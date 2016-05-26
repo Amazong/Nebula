@@ -1,9 +1,13 @@
 #include <iostream>
+#include <Windows.h>
 #include "SFML\Graphics.hpp"
 #include "headers\GameWindows.h"
 #include "headers\Errors.h"
 
 int main() {
+	//ShowWindow(GetConsoleWindow(), SW_HIDE);
+	// Descomentar a linha acima para esconder a consola
+
 	if (render_splash() == 42) {
 		error::file_access();
 	}
