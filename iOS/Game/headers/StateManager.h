@@ -1,16 +1,19 @@
 #pragma once
 
-#include "GameStates.h"
+
 #include <stack>
 #include "SFML\Graphics.hpp"
 
+class game_state; 
 
 class state_manager
 {
 public:
+	sf::RenderWindow window;
+
 
 	std::stack<game_state *> states_stack;
-	sf::RenderWindow window;
+
 
 
 	state_manager();

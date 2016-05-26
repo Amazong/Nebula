@@ -57,16 +57,15 @@ void state_manager::game_loop()
 
 		if (peek_state() == nullptr)
 			continue;
-		else
-		{
-			peek_state()->input();
-			peek_state()->logic_update(elapsed.asSeconds());
-			window.clear();
-			peek_state()->draw(elapsed.asSeconds());
-			window.display();
+	
 
-		}
+		peek_state()->input();
+		peek_state()->logic_update(elapsed.asSeconds());
+		window.clear();
+		peek_state()->draw(elapsed.asSeconds());
+		window.display();
 
+	
 	}
 
 
