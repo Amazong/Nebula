@@ -153,12 +153,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameStates.cpp" />
     <ClCompile Include="headers\Errors.cpp" />
     <ClCompile Include="headers\GameWindows.cpp" />
+    <ClCompile Include="headers\StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\Errors.h" />
+    <ClInclude Include="headers\GameStates.h" />
     <ClInclude Include="headers\GameWindows.h" />
+    <ClInclude Include="headers\StateManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
