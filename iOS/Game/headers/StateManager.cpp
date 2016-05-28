@@ -50,12 +50,13 @@ void state_manager::change_state(game_state * state)
 void state_manager::game_loop()
 {
 	sf::Clock clk;
+	sf::Time elapsed;
 
 	while (window.isOpen())
 	{
-		if (peek_state() == nullptr) continue;
+		elapsed = clk.restart();
 
-		sf::Time elapsed = clk.restart();
+		if (peek_state() == nullptr) continue;
 
 		peek_state()->input();
 		peek_state()->logic_update(elapsed.asSeconds());

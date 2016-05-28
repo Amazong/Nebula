@@ -31,7 +31,7 @@ public:
 
 	main_menu(state_manager * game);
 	
-	// These down under are not virtual. See http://www.cplusplus.com/doc/tutorial/polymorphism/
+
 	void input();
 	void logic_update(const float elapsed);
 	void draw(const float elapsed);
