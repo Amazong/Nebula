@@ -7,7 +7,7 @@
 state_manager::state_manager()
 {
 	window.create(sf::VideoMode::getDesktopMode(), "iOS", sf::Style::Fullscreen);
-	window.setFramerateLimit(60);  //default framerate
+	window.setFramerateLimit(60);  // default framerate
 }
 
 state_manager::~state_manager()
@@ -52,21 +52,15 @@ void state_manager::game_loop()
 	sf::Clock clk;
 
 	while (window.isOpen())
-	{	
-		sf::Time elapsed = clk.restart();
+	{
+		if (peek_state() == nullptr) continue;
 
-		if (peek_state() == nullptr)
-			continue;
-	
+		sf::Time elapsed = clk.restart();
 
 		peek_state()->input();
 		peek_state()->logic_update(elapsed.asSeconds());
 		window.clear();
 		peek_state()->draw(elapsed.asSeconds());
 		window.display();
-
-	
 	}
-
-
 }

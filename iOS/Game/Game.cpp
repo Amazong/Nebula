@@ -1,4 +1,5 @@
 #include <iostream>
+//#include <Windows.h>
 #include "SFML\Graphics.hpp"
 #include "headers\GameWindows.h"
 #include "headers\Errors.h"
@@ -12,12 +13,17 @@ int main() {
 
 	if (render_splash() == 42) {
 		error::file_access();
+		return 42;
 	}
 
 	
 	state_manager game;
 
 	game.push_state(new main_menu(&game)); // startup state
+	if (!(game.peek_state()->is_ok())) {
+		error::file_access();
+		return 42;
+	}
 	game.game_loop();
 
 	

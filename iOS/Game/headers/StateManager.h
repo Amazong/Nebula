@@ -11,11 +11,8 @@ class state_manager
 public:
 	sf::RenderWindow window;
 
-
 	std::stack<game_state *> states_stack;
-
-
-
+	
 	state_manager();
 	~state_manager();
 
@@ -26,5 +23,4 @@ public:
 	void change_state(game_state * state);
 	void game_loop();
 	
-
 };

@@ -3,11 +3,14 @@
 
 int render_splash()
 {
-	sf::RenderWindow *splash_screen = new sf::RenderWindow(sf::VideoMode(889, 411), "", sf::Style::None);
+	sf::RenderWindow *splash_screen = new sf::RenderWindow(sf::VideoMode(887, 407), "", sf::Style::None);
 	sf::Clock splash_clk;
 	
 	sf::Texture splash_png;
-	if (!(splash_png.loadFromFile("res/png/Splash.png"))) return 42;
+	if (!(splash_png.loadFromFile("res/png/Splash.png"))) {
+		splash_screen->setVisible(0);
+		return 42;
+	}
 	sf::Sprite splash_sprite;
 	splash_sprite.setTexture(splash_png);
 

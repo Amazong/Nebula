@@ -1,11 +1,20 @@
 #include "SFML\Graphics.hpp"
 #include "headers\GameStates.h"
+#include "headers\Errors.h"
 
 /*---------------- Main Menu------------------------------*/
 
 main_menu::main_menu(state_manager * game_ptr)
 {
 	this->game = game_ptr;  //now we have a pointer to state manager
+	
+	if (load_texture() == 42) {
+		this->ok = false;
+		game_ptr->window.setVisible(0);
+		return;
+	}
+
+	menu_background_sprite.setTexture(background); // link sprite and texture
 	//needs to add the load  of background image
 }
 
@@ -39,10 +48,15 @@ void main_menu::logic_update(const float elapsed)
 {
 }
 
-void main_menu::draw(const float elapsed)
+int main_menu::load_texture()
 {
-
-	//needs background
+	if (!background.loadFromFile("res/png/Main.png")) {
+		return 42; // needs to return 42, and for error::file_access() to run on upper level
+	}
+	return 0;
 }
 
-
+void main_menu::draw(const float elapsed)
+{
+	game->window.draw(menu_background_sprite); // draw sprite
+}
