@@ -8,12 +8,11 @@
 
 int main() {
 	//ShowWindow(GetConsoleWindow(), SW_HIDE);
-	// Descomentar a linha acima para esconder a consola
+	// Uncomment line above to show console
 	
 
 	if (render_splash() == 42) {
-		error::file_access();
-		return 42;
+		return error::file_access();
 	}
 
 	
@@ -21,8 +20,7 @@ int main() {
 
 	game.push_state(new main_menu(&game)); // startup state
 	if (!(game.peek_state()->is_ok())) {
-		error::file_access();
-		return 42;
+		return error::file_access();
 	}
 	game.game_loop();
 

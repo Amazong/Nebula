@@ -2,10 +2,10 @@
 #include "StateManager.h"
 #include "SFML\Graphics.hpp"
 
-class game_state  //base class common to all derived states.
+class game_state  // base class common to all derived states.
 {
 private:
-	bool ok = true;
+	bool ok = true; // by default, everything is fine
 
 public:
 
@@ -25,14 +25,14 @@ class main_menu : public game_state
 {
 private:
 	sf::Texture background;
-	sf::Sprite menu_background_sprite;
+	sf::Sprite background_sprite;
 
 public:
 
 	main_menu(state_manager * game);
-
+	
+	// These down under are not virtual. See http://www.cplusplus.com/doc/tutorial/polymorphism/
 	void input();
 	void logic_update(const float elapsed);
 	void draw(const float elapsed);
-	int load_texture();
 };
