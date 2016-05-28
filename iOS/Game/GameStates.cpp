@@ -1,6 +1,5 @@
 #include "SFML\Graphics.hpp"
 #include "headers\GameStates.h"
-#include "headers\Errors.h"
 
 /*---------------- Main Menu------------------------------*/
 
