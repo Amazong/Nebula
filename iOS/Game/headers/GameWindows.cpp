@@ -21,4 +21,5 @@ int render_splash()
 	}
 	
 	delete splash_screen;
+	return 0;
 }
