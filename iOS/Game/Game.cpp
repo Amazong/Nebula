@@ -11,9 +11,10 @@ int main() {
 	// Uncomment line above to show console
 	
 
-	if (render_splash() == 42) {
+	// while debugging, I'll leave the splash screen commented
+	/*if (render_splash() == 42) {
 		return error::file_access();
-	}
+	}*/
 
 	
 	state_manager game;

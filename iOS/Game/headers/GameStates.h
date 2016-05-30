@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include "StateManager.h"
 #include "SFML\Graphics.hpp"
 
@@ -24,15 +25,19 @@ public:
 class main_menu : public game_state
 {
 private:
+	const std::string options[4] = { "New Game", "Continue", "Options", "Quit" };
+	bool save_game;
+	sf::Font menu_font;
+	sf::Text options_text[4];
 	sf::Texture background;
 	sf::Sprite background_sprite;
 
 public:
-
 	main_menu(state_manager * game);
-	
 
 	void input();
 	void logic_update(const float elapsed);
 	void draw(const float elapsed);
+
+	void update_save(); // TO-DO - checks if there is a *valid* saved game; menu is displayed accordingly.
 };
