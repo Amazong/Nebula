@@ -22,16 +22,25 @@ main_menu::main_menu(state_manager * game_ptr)
 	}
 
 	sf::Vector2u size_window = game->window.getSize();
-	sf::Vector2f starting_pos(size_window.x * 0.75, size_window.y * 0.5);
+	sf::Vector2f starting_pos(size_window.x * 0.65, size_window.y * 0.3);
 
+	int old_right;
 	for (int i = 0; i < 4; i++) {
 		if (i == 1 && !save_game) continue;
 		options_text[i].setFont(menu_font);
-		options_text[i].setCharacterSize(70);
+		options_text[i].setCharacterSize(80);
 		options_text[i].setString(options[i]);
 		options_text[i].setColor(sf::Color::White);
 		options_text[i].setPosition(starting_pos);
-		starting_pos.y += 100;
+		
+		if (i > 0) {
+			while (options_text[i].getGlobalBounds().left + options_text[i].getGlobalBounds().width < old_right) {
+				options_text[i].setPosition(sf::Vector2f(options_text[i].getGlobalBounds().left + 1, options_text[i].getPosition().y));
+			}
+		}
+		
+		old_right = options_text[i].getGlobalBounds().left + options_text[i].getGlobalBounds().width;
+		starting_pos.y += 150;
 	}
 
 	background_sprite.setTexture(background); // link sprite and texture
