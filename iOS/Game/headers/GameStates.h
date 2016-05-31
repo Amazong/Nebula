@@ -25,12 +25,15 @@ public:
 class main_menu : public game_state
 {
 private:
-	const std::string options[4] = { "New Game", "Continue", "Options", "Quit" };
+	const std::string options_text[4] = { "New Game", "Continue", "Options", "Quit" };
 	bool save_game;
 	sf::Font menu_font;
-	sf::Text options_text[4];
+	sf::Text options[4];
 	sf::Texture background;
 	sf::Sprite background_sprite;
+	sf::Vector2u current_size;
+	sf::RectangleShape selector;
+	int selection;
 
 public:
 	main_menu(state_manager * game);
@@ -38,6 +41,6 @@ public:
 	void input();
 	void logic_update(const float elapsed);
 	void draw(const float elapsed);
-
+	void setup_text();
 	void update_save(); // TO-DO - checks if there is a *valid* saved game; menu is displayed accordingly.
 };
