@@ -194,6 +194,8 @@ options_menu::options_menu(state_manager * game_ptr)
 
 	setup_text();
 
+	
+
 	//background_sprite.setTexture(background);						//to deal with
 	//background_sprite.setScale(game->window.getSize().x / 1920.0f, game->window.getSize().y / 1080.0f);
 
@@ -202,6 +204,11 @@ options_menu::options_menu(state_manager * game_ptr)
 void options_menu::input()
 {
 	sf::Event event;
+	sf::Vector2f mouse_pos(0.0f,0.0f); // by default 
+
+	selector.setFillColor(sf::Color::Transparent); //invisible when not in selection
+
+
 
 	while (game->window.pollEvent(event))
 	{
@@ -215,12 +222,32 @@ void options_menu::input()
 			}
 			case sf::Event::MouseMoved:
 			{
+				mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
 				
+				selection = -1; // this way the selection will always be -1 if it's not in one of the options
+				for (int i  = 0; i < 5; i++)
+				{
+					if (options[i].getGlobalBounds().contains(mouse_pos))
+						selection = i;
+				}
+
+				std::cout << "           Selection" << selection << std::endl; //debug
+
 				break;
 			}
 			case sf::Event::MouseButtonPressed:
 			{
-				
+				switch (selection)
+				{
+					case 0:
+					{
+						game->pop_state();
+						return;
+						break;
+					}
+					// to add actions
+				}
+
 				break;
 			}
 			default:
@@ -231,6 +258,17 @@ void options_menu::input()
 
 void options_menu::logic_update(const float elapsed)
 {
+	if (selection != -1)
+	{
+
+		sf::Vector2f sel_pos = options[selection].findCharacterPos(0); //position of first char
+		selector.setPosition(sel_pos);
+		selector.move(0.0f, options[selection].getCharacterSize() +  10 );
+		
+		selector.setSize(sf::Vector2f(options[selection].getLocalBounds().width, 5));
+		selector.setFillColor(sf::Color::White);
+
+	}
 }
 
 void options_menu::draw(const float elapsed)
@@ -243,6 +281,7 @@ void options_menu::draw(const float elapsed)
 		game->window.draw(options[i]);
 	}
 
+	game->window.draw(selector);
 }
 
 void options_menu::setup_text()

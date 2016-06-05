@@ -22,6 +22,7 @@ public:
 	friend class options_menu;
 };
 
+/*------------------------------Main Menu------------------------------*/
 
 class main_menu : public game_state
 {
@@ -46,6 +47,7 @@ public:
 	void update_save(); // TO-DO - checks if there is a *valid* saved game; menu is displayed accordingly.
 };
 
+/*------------------------------Options Menu------------------------------*/
 
 class options_menu : public game_state
 {
@@ -56,7 +58,7 @@ private:
 	sf::Texture background;
 	sf::Sprite background_sprite;
 	sf::RectangleShape selector;
-	int selection;
+	int selection = -1; //by default nothing is selected
 
 public:
 	options_menu(state_manager * game_ptr);
