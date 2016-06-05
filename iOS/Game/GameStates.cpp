@@ -5,7 +5,7 @@
 #include "headers\GameStates.h"
 #include <thread>
 
-/*---------------- Main Menu------------------------------*/
+/*------------------------------Main Menu------------------------------*/
 
 main_menu::main_menu(state_manager * game_ptr)
 {
@@ -62,7 +62,6 @@ void main_menu::input()
 					selector.setPosition(selector.getPosition().x + 2, selector.getPosition().y + options[selection].getCharacterSize() + 10);
 					selector.setSize(sf::Vector2f(options[selection].getLocalBounds().width, 5));
 
-
 					// WORK IN PROGRESS
 					/*std::thread animate_selection;
 					selector.setSize(sf::Vector2f(1, 5));
@@ -101,7 +100,7 @@ void main_menu::input()
 						//continue game
 						break;
 					case 2:
-						//options
+						game->push_state(new options_menu(game)); //go to options
 						break;
 					case 3:
 						game->window.close(); //quit
@@ -166,4 +165,104 @@ void main_menu::setup_text()
 void main_menu::update_save() // TO-DO
 {
 	save_game = true;
+}
+
+
+
+
+
+
+
+/*------------------------------Options Menu------------------------------*/
+
+
+options_menu::options_menu(state_manager * game_ptr)
+{
+	game = game_ptr;
+
+	/*if (!background.loadFromFile("res/png/ ----------------")) {		//to deal with
+		ok = false;
+		game->window.setVisible(0);
+		return;
+	}*/
+
+	if (!options_font.loadFromFile("res/fonts/Roboto-Bold.ttf")) {
+		ok = false;
+		game->window.setVisible(false);
+		return;
+	}
+
+	setup_text();
+
+	//background_sprite.setTexture(background);						//to deal with
+	//background_sprite.setScale(game->window.getSize().x / 1920.0f, game->window.getSize().y / 1080.0f);
+
+}
+
+void options_menu::input()
+{
+	sf::Event event;
+
+	while (game->window.pollEvent(event))
+	{
+		switch (event.type)
+		{
+			case sf::Event::KeyPressed:
+			{
+				if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+					game->window.close();
+				break;
+			}
+			case sf::Event::MouseMoved:
+			{
+				
+				break;
+			}
+			case sf::Event::MouseButtonPressed:
+			{
+				
+				break;
+			}
+			default:
+				break;
+		}
+	}
+}
+
+void options_menu::logic_update(const float elapsed)
+{
+}
+
+void options_menu::draw(const float elapsed)
+{
+	game->window.clear(sf::Color::Black);  //temp
+
+	//game->window.draw(background_sprite); 
+	for (int i = 0; i < 5; i++)
+	{
+		game->window.draw(options[i]);
+	}
+
+}
+
+void options_menu::setup_text()
+{
+	sf::Vector2f starting_pos(game->window.getSize().x * 0.5f, game->window.getSize().y * 0.25f);
+	int font_size = (int)(game->window.getSize().y / 13.5f); // from ideal 1080p ratios
+	int offset = (int)(game->window.getSize().y / 8.0f); // 
+
+
+	for (int i = 0; i < 5; i++)
+	{
+		options[i].setFont(options_font);
+		options[i].setCharacterSize(font_size);
+		options[i].setString(options_str[i]);
+		options[i].setColor(sf::Color::White);
+		options[i].setOrigin((options[i].getGlobalBounds().width / 2.0f) , (options[i].getGlobalBounds().height / 2.0f) ); // origin of font in its geometric center
+		options[i].setPosition(starting_pos);
+
+		starting_pos.y += offset;
+	
+	}
+
 }

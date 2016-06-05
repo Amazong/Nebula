@@ -19,6 +19,7 @@ public:
 	virtual void draw(const float elapsed) = 0;
 
 	friend class main_menu;
+	friend class options_menu;
 };
 
 
@@ -43,4 +44,26 @@ public:
 	void draw(const float elapsed);
 	void setup_text();
 	void update_save(); // TO-DO - checks if there is a *valid* saved game; menu is displayed accordingly.
+};
+
+
+class options_menu : public game_state
+{
+private:
+	const std::string options_str[5] = { "Back", "Music", "Difficulty", "Framerate", "Fullscreen" };
+	sf::Font options_font;
+	sf::Text options[5];
+	sf::Texture background;
+	sf::Sprite background_sprite;
+	sf::RectangleShape selector;
+	int selection;
+
+public:
+	options_menu(state_manager * game_ptr);
+	
+	void input();
+	void logic_update(const float elapsed);
+	void draw(const float elapsed);
+	
+	void setup_text();
 };

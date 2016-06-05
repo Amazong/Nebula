@@ -4,7 +4,7 @@
 #include <stack>
 #include "SFML\Graphics.hpp"
 
-class game_state; 
+class game_state; //so state_manager knows this exists
 
 class state_manager
 {

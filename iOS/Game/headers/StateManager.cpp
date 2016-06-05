@@ -1,6 +1,5 @@
 #include <stack>
 #include "SFML\Graphics.hpp"
-
 #include "StateManager.h"
 #include "GameStates.h"
 
@@ -56,12 +55,12 @@ void state_manager::game_loop()
 	while (window.isOpen())
 	{
 		elapsed = clk.restart();
-
+		
 		if (peek_state() == nullptr) continue;
 
 		peek_state()->input();
 		peek_state()->logic_update(elapsed.asSeconds());
-		window.clear();
+		window.clear(sf::Color::Black);
 		peek_state()->draw(elapsed.asSeconds());
 		window.display();
 	}

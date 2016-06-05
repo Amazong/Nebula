@@ -14,8 +14,8 @@ int render_splash()
 	sf::Sprite splash_sprite;
 	splash_sprite.setTexture(splash_png);
 
-	while (splash_clk.getElapsedTime().asSeconds() < 3.0f) {
-		splash_screen->clear();
+	while (splash_clk.getElapsedTime().asSeconds() < 4.0f) {
+		splash_screen->clear(sf::Color::Black);
 		splash_screen->draw(splash_sprite);
 		splash_screen->display();
 	}
