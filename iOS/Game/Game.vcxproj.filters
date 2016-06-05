@@ -44,5 +44,8 @@
     <ClInclude Include="headers\GameStates.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameMechanics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

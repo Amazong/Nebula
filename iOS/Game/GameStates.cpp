@@ -231,7 +231,7 @@ void options_menu::input()
 						selection = i;
 				}
 
-				std::cout << "           Selection" << selection << std::endl; //debug
+				std::cout << "           Selection " << selection << std::endl; //debug
 
 				break;
 			}
@@ -263,7 +263,7 @@ void options_menu::logic_update(const float elapsed)
 
 		sf::Vector2f sel_pos = options[selection].findCharacterPos(0); //position of first char
 		selector.setPosition(sel_pos);
-		selector.move(0.0f, options[selection].getCharacterSize() +  10 );
+		selector.move(0.0f, options[selection].getCharacterSize() +  10.0f );
 		
 		selector.setSize(sf::Vector2f(options[selection].getLocalBounds().width, 5));
 		selector.setFillColor(sf::Color::White);
