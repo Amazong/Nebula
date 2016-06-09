@@ -27,6 +27,8 @@ main_menu::main_menu(state_manager * game_ptr)
 		return;
 	}
 
+	selection_old = -1;
+
 	setup_text();
 
 	background_sprite.setTexture(background); // link sprite and texture
@@ -58,26 +60,33 @@ void main_menu::input()
 					for (selection = 0; selection < 3; selection++) {
 						if (pos.y < options[selection + 1].getPosition().y) break;
 					}
+					std::cout << selection << std::endl;
 					selector.setPosition(options[selection].getPosition());
 					selector.setPosition(selector.getPosition().x + 2, selector.getPosition().y + options[selection].getCharacterSize() + 10);
-					selector.setSize(sf::Vector2f(options[selection].getLocalBounds().width, 5));
-
+					//selector.setSize(sf::Vector2f(options[selection].getLocalBounds().width, 5));
+					selector.setFillColor(sf::Color::White);
+					
+					if (selection_old != selection) {
+						selector.setSize(sf::Vector2f(0, 2));
+						target_size = options[selection].getLocalBounds().width;
+						animation = 1;
+						t_clock.restart();
+					}
+					
+					selection_old = selection;
 					// WORK IN PROGRESS
 					/*std::thread animate_selection;
 					selector.setSize(sf::Vector2f(1, 5));
 					sf::Clock animator;
 					while (selector.getSize().x < options[selection].getLocalBounds().width) {
-						selector.setSize(sf::Vector2f(selector.getSize().x+1, 5));
-						game->window.draw(selector);
-						game->window.display();
-						while (animator.getElapsedTime().asMicroseconds() < 100);
-						animator.restart();
+					selector.setSize(sf::Vector2f(selector.getSize().x+1, 5));
+					game->window.draw(selector);
+					game->window.display();
+					while (animator.getElapsedTime().asMicroseconds() < 100);
+					animator.restart();
 					}*/
-
-
-
-					selector.setFillColor(sf::Color::White);
-					std::cout << selection << std::endl;
+					
+					
 				}
 
 				break;
@@ -123,6 +132,30 @@ void main_menu::input()
 
 void main_menu::logic_update(const float elapsed)
 {
+	// minimum system requirements - so long as << 333 ms, will work fine.
+	// will jump in the reason of return/333
+	// not serious, because smoothed with the rest
+
+	if (animation) {
+		selector.setSize(sf::Vector2f(
+			target_size * (-2.0*pow(t_clock.getElapsedTime().asMilliseconds()/333.0, 3) + 3.0*pow(t_clock.getElapsedTime().asMilliseconds()/333.0, 2))
+			, selector.getSize().y));
+	}
+	if (selector.getSize().x >= target_size || t_clock.getElapsedTime().asMilliseconds() >= 333) {
+		animation = 0;
+		t = 0;
+	}
+	
+	/*if (animation) {
+		selector.setSize(sf::Vector2f(
+			target_size * (-2.0*pow(t,3) + 3.0*pow(t,2))
+			, selector.getSize().y));
+		t += 0.07;
+	}
+	if (selector.getSize().x >= target_size || t >= 1) {
+		animation = 0;
+		t = 0;
+	}*/
 }
 
 void main_menu::draw(const float elapsed)

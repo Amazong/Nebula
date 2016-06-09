@@ -29,6 +29,10 @@ class main_menu : public game_state
 private:
 	const std::string options_text[4] = { "New Game", "Continue", "Options", "Quit" };
 	bool save_game;
+	bool animation;
+	double target_size;
+	double t = 0;
+	sf::Clock t_clock;
 	sf::Font menu_font;
 	sf::Text options[4];
 	sf::Texture background;
@@ -36,6 +40,7 @@ private:
 	sf::Vector2u current_size;
 	sf::RectangleShape selector;
 	int selection;
+	int selection_old;
 
 public:
 	main_menu(state_manager * game);
