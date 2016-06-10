@@ -29,7 +29,7 @@ private:
 	float salary;
 
 public:
-
+	
 };
 
 
@@ -40,8 +40,12 @@ private:
 	std::list<guitars *> inventory;
 	std::list<employees *> staff;
 	int reputation = 0; // by default
+	int max_stock;
+	int value;
+	int traffic;
 	enum area { poor, middle, rich } setting; //effect on buying formula
 
+	
 public:
 
 
