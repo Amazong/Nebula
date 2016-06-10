@@ -101,6 +101,7 @@ void main_menu::input()
 					pos.y < selector.getPosition().y + selector.getLocalBounds().height)
 				{
 					std::cout << selection << std::endl;
+					selector.setSize(sf::Vector2f(0, 0));
 					switch (selection) {
 					case 0:
 						//new game
