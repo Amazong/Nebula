@@ -67,7 +67,7 @@ void main_menu::input()
 					selector.setFillColor(sf::Color::White);
 					
 					if (selection_old != selection) {
-						selector.setSize(sf::Vector2f(0, 2));
+						selector.setSize(sf::Vector2f(0, 5));
 						target_size = options[selection].getLocalBounds().width;
 						animation = 1;
 						t_clock.restart();
