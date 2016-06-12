@@ -153,14 +153,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameMechanics.cpp" />
     <ClCompile Include="GameStates.cpp" />
     <ClCompile Include="headers\Errors.cpp" />
     <ClCompile Include="headers\GameWindows.cpp" />
     <ClCompile Include="headers\StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameMechanics.h" />
     <ClInclude Include="headers\Errors.h" />
+    <ClInclude Include="headers\GameMechanics.h" />
     <ClInclude Include="headers\GameStates.h" />
     <ClInclude Include="headers\GameWindows.h" />
     <ClInclude Include="headers\StateManager.h" />

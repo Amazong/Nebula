@@ -30,6 +30,9 @@
     <ClCompile Include="GameStates.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameMechanics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\GameWindows.h">
@@ -44,7 +47,7 @@
     <ClInclude Include="headers\GameStates.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameMechanics.h">
+    <ClInclude Include="headers\GameMechanics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

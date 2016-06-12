@@ -6,6 +6,7 @@
 #include "headers\StateManager.h"
 #include "headers\GameStates.h"
 
+
 int main() {
 	//ShowWindow(GetConsoleWindow(), SW_HIDE);
 	// Uncomment line above to show console
@@ -16,7 +17,7 @@ int main() {
 		return error::file_access();
 	}*/
 
-	
+
 	state_manager game;
 
 	game.push_state(new main_menu(&game)); // startup state
@@ -24,7 +25,6 @@ int main() {
 		return error::file_access();
 	}
 	game.game_loop();
-
 	
 	return(0);
 }
