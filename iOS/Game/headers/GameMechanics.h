@@ -27,7 +27,7 @@ public:
 
 };
 
-/*
+
 class employee
 {
 private:
@@ -85,10 +85,9 @@ user_profile();
 
 
 void push_store(store * store);
-void load_game(std::string profile_title);
+void load_game(std::string profile_title); // pass an object of save game instead of string 
 void save_game();
 
 
 };
 
-*/
