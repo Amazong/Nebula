@@ -60,6 +60,8 @@ private:
 	const std::string options_str[5] = { "Back", "Music", "Difficulty", "Framerate", "Fullscreen" };
 	sf::Font options_font;
 	sf::Text options[5];
+	double target_size;
+	sf::Clock t_clock;
 	sf::Texture background;
 	sf::Sprite background_sprite;
 	sf::RectangleShape selector;
