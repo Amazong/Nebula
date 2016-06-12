@@ -239,7 +239,10 @@ void options_menu::input()
 {
 	sf::Event event;
 	sf::Vector2f mouse_pos(0.0f,0.0f); // by default 
-
+	
+	if (selection == -1)
+		selector.setSize(sf::Vector2f(0.0f, 0.0f));
+									  
 	selector.setFillColor(sf::Color::Transparent); //invisible when not in selection
 
 
@@ -259,14 +262,20 @@ void options_menu::input()
 				mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
 				
 				selection = -1; // this way the selection will always be -1 if it's not in one of the options
+			
 				for (int i  = 0; i < 5; i++)
 				{
 					if (options[i].getGlobalBounds().contains(mouse_pos))
+					{
 						selection = i;
+						target_size = options[i].getGlobalBounds().width;
+					}
 				}
 
+				
 				std::cout << "           Selection " << selection << std::endl; //debug
 
+				t_clock.restart();
 				break;
 			}
 			case sf::Event::MouseButtonPressed:
@@ -294,12 +303,20 @@ void options_menu::logic_update(const float elapsed)
 {
 	if (selection != -1)
 	{
+		if (selector.getSize().x >= target_size || t_clock.getElapsedTime().asMilliseconds() >= 333)
+		{
+			selector.setFillColor(sf::Color::White);
+			return;
+		}
+			
 
 		sf::Vector2f sel_pos = options[selection].findCharacterPos(0); //position of first char
 		selector.setPosition(sel_pos);
 		selector.move(0.0f, options[selection].getCharacterSize() +  10.0f );
 		
-		selector.setSize(sf::Vector2f(options[selection].getLocalBounds().width, 5));
+		selector.setSize(sf::Vector2f(target_size * (-2.0*pow(t_clock.getElapsedTime().asMilliseconds() / 333.0, 3) + 3.0*pow(t_clock.getElapsedTime().asMilliseconds() / 333.0, 2)) , 5.0f));
+		//selector.setSize(sf::Vector2f(options[selection].getLocalBounds().width, 5.0f));
+
 		selector.setFillColor(sf::Color::White);
 
 	}
