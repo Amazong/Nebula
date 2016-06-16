@@ -1,6 +1,9 @@
 #include "headers\GameMechanics.h"
 
-guitar::guitar(double value, std::string name)
+
+/*------------------------------ guitar ------------------------------*/
+
+guitar::guitar(double value, std::string & name)
 {
 	this->price = this->value = value;
 	this->brand = name;
@@ -34,3 +37,19 @@ void guitar::set_price(double price)
 	this->price = price;
 	set_perceived_value(this->price / this->value);
 }
+
+
+/*------------------------------ employee ------------------------------*/
+
+
+employee::employee(std::string & person, double value, int num) // 0 -low; 1- neutral 2-high
+{
+	this->name = person;
+	salary = value;
+	this->skill = efficiency(num);
+}
+
+employee::~employee()
+{
+}
+

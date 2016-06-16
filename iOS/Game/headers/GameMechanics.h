@@ -8,6 +8,9 @@
 
 //result of buying formula should be(for now) a flat rate (int) of chosen guitars to be sold per unit of time (to be defined)
 
+/*------------------------------ guitar ------------------------------*/
+
+
 class guitar
 {
 private:
@@ -18,7 +21,7 @@ private:
 
 public:
 
-	guitar(double value, std::string brand); // sets a value and a brand
+	guitar(double value, std::string & brand); // sets a value and a brand
 	~guitar();
 
 	void set_perceived_value(double relation);
@@ -28,16 +31,25 @@ public:
 };
 
 
+/*------------------------------ employee ------------------------------*/
+
+
 class employee
 {
+
 private:
 enum efficiency { low, neutral, high } skill;  //effect on buying formula
 std::string name;
-float salary;
+double salary;
 
 public:
-
+	employee(std::string & person, double value, int  num); // 0 -low; 1- neutral 2-high
+	~employee();
+	
 };
+
+
+/*------------------------------ store ------------------------------*/
 
 
 class store
@@ -66,6 +78,9 @@ void pop_employee(std::string name);
 void pop_guitar(); // to be expecified.
 
 };
+
+
+/*------------------------------ user_profile ------------------------------*/
 
 
 class user_profile
