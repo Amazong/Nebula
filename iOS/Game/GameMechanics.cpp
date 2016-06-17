@@ -95,7 +95,7 @@ void store::sell_algorithm()
 
 			position = inventory_range(random_numbers); //position 0 -> size-1
 
-			sell_guitar(position); // to be redefined upon piano class deployment
+			sell_instrument(position); // to be redefined upon piano class deployment
 
 
 		}
@@ -104,9 +104,9 @@ void store::sell_algorithm()
 	//deploy message your inventory is empty. (else)
 }
 
-void store::sell_guitar(int position_offset)
+void store::sell_instrument(int position_offset)
 {
-	std::list<guitar *>::iterator it = inventory.begin();
+	std::list<instrument *>::iterator it = inventory.begin();
 
 	for ( ; position_offset != 0; position_offset--)  //proceding to position offset
 	{

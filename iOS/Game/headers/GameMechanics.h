@@ -8,17 +8,37 @@
 
 //result of buying formula should be(for now) a flat rate (int) of chosen guitars to be sold per unit of time (to be defined)
 
-/*------------------------------ guitar ------------------------------*/
 
-
-class guitar
+class instrument
 {
-private:
+protected:
 	enum perceived_value { unattainable, overpriced, high, neutral, cheap, irresistible } purchasing_power; //price 0, .....  infinite , factors in chosen guitar to be sold, calculated from relation between price and value
-	
+
 	std::string brand;
 	double value; //wholesale cost
 	double price; // set by player
+
+public:
+	virtual void set_perceived_value(double relation) = 0;
+
+	virtual void set_price(double price) = 0;
+
+	//friends
+	friend class store;
+};
+
+
+
+
+
+
+
+
+/*------------------------------ guitar ------------------------------*/
+
+
+class guitar: public instrument
+{
 
 public:
 
@@ -29,8 +49,7 @@ public:
 
 	void set_price(double price);
 
-	//friends
-	friend class store;
+
 };
 
 
@@ -62,7 +81,7 @@ class store
 {
 private:
 
-	std::list<guitar *> inventory;
+	std::list<instrument *> inventory;
 	std::list<employee *> staff;
 	enum area { poor, middle, rich } setting; //effect on buying formula
 
@@ -86,8 +105,9 @@ public:
 //inventory management
 
 	void buy_guitar(guitar * guitar); //needs access to user's attributes
+	//to add buy piano
 	void sell_algorithm();
-	void sell_guitar(int position_offset);
+	void sell_instrument(int position_offset);
 
 //staff management
 
