@@ -53,3 +53,74 @@ employee::~employee()
 {
 }
 
+/*------------------------------ store ------------------------------*/
+
+
+
+store::store(user_profile * current, std::string & name, int num) //num 0 - poor; 1-middle; 2-rich 
+{
+	this->user = current;
+	this->name = name;
+	this->setting = static_cast<area>(num);
+	this->max_stock = 50 + 10 * setting; //can be altered, formula for max inventory
+}
+
+store::~store()
+{
+		//to work on
+}
+
+void store::buy_guitar(guitar * guitar)
+{
+	if (user->net_worth >= guitar->value) //buying from wholesale
+	{
+		user->net_worth -= guitar->value;
+		this->inventory.push_back(guitar); 
+		return;
+	}
+	
+	//else we need to deploy a message error (warning window)
+}
+
+void store::sell_algorithm()
+{
+	if (!inventory.empty()) //only when inventory is not empty
+	{
+		std::mt19937 random_numbers(rd()); //random number generator algorithm
+		int position;
+
+		for ( int i = buying_rate ; i != 0; i-- )
+		{
+			std::uniform_int_distribution<int> inventory_range(0, (inventory.size() - 1)); // random position to eliminate
+
+			position = inventory_range(random_numbers); //position 0 -> size-1
+
+			sell_guitar(position); // to be redefined upon piano class deployment
+
+
+		}
+	}
+
+	//deploy message your inventory is empty. (else)
+}
+
+void store::sell_guitar(int position_offset)
+{
+	std::list<guitar *>::iterator it = inventory.begin();
+
+	for ( ; position_offset != 0; position_offset--)  //proceding to position offset
+	{
+		it++;
+	}
+
+	// *it -> pointer to guitar
+	user->net_worth += (*it)->price;
+	this->reputation += ((*it)->value * 0.05); //5%of inventory's value added to store reputation
+
+	delete (*it); //memory management
+
+	inventory.erase(it);
+	
+}
+
+
