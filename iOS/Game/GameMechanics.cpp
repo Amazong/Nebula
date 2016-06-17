@@ -72,7 +72,7 @@ store::~store()
 
 void store::buy_guitar(guitar * guitar)
 {
-	if (user->net_worth >= guitar->value) //buying from wholesale
+	if (user->net_worth >= guitar->value && inventory.size() < max_stock) //buying from wholesale
 	{
 		user->net_worth -= guitar->value;
 		this->inventory.push_back(guitar); 
