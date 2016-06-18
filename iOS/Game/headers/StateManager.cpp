@@ -6,7 +6,7 @@
 state_manager::state_manager()
 {
 	//window.create(sf::VideoMode::getDesktopMode(), "iOS", sf::Style::Fullscreen);
-	window.create(sf::VideoMode(800,600), "iOS");
+	window.create(sf::VideoMode(800,600), "iOS"); // for debugging
 	window.setFramerateLimit(60);  // default framerate
 }
 
@@ -18,7 +18,7 @@ state_manager::~state_manager()
 	}
 }
 
-game_state * state_manager::peek_state() //does not pop
+game_state * state_manager::peek_state() // does not pop
 {
 	if(states_stack.empty())
 		return nullptr;
