@@ -22,11 +22,12 @@ protected:
 	double price; // set by player
 
 public:
+	// why virtual? these are common properties, no?
 	virtual void set_perceived_value(double relation) = 0;
-
 	virtual void set_price(double price) = 0;
+	//
 
-	//friends
+	// friends
 	friend class store;
 };
 
@@ -41,6 +42,23 @@ public:
 
 	guitar(double value, std::string & brand); // sets a value and a brand
 	~guitar();
+
+	void set_perceived_value(double relation);
+
+	void set_price(double price);
+
+};
+
+/*------------------------------ piano ------------------------------*/
+
+
+class piano : public instrument
+{
+
+public:
+
+	piano(double value, std::string & brand); // sets a value and a brand
+	~piano();
 
 	void set_perceived_value(double relation);
 
@@ -88,7 +106,7 @@ private:
 	
 	user_profile * user; // so we can acess user's attributes
 
-	int reputation = 0; // by default
+	double reputation = 0; // by default
 	int max_stock;
 	int value;
 	int traffic;
@@ -98,21 +116,26 @@ public:
 	store(user_profile * current, std::string & name, int num); // num: 0-poor; 1-middle; 2-rich 
 	~store();
 
-//inventory management
+	// store management
+	void set_reputation(double rep) { reputation = rep; };
+	double get_reputation() { return reputation; };
 
+	// inventory management
+	int get_max_stock();
+	int get_stock();
 	void buy_guitar(guitar * guitar); // needs access to user's attributes
-	//to add buy piano
+	void buy_piano(piano * piano); // to implement
 
 	void sell_algorithm();
 	void sell_instrument(int position_offset);
 
-//staff management
+	// staff management
 
 	void hire_employee(employee * employee);
 	void fire_employee(std::string name);
 	
 
-	//friends
+	// friends
 	friend class user_profile;
 };
 
@@ -123,18 +146,25 @@ public:
 class user_profile
 {
 private:
-
 	std::list<store *> stores;
+	store * active_store;
 	sf::Time time_elapsed = sf::seconds(0.0f);  // by omission time offset from 0 is 0. Used to calculate date (in game)
 	double weekly_expenses;
 	double net_worth;
 	double reputation;
+	int difficulty = -1; // difficulty: 0-easy; 1-medium; 2-hard
 
 public:
 
 	user_profile();
 	~user_profile();
+	
+	store * get_active_store();
+	void set_active_store(store * active_store_new);
+	bool set_active_store(unsigned int store_id);
 
+	int get_difficulty() { return difficulty; }
+	void set_difficulty(int diff) { difficulty = diff; }
 
 	void buy_store(store * store);
 	void load_game(std::string profile_title); // pass an object of save game instead of string 

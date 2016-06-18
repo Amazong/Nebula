@@ -2,6 +2,7 @@
 #include "SFML\Graphics.hpp"
 #include "StateManager.h"
 #include "GameStates.h"
+#include "Errors.h"
 
 state_manager::state_manager()
 {
@@ -28,15 +29,30 @@ game_state * state_manager::peek_state() // does not pop
 	}
 }
 
+user_profile * state_manager::get_current_user()
+{
+	return current_user;
+}
+
+void state_manager::set_current_user(user_profile * user)
+{
+	current_user = user;
+}
+
 void state_manager::push_state(game_state * state)
 {
 	states_stack.push(state);
 }
 
-void state_manager::pop_state()
+int state_manager::pop_state()
 {
+	if (!(states_stack.top()->is_ok())) {
+		states_stack.top()->make_ok(); // to show that it's been handled; prevents infinite loop
+		return error::trace_error(states_stack.top()->get_error_code());		
+	}
 	delete states_stack.top();
 	states_stack.pop();
+	return 0;
 }
 
 void state_manager::change_state(game_state * state)
@@ -47,7 +63,7 @@ void state_manager::change_state(game_state * state)
 
 }
 
-void state_manager::game_loop()
+int state_manager::game_loop()
 {
 	sf::Clock clk;
 	sf::Time elapsed;
@@ -57,6 +73,10 @@ void state_manager::game_loop()
 		elapsed = clk.restart();
 		
 		if (peek_state() == nullptr) continue;
+
+		if (!(peek_state()->is_ok())) {
+			return pop_state();
+		}
 
 		peek_state()->input();
 		peek_state()->logic_update(elapsed.asSeconds());
