@@ -6,7 +6,7 @@
 #include <list>
 
 
-//result of buying formula should be(for now) a flat rate (int) of chosen guitars to be sold per unit of time (to be defined)
+// result of buying formula should be (for now) a flat rate (int) of chosen guitars to be sold per unit of time (to be defined)
 
 
 /*------------------------------ instrument ------------------------------*/
@@ -15,10 +15,10 @@
 class instrument
 {
 protected:
-	enum perceived_value { unattainable, overpriced, high, neutral, cheap, irresistible } purchasing_power; //price 0, .....  infinite , factors in chosen guitar to be sold, calculated from relation between price and value
-
+	enum perceived_value { unattainable, overpriced, high, neutral, cheap, irresistible } purchasing_power; // price 0, .....  infinite
+																											// factors in guitar chosen to be sold, calculated from ratio between price and value
 	std::string brand;
-	double value; //wholesale cost
+	double value; // wholesale cost
 	double price; // set by player
 
 public:
@@ -46,7 +46,6 @@ public:
 
 	void set_price(double price);
 
-
 };
 
 
@@ -62,7 +61,7 @@ private:
 	double salary;
 
 public:
-	employee(std::string & person, double value, int  num); // 0 -low; 1- neutral 2-high
+	employee(std::string & person, double value, int  num); // num: 0-low; 1-neutral; 2-high
 	~employee();
 	
 	friend class store;
@@ -80,7 +79,7 @@ private:
 
 	std::list<instrument *> inventory;
 	std::list<employee *> staff;
-	enum area { poor, middle, rich } setting; //effect on buying formula
+	enum area { poor, middle, rich } setting; // effect on buying formula
 
 	std::string name;
 
@@ -96,13 +95,14 @@ private:
 	int buying_rate; // each store has it's buying rate
 
 public:
-	store(user_profile * current, std::string & name, int num); //num 0 - poor; 1-middle; 2-rich 
+	store(user_profile * current, std::string & name, int num); // num: 0-poor; 1-middle; 2-rich 
 	~store();
 
 //inventory management
 
-	void buy_guitar(guitar * guitar); //needs access to user's attributes
+	void buy_guitar(guitar * guitar); // needs access to user's attributes
 	//to add buy piano
+
 	void sell_algorithm();
 	void sell_instrument(int position_offset);
 

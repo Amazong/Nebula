@@ -65,7 +65,7 @@ private:
 	sf::Texture background;
 	sf::Sprite background_sprite;
 	sf::RectangleShape selector;
-	int selection = -1; //by default nothing is selected
+	int selection = -1; // by default nothing is selected
 
 public:
 	options_menu(state_manager * game_ptr);

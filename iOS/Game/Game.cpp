@@ -1,5 +1,5 @@
 #include <iostream>
-//#include <Windows.h>
+//#include <Windows.h> // to hide console; to uncomment on final version, together with code below
 #include "SFML\Graphics.hpp"
 #include "headers\GameWindows.h"
 #include "headers\Errors.h"
@@ -9,7 +9,7 @@
 
 int main() {
 	//ShowWindow(GetConsoleWindow(), SW_HIDE);
-	// Uncomment line above to show console
+	// uncomment line above to show console
 	
 
 	// while debugging, I'll leave the splash screen commented

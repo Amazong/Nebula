@@ -175,6 +175,7 @@ void main_menu::setup_text()
 	sf::Vector2f starting_pos(window_size.x * 0.65f, window_size.y * 0.3f);
 	int font_size = (int)(game->window.getSize().y / 13.5); // from ideal 1080p ratios
 	int offset = (int)(game->window.getSize().y / 7.2); // from ideal 1080p ratios
+														// will not hold exactly for all aspect ratios, but most often the difference will be negligible
 	float old_right;
 
 	for (int i = 0; i < 4; i++) {
@@ -310,7 +311,7 @@ void options_menu::logic_update(const float elapsed)
 		}
 			
 
-		sf::Vector2f sel_pos = options[selection].findCharacterPos(0); //position of first char
+		sf::Vector2f sel_pos = options[selection].findCharacterPos(0); // position of first char
 		selector.setPosition(sel_pos);
 		selector.move(0.0f, options[selection].getCharacterSize() +  10.0f );
 		
@@ -324,7 +325,7 @@ void options_menu::logic_update(const float elapsed)
 
 void options_menu::draw(const float elapsed)
 {
-	game->window.clear(sf::Color::Black);  //temp
+	game->window.clear(sf::Color::Black);  // temp
 
 	//game->window.draw(background_sprite); 
 	for (int i = 0; i < 5; i++)
@@ -339,7 +340,7 @@ void options_menu::setup_text()
 {
 	sf::Vector2f starting_pos(game->window.getSize().x * 0.5f, game->window.getSize().y * 0.25f);
 	int font_size = (int)(game->window.getSize().y / 13.5f); // from ideal 1080p ratios
-	int offset = (int)(game->window.getSize().y / 8.0f); // 
+	int offset = (int)(game->window.getSize().y / 8.0f); // from ideal 1080p ratios
 
 
 	for (int i = 0; i < 5; i++)
