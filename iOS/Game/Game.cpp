@@ -21,10 +21,6 @@ int main() {
 	state_manager game;
 
 	game.push_state(new main_menu(&game)); // startup state
-	if (!(game.peek_state()->is_ok())) {
-		return error::file_access();
-	}
-	game.game_loop();
 	
-	return(0);
+	return game.game_loop();
 }

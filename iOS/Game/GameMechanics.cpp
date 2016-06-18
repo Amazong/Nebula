@@ -93,6 +93,16 @@ void store::buy_guitar(guitar * guitar)
 	// else we need to deploy a message error (warning window)
 }
 
+int store::get_max_stock()
+{
+	return max_stock;
+}
+
+int store::get_stock()
+{
+	return inventory.size();
+}
+
 void store::sell_algorithm()
 {
 	if (!inventory.empty()) // only when inventory is not empty
@@ -174,6 +184,31 @@ user_profile::~user_profile()
 	{
 		delete (*it);
 	}
+}
+
+store * user_profile::get_active_store()
+{
+	return active_store;
+}
+
+void user_profile::set_active_store(store * active_store_new)
+{
+	active_store = active_store_new;
+}
+
+bool user_profile::set_active_store(unsigned int store_id)
+{
+	auto it = stores.begin();
+	
+	for (unsigned int c = 0; c < store_id; c++) {
+		if (c >= stores.size()) return false;
+		
+		it = std::next(it, 1);
+	}
+
+	active_store = *it;
+
+	return true;
 }
 
 void user_profile::buy_store(store * store)

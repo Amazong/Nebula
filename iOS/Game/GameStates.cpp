@@ -3,6 +3,7 @@
 
 #include "SFML\Graphics.hpp"
 #include "headers\GameStates.h"
+#include "headers\Errors.h"
 #include <thread>
 
 /*------------------------------Main Menu------------------------------*/
@@ -16,14 +17,12 @@ main_menu::main_menu(state_manager * game_ptr)
 	current_size = game->window.getSize();
 
 	if (!background.loadFromFile("res/png/Main.png")) {
-		ok = false;
-		game_ptr->window.setVisible(0);
+		complain(ErrNo::file_access);
 		return;
 	}
 
 	if (!menu_font.loadFromFile("res/fonts/Roboto-Bold.ttf")) {
-		ok = false;
-		game_ptr->window.setVisible(0);
+		complain(ErrNo::file_access);
 		return;
 	}
 
@@ -206,8 +205,6 @@ void main_menu::update_save() // TO-DO
 
 
 
-
-
 /*------------------------------Options Menu------------------------------*/
 
 
@@ -356,4 +353,65 @@ void options_menu::setup_text()
 	
 	}
 
+}
+
+
+/*------------------------------ InGame ------------------------------*/
+
+in_game::in_game(state_manager * game_ptr)
+{
+	game = game_ptr;
+}
+
+void in_game::update_buying_rate()
+{
+	buying_rate = active_store->get_max_stock(); // theoretical maximum
+		//popularity * 2;
+	if (buying_rate > 0) {
+		switch (current_user->get_difficulty())
+		{
+		case 0:
+			buying_rate *= 2; // can be adjusted later, according to game balance
+			break;
+		case 1:
+			buying_rate *= 1.5; // can be adjusted later, according to game balance
+			break;
+		case 2:
+			// rate stays as is
+			break;
+		default:
+			// something is wrong with the user profile
+
+			// log corrupt profile error
+
+			complain(10);
+			return;
+			break;
+		}
+	}
+}
+
+void in_game::input()
+{
+	return;
+}
+
+void in_game::logic_update(const float elapsed)
+{
+	update_buying_rate();
+	if (buying_rate > active_store->get_stock()) {
+		// if not enough items in stock, penalize player
+		active_store->set_reputation (active_store->get_reputation() * 0.9);
+	}
+}
+
+void in_game::draw(const float elapsed)
+{
+	return;
+}
+
+void in_game::setup()
+{
+	current_user = game->get_current_user();
+	active_store = current_user->get_active_store();
 }
