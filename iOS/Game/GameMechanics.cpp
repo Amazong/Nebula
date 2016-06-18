@@ -67,7 +67,18 @@ store::store(user_profile * current, std::string & name, int num) // num: 0-poor
 
 store::~store()
 {
-		//to work on
+	std::list<instrument *>::iterator inst_it;
+	std::list<employee *>::iterator staff_it;
+
+	for (inst_it = inventory.begin(); inst_it != inventory.end(); inst_it++)
+	{
+		delete (*inst_it);
+	}
+	
+	for (staff_it = staff.begin(); staff_it != staff.end(); staff_it++)
+	{
+		delete (*staff_it);
+	}
 }
 
 void store::buy_guitar(guitar * guitar)
@@ -157,7 +168,12 @@ user_profile::user_profile()
 
 user_profile::~user_profile()
 {
+	std::list<store *>::iterator it;
 
+	for (it = stores.begin(); it != stores.end(); it++)
+	{
+		delete (*it);
+	}
 }
 
 void user_profile::buy_store(store * store)
