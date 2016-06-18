@@ -9,6 +9,9 @@
 //result of buying formula should be(for now) a flat rate (int) of chosen guitars to be sold per unit of time (to be defined)
 
 
+/*------------------------------ instrument ------------------------------*/
+
+
 class instrument
 {
 protected:
@@ -26,12 +29,6 @@ public:
 	//friends
 	friend class store;
 };
-
-
-
-
-
-
 
 
 /*------------------------------ guitar ------------------------------*/
@@ -68,7 +65,7 @@ public:
 	employee(std::string & person, double value, int  num); // 0 -low; 1- neutral 2-high
 	~employee();
 	
-	
+	friend class store;
 };
 
 
@@ -111,10 +108,12 @@ public:
 
 //staff management
 
-	void push_employee(employee * employee);
-	void pop_employee(std::string name);
+	void hire_employee(employee * employee);
+	void fire_employee(std::string name);
 	
 
+	//friends
+	friend class user_profile;
 };
 
 
@@ -137,7 +136,7 @@ public:
 	~user_profile();
 
 
-	void push_store(store * store);
+	void buy_store(store * store);
 	void load_game(std::string profile_title); // pass an object of save game instead of string 
 	void save_game();
 

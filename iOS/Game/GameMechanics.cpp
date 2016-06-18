@@ -53,8 +53,8 @@ employee::~employee()
 {
 }
 
-/*------------------------------ store ------------------------------*/
 
+/*------------------------------ store ------------------------------*/
 
 
 store::store(user_profile * current, std::string & name, int num) //num 0 - poor; 1-middle; 2-rich 
@@ -123,4 +123,48 @@ void store::sell_instrument(int position_offset)
 	
 }
 
+void store::hire_employee(employee * employee)
+{
+	staff.push_back(employee); 
+}
 
+void store::fire_employee(std::string name)
+{
+	std::list<employee *>::iterator it;
+
+	for ( it = staff.begin() ; it != staff.end(); it++)
+	{
+		if ((*it)->name.compare(name) == 0)
+		{
+			delete (*it);
+			staff.erase(it);
+			return;
+		}
+
+	}
+
+	// person not found
+}
+
+
+/*------------------------------ user_profile ------------------------------*/
+
+
+user_profile::user_profile()
+{
+
+}
+
+user_profile::~user_profile()
+{
+
+}
+
+void user_profile::buy_store(store * store)
+{
+	if ( this->net_worth >= store->value)
+	{
+		this->net_worth -= store->value;
+		stores.push_back(store);
+	}
+}
