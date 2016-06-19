@@ -253,8 +253,3 @@ void user_profile::buy_store(store * store)
 		stores.push_back(store);
 	}
 }
-
-void instrument::set_price(double price)
-{
-	this->price = price;
-}
