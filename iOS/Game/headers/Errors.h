@@ -9,6 +9,6 @@ enum ErrNo
 namespace error {
 	int trace_error(int code);
 
-	void profile_error();
+	void corrupt_profile();
 	void file_access();
 }

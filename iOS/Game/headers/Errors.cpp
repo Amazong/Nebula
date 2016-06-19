@@ -16,7 +16,7 @@ int error::trace_error(int code) {
 	switch (code)
 	{
 	case 10:
-		error::profile_error();
+		error::corrupt_profile();
 	case 42:
 		error::file_access();
 	default:
@@ -26,12 +26,12 @@ int error::trace_error(int code) {
 	return code;
 }
 
-void error::profile_error()
+void error::corrupt_profile()
 {
-	std::cerr << "Erro de perfil de utilizador!";
+	std::cerr << "The user profile is corrupt!";
 }
 
 void error::file_access()
 {
-	std::cerr << "Erro de acesso de ficheiro!";
+	std::cerr << "File access error!";
 }
