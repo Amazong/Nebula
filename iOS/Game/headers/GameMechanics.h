@@ -22,10 +22,9 @@ protected:
 	double price; // set by player
 
 public:
-	// why virtual? these are common properties, no?
+	void set_price(double price);
+
 	virtual void set_perceived_value(double relation) = 0;
-	virtual void set_price(double price) = 0;
-	//
 
 	// friends
 	friend class store;
@@ -44,9 +43,6 @@ public:
 	~guitar();
 
 	void set_perceived_value(double relation);
-
-	void set_price(double price);
-
 };
 
 /*------------------------------ piano ------------------------------*/
@@ -61,9 +57,6 @@ public:
 	~piano();
 
 	void set_perceived_value(double relation);
-
-	void set_price(double price);
-
 };
 
 
