@@ -18,13 +18,11 @@ int main() {
 	}*/
 
 	// TESTING CRYPTO
-	CryptoKey k;
-	k.set_key("hello_there000000000000000000000000000000000000000", mode::filling); // include repeating mode
+	
+	CryptoKey k("LoremIpsum"); // include repeating mode
 
 	CryptoFile f("meow.txt", statuses::plaintext);
-	//if (!f.encrypt("new_name", k)) return -1;
-	f.set_file("new_name");
-	f.set_status(statuses::encrypted);
+	if (!f.encrypt("encrypted", k)) return -1;
 	if (!f.decrypt("meow.txt", k)) return -1;
 
 	return 0;
