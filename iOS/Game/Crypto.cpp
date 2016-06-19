@@ -28,7 +28,7 @@ bool CryptoKey::set_key(std::string new_key, mode mod)
 	}
 	else {
 		int i;
-		for (i = 0; i < length; i++) {
+		for (i = 0; i < length && i < 32; i++) {
 			key[i] = new_key.at(i);
 		}
 		for (; i < 32; i++) {
