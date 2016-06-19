@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Crypto.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMechanics.cpp" />
     <ClCompile Include="GameStates.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="headers\StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headers\Crypto.h" />
     <ClInclude Include="headers\Errors.h" />
     <ClInclude Include="headers\GameMechanics.h" />
     <ClInclude Include="headers\GameStates.h" />
