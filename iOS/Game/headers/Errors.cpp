@@ -5,6 +5,13 @@
 // error xy, where x is category, and y is error number
 // analogous to errors xyy in HTML (for example, 404, where x = 4 and yy == 04). See https://www.w3.org/Protocols/HTTP/HTRESP.html
 
+// more errors to be added as needed
+
+// usage in program: to throw an error, write
+// complain(ErrNo::<errortype>);
+// this makes the window invisible
+// the error will be caught on next game_loop, and execution halted
+
 int error::trace_error(int code) {
 	switch (code)
 	{
@@ -15,7 +22,7 @@ int error::trace_error(int code) {
 	default:
 		break;
 	}
-	std::cin.get();
+	std::cin.get(); // get user's attention
 	return code;
 }
 
