@@ -1,6 +1,14 @@
 #include "headers\GameMechanics.h"
 
 
+/*------------------------------ instrument ------------------------------*/
+
+void instrument::set_price(double price)
+{
+	this->price = price;
+	set_perceived_value(this->price / this->value);
+}
+
 /*------------------------------ guitar ------------------------------*/
 
 guitar::guitar(double value, std::string & name)
@@ -32,11 +40,6 @@ void guitar::set_perceived_value(double ratio)
 		purchasing_power = perceived_value::unattainable;
 }
 
-void guitar::set_price(double price)
-{
-	this->price = price;
-	set_perceived_value(this->price / this->value);
-}
 
 /*------------------------------ piano ------------------------------*/
 
@@ -68,13 +71,6 @@ void piano::set_perceived_value(double ratio)
 	else if (ratio > 10)
 		purchasing_power = perceived_value::unattainable;
 }
-
-void piano::set_price(double price)
-{
-	this->price = price;
-	set_perceived_value(this->price / this->value);
-}
-
 
 
 /*------------------------------ employee ------------------------------*/
@@ -256,4 +252,9 @@ void user_profile::buy_store(store * store)
 		this->net_worth -= store->value;
 		stores.push_back(store);
 	}
+}
+
+void instrument::set_price(double price)
+{
+	this->price = price;
 }

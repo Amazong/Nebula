@@ -24,7 +24,7 @@ protected:
 public:
 	void set_price(double price);
 
-	virtual void set_perceived_value(double relation) = 0;
+	virtual void set_perceived_value(double ratio) = 0;
 
 	// friends
 	friend class store;
@@ -42,7 +42,7 @@ public:
 	guitar(double value, std::string & brand); // sets a value and a brand
 	~guitar();
 
-	void set_perceived_value(double relation);
+	void set_perceived_value(double ratio);
 };
 
 /*------------------------------ piano ------------------------------*/
@@ -56,7 +56,7 @@ public:
 	piano(double value, std::string & brand); // sets a value and a brand
 	~piano();
 
-	void set_perceived_value(double relation);
+	void set_perceived_value(double ratio);
 };
 
 
