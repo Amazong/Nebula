@@ -138,8 +138,8 @@ void main_menu::logic_update(const float elapsed)
 
 	if (animation) {
 		selector.setSize(sf::Vector2f(
-			target_size * (-2.0*pow(t_clock.getElapsedTime().asMilliseconds()/333.0, 3) + 3.0*pow(t_clock.getElapsedTime().asMilliseconds()/333.0, 2))
-			, selector.getSize().y));
+			(float)(target_size * (-2.0*pow(t_clock.getElapsedTime().asMilliseconds()/333.0, 3) + 3.0*pow(t_clock.getElapsedTime().asMilliseconds()/333.0, 2)))
+			, (float)(selector.getSize().y)));
 	}
 	if (selector.getSize().x >= target_size || t_clock.getElapsedTime().asMilliseconds() >= 333) {
 		animation = 0;
@@ -312,7 +312,9 @@ void options_menu::logic_update(const float elapsed)
 		selector.setPosition(sel_pos);
 		selector.move(0.0f, options[selection].getCharacterSize() +  10.0f );
 		
-		selector.setSize(sf::Vector2f(target_size * (-2.0*pow(t_clock.getElapsedTime().asMilliseconds() / 333.0, 3) + 3.0*pow(t_clock.getElapsedTime().asMilliseconds() / 333.0, 2)) , 5.0f));
+		selector.setSize(sf::Vector2f(
+			(float)(target_size * (-2.0*pow(t_clock.getElapsedTime().asMilliseconds() / 333.0, 3) + 3.0*pow(t_clock.getElapsedTime().asMilliseconds() / 333.0, 2)))
+			, 5.0f));
 		//selector.setSize(sf::Vector2f(options[selection].getLocalBounds().width, 5.0f));
 
 		selector.setFillColor(sf::Color::White);
@@ -365,13 +367,13 @@ in_game::in_game(state_manager * game_ptr)
 
 void in_game::update_buying_rate()
 {
-	buying_rate = active_store->get_max_stock(); // theoretical maximum
-		//popularity * 2;
+	buying_rate = active_store->get_max_stock() * // theoretical maximum
+		active_store->get_reputation() * 2;
 	if (buying_rate > 0) {
 		switch (current_user->get_difficulty())
 		{
 		case 0:
-			buying_rate *= 2; // can be adjusted later, according to game balance
+			buying_rate *= 2.0; // can be adjusted later, according to game balance
 			break;
 		case 1:
 			buying_rate *= 1.5; // can be adjusted later, according to game balance

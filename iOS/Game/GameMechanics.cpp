@@ -16,19 +16,19 @@ guitar::~guitar()
 {
 }
 
-void guitar::set_perceived_value(double relation)
+void guitar::set_perceived_value(double ratio)
 {
-	if (relation <= 0.1 )
+	if (ratio <= 0.1 )
 		purchasing_power = perceived_value::irresistible;
-	else if (relation <= 1.5 && relation > 0.1 )
+	else if (ratio <= 1.5 && ratio > 0.1 )
 		purchasing_power = perceived_value::cheap;
-	else if (relation <= 3 && relation > 1.5 )
+	else if (ratio <= 3 && ratio > 1.5 )
 		purchasing_power = perceived_value::neutral;
-	else if (relation <= 5 && relation > 3 )
+	else if (ratio <= 5 && ratio > 3 )
 		purchasing_power = perceived_value::high;
-	else if (relation <= 10 && relation > 5 )
+	else if (ratio <= 10 && ratio > 5 )
 		purchasing_power = perceived_value::overpriced;
-	else if (relation > 10)
+	else if (ratio > 10)
 		purchasing_power = perceived_value::unattainable;
 }
 

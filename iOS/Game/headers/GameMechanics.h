@@ -107,7 +107,7 @@ private:
 	user_profile * user; // so we can acess user's attributes
 
 	double reputation = 0; // by default
-	int max_stock;
+	unsigned int max_stock;
 	int value;
 	int traffic;
 	int buying_rate; // each store has it's buying rate

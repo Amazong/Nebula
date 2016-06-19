@@ -17,7 +17,6 @@ int main() {
 		return error::file_access();
 	}*/
 
-
 	state_manager game;
 
 	game.push_state(new main_menu(&game)); // startup state
