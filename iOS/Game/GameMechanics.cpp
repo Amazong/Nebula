@@ -38,6 +38,44 @@ void guitar::set_price(double price)
 	set_perceived_value(this->price / this->value);
 }
 
+/*------------------------------ piano ------------------------------*/
+
+piano::piano(double value, std::string & name)
+{
+	this->price = this->value = value;
+	this->brand = name;
+
+	set_perceived_value(this->price / this->value);
+
+}
+
+piano::~piano()
+{
+}
+
+void piano::set_perceived_value(double ratio)
+{
+	if (ratio <= 0.1)
+		purchasing_power = perceived_value::irresistible;
+	else if (ratio <= 1.5 && ratio > 0.1)
+		purchasing_power = perceived_value::cheap;
+	else if (ratio <= 3 && ratio > 1.5)
+		purchasing_power = perceived_value::neutral;
+	else if (ratio <= 5 && ratio > 3)
+		purchasing_power = perceived_value::high;
+	else if (ratio <= 10 && ratio > 5)
+		purchasing_power = perceived_value::overpriced;
+	else if (ratio > 10)
+		purchasing_power = perceived_value::unattainable;
+}
+
+void piano::set_price(double price)
+{
+	this->price = price;
+	set_perceived_value(this->price / this->value);
+}
+
+
 
 /*------------------------------ employee ------------------------------*/
 
