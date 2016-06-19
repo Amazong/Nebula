@@ -386,7 +386,7 @@ void in_game::update_buying_rate()
 
 			// log corrupt profile error
 
-			complain(10);
+			complain(ErrNo::corrupt_profile);
 			return;
 			break;
 		}
