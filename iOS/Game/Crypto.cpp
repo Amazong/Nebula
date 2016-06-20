@@ -53,7 +53,7 @@ void CryptoKey::update_repetitions()
 
 	int reps = 1;
 	for (int i = 0; i < 32; i++) {
-		if (key[i] == '0') continue;
+		if (key[i] == '\0') continue;
 		if (i % 2 == 0) { // alternately multiply and add
 			reps *= (int)(key[i]);
 		}
@@ -133,7 +133,7 @@ void CryptoFile::set_status(statuses stat)
 
 bool CryptoFile::encrypt(std::string target_name, CryptoKey &key, int run)
 {
-	if (status != 1) {
+	if (status != statuses::plaintext) {
 		std::cerr << "File is already encrypted!";
 		return false;
 	}
@@ -141,7 +141,7 @@ bool CryptoFile::encrypt(std::string target_name, CryptoKey &key, int run)
 	std::ifstream in;
 	std::ofstream out;
 
-	in.open(filename, std::ofstream::binary);
+	in.open(filename, std::ifstream::binary);
 	if (!in.is_open()) return false;
 
 	if (run == 0) {
@@ -185,7 +185,7 @@ bool CryptoFile::encrypt(std::string target_name, CryptoKey &key, int run)
 
 bool CryptoFile::decrypt(std::string target_name, CryptoKey &key, int run)
 {
-	if (status != 0) {
+	if (status != statuses::encrypted) {
 		std::cerr << "File is already decrypted!";
 		return false;
 	}
@@ -193,7 +193,7 @@ bool CryptoFile::decrypt(std::string target_name, CryptoKey &key, int run)
 	std::ifstream in;
 	std::ofstream out;
 
-	in.open(filename, std::ofstream::binary);
+	in.open(filename, std::ifstream::binary);
 	if (!in.is_open()) return false;
 
 	if (run == 0) {

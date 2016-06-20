@@ -18,14 +18,12 @@ int main() {
 	}*/
 
 	// TESTING CRYPTO
-	
+
 	CryptoKey k("LoremIpsum"); // include repeating mode
 
 	CryptoFile f("meow.txt", statuses::plaintext);
 	if (!f.encrypt("encrypted", k)) return -1;
 	if (!f.decrypt("meow.txt", k)) return -1;
-
-	return 0;
 
 	state_manager game;
 
