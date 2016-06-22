@@ -13,6 +13,7 @@ void instrument::set_price(double price)
 
 guitar::guitar(double value, std::string & name)
 {
+	is_guitar = true;
 	this->price = this->value = value;
 	this->brand = name;
 
@@ -45,6 +46,7 @@ void guitar::set_perceived_value(double ratio)
 
 piano::piano(double value, std::string & name)
 {
+	is_guitar = false;
 	this->price = this->value = value;
 	this->brand = name;
 
@@ -127,6 +129,18 @@ void store::buy_guitar(guitar * guitar)
 	// else we need to deploy a message error (warning window)
 }
 
+void store::buy_piano(piano * piano)
+{
+	if (user->net_worth >= piano->value && inventory.size() < max_stock) // buying from wholesale
+	{
+		user->net_worth -= piano->value;
+		this->inventory.push_back(piano);
+		return;
+	}
+
+	// else we need to deploy a message error (warning window)
+}
+
 int store::get_max_stock()
 {
 	return max_stock;
@@ -199,6 +213,39 @@ void store::fire_employee(std::string name)
 	}
 
 	// person not found
+}
+
+guitar * store::inventory_tab(int & size)
+{
+	size = inventory.size();
+	guitar * tab = new guitar[size]; //by default, with the is_guitar we can cast it.
+	auto it = inventory.begin();
+	guitar * ptr;
+
+	for (int i = 0; it != inventory.end() && i < size; i++, it++)
+	{
+		ptr = (guitar *)*it;
+		tab[i] = guitar(*ptr);
+	}
+
+	return (tab);
+}
+
+employee * store::staff_tab(int & size)
+{
+	size = staff.size();
+	employee * tab = new employee[size];
+	auto it = staff.begin();
+	employee * ptr;
+
+	for (int i = 0; it != staff.end() && i < size; i++, it++)
+	{
+		ptr = *it;
+		tab[i] = employee(*ptr);
+
+	}
+
+	return (tab);
 }
 
 

@@ -22,8 +22,10 @@ protected:
 	double price; // set by player
 
 public:
-	void set_price(double price);
+	bool is_guitar;
 
+
+	void set_price(double price);
 	virtual void set_perceived_value(double ratio) = 0;
 
 	// friends
@@ -38,7 +40,7 @@ class guitar: public instrument
 {
 
 public:
-
+	guitar() {};
 	guitar(double value, std::string & brand); // sets a value and a brand
 	~guitar();
 
@@ -52,7 +54,7 @@ class piano : public instrument
 {
 
 public:
-
+	piano() {};
 	piano(double value, std::string & brand); // sets a value and a brand
 	~piano();
 
@@ -72,6 +74,7 @@ private:
 	double salary;
 
 public:
+	employee() {};
 	employee(std::string & person, double value, int  num); // num: 0-low; 1-neutral; 2-high
 	~employee();
 	
@@ -127,6 +130,11 @@ public:
 	void hire_employee(employee * employee);
 	void fire_employee(std::string name);
 	
+	//instrument, guitar and piano all have the same sizes
+	// uses adm, memory must be freed after use of this function.
+	// save inventory and staff -- returns array with elements and size in argument // inventory gives as guitars, but they will be casted in the loading function. with isguitar member
+	guitar * inventory_tab(int & size);
+	employee * staff_tab(int & size);
 
 	// friends
 	friend class user_profile;
