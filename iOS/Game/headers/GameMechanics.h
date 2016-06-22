@@ -109,6 +109,8 @@ private:
 	int buying_rate; // each store has it's buying rate
 
 public:
+	store() {};
+	store(const store & shop); // does not copy the std::lists nor the user pointer
 	store(user_profile * current, std::string & name, int num); // num: 0-poor; 1-middle; 2-rich 
 	~store();
 
@@ -157,7 +159,8 @@ private:
 
 public:
 
-	user_profile();
+	user_profile() {};
+	user_profile(const user_profile & user); // does not copy the std::lists nor active store
 	~user_profile();
 	
 	store * get_active_store();

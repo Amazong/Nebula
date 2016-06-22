@@ -93,6 +93,17 @@ employee::~employee()
 /*------------------------------ store ------------------------------*/
 
 
+store::store(const store & shop)
+{
+	this->setting = shop.setting;
+	this->name = shop.name;
+	reputation = shop.reputation;
+	max_stock = shop.max_stock;
+	value = shop.value;
+	traffic = shop.traffic;
+	buying_rate = shop.buying_rate;
+}
+
 store::store(user_profile * current, std::string & name, int num) // num: 0-poor; 1-middle; 2-rich 
 {
 	this->user = current;
@@ -251,10 +262,13 @@ employee * store::staff_tab(int & size)
 
 /*------------------------------ user_profile ------------------------------*/
 
-
-user_profile::user_profile()
+user_profile::user_profile(const user_profile & user)
 {
-
+	time_elapsed = user.time_elapsed;
+	weekly_expenses = user.weekly_expenses;
+	net_worth = user.net_worth;
+	reputation = user.reputation;
+	difficulty = user.difficulty;
 }
 
 user_profile::~user_profile()
