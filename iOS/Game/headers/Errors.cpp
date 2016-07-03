@@ -19,6 +19,8 @@ int error::trace_error(int code) {
 		error::corrupt_profile();
 	case 42:
 		error::file_access();
+	case 404:
+		error::profile_not_found();
 	default:
 		break;
 	}
@@ -34,4 +36,9 @@ void error::corrupt_profile()
 void error::file_access()
 {
 	std::cerr << "File access error!";
+}
+
+void error::profile_not_found()
+{
+	std::cerr << "Profile not found ";
 }

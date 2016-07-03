@@ -11,19 +11,16 @@ void instrument::set_price(double price)
 
 /*------------------------------ guitar ------------------------------*/
 
-guitar::guitar(double value, std::string & name)
+guitar::guitar(double value, char * name)
 {
 	is_guitar = true;
 	this->price = this->value = value;
-	this->brand = name;
+	strcpy_s(this->brand, name);
 
 	set_perceived_value(this->price / this->value);
 
  }
 
-guitar::~guitar()
-{
-}
 
 void guitar::set_perceived_value(double ratio)
 {
@@ -44,19 +41,16 @@ void guitar::set_perceived_value(double ratio)
 
 /*------------------------------ piano ------------------------------*/
 
-piano::piano(double value, std::string & name)
+piano::piano(double value, char * name)
 {
 	is_guitar = false;
 	this->price = this->value = value;
-	this->brand = name;
+	strcpy_s(this->brand, name);
 
 	set_perceived_value(this->price / this->value);
 
 }
 
-piano::~piano()
-{
-}
 
 void piano::set_perceived_value(double ratio)
 {
@@ -78,15 +72,11 @@ void piano::set_perceived_value(double ratio)
 /*------------------------------ employee ------------------------------*/
 
 
-employee::employee(std::string & person, double value, int num) // num: 0-low; 1-neutral; 2-high
+employee::employee(char * person, double value, int num) // num: 0-low; 1-neutral; 2-high
 {
-	this->name = person;
+	strcpy_s(this->name, person);
 	salary = value;
 	this->skill = efficiency(num);
-}
-
-employee::~employee()
-{
 }
 
 
@@ -96,36 +86,60 @@ employee::~employee()
 store::store(const store & shop)
 {
 	this->setting = shop.setting;
-	this->name = shop.name;
+	strcpy_s(this->name, shop.name);
 	reputation = shop.reputation;
 	max_stock = shop.max_stock;
 	value = shop.value;
 	traffic = shop.traffic;
 	buying_rate = shop.buying_rate;
+
+	inventory.clear();
+	staff.clear();
 }
 
-store::store(user_profile * current, std::string & name, int num) // num: 0-poor; 1-middle; 2-rich 
+store::store(user_profile * current, char * name, int value, int num) // num: 0-poor; 1-middle; 2-rich 
 {
+	this->value = value;
 	this->user = current;
-	this->name = name;
+	strcpy_s(this->name, name);
+
 	this->setting = static_cast<area>(num);
 	this->max_stock = 50 + 10 * setting; // can be altered, formula for max inventory
+
+	inventory.clear();
+	staff.clear();
 }
 
 store::~store()
 {
-	std::list<instrument *>::iterator inst_it;
-	std::list<employee *>::iterator staff_it;
+	while (!inventory.empty())
+	{
+		delete (inventory.front());
+		inventory.pop_front();
+	}
 
-	for (inst_it = inventory.begin(); inst_it != inventory.end(); inst_it++)
+	while (!staff.empty())
 	{
-		delete (*inst_it);
+		delete (staff.front());
+		staff.pop_front();
 	}
-	
-	for (staff_it = staff.begin(); staff_it != staff.end(); staff_it++)
-	{
-		delete (*staff_it);
-	}
+
+}
+
+store & store::operator=(const store & shop)
+{
+
+	setting = shop.setting;
+	reputation = shop.reputation;
+	max_stock = shop.max_stock;
+	value = shop.value;
+	traffic = shop.traffic;
+	buying_rate = shop.buying_rate;
+	strcpy_s(this->name, shop.name);
+	inventory.clear();
+	staff.clear();
+
+	return(*this);
 }
 
 void store::buy_guitar(guitar * guitar)
@@ -208,19 +222,22 @@ void store::hire_employee(employee * employee)
 	staff.push_back(employee); 
 }
 
-void store::fire_employee(std::string name)
+void store::fire_employee(char * name)
 {
 	std::list<employee *>::iterator it;
 
 	for ( it = staff.begin() ; it != staff.end(); it++)
 	{
-		if ((*it)->name.compare(name) == 0)
+
+		if (std::strcmp((*it)->name, name) == 0)
 		{
+
 			delete (*it);
+			*it = nullptr;
 			staff.erase(it);
 			return;
 		}
-
+		
 	}
 
 	// person not found
@@ -229,8 +246,10 @@ void store::fire_employee(std::string name)
 guitar * store::inventory_tab(int & size)
 {
 	size = inventory.size();
+	if (size == 0) return (nullptr);
+
 	guitar * tab = new guitar[size]; //by default, with the is_guitar we can cast it.
-	auto it = inventory.begin();
+	std::list<instrument *>::iterator it = inventory.begin();
 	guitar * ptr;
 
 	for (int i = 0; it != inventory.end() && i < size; i++, it++)
@@ -245,8 +264,10 @@ guitar * store::inventory_tab(int & size)
 employee * store::staff_tab(int & size)
 {
 	size = staff.size();
+	if (size == 0) return(nullptr);
+
 	employee * tab = new employee[size];
-	auto it = staff.begin();
+	std::list<employee *>::iterator it = staff.begin();
 	employee * ptr;
 
 	for (int i = 0; it != staff.end() && i < size; i++, it++)
@@ -259,11 +280,54 @@ employee * store::staff_tab(int & size)
 	return (tab);
 }
 
+void store::fill_inventory(guitar * tab, int size)
+{
+	//precaution
+	inventory.clear();
+
+	for (int i = 0; i < size; i++)
+	{
+		if (tab[i].is_guitar)
+			inventory.push_back(new guitar(tab[i]));
+		else
+		{
+
+			inventory.push_back(new piano(tab[i].value, tab[i].brand));
+		}
+	}
+
+}
+
+
+
+void store::fill_staff(employee * tab, int size)
+{
+	//precaution
+	staff.clear();
+
+	for (int i = 0; i < size; i++)
+	{
+		staff.push_back(new employee(tab[i]));
+	}
+}
+
+
+
+
 
 /*------------------------------ user_profile ------------------------------*/
 
+user_profile::user_profile(char * name)
+{
+	strcpy_s(this->user, name);
+
+	weekly_expenses = reputation = difficulty = net_worth = 0;
+
+}
+
 user_profile::user_profile(const user_profile & user)
 {
+	strcpy_s(this->user, user.user);
 	time_elapsed = user.time_elapsed;
 	weekly_expenses = user.weekly_expenses;
 	net_worth = user.net_worth;
@@ -273,11 +337,22 @@ user_profile::user_profile(const user_profile & user)
 
 user_profile::~user_profile()
 {
-	std::list<store *>::iterator it;
-
-	for (it = stores.begin(); it != stores.end(); it++)
+	while (!stores.empty())
 	{
-		delete (*it);
+		while (!stores.front()->inventory.empty())
+		{
+			delete stores.front()->inventory.front();
+			stores.front()->inventory.pop_front();
+		}
+
+		while (!stores.front()->staff.empty())
+		{
+			delete stores.front()->staff.front();
+			stores.front()->staff.pop_front();
+		}
+
+		delete stores.front();
+		stores.pop_front();
 	}
 }
 
@@ -314,3 +389,377 @@ void user_profile::buy_store(store * store)
 		stores.push_back(store);
 	}
 }
+
+void user_profile::save_game()
+{
+
+	if (!stores.empty())
+	{
+		std::list<store *>::iterator it = stores.begin();
+		int	 n_stores = stores.size(), n_staff, n_inventory;
+
+		store * store_ptr = new store[n_stores];
+		store * temp = nullptr;
+
+		guitar * inventory = nullptr;
+		employee * people = nullptr;
+
+		std::string user = user;
+
+		for (int i = 0; i < n_stores && it != stores.end(); i++, it++)
+		{
+			temp = *it;
+
+			inventory = temp->inventory_tab(n_inventory); //these now have all the inventory and staff
+			people = temp->staff_tab(n_staff);
+
+			if (inventory != nullptr)
+				save_inventories(user, inventory, n_inventory, i);
+
+			if (people != nullptr)
+				save_staff(user, people, n_staff, i);
+
+			store_ptr[i] = store(*temp); //copy does not involve lists
+
+			if (inventory != nullptr)
+			{
+				delete[] inventory;
+				inventory = nullptr;
+			}
+			if (people != nullptr)
+			{
+				delete[] people;
+				people = nullptr;
+			}
+		} //store_ptr now has all stores
+
+
+		if (store_ptr != nullptr) save_stores(user, store_ptr, n_stores);
+
+		if (store_ptr != nullptr)
+		{
+			delete[]  store_ptr;
+			store_ptr = nullptr;
+		}
+	} //if empty stores, it wont save any (empty stores). also, if stores file is corrupted, you'll be loaded with no store.
+
+	std::ifstream fin("users");
+	std::ofstream fout;
+
+	if (fin.fail())
+	{
+
+		fout.open("users");
+
+		if (fout.fail())
+			error::trace_error(ErrNo::file_access);
+			
+	
+
+		if (fout.is_open())
+			fout << user << "\n";
+
+		fout.close();
+
+
+	}
+	else //does not repeat writing the user  if already there 
+	{
+		std::string line, line_2 = user;
+		bool is_there = false;
+		while (std::getline(fin, line))
+		{
+			if (line_2 == line)
+				is_there = true;
+
+			if (is_there)
+				break;
+		}
+
+		if (!is_there)
+		{
+			fout.open("users", std::ios::app);
+
+			if (fout.fail())
+				error::trace_error(ErrNo::file_access);
+
+			fout << user << "\n";
+
+			fout.close();
+		}
+	}
+
+	fout.open(user, std::ios::binary | std::ios::trunc);
+
+	if (fout.fail())
+		error::trace_error(ErrNo::file_access);
+
+	struct save_user save;
+	save.difficulty = this->difficulty;
+	save.net_worth = net_worth;
+	save.reputation = reputation;
+	save.weekly_expenses = weekly_expenses;
+	strcpy_s(save.user, user);
+
+	fout.seekp(0, std::ios::beg);
+
+	if (fout.is_open() && ((&save) != nullptr))
+		fout.write((char *)&save, sizeof(save_user));
+
+	fout.close();
+
+}
+
+void user_profile::save_inventories(std::string  user, const  guitar * tab, int size, int store_index)
+{
+	std::string file_name = user;   //std structure of naming files
+	file_name += ".Store_inventory";
+	file_name.push_back(char(store_index));
+
+	std::ofstream fout(file_name, std::ios::binary | std::ios::trunc); //whatever was there is redefined
+
+	if (fout.fail())
+	{
+		error::trace_error(ErrNo::file_access);
+	}
+
+	fout.seekp(0, std::ios::beg);
+
+	if (fout.is_open() && tab != nullptr)
+		fout.write((char*)tab, size * sizeof(guitar));
+
+	fout.close();
+}
+
+void user_profile::save_staff(std::string  user, const employee * tab, int size, int store_index)
+{
+	std::string file_name = user;   //std structure of naming files
+	file_name += ".Store_staff";
+	file_name.push_back(char(store_index));
+
+	std::ofstream fout(file_name, std::ios::binary | std::ios::trunc); //whatever was there is redefined
+
+	if (fout.fail())
+	{
+		error::trace_error(ErrNo::file_access);
+	}
+
+	fout.seekp(0, std::ios::beg);
+
+	if (fout.is_open() && tab != nullptr)
+		fout.write((char*)tab, size * sizeof(employee));
+
+	fout.close();
+}
+
+void user_profile::save_stores(std::string  user, const store * tab, int size)
+{
+	std::string file_name = user;   //std structure of naming files
+	file_name += ".Stores";
+
+	std::ofstream fout(file_name, std::ios::binary | std::ios::trunc); //whatever was there is redefined
+
+	if (fout.fail())
+	{
+		error::trace_error(ErrNo::file_access);
+	}
+
+	fout.seekp(0, std::ios::beg);
+
+	if (fout.is_open() && tab != nullptr)
+		fout.write((char*)tab, size * sizeof(store));
+
+	fout.close();
+
+}
+
+void user_profile::load_game(std::string  profile_title)
+{
+
+	std::ifstream fin("users");
+
+
+	if (fin.fail())
+		error::trace_error(ErrNo::file_access);
+
+	std::string line;
+
+	while (fin.is_open())
+	{
+		while (std::getline(fin, line))
+		{
+			if (line == profile_title)
+			{
+				load_user(profile_title);
+				fin.close();
+				return;
+			}
+		}
+	}
+
+	error::trace_error(ErrNo::profile_not_found);
+
+}
+
+void user_profile::load_user(std::string & profile_title)
+{
+
+	std::ifstream fin_2(profile_title, std::ios::binary);
+
+	if (fin_2.fail())
+		error::trace_error(ErrNo::file_access);
+
+	save_user load[1];
+
+	if (fin_2.is_open())
+	{
+		fin_2.read((char *)&load, sizeof(save_user));
+		fin_2.close();
+	}
+
+
+	strcpy_s(this->user, load[0].user);
+
+	this->weekly_expenses = load[0].weekly_expenses;
+	this->net_worth = load[0].net_worth;
+	this->reputation = load[0].reputation;
+	this->difficulty = load[0].difficulty;
+
+
+	load_stores(this);
+}
+
+void user_profile::load_stores(user_profile * user)
+{
+	std::string file_name = user->user;
+	file_name += ".Stores";
+
+	std::ifstream fin(file_name, std::ios::binary);
+
+	if (fin.fail())
+		error::trace_error(ErrNo::file_access);
+
+	int size;
+	store * tab_ptr = nullptr;
+
+	if (fin.is_open())
+	{
+		fin.seekg(0, std::ios::end);
+		size = int(fin.tellg()) / sizeof(store);
+		fin.seekg(0, std::ios::beg);
+
+		tab_ptr = (store *)malloc(size * sizeof(store));
+
+		fin.read((char *)tab_ptr, size * sizeof(store));
+
+		fin.close();
+	}
+	else
+	{
+		error::trace_error(ErrNo::file_access);
+		return;
+	}
+
+	user->stores.clear(); //precaution
+
+	for (int i = 0; tab_ptr != nullptr, i < size; i++)
+	{
+
+
+		user->stores.push_back(new store(tab_ptr[i]));
+
+		load_store_inv(user, (*stores.back()), i);
+		load_store_staff(user, (*stores.back()), i);
+	}
+
+
+	free(tab_ptr);
+	tab_ptr = nullptr;
+	
+}
+
+void user_profile::load_store_inv(const user_profile * user, store & shop, int store_index)
+{
+	std::string file_name = user->user;
+	file_name += ".Store_inventory";
+	file_name.push_back(store_index);
+
+	std::ifstream fin(file_name, std::ios::binary);
+
+	if (fin.fail())
+		error::trace_error(ErrNo::file_access);
+
+	int size;
+	guitar * tab_ptr = nullptr;
+
+	if (fin.is_open())
+	{
+		fin.seekg(0, std::ios::end);
+		size = int(fin.tellg()) / sizeof(guitar);
+		fin.seekg(0, std::ios::beg);
+
+		tab_ptr = (guitar *) malloc (size * sizeof(guitar));
+
+		char  * ptr = (char *)(tab_ptr);
+
+		fin.read(ptr, size * sizeof(guitar));
+
+		fin.close();
+	}
+	else
+	{
+		error::trace_error(ErrNo::file_access);
+		return;
+	}
+
+
+	shop.fill_inventory(tab_ptr, size); // this function allocates its own 
+
+	free(tab_ptr);
+	tab_ptr = nullptr;
+
+}
+
+void user_profile::load_store_staff(const user_profile * user, store & shop, int store_index)
+{
+	std::string file_name = user->user;
+	file_name += ".Store_staff";
+	file_name.push_back(store_index);
+
+	std::ifstream fin(file_name, std::ios::binary);
+
+	if (fin.fail())
+		error::trace_error(ErrNo::file_access);
+
+
+	int size;
+	employee * tab_ptr = nullptr;
+
+	if (fin.is_open())
+	{
+		fin.seekg(0, std::ios::end);
+		size = int(fin.tellg()) / sizeof(employee);
+		fin.seekg(0, std::ios::beg);
+
+		tab_ptr = (employee *)malloc(size * sizeof(employee));
+
+		fin.read((char *)tab_ptr, size * sizeof(employee));
+
+		fin.close();
+	}
+	else
+	{
+		error::trace_error(ErrNo::file_access);
+		return;
+	}
+
+
+	shop.fill_staff(tab_ptr, size); // this function  allocates its own 
+
+
+	free(tab_ptr);
+	tab_ptr = nullptr;
+	
+}
+
+
