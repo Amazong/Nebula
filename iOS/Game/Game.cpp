@@ -22,9 +22,17 @@ int main() {
 	CryptoKey k("LoremIpsum"); // include repeating mode
 
 	CryptoFile f("meow.txt", statuses::plaintext);
+	
+	sf::Clock t1;
+	std::cout << "Working..." << std::endl;
 	if (!f.encrypt("encrypted", k)) return -1;
+	std::cout << "Done!\n" << t1.getElapsedTime().asMicroseconds();
 	std::cin.get();
+
+	t1.restart();
+	std::cout << "Working..." << std::endl;
 	if (!f.decrypt("meow.txt", k)) return -1;
+	std::cout << "Done!\n" << t1.getElapsedTime().asMicroseconds();
 	std::cin.get();
 
 	state_manager game;

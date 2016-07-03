@@ -159,11 +159,11 @@ bool CryptoFile::encrypt(std::string target_name, CryptoKey & key)
 
 bool CryptoFile::encrypt_private(std::string target_name, CryptoKey &key, int run, int limit)
 {
-	std::ifstream in;
-	std::ofstream out;
+	std::ifstream * in = new std::ifstream;
+	std::ofstream * out = new std::ofstream;
 
-	in.open(filename, std::ifstream::binary);
-	if (!in.is_open()) return false;
+	in->open(filename, std::ifstream::binary);
+	if (!in->is_open()) return false;
 
 	if (run == 0) {
 		old_filename = filename;
@@ -171,20 +171,20 @@ bool CryptoFile::encrypt_private(std::string target_name, CryptoKey &key, int ru
 		temp_filename = "_" + filename;
 	}
 
-	out.open(temp_filename, std::ofstream::binary | std::ofstream::trunc);
+	out->open(temp_filename, std::ofstream::binary | std::ofstream::trunc);
 
 	int i = 0;
-	while (!in.eof()) {
-		out << (char)(in.get() ^ key.get_char(i % 32));
+	while (!in->eof()) {
+		(*out) << (char)(in->get() ^ key.get_char(i % 32));
 		i++;
-		in.peek();
+		in->peek();
 	}
 
 	if (run == limit) {
-		out << std::endl; // all files that have been properly output will end with an empty line
+		(*out) << std::endl; // all files that have been properly output will end with an empty line
 		
-		in.close();
-		out.close();
+		in->close();
+		out->close();
 		
 		std::remove(filename.c_str());
 		rename(temp_filename.c_str(), filename.c_str()); // overwrite previous version with final
@@ -196,9 +196,12 @@ bool CryptoFile::encrypt_private(std::string target_name, CryptoKey &key, int ru
 		return true;
 	}
 
-	in.close();
-	out.close();
+	in->close();
+	out->close();
 	
+	delete in; // more stable memory management, minimum overhead
+	delete out;
+
 	rename(temp_filename.c_str(), filename.c_str());
 	
 	for (i = 0; i < 10; i++) key.increment();
@@ -231,11 +234,11 @@ bool CryptoFile::decrypt(std::string target_name, CryptoKey &key, int run)
 
 bool CryptoFile::decrypt_private(std::string target_name, CryptoKey &key, int run, int limit)
 {
-	std::ifstream in;
-	std::ofstream out;
+	std::ifstream * in = new std::ifstream;
+	std::ofstream * out = new std::ofstream;
 
-	in.open(filename, std::ifstream::binary);
-	if (!in.is_open()) return false;
+	in->open(filename, std::ifstream::binary);
+	if (!in->is_open()) return false;
 
 	if (run == 0) {
 		old_filename = filename;
@@ -243,21 +246,24 @@ bool CryptoFile::decrypt_private(std::string target_name, CryptoKey &key, int ru
 		temp_filename = "_" + filename;
 	}
 
-	out.open(temp_filename, std::ofstream::binary | std::ofstream::trunc);
+	out->open(temp_filename, std::ofstream::binary | std::ofstream::trunc);
 
 	int i = 0;
 
-	in.seekg(0, in.end);
-	int end = (int)(in.tellg()) - 1;
-	in.seekg(0, in.beg);
+	in->seekg(0, in->end);
+	int end = (int)(in->tellg()) - 1;
+	in->seekg(0, in->beg);
 
 	while (i < end) {
-		out << (char)(in.get() ^ key.get_char(i % 32));
+		(*out) << (char)(in->get() ^ key.get_char(i % 32));
 		i++;
 	}
 
-	in.close();
-	out.close();
+	in->close();
+	out->close();
+
+	delete in;
+	delete out;
 
 	if (run == limit) {
 		std::remove(filename.c_str());
