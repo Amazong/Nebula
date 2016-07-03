@@ -32,10 +32,15 @@ public:
 class CryptoFile
 {
 private:
+	// Variables
 	std::string filename;
 	std::string temp_filename;
 	std::string old_filename;
 	statuses status;
+
+	// Crypto Functions
+	bool encrypt_private(std::string target_name, CryptoKey &key, int run = 0, int limit = 500);
+	bool decrypt_private(std::string target_name, CryptoKey &key, int run = 0, int limit = 500);
 
 public:
 	CryptoFile(std::string name, statuses stat);
@@ -43,7 +48,7 @@ public:
 	bool set_file(std::string name);
 	void set_status(statuses stat);
 
-	bool encrypt(std::string target_name, CryptoKey &key, int run = 0);
+	bool encrypt(std::string target_name, CryptoKey &key);
 	bool decrypt(std::string target_name, CryptoKey &key, int run = 0);
 
 	~CryptoFile();
