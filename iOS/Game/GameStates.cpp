@@ -212,25 +212,32 @@ options_menu::options_menu(state_manager * game_ptr)
 {
 	game = game_ptr;
 
-	/*if (!background.loadFromFile("res/png/ ----------------")) {		//to deal with
-		ok = false;
-		game->window.setVisible(0);
-		return;
-	}*/
-
-	if (!options_font.loadFromFile("res/fonts/Roboto-Bold.ttf")) {
-		ok = false;
-		game->window.setVisible(false);
+	if (!background.loadFromFile("res/png/Options.png")) {		//to deal with
+		complain(ErrNo::file_access);
 		return;
 	}
 
+	if (!options_font.loadFromFile("res/fonts/Roboto-Bold.ttf")) {
+		complain(ErrNo::file_access);
+		return;
+	}
+
+
+	if (!selector_text.loadFromFile("res/png/Selector.png"))
+	{
+		complain(ErrNo::file_access);
+		return;
+	}
+
+	selector.setTexture(selector_text);
+
 	setup_text();
 
-	
+	background_sprite.setTexture(background);						//to deal with
+	background_sprite.setScale(game->window.getSize().x / 1920.0f, game->window.getSize().y / 1080.0f);
 
-	//background_sprite.setTexture(background);						//to deal with
-	//background_sprite.setScale(game->window.getSize().x / 1920.0f, game->window.getSize().y / 1080.0f);
 
+	selector.setScale(0.04f, 0.04f);
 }
 
 void options_menu::input()
@@ -238,11 +245,6 @@ void options_menu::input()
 	sf::Event event;
 	sf::Vector2f mouse_pos(0.0f,0.0f); // by default 
 	
-	if (selection == -1)
-		selector.setSize(sf::Vector2f(0.0f, 0.0f));
-									  
-	selector.setFillColor(sf::Color::Transparent); //invisible when not in selection
-
 
 
 	while (game->window.pollEvent(event))
@@ -261,12 +263,11 @@ void options_menu::input()
 				
 				selection = -1; // this way the selection will always be -1 if it's not in one of the options
 			
-				for (int i  = 0; i < 5; i++)
+				for (int i = 0; i < 4; i++)
 				{
 					if (options[i].getGlobalBounds().contains(mouse_pos))
 					{
 						selection = i;
-						target_size = options[i].getGlobalBounds().width;
 					}
 				}
 
@@ -301,48 +302,33 @@ void options_menu::logic_update(const float elapsed)
 {
 	if (selection != -1)
 	{
-		if (selector.getSize().x >= target_size || t_clock.getElapsedTime().asMilliseconds() >= 333)
-		{
-			selector.setFillColor(sf::Color::White);
-			return;
-		}
-			
-
-		sf::Vector2f sel_pos = options[selection].findCharacterPos(0); // position of first char
-		selector.setPosition(sel_pos);
-		selector.move(0.0f, options[selection].getCharacterSize() +  10.0f );
-		
-		selector.setSize(sf::Vector2f(
-			(float)(target_size * (-2.0*pow(t_clock.getElapsedTime().asMilliseconds() / 333.0, 3) + 3.0*pow(t_clock.getElapsedTime().asMilliseconds() / 333.0, 2)))
-			, 5.0f));
-		//selector.setSize(sf::Vector2f(options[selection].getLocalBounds().width, 5.0f));
-
-		selector.setFillColor(sf::Color::White);
-
+		selector.setPosition(options[selection].findCharacterPos(0).x, options[selection].getPosition().y); //position of first character
+		selector.move(-20.0f , -2.0f);
 	}
+
 }
 
 void options_menu::draw(const float elapsed)
 {
-	game->window.clear(sf::Color::Black);  // temp
+	game->window.draw(background_sprite); 
 
-	//game->window.draw(background_sprite); 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		game->window.draw(options[i]);
 	}
 
-	game->window.draw(selector);
+	if (selection != -1)
+		game->window.draw(selector);
+		
 }
 
 void options_menu::setup_text()
 {
-	sf::Vector2f starting_pos(game->window.getSize().x * 0.5f, game->window.getSize().y * 0.25f);
+	sf::Vector2f starting_pos(game->window.getSize().x * 0.51f, game->window.getSize().y * 0.20f);
 	int font_size = (int)(game->window.getSize().y / 13.5f); // from ideal 1080p ratios
 	int offset = (int)(game->window.getSize().y / 8.0f); // from ideal 1080p ratios
 
-
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		options[i].setFont(options_font);
 		options[i].setCharacterSize(font_size);
@@ -351,7 +337,7 @@ void options_menu::setup_text()
 		options[i].setOrigin((options[i].getGlobalBounds().width / 2.0f) , (options[i].getGlobalBounds().height / 2.0f) ); // origin of font in its geometric center
 		options[i].setPosition(starting_pos);
 
-		starting_pos.y += offset;
+		starting_pos.y += (i == 0) ? 2.5f * offset : offset;
 	
 	}
 

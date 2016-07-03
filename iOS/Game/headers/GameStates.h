@@ -64,14 +64,15 @@ public:
 class options_menu : public game_state
 {
 private:
-	const std::string options_str[5] = { "Back", "Music", "Difficulty", "Framerate", "Fullscreen" };
+	const std::string options_str[4] = { "Back", "Music", "Difficulty", "Framerate" };
 	sf::Font options_font;
 	sf::Text options[5];
 	double target_size;
 	sf::Clock t_clock;
 	sf::Texture background;
 	sf::Sprite background_sprite;
-	sf::RectangleShape selector;
+	sf::Sprite selector;
+	sf::Texture selector_text;
 	int selection = -1; // by default nothing is selected
 
 public:
