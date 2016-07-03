@@ -47,22 +47,23 @@ bool CryptoKey::set_key(std::string new_key, mode mod)
 
 void CryptoKey::update_repetitions()
 {
-	reps = 1000;
+	reps = 999;
 	return;
 	//
 
 	int reps = 1;
 	for (int i = 0; i < 32; i++) {
 		if (key[i] == '0') continue;
-		if (i % 2 == 0) { // alternately multiply and add
-			reps *= (int)(key[i]);
-		}
-		else {
-			reps += (int)(key[i]);
-		}
-		reps %= 65536; // reps will be between 0-65536 - 2^16, because 2^16 * 2^8 = 2^32 (int)
+		reps *= (int)(key[i]); // alternately multiply and add
+		i++;
+		reps += (int)(key[i]);
+
+		reps %= 65536; // reps will be between 0-65536
+		
+		if (reps == 0) reps = 1; // modulo op can return 0
+								 // need to safeguard against that
 	}
-	this->reps = reps + 100; // always an added bonus, to ensure at least 10000, but in random number
+	this->reps = reps + 1000; // always an added bonus, to ensure at least 1000, but in random number
 }
 
 CryptoKey * CryptoKey::increment()
@@ -131,13 +132,32 @@ void CryptoFile::set_status(statuses stat)
 	status = stat;
 }
 
-bool CryptoFile::encrypt(std::string target_name, CryptoKey &key, int run)
+bool CryptoFile::encrypt(std::string target_name, CryptoKey & key)
 {
 	if (status != 1) {
 		std::cerr << "File is already encrypted!";
 		return false;
 	}
 
+	// number of reps will always be >1000
+
+	encrypt_private(("_" + filename), key); // first 500
+
+	for (int i = 1; i < key.get_repetitions() / 500; i++) {
+		encrypt_private(target_name, key);
+	}
+	
+	if (key.get_repetitions() % 500 != 0) {
+		encrypt_private(target_name, key, 0, key.get_repetitions() % 500);
+	}
+
+	set_status(encrypted);
+
+	return true;
+}
+
+bool CryptoFile::encrypt_private(std::string target_name, CryptoKey &key, int run, int limit)
+{
 	std::ifstream in;
 	std::ofstream out;
 
@@ -159,16 +179,19 @@ bool CryptoFile::encrypt(std::string target_name, CryptoKey &key, int run)
 		in.peek();
 	}
 
-	if (run == key.get_repetitions()) {
+	if (run == limit) {
 		out << std::endl; // all files that have been properly output will end with an empty line
 		
 		in.close();
 		out.close();
 		
 		std::remove(filename.c_str());
-		rename(temp_filename.c_str(), filename.c_str());
-		std::remove(old_filename.c_str());
-		set_status(encrypted);
+		rename(temp_filename.c_str(), filename.c_str()); // overwrite previous version with final
+
+		if (old_filename != filename) { // if they are the same, the rename operation has already solved it
+			std::remove(old_filename.c_str());
+		}
+
 		return true;
 	}
 
@@ -179,7 +202,7 @@ bool CryptoFile::encrypt(std::string target_name, CryptoKey &key, int run)
 	
 	for (i = 0; i < 10; i++) key.increment();
 	
-	if (encrypt(temp_filename, key, run + 1)) return true; // optimise to make use of dynamic memory, to prevent overflow, if we have time
+	if (encrypt_private(temp_filename, key, run + 1, limit)) return true; // optimise to make use of dynamic memory, to prevent overflow, if we have time
 	return false;
 }
 
@@ -190,6 +213,23 @@ bool CryptoFile::decrypt(std::string target_name, CryptoKey &key, int run)
 		return false;
 	}
 
+	decrypt_private(("_" + filename), key); // first 500
+
+	for (int i = 1; i < key.get_repetitions() / 500; i++) {
+		decrypt_private(target_name, key);
+	}
+
+	if (key.get_repetitions() % 500 != 0) {
+		decrypt_private(target_name, key, 0, key.get_repetitions() % 500);
+	}
+
+	set_status(plaintext);
+
+	return true;
+}
+
+bool CryptoFile::decrypt_private(std::string target_name, CryptoKey &key, int run, int limit)
+{
 	std::ifstream in;
 	std::ofstream out;
 
@@ -205,11 +245,11 @@ bool CryptoFile::decrypt(std::string target_name, CryptoKey &key, int run)
 	out.open(temp_filename, std::ofstream::binary | std::ofstream::trunc);
 
 	int i = 0;
-	
+
 	in.seekg(0, in.end);
 	int end = (int)(in.tellg()) - 1;
 	in.seekg(0, in.beg);
-	
+
 	while (i < end) {
 		out << (char)(in.get() ^ key.get_char(i % 32));
 		i++;
@@ -218,11 +258,14 @@ bool CryptoFile::decrypt(std::string target_name, CryptoKey &key, int run)
 	in.close();
 	out.close();
 
-	if (run == key.get_repetitions()) {
+	if (run == limit) {
 		std::remove(filename.c_str());
 		rename(temp_filename.c_str(), filename.c_str());
-		std::remove(old_filename.c_str());
-		set_status(plaintext);
+
+		if (old_filename != filename) { // if they are the same, the rename operation has already solved it
+			std::remove(old_filename.c_str());
+		}
+
 		return true;
 	}
 
@@ -230,10 +273,9 @@ bool CryptoFile::decrypt(std::string target_name, CryptoKey &key, int run)
 
 	for (i = 0; i < 10; i++) key.decrement();
 
-	if (decrypt(temp_filename, key, run + 1)) return true;
+	if (decrypt_private(temp_filename, key, run + 1, limit)) return true;
 	return false;
 }
-
 
 CryptoFile::~CryptoFile()
 {
