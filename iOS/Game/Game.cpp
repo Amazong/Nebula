@@ -23,7 +23,9 @@ int main() {
 
 	CryptoFile f("meow.txt", statuses::plaintext);
 	if (!f.encrypt("encrypted", k)) return -1;
+	std::cin.get();
 	if (!f.decrypt("meow.txt", k)) return -1;
+	std::cin.get();
 
 	return 0;
 
