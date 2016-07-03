@@ -238,6 +238,8 @@ options_menu::options_menu(state_manager * game_ptr)
 
 
 	selector.setScale(0.04f, 0.04f);
+
+	
 }
 
 void options_menu::input()
@@ -302,8 +304,9 @@ void options_menu::logic_update(const float elapsed)
 {
 	if (selection != -1)
 	{
+		selector.setOrigin((selector.getGlobalBounds().width / 2.0f), (selector.getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
 		selector.setPosition(options[selection].findCharacterPos(0).x, options[selection].getPosition().y); //position of first character
-		selector.move(-20.0f , -2.0f);
+		selector.move(-20.0f , 4);
 	}
 
 }
