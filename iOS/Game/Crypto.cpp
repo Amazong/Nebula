@@ -53,16 +53,7 @@ void CryptoKey::update_repetitions()
 
 	int reps = 1;
 	for (int i = 0; i < 32; i++) {
-<<<<<<< HEAD
-		if (key[i] == '\0') continue;
-		if (i % 2 == 0) { // alternately multiply and add
-			reps *= (int)(key[i]);
-		}
-		else {
-			reps += (int)(key[i]);
-		}
-		reps %= 65536; // reps will be between 0-65536 - 2^16, because 2^16 * 2^8 = 2^32 (int)
-=======
+
 		if (key[i] == '0') continue;
 		reps *= (int)(key[i]); // alternately multiply and add
 		i++;
@@ -72,7 +63,6 @@ void CryptoKey::update_repetitions()
 		
 		if (reps == 0) reps = 1; // modulo op can return 0
 								 // need to safeguard against that
->>>>>>> crypto
 	}
 	this->reps = reps + 1000; // always an added bonus, to ensure at least 1000, but in random number
 }
