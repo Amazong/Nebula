@@ -173,10 +173,10 @@ bool CryptoFile::encrypt_private(std::string target_name, CryptoKey &key, int ru
 
 	out->open(temp_filename, std::ofstream::binary | std::ofstream::trunc);
 
-	int i = 0;
+	int *i = (int*)calloc(1,sizeof(int));
 	while (!in->eof()) {
-		(*out) << (char)(in->get() ^ key.get_char(i % 32));
-		i++;
+		(*out) << (char)(in->get() ^ key.get_char(*i % 32));
+		(*i)++;
 		in->peek();
 	}
 
@@ -204,7 +204,9 @@ bool CryptoFile::encrypt_private(std::string target_name, CryptoKey &key, int ru
 
 	rename(temp_filename.c_str(), filename.c_str());
 	
-	for (i = 0; i < 10; i++) key.increment();
+	for (*i = 0; *i < 10; (*i)++) key.increment();
+
+	delete i;
 	
 	if (encrypt_private(temp_filename, key, run + 1, limit)) return true; // optimise to make use of dynamic memory, to prevent overflow, if we have time
 	return false;
@@ -255,27 +257,14 @@ bool CryptoFile::decrypt_private(std::string target_name, CryptoKey &key, std::i
 
 	out->open(temp_filename, std::ofstream::binary | std::ofstream::trunc);
 
-	int i = 0;
+	int *i = (int*)calloc(1, sizeof(int)); // allocated once
 
-	if (run == limit) {
-		while (i < n_chars) {
-			char debug = (char)(in->get() ^ key.get_char(i % 32));
+	while (*i < n_chars) { // iterator relative to streampos
+		(*out) << (char)(in->get() ^ key.get_char((*i) % 32));
 
-			(*out) << debug;
-
-			i++;
-		}
+		(*i)++;
 	}
-	else {
-		while (i < n_chars) {
-			(*out) << (char)(in->get() ^ key.get_char(i % 32));
-
-			i++;
-		}
-	}
-
 	
-
 	in->close();
 	out->close();
 
@@ -295,7 +284,9 @@ bool CryptoFile::decrypt_private(std::string target_name, CryptoKey &key, std::i
 
 	rename(temp_filename.c_str(), filename.c_str());
 
-	for (i = 0; i < 10; i++) key.decrement();
+	for (*i = 0; *i < 10; (*i)++) key.decrement(); // reuse variable
+
+	delete i; // extend recursion lifetime
 
 	if (decrypt_private(temp_filename, key, n_chars, run + 1, limit)) return true;
 	return false;
