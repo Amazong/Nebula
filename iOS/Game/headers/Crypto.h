@@ -40,7 +40,7 @@ private:
 
 	// Crypto Functions
 	bool encrypt_private(std::string target_name, CryptoKey &key, int run = 0, int limit = 500);
-	bool decrypt_private(std::string target_name, CryptoKey &key, int run = 0, int limit = 500);
+	bool decrypt_private(std::string target_name, CryptoKey &key, std::ios_base::streampos &n_chars, int run = 0, int limit = 500);
 
 public:
 	CryptoFile(std::string name, statuses stat);

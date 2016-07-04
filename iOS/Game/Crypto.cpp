@@ -217,14 +217,21 @@ bool CryptoFile::decrypt(std::string target_name, CryptoKey &key, int run)
 		return false;
 	}
 
-	decrypt_private(("_" + filename), key); // first 500
+	std::ifstream *in = new std::ifstream(filename);
+
+	in->seekg(0, std::ios_base::end);
+	std::ios_base::streampos end_pos = in->tellg();
+	end_pos -= 2;
+	delete in;
+
+	decrypt_private(("_" + filename), key, end_pos); // first 500
 
 	for (int i = 1; i < key.get_repetitions() / 500; i++) {
-		decrypt_private(target_name, key);
+		decrypt_private(target_name, key, end_pos);
 	}
 
 	if (key.get_repetitions() % 500 != 0) {
-		decrypt_private(target_name, key, 0, key.get_repetitions() % 500);
+		decrypt_private(target_name, key, end_pos, 0, key.get_repetitions() % 500);
 	}
 
 	set_status(plaintext);
@@ -232,7 +239,7 @@ bool CryptoFile::decrypt(std::string target_name, CryptoKey &key, int run)
 	return true;
 }
 
-bool CryptoFile::decrypt_private(std::string target_name, CryptoKey &key, int run, int limit)
+bool CryptoFile::decrypt_private(std::string target_name, CryptoKey &key, std::ios_base::streampos &n_chars, int run, int limit)
 {
 	std::ifstream * in = new std::ifstream;
 	std::ofstream * out = new std::ofstream;
@@ -250,14 +257,24 @@ bool CryptoFile::decrypt_private(std::string target_name, CryptoKey &key, int ru
 
 	int i = 0;
 
-	in->seekg(0, in->end);
-	int end = (int)(in->tellg()) - 1;
-	in->seekg(0, in->beg);
+	if (run == limit) {
+		while (i < n_chars) {
+			char debug = (char)(in->get() ^ key.get_char(i % 32));
 
-	while (i < end) {
-		(*out) << (char)(in->get() ^ key.get_char(i % 32));
-		i++;
+			(*out) << debug;
+
+			i++;
+		}
 	}
+	else {
+		while (i < n_chars) {
+			(*out) << (char)(in->get() ^ key.get_char(i % 32));
+
+			i++;
+		}
+	}
+
+	
 
 	in->close();
 	out->close();
@@ -280,7 +297,7 @@ bool CryptoFile::decrypt_private(std::string target_name, CryptoKey &key, int ru
 
 	for (i = 0; i < 10; i++) key.decrement();
 
-	if (decrypt_private(temp_filename, key, run + 1, limit)) return true;
+	if (decrypt_private(temp_filename, key, n_chars, run + 1, limit)) return true;
 	return false;
 }
 
