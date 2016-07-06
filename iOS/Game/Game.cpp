@@ -35,6 +35,10 @@ int main() {
 	std::cout << "Done!\n" << t1.getElapsedTime().asMicroseconds();
 	std::cin.get();
 
+
+	std::string alala("Hello Game World, this is iOS.");
+
+	show_textbox(alala, 30, 16);
 	state_manager game;
 
 	game.push_state(new main_menu(&game)); // startup state
