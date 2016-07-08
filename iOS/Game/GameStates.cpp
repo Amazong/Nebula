@@ -104,6 +104,7 @@ void main_menu::input()
 					switch (selection) {
 					case 0:
 						//new game
+						game->push_state(new in_game(game));
 						break;
 					case 1:
 						//continue game
@@ -352,6 +353,7 @@ void options_menu::setup_text()
 in_game::in_game(state_manager * game_ptr)
 {
 	game = game_ptr;
+	setup_options();
 }
 
 void in_game::update_buying_rate()
@@ -384,25 +386,149 @@ void in_game::update_buying_rate()
 
 void in_game::input()
 {
-	return;
+	sf::Event event;
+	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default 
+
+
+
+	while (game->window.pollEvent(event))
+	{
+		switch (event.type)
+		{
+			case sf::Event::KeyPressed:
+			{
+				if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+					game->window.close();
+				break;
+			}
+			case sf::Event::MouseMoved:
+			{
+				mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
+
+				//selection = -1; // this way the selection will always be -1 if it's not in one of the options
+
+				for (int i = 0; i < 4; i++)
+				{
+					/*if (options[i].getGlobalBounds().contains(mouse_pos))
+					{
+						selection = i;
+					}*/
+				}
+
+
+				//std::cout << "           Selection " << selection << std::endl; //debug
+
+				//t_clock.restart();
+				break;
+			}
+			case sf::Event::MouseButtonPressed:
+			{
+				/*switch (selection)
+				{
+				case 0:
+				{
+					game->pop_state();
+					return;
+					break;
+				}
+				// to add actions
+				}*/
+
+				break;
+			}
+			default:
+				break;
+		}
+	}
+	
 }
 
 void in_game::logic_update(const float elapsed)
 {
+	/*
 	update_buying_rate();
 	if (buying_rate > active_store->get_stock()) {
 		// if not enough items in stock, penalize player
 		active_store->set_reputation (active_store->get_reputation() * 0.9);
-	}
+	} */
 }
 
 void in_game::draw(const float elapsed)
 {
-	return;
+	for (int i = 0; i < 7; i++) game->window.draw(heat[i]);
 }
-
+	
 void in_game::setup()
 {
 	current_user = game->get_current_user();
 	active_store = current_user->get_active_store();
+}
+
+void in_game::setup_options()
+{
+	sf::Vector2f rectangle_size(game->window.getSize().x / 5.8f , game->window.getSize().y /3.5f);
+	sf::Vector2f options_pos(game->window.getSize().x / 5.8f, 0);
+	
+	for (int i = 0; i < 7; i++)
+	{
+		heat[i].setSize(rectangle_size);
+		//heat[i].setOutlineColor(sf::Color::White);
+		heat[i].setFillColor(sf::Color::White);
+		heat[i].setOutlineThickness(0);
+
+		switch (i)
+		{
+			case 0 :
+			{
+				heat[i].setPosition( 0 , 0 );
+				heat[i].setFillColor(sf::Color::Blue);
+				break;
+			}
+			case 1:
+			{
+				heat[i].setPosition(0, rectangle_size.y);
+				heat[i].scale(1.0f, 2.0f);
+				heat[i].setFillColor(sf::Color::Yellow);
+				break;
+			}
+			case 2:
+			{
+				heat[i].setPosition(0, 3.0f * rectangle_size.y);
+				heat[i].setFillColor(sf::Color::Green);
+				heat[i].scale(1.0f,0.5f);
+				
+				break;
+			}
+			default:
+			{	
+				heat[i].scale(5.0 / 3.0, 1.0f);
+				heat[i].setFillColor(sf::Color::Red);
+				//heat[i].setOutlineColor(sf::Color::Red);
+
+				if (i < 5)
+				{
+					heat[i].setPosition(options_pos.x  + (0.55 * rectangle_size.x), 0.82 * rectangle_size.x );
+					if (i == 4)
+						heat[i].move( heat[i].getGlobalBounds().width + (0.35 * rectangle_size.x), 0);
+
+				}
+				else
+				{
+					heat[i].setPosition(heat[3].getPosition());
+					heat[i].move(0, heat[i].getGlobalBounds().height + (0.225 * rectangle_size.x));
+					
+					if (i == 6)
+						heat[i].move(heat[i].getGlobalBounds().width + (0.35 * rectangle_size.x), 0);
+				}
+
+				break;
+			}
+
+		}
+	}
+
+}
+
+void in_game::setup_indicators()
+{
 }

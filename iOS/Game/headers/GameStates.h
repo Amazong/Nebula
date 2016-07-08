@@ -66,7 +66,7 @@ class options_menu : public game_state
 private:
 	const std::string options_str[4] = { "Back", "Music", "Difficulty", "Framerate" };
 	sf::Font options_font;
-	sf::Text options[5];
+	sf::Text options[4];
 	double target_size;
 	sf::Clock t_clock;
 	sf::Texture background;
@@ -90,6 +90,10 @@ public:
 class in_game : public game_state
 {
 private:
+	const std::string options_str[4] = { "Staff", "Inventory", "Shop", "Finance" };
+	sf::Font options_font;
+	sf::Text options[4];
+	sf::RectangleShape heat[7];
 	double buying_rate;
 	void update_buying_rate();
 	store * active_store;
@@ -103,4 +107,6 @@ public:
 	void draw(const float elapsed);
 
 	void setup();
+	void setup_options();
+	void setup_indicators();
 };

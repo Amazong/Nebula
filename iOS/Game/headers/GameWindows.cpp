@@ -170,6 +170,9 @@ void show_textbox(std::string & str, unsigned int line_size, unsigned int char_s
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+			else if (event.type == sf::Event::KeyPressed)
+				if (event.key.code == sf::Keyboard::Return)
+					window.close();
 		}
 
 
