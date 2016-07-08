@@ -353,6 +353,12 @@ void options_menu::setup_text()
 in_game::in_game(state_manager * game_ptr)
 {
 	game = game_ptr;
+	
+	if (!options_font.loadFromFile("res/fonts/Roboto-Bold.ttf")) {
+		complain(ErrNo::file_access);
+		return;
+	}
+
 	setup_options();
 }
 
@@ -455,9 +461,16 @@ void in_game::logic_update(const float elapsed)
 
 void in_game::draw(const float elapsed)
 {
-	for (int i = 0; i < 7; i++) game->window.draw(heat[i]);
-}
-	
+	for (int i = 0; i < 7; i++)
+	{
+		game->window.draw(heat[i]);
+		
+	}
+
+	for (int i = 0; i < 4; i++)
+		game->window.draw(options[i]);
+}		
+
 void in_game::setup()
 {
 	current_user = game->get_current_user();
@@ -526,6 +539,20 @@ void in_game::setup_options()
 
 		}
 	}
+
+	
+	for (int i = 0; i < 4; i++)
+	{
+		options[i].setFont(options_font);
+		options[i].setCharacterSize((int)(game->window.getSize().y / 13.5f));
+		options[i].setString(options_str[i]);
+		options[i].setColor(sf::Color::White);
+		options[i].setOrigin((options[i].getGlobalBounds().width / 2.0f), (options[i].getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
+		options[i].setPosition(heat[(3 + i)].getPosition() );
+		options[i].move((heat[(3 + i)].getGlobalBounds().width / 2.0f), (heat[(3 + i)].getGlobalBounds().height / 2.3f));
+
+	}
+
 
 }
 
