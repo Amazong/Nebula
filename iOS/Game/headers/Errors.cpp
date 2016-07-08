@@ -40,5 +40,5 @@ void error::file_access()
 
 void error::profile_not_found()
 {
-	std::cerr << "Profile not found ";
+	std::cerr << "Profile not found!";
 }
