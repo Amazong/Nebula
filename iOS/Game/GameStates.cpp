@@ -394,8 +394,11 @@ void in_game::input()
 {
 	sf::Event event;
 	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default 
-
-
+	if (selection > 2)
+	{
+		options[(selection - 3)].setStyle(sf::Text::Regular);
+		options[(selection - 3)].setColor(sf::Color::White);
+	}
 
 	while (game->window.pollEvent(event))
 	{
@@ -411,34 +414,46 @@ void in_game::input()
 			{
 				mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
 
-				//selection = -1; // this way the selection will always be -1 if it's not in one of the options
 
+				if (selection != -1)
+					heat[selection].setOutlineThickness(0);
+
+				selection = -1; // this way the selection will always be -1 if it's not in one of the options
+				
 				for (int i = 0; i < 4; i++)
 				{
-					/*if (options[i].getGlobalBounds().contains(mouse_pos))
+					if (heat[(3 + i)].getGlobalBounds().contains(mouse_pos))
 					{
-						selection = i;
-					}*/
+						selection = i + 3;
+					}
 				}
 
+				if (selection != -1)
+					heat[selection].setOutlineThickness(-2);
 
-				//std::cout << "           Selection " << selection << std::endl; //debug
+				std::cout << "           Selection " << selection << std::endl; //debug
 
-				//t_clock.restart();
+				
 				break;
 			}
 			case sf::Event::MouseButtonPressed:
 			{
-				/*switch (selection)
+				if (selection > 2 && event.mouseButton.button == sf::Mouse::Left)
 				{
-				case 0:
-				{
-					game->pop_state();
-					return;
-					break;
+					options[(selection - 3)].setStyle(sf::Text::Italic);
+					options[(selection - 3)].setColor(sf::Color::Red);	
 				}
+				
+				switch(selection)
+				{	
+					case 0:
+					{
+						game->pop_state();
+						return;
+						break;
+					}
 				// to add actions
-				}*/
+				}
 
 				break;
 			}
@@ -451,6 +466,7 @@ void in_game::input()
 
 void in_game::logic_update(const float elapsed)
 {
+	
 	/*
 	update_buying_rate();
 	if (buying_rate > active_store->get_stock()) {
@@ -469,6 +485,7 @@ void in_game::draw(const float elapsed)
 
 	for (int i = 0; i < 4; i++)
 		game->window.draw(options[i]);
+
 }		
 
 void in_game::setup()
@@ -485,9 +502,8 @@ void in_game::setup_options()
 	for (int i = 0; i < 7; i++)
 	{
 		heat[i].setSize(rectangle_size);
-		//heat[i].setOutlineColor(sf::Color::White);
 		heat[i].setFillColor(sf::Color::White);
-		heat[i].setOutlineThickness(0);
+		
 
 		switch (i)
 		{
@@ -515,9 +531,8 @@ void in_game::setup_options()
 			default:
 			{	
 				heat[i].scale(5.0 / 3.0, 1.0f);
-				heat[i].setFillColor(sf::Color::Red);
-				//heat[i].setOutlineColor(sf::Color::Red);
-
+				heat[i].setFillColor(sf::Color::Transparent);
+				
 				if (i < 5)
 				{
 					heat[i].setPosition(options_pos.x  + (0.55 * rectangle_size.x), 0.82 * rectangle_size.x );

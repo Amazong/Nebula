@@ -95,9 +95,10 @@ private:
 	sf::Text options[4];
 	sf::RectangleShape heat[7];
 	double buying_rate;
-	void update_buying_rate();
+	int selection = -1;
 	store * active_store;
 	user_profile * current_user;
+	void update_buying_rate();
 
 public:
 	in_game(state_manager * game_ptr);
