@@ -126,7 +126,7 @@ void piano::set_perceived_value(double ratio)
 /*------------------------------ employee ------------------------------*/
 
 
-employee::employee(char * person, double value, int eff) // eff: 0-low; 1-neutral; 2-high
+employee::employee(char * person, double value, int eff) // eff: 1-low; 2-neutral; 3-high
 {
 	strcpy_s(this->name, person);
 	salary = value;
@@ -255,6 +255,48 @@ void store::buy_piano(piano * piano)
 	// else we need to deploy a message error (warning window)
 }
 
+bool store::run_probability(double prob)
+{
+	std::mt19937 random_numbers(rd());
+
+	std::uniform_real_distribution<double> range(0.0, 1.0);
+
+	double number = range(random_numbers);
+
+	if (number > prob) return false;
+	return true;
+}
+
+void store::update_traffic()
+{
+	double weeks_in_year = user->time_elapsed.asSeconds();
+	weeks_in_year = ((int)weeks_in_year % 520) / 10;
+
+	double traffic_double = 2.5 * (1 + reputation) + 2 * cos((weeks_in_year / 26) * (atan(1) * 4));
+	
+	switch (user->difficulty)
+	{
+	case 0:
+		traffic_double += 1;
+		break;
+	case 1:
+		break;
+	case 2:
+		traffic_double -= 1;
+		break;
+	default:
+		break;
+	}
+
+	if (traffic_double < 0) {
+		traffic = 0;
+		return;
+	}
+
+	traffic_double += 0.5;
+	traffic = (int)traffic_double;
+}
+
 int store::get_max_stock()
 {
 	return max_stock;
@@ -270,21 +312,64 @@ void store::sell_algorithm()
 	if (!inventory.empty()) // only when inventory is not empty
 	{
 		std::mt19937 random_numbers(rd()); // random number generator algorithm
-		int position;
+		int product_pos;
+		int employee_pos;
 
-		for ( int i = buying_rate ; i != 0; i-- )
+		double desirability, service;
+
+		update_traffic();
+
+		for (int i = traffic; i > 0; i--)
 		{
-			std::uniform_int_distribution<int> inventory_range(0, (inventory.size() - 1)); // random position to eliminate
+			std::uniform_int_distribution<int> inventory_range(0, (inventory.size() - 1)); // random position to evaluate
+			std::uniform_int_distribution<int> staff_range(0, (staff.size() - 1)); // random staff member to help
 
-			position = inventory_range(random_numbers); // position 0 -> size-1
+			product_pos = inventory_range(random_numbers); // position 0 -> size-1
+			employee_pos = staff_range(random_numbers); // position 0 -> size-1
 
-			sell_instrument(position); // to be redefined upon piano class deployment
+			// do the math
+			update_averages();
 
+			std::list<instrument *>::iterator instrument_it = inventory.begin();
+			for (int j = product_pos; j > 0; j--) {
+				instrument_it++;
+			}
+			desirability = ((setting + 1)/3.0) * (0.3 * (get_average_purchasing_power() / 5.0) + 0.7 * ((*instrument_it)->get_perceived_value()) / 5.0);
+			desirability *= 0.6;
 
+			std::list<employee *>::iterator employee_it = staff.begin();
+			for (int j = employee_pos; j > 0; j--) {
+				employee_it++;
+			}
+			service = 0.3 * (get_average_efficiency() / 3.0) + 0.7 * ((*employee_it)->skill / 3.0);
+			service *= 0.4;
+
+			double probability = desirability + service;
+
+			if (run_probability(probability)) {
+				sell_instrument(product_pos); // to be redefined upon piano class deployment	
+				if (inventory.empty() || staff.empty()) {
+					for (int j = i; j > 0; j--) {
+						reputation += 1;
+						reputation *= 0.99;
+						reputation -= 1;
+					}
+					break;
+				}
+				continue;
+			}
+			reputation += 1;
+			reputation *= 0.99;
+			reputation -= 1;
 		}
 	}
 
-	// deploy message your inventory is empty. (else)
+	else {
+		reputation += 1;
+		reputation *= 0.99;
+		reputation -= 1;
+		// deploy message your inventory is empty. (else)
+	}
 }
 
 void store::sell_instrument(int position_offset)
@@ -298,7 +383,10 @@ void store::sell_instrument(int position_offset)
 
 	// *it -> pointer to guitar
 	user->net_worth += (*it)->price;
-	this->reputation += ((*it)->value * 0.05); // 5% of inventory's value added to store reputation
+	reputation += 1;
+	reputation *= 1.01;
+	reputation -= 1;
+	if (reputation > 1) reputation = 1;
 
 	delete (*it); // memory management
 

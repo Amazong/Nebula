@@ -6,6 +6,7 @@
 #include <list>
 #include <fstream>
 #include <cstdlib>
+#include <math.h>
 #include "Errors.h"
 // result of buying formula should be (for now) a flat rate (int) of chosen guitars to be sold per unit of time (to be defined)
 
@@ -104,13 +105,13 @@ public:
 class employee
 {
 private:
-	enum efficiency { low, neutral, high } skill;  //effect on buying formula
+	enum efficiency { low = 1, neutral, high } skill;  //effect on buying formula
 	char name[51];
 	double salary;
 
 public:
 	employee() {};
-	employee(char * person, double value, int eff); // eff: 0-low; 1-neutral; 2-high
+	employee(char * person, double value, int eff); // eff: 1-low; 2-neutral; 3-high
 
 	friend class store;
 };
@@ -164,6 +165,8 @@ public:
 	void update_averages() { update_average_purchasing_power(); update_average_efficiency(); }
 	double get_average_purchasing_power() { return average_purchasing_power; };
 	double get_average_efficiency() { return average_efficiency; };
+	bool run_probability(double prob);
+	void update_traffic();
 
 	// inventory management
 	int get_max_stock();
@@ -238,6 +241,5 @@ public:
 
 	//friends
 	friend class store;
-
 };
 
