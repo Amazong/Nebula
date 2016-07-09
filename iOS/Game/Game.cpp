@@ -16,7 +16,8 @@ int main() {
 	/*if (render_splash() == 42) {
 		return error::file_access();
 	}*/
-
+	
+	/*{
 	// TESTING CRYPTO
 
 	CryptoKey k("LoremIpsum"); // include repeating mode
@@ -34,7 +35,7 @@ int main() {
 	if (!f.decrypt("meow.txt", k)) return -1;
 	std::cout << "Done!\n" << t1.getElapsedTime().asMicroseconds();
 	std::cin.get();
-
+	}*/
 
 	std::string alala("Hello Game World, this is iOS.");
 

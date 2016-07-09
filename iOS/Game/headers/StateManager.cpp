@@ -84,4 +84,6 @@ int state_manager::game_loop()
 		peek_state()->draw(elapsed.asSeconds());
 		window.display();
 	}
+
+	return 0;
 }

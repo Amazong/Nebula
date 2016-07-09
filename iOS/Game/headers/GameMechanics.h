@@ -23,23 +23,41 @@ struct save_user //for saving user.
 
 /*------------------------------ instrument ------------------------------*/
 
+namespace piano_brands {
+	const enum piano_brands { NA, Roland, Korg, Kawai, Yamaha, Steinway };
+}
+namespace piano_type {
+	const enum piano_type { NA, Digital, Upright, Grand };
+}
+namespace quality {
+	const enum quality { NA, Poor, Fair, Great };
+}
+
 
 class instrument
 {
 protected:
 	enum perceived_value { unattainable, overpriced, high, neutral, cheap, irresistible } purchasing_power; // price 0, .....  infinite
 																											// factors in guitar chosen to be sold, calculated from ratio between price and value
-	char  brand[51];
+												
+	char brand[51];
 	double value; // wholesale cost
 	double price; // set by player
 
 public:
 	bool is_guitar;
-
-
+	
 	void set_price(double price);
 	virtual void set_perceived_value(double ratio) = 0;
+	
+	perceived_value get_perceived_value() { return purchasing_power; }
 
+	virtual piano_brands::piano_brands get_brand() { return piano_brands::NA; }
+	virtual piano_type::piano_type get_type() { return piano_type::NA; }
+	virtual quality::quality get_quality() { return quality::NA; }
+	
+	char * print_brand() { return brand; }
+	
 	// friends
 	friend class store;
 };
@@ -64,11 +82,22 @@ public:
 
 class piano : public instrument
 {
+private:
+	char brands[5][51] = { "Roland", "Korg", "Kawai", "Yamaha", "Steinway & Sons" };
+	piano_brands::piano_brands own_brand;
+	piano_type::piano_type own_type;
+	quality::quality own_quality;
 
 public:
 	piano() {};
-	piano(double value, char * brand); // sets a value and a brand
-	
+	piano(piano_brands::piano_brands brand,
+		piano_type::piano_type type,
+		quality::quality quality); // sets a value and a brand
+
+	piano_brands::piano_brands get_brand() { return own_brand; }
+	piano_type::piano_type get_type() { return own_type; }
+	quality::quality get_quality() { return own_quality; }
+
 	void set_perceived_value(double ratio);
 };
 
@@ -149,7 +178,7 @@ public:
 	guitar * inventory_tab(int & size);
 	employee * staff_tab(int & size);
 
-	void fill_inventory(guitar * tab, int size); // allocates its own
+	void fill_inventory(instrument * tab, int size); // allocates its own
 	void fill_staff(employee * tab, int size);	// allocates its own
 
 	// friends

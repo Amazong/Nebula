@@ -17,8 +17,7 @@ guitar::guitar(double value, char * name)
 	this->price = this->value = value;
 	strcpy_s(this->brand, name);
 
-	set_perceived_value(this->price / this->value);
-
+	purchasing_power = perceived_value::neutral; // as is always the case when the object is created
  }
 
 
@@ -41,14 +40,24 @@ void guitar::set_perceived_value(double ratio)
 
 /*------------------------------ piano ------------------------------*/
 
-piano::piano(double value, char * name)
+piano::piano(piano_brands::piano_brands brand, piano_type::piano_type type, quality::quality quality)
 {
 	is_guitar = false;
-	this->price = this->value = value;
-	strcpy_s(this->brand, name);
 
-	set_perceived_value(this->price / this->value);
+	value = (double)(brand * type * quality);
+	value /= (5*3*3); // compute ratio
+	value *= 50000; // maximum piano price
 
+	price = value;
+	own_brand = brand;
+	own_type = type;
+	own_quality = quality;
+	
+	if (own_brand != 0){
+		strcpy_s(this->brand, brands[own_brand - 1]);
+	}
+
+	purchasing_power = perceived_value::neutral; // as is always the case when the object is created
 }
 
 
@@ -58,13 +67,13 @@ void piano::set_perceived_value(double ratio)
 		purchasing_power = perceived_value::irresistible;
 	else if (ratio <= 1.5 && ratio > 0.1)
 		purchasing_power = perceived_value::cheap;
-	else if (ratio <= 3 && ratio > 1.5)
+	else if (ratio <= 2 && ratio > 1.5)
 		purchasing_power = perceived_value::neutral;
-	else if (ratio <= 5 && ratio > 3)
+	else if (ratio <= 3 && ratio > 2)
 		purchasing_power = perceived_value::high;
-	else if (ratio <= 10 && ratio > 5)
+	else if (ratio <= 5 && ratio > 3)
 		purchasing_power = perceived_value::overpriced;
-	else if (ratio > 10)
+	else if (ratio > 5)
 		purchasing_power = perceived_value::unattainable;
 }
 
@@ -280,7 +289,7 @@ employee * store::staff_tab(int & size)
 	return (tab);
 }
 
-void store::fill_inventory(guitar * tab, int size)
+void store::fill_inventory(instrument * tab, int size)
 {
 	//precaution
 	inventory.clear();
@@ -288,11 +297,10 @@ void store::fill_inventory(guitar * tab, int size)
 	for (int i = 0; i < size; i++)
 	{
 		if (tab[i].is_guitar)
-			inventory.push_back(new guitar(tab[i]));
+			inventory.push_back(new guitar(tab[i].value, tab[i].brand));
 		else
 		{
-
-			inventory.push_back(new piano(tab[i].value, tab[i].brand));
+			inventory.push_back(new piano(tab[i].get_brand(), tab[i].get_type(), tab[i].get_quality()));
 		}
 	}
 
@@ -321,7 +329,8 @@ user_profile::user_profile(char * name)
 {
 	strcpy_s(this->user, name);
 
-	weekly_expenses = reputation = difficulty = net_worth = 0;
+	difficulty = 0;
+	weekly_expenses = reputation = net_worth = 0;
 
 }
 
