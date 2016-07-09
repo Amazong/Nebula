@@ -398,6 +398,7 @@ void in_game::input()
 	{
 		options[(selection - 3)].setStyle(sf::Text::Regular);
 		options[(selection - 3)].setColor(sf::Color::White);
+		heat[selection].setOutlineColor(sf::Color::White);
 	}
 
 	while (game->window.pollEvent(event))
@@ -442,6 +443,7 @@ void in_game::input()
 				{
 					options[(selection - 3)].setStyle(sf::Text::Italic);
 					options[(selection - 3)].setColor(sf::Color::Red);	
+					heat[selection].setOutlineColor(sf::Color::Red);
 				}
 				
 				switch(selection)
