@@ -37,6 +37,9 @@ int main() {
 	std::cin.get();
 	}*/
 	
+	logger logger;
+	logger.log("Program started");
+
 	user_profile ACTIVE_USER;
 
 	ACTIVE_USER.set_net_worth(2000000);
