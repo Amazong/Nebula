@@ -39,7 +39,7 @@ class instrument
 protected:
 	enum perceived_value { unattainable, overpriced, high, neutral, cheap, irresistible } purchasing_power; // price 0, .....  infinite
 																											// factors in guitar chosen to be sold, calculated from ratio between price and value
-	char brand[51];
+	char brand[51] = "NA";
 	char piano_brands[5][51] = { "Roland", "Korg", "Kawai", "Yamaha", "Steinway & Sons" };
 	double value; // wholesale cost
 	double price; // set by player
@@ -79,7 +79,6 @@ public:
 	guitar(double value, char * brand); // sets a value and a brand
 	guitar(piano_brands::piano_brands brand, piano_type::piano_type type, quality::quality quality); // invalid, for guitars
 
-
 	void set_perceived_value(double ratio);
 };
 
@@ -111,7 +110,7 @@ private:
 
 public:
 	employee() {};
-	employee(char * person, double value, int  num); // num: 0-low; 1-neutral; 2-high
+	employee(char * person, double value, int eff); // eff: 0-low; 1-neutral; 2-high
 
 	friend class store;
 };
@@ -132,13 +131,17 @@ private:
 
 	char name[51];
 
-	//random  seed Generation
+	//random seed Generation
 	std::random_device rd;
 
 	user_profile * user; // so we can acess user's attributes
 
 	double reputation = 0; // by default
+	double average_purchasing_power;
+	double average_efficiency;
+	
 	unsigned int max_stock;
+	
 	int value;
 	int traffic;
 	int buying_rate; // each store has it's buying rate
@@ -146,13 +149,21 @@ private:
 public:
 	store() {};
 	store(const store & shop); // does not copy the std::lists nor the user pointer
-	store(user_profile * current, char * name, int value, int num); // num: 0-poor; 1-middle; 2-rich 
+	store(user_profile * current, char * name, int value, int areacode); // areacode: 0-poor; 1-middle; 2-rich 
 	~store();
 
 	store & operator = (const store & store);
+	
 	// store management
 	void set_reputation(double rep) { reputation = rep; };
 	double get_reputation() { return reputation; };
+	
+	// averages
+	void update_average_purchasing_power();
+	void update_average_efficiency();
+	void update_averages() { update_average_purchasing_power(); update_average_efficiency(); }
+	double get_average_purchasing_power() { return average_purchasing_power; };
+	double get_average_efficiency() { return average_efficiency; };
 
 	// inventory management
 	int get_max_stock();
@@ -164,11 +175,10 @@ public:
 	void sell_instrument(int position_offset);
 
 	// staff management
-
 	void hire_employee(employee * employee);
 	void fire_employee(char * name);
 
-	//instrument, guitar and piano all have the same sizes
+	// instrument, guitar and piano all have the same sizes
 	// uses adm, memory must be freed after use of this function.
 	// save inventory and staff -- returns array with elements and size in argument // inventory gives as guitars, but they will be casted in the loading function. with isguitar member
 	guitar * inventory_tab(int & size);
@@ -177,13 +187,12 @@ public:
 	void fill_inventory(instrument * tab, int size); // allocates its own
 	void fill_staff(employee * tab, int size);	// allocates its own
 
-												// friends
+	// friends
 	friend class user_profile;
 };
 
 
 /*------------------------------ user_profile ------------------------------*/
-
 
 class user_profile
 {
@@ -205,6 +214,8 @@ public:
 	user_profile(const user_profile & user); // does not copy the std::lists nor active store
 	~user_profile();
 
+	void set_net_worth(int worth) { net_worth = worth; }
+
 	store * get_active_store();
 	void set_active_store(store * active_store_new);
 	bool set_active_store(unsigned int store_id);
@@ -213,6 +224,7 @@ public:
 	void set_difficulty(int diff) { difficulty = diff; }
 
 	void buy_store(store * store);
+	store * get_back_store() { return stores.back(); }
 
 	void save_game();
 	void save_inventories(std::string  user, const guitar * tab, int size, int store_index);

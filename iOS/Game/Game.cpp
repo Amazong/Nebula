@@ -37,6 +37,8 @@ int main() {
 	std::cin.get();
 	}*/
 	
+	user_profile ACTIVE_USER;
+
 	std::string alala("Hello Game World, this is iOS.");
 
 	show_textbox(alala, 30, 16);

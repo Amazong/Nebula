@@ -17,7 +17,11 @@ guitar::guitar(double value, char * name)
 	this->price = this->value = value;
 	strcpy_s(this->brand, name);
 
-	purchasing_power = perceived_value::neutral; // as is always the case when the object is created
+	own_brand_piano = piano_brands::NA;
+	own_type_piano = piano_type::NA;
+	own_quality = quality::NA;
+
+	set_perceived_value(this->price / this->value);
  }
 
 guitar::guitar(piano_brands::piano_brands brand, piano_type::piano_type type, quality::quality quality)
@@ -71,7 +75,9 @@ piano::piano(piano_brands::piano_brands brand, piano_type::piano_type type, qual
 {
 	is_guitar = false;
 
-	switch (type) { // set maximum price for category
+	// fuck you if NA
+
+	switch (type) { // set maximum price for type
 	case 1:
 		value = 1500;
 		break;
@@ -85,7 +91,7 @@ piano::piano(piano_brands::piano_brands brand, piano_type::piano_type type, qual
 		break;
 	}
 	
-	value *= ((0.6 * brand + 0.4 * quality) / 4.2);
+	value *= ((0.6 * brand + 0.4 * quality) / 4.2); // calculate real value
 
 	price = value;
 	own_brand_piano = brand;
@@ -96,7 +102,7 @@ piano::piano(piano_brands::piano_brands brand, piano_type::piano_type type, qual
 		strcpy_s(this->brand, piano_brands[own_brand_piano - 1]);
 	}
 
-	set_perceived_value(this->price / this->value); // as is always the case when the object is created
+	set_perceived_value(this->price / this->value); // update purchasing power
 }
 
 
@@ -120,11 +126,11 @@ void piano::set_perceived_value(double ratio)
 /*------------------------------ employee ------------------------------*/
 
 
-employee::employee(char * person, double value, int num) // num: 0-low; 1-neutral; 2-high
+employee::employee(char * person, double value, int eff) // eff: 0-low; 1-neutral; 2-high
 {
 	strcpy_s(this->name, person);
 	salary = value;
-	this->skill = efficiency(num);
+	this->skill = efficiency(eff);
 }
 
 
@@ -145,13 +151,13 @@ store::store(const store & shop)
 	staff.clear();
 }
 
-store::store(user_profile * current, char * name, int value, int num) // num: 0-poor; 1-middle; 2-rich 
+store::store(user_profile * current, char * name, int value, int areacode) // areacode: 0-poor; 1-middle; 2-rich 
 {
 	this->value = value;
 	this->user = current;
 	strcpy_s(this->name, name);
 
-	this->setting = static_cast<area>(num);
+	this->setting = static_cast<area>(areacode);
 	this->max_stock = 50 + 10 * setting; // can be altered, formula for max inventory
 
 	inventory.clear();
@@ -188,6 +194,41 @@ store & store::operator=(const store & shop)
 	staff.clear();
 
 	return(*this);
+}
+
+// averages
+void store::update_average_purchasing_power() {
+	double purchasing_power = 0;
+	int n = 0;
+
+	for (auto it = inventory.begin(); it != inventory.end(); it++) {
+		purchasing_power += (*it)->get_perceived_value();
+		n++;
+	}
+	
+	if (n == 0) {
+		average_purchasing_power = -1;
+		return;
+	}
+
+	average_purchasing_power = purchasing_power / n;
+}
+
+void store::update_average_efficiency() {
+	double tot_efficiency = 0;
+	int n = 0;
+
+	for (auto it = staff.begin(); it != staff.end(); it++) {
+		tot_efficiency += (*it)->skill;
+		n++;
+	}
+
+	if (n == 0) {
+		average_efficiency = -1;
+		return;
+	}
+
+	average_efficiency = tot_efficiency / n;
 }
 
 void store::buy_guitar(guitar * guitar)
@@ -359,16 +400,12 @@ void store::fill_staff(employee * tab, int size)
 }
 
 
-
-
-
 /*------------------------------ user_profile ------------------------------*/
 
 user_profile::user_profile(char * name)
 {
 	strcpy_s(this->user, name);
 
-	difficulty = 0;
 	weekly_expenses = reputation = net_worth = 0;
 
 }
@@ -431,7 +468,7 @@ bool user_profile::set_active_store(unsigned int store_id)
 
 void user_profile::buy_store(store * store)
 {
-	if ( this->net_worth >= store->value)
+	if (this->net_worth >= store->value)
 	{
 		this->net_worth -= store->value;
 		stores.push_back(store);
@@ -440,11 +477,11 @@ void user_profile::buy_store(store * store)
 
 void user_profile::save_game()
 {
-
+	std::string user = "saves/";
 	if (!stores.empty())
 	{
 		std::list<store *>::iterator it = stores.begin();
-		int	 n_stores = stores.size(), n_staff, n_inventory;
+		int	n_stores = stores.size(), n_staff, n_inventory;
 
 		store * store_ptr = new store[n_stores];
 		store * temp = nullptr;
@@ -452,7 +489,7 @@ void user_profile::save_game()
 		guitar * inventory = nullptr;
 		employee * people = nullptr;
 
-		std::string user = user;
+		user += this->user;
 
 		for (int i = 0; i < n_stores && it != stores.end(); i++, it++)
 		{
@@ -486,47 +523,41 @@ void user_profile::save_game()
 
 		if (store_ptr != nullptr)
 		{
-			delete[]  store_ptr;
+			delete[] store_ptr;
 			store_ptr = nullptr;
 		}
 	} //if empty stores, it wont save any (empty stores). also, if stores file is corrupted, you'll be loaded with no store.
 
-	std::ifstream fin("users");
+	std::ifstream fin("saves/users");
 	std::ofstream fout;
 
 	if (fin.fail())
 	{
-
-		fout.open("users");
+		fout.open("saves/users");
 
 		if (fout.fail())
 			error::trace_error(ErrNo::file_access);
 			
-	
-
 		if (fout.is_open())
-			fout << user << "\n";
+			fout << this->user << "\n";
 
 		fout.close();
-
-
 	}
-	else //does not repeat writing the user  if already there 
+	else //does not repeat writing the user if already there 
 	{
 		std::string line, line_2 = user;
 		bool is_there = false;
 		while (std::getline(fin, line))
 		{
-			if (line_2 == line)
+			if (line_2 == line) {
 				is_there = true;
-
-			if (is_there)
 				break;
+			}
 		}
 
 		if (!is_there)
 		{
-			fout.open("users", std::ios::app);
+			fout.open("saves/users", std::ios::app);
 
 			if (fout.fail())
 				error::trace_error(ErrNo::file_access);
@@ -547,7 +578,7 @@ void user_profile::save_game()
 	save.net_worth = net_worth;
 	save.reputation = reputation;
 	save.weekly_expenses = weekly_expenses;
-	strcpy_s(save.user, user);
+	strcpy_s(save.user, this->user);
 
 	fout.seekp(0, std::ios::beg);
 
@@ -555,7 +586,6 @@ void user_profile::save_game()
 		fout.write((char *)&save, sizeof(save_user));
 
 	fout.close();
-
 }
 
 void user_profile::save_inventories(std::string  user, const  guitar * tab, int size, int store_index)
@@ -623,9 +653,7 @@ void user_profile::save_stores(std::string  user, const store * tab, int size)
 
 void user_profile::load_game(std::string  profile_title)
 {
-
-	std::ifstream fin("users");
-
+	std::ifstream fin("saves/users");
 
 	if (fin.fail())
 		error::trace_error(ErrNo::file_access);
@@ -651,8 +679,8 @@ void user_profile::load_game(std::string  profile_title)
 
 void user_profile::load_user(std::string & profile_title)
 {
-
-	std::ifstream fin_2(profile_title, std::ios::binary);
+	
+	std::ifstream fin_2("saves/" + profile_title, std::ios::binary);
 
 	if (fin_2.fail())
 		error::trace_error(ErrNo::file_access);
@@ -679,7 +707,8 @@ void user_profile::load_user(std::string & profile_title)
 
 void user_profile::load_stores(user_profile * user)
 {
-	std::string file_name = user->user;
+	std::string file_name = "saves/";
+	file_name += user->user;
 	file_name += ".Stores";
 
 	std::ifstream fin(file_name, std::ios::binary);
@@ -712,23 +741,20 @@ void user_profile::load_stores(user_profile * user)
 
 	for (int i = 0; tab_ptr != nullptr, i < size; i++)
 	{
-
-
 		user->stores.push_back(new store(tab_ptr[i]));
 
 		load_store_inv(user, (*stores.back()), i);
 		load_store_staff(user, (*stores.back()), i);
 	}
 
-
 	free(tab_ptr);
 	tab_ptr = nullptr;
-	
 }
 
 void user_profile::load_store_inv(const user_profile * user, store & shop, int store_index)
 {
-	std::string file_name = user->user;
+	std::string file_name = "saves/";
+	file_name += user->user;
 	file_name += ".Store_inventory";
 	file_name.push_back(store_index);
 
@@ -760,17 +786,16 @@ void user_profile::load_store_inv(const user_profile * user, store & shop, int s
 		return;
 	}
 
-
 	shop.fill_inventory(tab_ptr, size); // this function allocates its own 
 
 	free(tab_ptr);
 	tab_ptr = nullptr;
-
 }
 
 void user_profile::load_store_staff(const user_profile * user, store & shop, int store_index)
 {
-	std::string file_name = user->user;
+	std::string file_name = "saves/";
+	file_name += user->user;
 	file_name += ".Store_staff";
 	file_name.push_back(store_index);
 
@@ -778,7 +803,6 @@ void user_profile::load_store_staff(const user_profile * user, store & shop, int
 
 	if (fin.fail())
 		error::trace_error(ErrNo::file_access);
-
 
 	int size;
 	employee * tab_ptr = nullptr;
@@ -800,14 +824,9 @@ void user_profile::load_store_staff(const user_profile * user, store & shop, int
 		error::trace_error(ErrNo::file_access);
 		return;
 	}
-
-
-	shop.fill_staff(tab_ptr, size); // this function  allocates its own 
-
-
-	free(tab_ptr);
-	tab_ptr = nullptr;
 	
+	shop.fill_staff(tab_ptr, size); // this function  allocates its own 
+	
+	free(tab_ptr);
+	tab_ptr = nullptr;	
 }
-
-
