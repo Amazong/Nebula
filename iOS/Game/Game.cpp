@@ -36,7 +36,7 @@ int main() {
 	std::cout << "Done!\n" << t1.getElapsedTime().asMicroseconds();
 	std::cin.get();
 	}*/
-
+	
 	std::string alala("Hello Game World, this is iOS.");
 
 	show_textbox(alala, 30, 16);

@@ -20,6 +20,13 @@ guitar::guitar(double value, char * name)
 	purchasing_power = perceived_value::neutral; // as is always the case when the object is created
  }
 
+guitar::guitar(piano_brands::piano_brands brand, piano_type::piano_type type, quality::quality quality)
+{
+	own_brand_piano = piano_brands::NA;
+	own_type_piano = piano_type::NA;
+	own_quality = quality;
+}
+
 
 void guitar::set_perceived_value(double ratio)
 {
@@ -40,24 +47,56 @@ void guitar::set_perceived_value(double ratio)
 
 /*------------------------------ piano ------------------------------*/
 
+piano::piano(double value, char * brand) {
+	is_guitar = false;
+
+	this->price = this->value = value;
+
+	set_perceived_value(this->price/this->value);
+
+	for (int i = 0; i < 5; i++) {
+		if (strcmp(brand, piano_brands[i]) == 0) {
+			own_brand_piano = static_cast<piano_brands::piano_brands>(i+1);
+			strcpy_s(this->brand, brand);
+			break;
+		}
+		own_brand_piano = piano_brands::NA;
+	}
+
+	own_quality = quality::NA;
+	own_type_piano = piano_type::NA;
+}
+
 piano::piano(piano_brands::piano_brands brand, piano_type::piano_type type, quality::quality quality)
 {
 	is_guitar = false;
 
-	value = (double)(brand * type * quality);
-	value /= (5*3*3); // compute ratio
-	value *= 50000; // maximum piano price
+	switch (type) { // set maximum price for category
+	case 1:
+		value = 1500;
+		break;
+	case 2:
+		value = 5000;
+		break;
+	case 3:
+		value = 50000;
+		break;
+	default:
+		break;
+	}
+	
+	value *= ((0.6 * brand + 0.4 * quality) / 4.2);
 
 	price = value;
-	own_brand = brand;
-	own_type = type;
+	own_brand_piano = brand;
+	own_type_piano = type;
 	own_quality = quality;
 	
-	if (own_brand != 0){
-		strcpy_s(this->brand, brands[own_brand - 1]);
+	if (own_brand_piano != 0){
+		strcpy_s(this->brand, piano_brands[own_brand_piano - 1]);
 	}
 
-	purchasing_power = perceived_value::neutral; // as is always the case when the object is created
+	set_perceived_value(this->price / this->value); // as is always the case when the object is created
 }
 
 
@@ -300,7 +339,7 @@ void store::fill_inventory(instrument * tab, int size)
 			inventory.push_back(new guitar(tab[i].value, tab[i].brand));
 		else
 		{
-			inventory.push_back(new piano(tab[i].get_brand(), tab[i].get_type(), tab[i].get_quality()));
+			inventory.push_back(new piano(tab[i].get_brand_piano(), tab[i].get_type_piano(), tab[i].get_quality()));
 		}
 	}
 

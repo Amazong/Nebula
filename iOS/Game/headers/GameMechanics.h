@@ -39,25 +39,31 @@ class instrument
 protected:
 	enum perceived_value { unattainable, overpriced, high, neutral, cheap, irresistible } purchasing_power; // price 0, .....  infinite
 																											// factors in guitar chosen to be sold, calculated from ratio between price and value
-												
 	char brand[51];
+	char piano_brands[5][51] = { "Roland", "Korg", "Kawai", "Yamaha", "Steinway & Sons" };
 	double value; // wholesale cost
 	double price; // set by player
 
+	piano_brands::piano_brands own_brand_piano;
+	piano_type::piano_type own_type_piano;
+	quality::quality own_quality;
+
 public:
 	bool is_guitar;
-	
+
 	void set_price(double price);
+	double get_price() { return price; }
+	double get_value() { return ((int)(value*100))/100.0; } // only two decimal places
 	virtual void set_perceived_value(double ratio) = 0;
-	
+
 	perceived_value get_perceived_value() { return purchasing_power; }
 
-	virtual piano_brands::piano_brands get_brand() { return piano_brands::NA; }
-	virtual piano_type::piano_type get_type() { return piano_type::NA; }
-	virtual quality::quality get_quality() { return quality::NA; }
-	
+	piano_brands::piano_brands get_brand_piano() { return own_brand_piano; }
+	piano_type::piano_type get_type_piano() { return own_type_piano; }
+	quality::quality get_quality() { return own_quality; }
+
 	char * print_brand() { return brand; }
-	
+
 	// friends
 	friend class store;
 };
@@ -66,12 +72,12 @@ public:
 /*------------------------------ guitar ------------------------------*/
 
 
-class guitar: public instrument
+class guitar : public instrument
 {
-
 public:
 	guitar() {};
 	guitar(double value, char * brand); // sets a value and a brand
+	guitar(piano_brands::piano_brands brand, piano_type::piano_type type, quality::quality quality); // invalid, for guitars
 
 
 	void set_perceived_value(double ratio);
@@ -82,21 +88,12 @@ public:
 
 class piano : public instrument
 {
-private:
-	char brands[5][51] = { "Roland", "Korg", "Kawai", "Yamaha", "Steinway & Sons" };
-	piano_brands::piano_brands own_brand;
-	piano_type::piano_type own_type;
-	quality::quality own_quality;
-
 public:
 	piano() {};
+	piano(double value, char * brand);
 	piano(piano_brands::piano_brands brand,
 		piano_type::piano_type type,
 		quality::quality quality); // sets a value and a brand
-
-	piano_brands::piano_brands get_brand() { return own_brand; }
-	piano_type::piano_type get_type() { return own_type; }
-	quality::quality get_quality() { return own_quality; }
 
 	void set_perceived_value(double ratio);
 };
@@ -107,7 +104,6 @@ public:
 
 class employee
 {
-
 private:
 	enum efficiency { low, neutral, high } skill;  //effect on buying formula
 	char name[51];
@@ -116,7 +112,7 @@ private:
 public:
 	employee() {};
 	employee(char * person, double value, int  num); // num: 0-low; 1-neutral; 2-high
-	
+
 	friend class store;
 };
 
@@ -138,7 +134,7 @@ private:
 
 	//random  seed Generation
 	std::random_device rd;
-	
+
 	user_profile * user; // so we can acess user's attributes
 
 	double reputation = 0; // by default
@@ -171,7 +167,7 @@ public:
 
 	void hire_employee(employee * employee);
 	void fire_employee(char * name);
-	
+
 	//instrument, guitar and piano all have the same sizes
 	// uses adm, memory must be freed after use of this function.
 	// save inventory and staff -- returns array with elements and size in argument // inventory gives as guitars, but they will be casted in the loading function. with isguitar member
@@ -181,7 +177,7 @@ public:
 	void fill_inventory(instrument * tab, int size); // allocates its own
 	void fill_staff(employee * tab, int size);	// allocates its own
 
-	// friends
+												// friends
 	friend class user_profile;
 };
 
@@ -195,7 +191,7 @@ private:
 	std::list<store *> stores;
 	store * active_store;
 	sf::Time time_elapsed = sf::seconds(0.0f);  // by omission time offset from 0 is 0. Used to calculate date (in game)
-	
+
 	char user[51];
 	double weekly_expenses;
 	double net_worth;
@@ -208,7 +204,7 @@ public:
 	user_profile(char * name);
 	user_profile(const user_profile & user); // does not copy the std::lists nor active store
 	~user_profile();
-	
+
 	store * get_active_store();
 	void set_active_store(store * active_store_new);
 	bool set_active_store(unsigned int store_id);
