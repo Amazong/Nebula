@@ -360,6 +360,7 @@ in_game::in_game(state_manager * game_ptr)
 	}
 
 	setup_options();
+	setup_indicators();
 }
 
 void in_game::update_buying_rate()
@@ -487,7 +488,10 @@ void in_game::draw(const float elapsed)
 
 	for (int i = 0; i < 4; i++)
 		game->window.draw(options[i]);
+	
 
+	for(int i = 0 ; i < 5 ; i++)
+		game->window.draw(indicators[i]);
 }		
 
 void in_game::setup()
@@ -519,7 +523,7 @@ void in_game::setup_options()
 			{
 				heat[i].setPosition(0, rectangle_size.y);
 				heat[i].scale(1.0f, 2.0f);
-				heat[i].setFillColor(sf::Color::Yellow);
+				heat[i].setFillColor(sf::Color::Transparent);
 				break;
 			}
 			case 2:
@@ -575,4 +579,19 @@ void in_game::setup_options()
 
 void in_game::setup_indicators()
 {
+
+	int offset = heat[1].getGlobalBounds().height / 5.0f;
+	
+	for (int i = 0; i < 5; i++)
+	{
+		indicators[i].setFont(options_font);
+		indicators[i].setCharacterSize((int)(game->window.getSize().y / 22.0f));
+		indicators[i].setString(indicators_str[i]);
+		indicators[i].setColor(sf::Color::White);
+		indicators[i].setOrigin((indicators[i].getGlobalBounds().width / 2.0f), (indicators[i].getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
+		indicators[i].setPosition(heat[1].getPosition());
+		indicators[i].move(heat[1].getGlobalBounds().width / 2.0f , (offset / 2.3f) + ( i*offset ) );
+
+	}
+
 }

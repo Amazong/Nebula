@@ -91,8 +91,10 @@ class in_game : public game_state
 {
 private:
 	const std::string options_str[4] = { "Staff", "Inventory", "Shop", "Finance" };
+	const std::string indicators_str[5] = {"Balance","Reputation","Game Time","Month's profits","Year's Profits"};
 	sf::Font options_font;
 	sf::Text options[4];
+	sf::Text indicators[5];
 	sf::RectangleShape heat[7];
 	double buying_rate;
 	int selection = -1;
