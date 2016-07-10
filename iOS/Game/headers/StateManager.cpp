@@ -85,5 +85,6 @@ int state_manager::game_loop()
 		window.display();
 	}
 
+	LOGGER::log("Program exited normally");
 	return 0;
 }

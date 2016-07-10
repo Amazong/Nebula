@@ -67,6 +67,6 @@ int main() {
 	state_manager game;
 
 	game.push_state(new main_menu(&game)); // startup state
-	
+
 	return game.game_loop();
 }

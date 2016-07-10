@@ -465,7 +465,7 @@ void store::sell_instrument(int position_offset)
 	reputation += 1;
 	reputation *= 1.01;
 	reputation -= 1;
-	LOGGER::log("You sold an item! Your reputation has increased");
+	LOGGER::log("Sold an item! Your reputation has increased");
 	if (reputation > 1) reputation = 1;
 
 	delete (*it); // memory management
@@ -477,7 +477,7 @@ void store::sell_instrument(int position_offset)
 void store::hire_employee(employee * employee)
 {
 	staff.push_back(employee); 
-	LOGGER::log("You just hired " + employee->get_name() + " for " + employee->get_salary());
+	LOGGER::log("Hired " + employee->get_name() + " for " + employee->get_salary() + "£ (peanuts)");
 }
 
 void store::fire_employee(char * name)
@@ -488,7 +488,7 @@ void store::fire_employee(char * name)
 	{
 		if (std::strcmp((*it)->name, name) == 0)
 		{
-			LOGGER::log("You just fired " + (*it)->get_name() + ". Will not be missed");
+			LOGGER::log("Fired " + (*it)->get_name() + ". Will not be missed");
 			
 			delete (*it);
 			*it = nullptr;
@@ -653,7 +653,7 @@ void user_profile::buy_store(store * store)
 {
 	if (this->net_worth >= store->value)
 	{
-		LOGGER::log("You just bought " + store->get_name_cpp() + " for " + store->get_value_cpp());
+		LOGGER::log("Bought " + store->get_name_cpp() + " for " + store->get_value_cpp() + "£ (peanuts)");
 		this->net_worth -= store->value;
 		stores.push_back(store);
 	}
