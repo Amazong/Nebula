@@ -1,7 +1,9 @@
+#pragma once
 #include <iostream>
-//#include <Windows.h> // to hide console; to uncomment on final version, together with code below
+#include <Windows.h> // to hide console
 #include "SFML\Graphics.hpp"
 #include "headers\GameWindows.h"
+#include "headers\Music.h"
 #include "headers\Errors.h"
 #include "headers\StateManager.h"
 #include "headers\GameStates.h"
@@ -37,8 +39,18 @@ int main() {
 	std::cout << "Done!\n" << t1.getElapsedTime().asMicroseconds();
 	std::cin.get();
 	}*/
-	
+
 	LOGGER::log("Program started");
+
+	MUSIC::set_m_player();
+
+	std::thread * music_player = nullptr;
+	music_player = new std::thread(&Music::loop, MUSIC::get_m_player());
+	LOGGER::log("Music started playing");
+
+
+
+
 
 	user_profile ACTIVE_USER;
 	

@@ -2,6 +2,7 @@
 #include <string>
 #include "StateManager.h"
 #include "SFML\Graphics.hpp"
+#include "Music.h"
 #include "GameMechanics.h"
 
 class game_state  // base class common to all derived states.

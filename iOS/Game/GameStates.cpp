@@ -112,6 +112,7 @@ void main_menu::input()
 						game->push_state(new options_menu(game)); //go to options
 						break;
 					case 3:
+						MUSIC::get_m_player()->set_quit(true);
 						game->window.close(); //quit
 						break;
 					default:

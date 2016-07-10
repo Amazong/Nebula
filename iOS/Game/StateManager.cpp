@@ -1,8 +1,8 @@
 #include <stack>
 #include "SFML\Graphics.hpp"
-#include "StateManager.h"
-#include "GameStates.h"
-#include "Errors.h"
+#include "headers\StateManager.h"
+#include "headers\GameStates.h"
+#include "headers\Errors.h"
 
 state_manager::state_manager()
 {
