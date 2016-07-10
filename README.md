@@ -5,6 +5,19 @@
 ### Introdução
 O iOS - Instrument Outlet Simulator é um jogo de simulação. Nele, o jogador toma o controlo de um conjunto de lojas de música. Comprando e vendendo instrumentos, e gerindo o pessoal, o objetivo é não ir à falência!
 
+### Funcionamento
+Quando o utilizador inicia o jogo pela primeira vez, será conduzido a um menu. Aqui, poderá tomar uma das seguintes decisões:
+1. **Criar um novo jogo** - neste caso, o utilizador irá configurar o seu perfil
+onde poderá configurar o seu perfil.
+
+### Estruturas de Dados
+Como está estruturado
+
+### Algoritmos
+e.g. algoritmo de compra, etc.
+
+### Conclusão
+
 
 
 ### Tecnologias Utilizadas
