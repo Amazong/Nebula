@@ -42,6 +42,8 @@ int main() {
 
 	user_profile ACTIVE_USER;
 	
+	ACTIVE_USER.set_difficulty(1);
+	
 	ACTIVE_USER.set_net_worth(2000000);
 	ACTIVE_USER.buy_store(new store(&ACTIVE_USER, "Downtown", 20000, 2));
 	ACTIVE_USER.set_active_store(ACTIVE_USER.get_back_store());

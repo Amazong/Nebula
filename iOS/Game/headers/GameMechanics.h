@@ -134,6 +134,7 @@ private:
 	std::list<instrument *> inventory;
 	std::list<employee *> staff;
 	enum area { poor, middle, rich } setting; // effect on buying formula
+	enum population { rural, town, city } placement;
 
 	char name[51];
 
@@ -155,7 +156,7 @@ private:
 public:
 	store() {};
 	store(const store & shop); // does not copy the std::lists nor the user pointer
-	store(user_profile * current, char * name, int value, int areacode); // areacode: 0-poor; 1-middle; 2-rich 
+	store(user_profile * current, char * name, int value, int areacode, int pop = 1); // areacode: 0-poor; 1-middle; 2-rich
 	~store();
 
 	store & operator = (const store & store);

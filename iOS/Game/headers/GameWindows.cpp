@@ -131,7 +131,7 @@ void show_textbox(std::string & str, unsigned int line_size, unsigned int char_s
 	sf::Font test_font;
 
 
-	std::string *  placeholder = get_string_tab(str, size, line_size);
+	std::string * placeholder = get_string_tab(str, size, line_size);
 
 	if (!test_font.loadFromFile("res/fonts/Roboto-Bold.ttf"))
 	{
@@ -158,7 +158,6 @@ void show_textbox(std::string & str, unsigned int line_size, unsigned int char_s
 		text[i].setPosition(pos);
 
 		pos.y += char_size;
-
 	}
 
 

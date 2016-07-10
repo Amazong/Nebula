@@ -13,3 +13,163 @@
 02:13:26 - Inventory emptied.
 02:13:26 - Your inventory is empty. Your reputation has decreased.
 02:13:28 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:27:51 - Program started.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:29:04 - Program started.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:29:41 - Program started.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:31:30 - Program started.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:31:57 - Program started.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:32:14 - Program started.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:33:08 - Program started.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:33:31 - Program started.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:35:11 - Program started.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:37:33 - Program started.
+02:37:33 - Bought Downtown for 20000.00£ (peanuts).
+02:37:33 - Bought Larrivee guitar for 200.00£ (peanuts).
+02:37:33 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+02:37:33 - Hired Cersei for 200000.00£ (peanuts).
+02:37:33 - Hired Ned Stark for 5000.00£ (peanuts).
+02:37:33 - Hired Jon Snow for 100000.00£ (peanuts).
+02:37:33 - Hired Sansa for 1000.00£ (peanuts).
+02:37:33 - The client didn't buy anything. Your reputation has decreased.
+02:37:33 - The client didn't buy anything. Your reputation has decreased.
+02:37:33 - The client didn't buy anything. Your reputation has decreased.
+02:37:33 - Sold Larrivee guitar for 1000.00£ (peanuts).
+02:37:33 - Sold an item! Your reputation has increased.
+02:37:33 - The client didn't buy anything. Your reputation has decreased.
+02:37:35 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:37:40 - Program started.
+02:37:40 - Bought Downtown for 20000.00£ (peanuts).
+02:37:40 - Bought Larrivee guitar for 200.00£ (peanuts).
+02:37:40 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+02:37:40 - Hired Cersei for 200000.00£ (peanuts).
+02:37:40 - Hired Ned Stark for 5000.00£ (peanuts).
+02:37:40 - Hired Jon Snow for 100000.00£ (peanuts).
+02:37:40 - Hired Sansa for 1000.00£ (peanuts).
+02:37:40 - The client didn't buy anything. Your reputation has decreased.
+02:37:40 - The client didn't buy anything. Your reputation has decreased.
+02:37:40 - Sold Larrivee guitar for 1000.00£ (peanuts).
+02:37:40 - Sold an item! Your reputation has increased.
+02:37:40 - The client didn't buy anything. Your reputation has decreased.
+02:37:40 - The client didn't buy anything. Your reputation has decreased.
+02:37:48 - Program exited normally.
