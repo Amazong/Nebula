@@ -8,9 +8,6 @@
 #include <cstdlib>
 #include <math.h>
 #include "Errors.h"
-// result of buying formula should be (for now) a flat rate (int) of chosen guitars to be sold per unit of time (to be defined)
-
-
 
 struct save_user //for saving user.
 {
@@ -20,7 +17,6 @@ struct save_user //for saving user.
 	double reputation;
 	int difficulty;
 };
-
 
 /*------------------------------ instrument ------------------------------*/
 
@@ -64,6 +60,12 @@ public:
 	quality::quality get_quality() { return own_quality; }
 
 	char * print_brand() { return brand; }
+	
+	// std::string returns
+	std::string print_brand_cpp() { std::string b = brand; return b; }
+	std::string print_type_cpp();
+	std::string get_value_cpp();
+	std::string get_price_cpp();
 
 	// friends
 	friend class store;
@@ -113,6 +115,10 @@ public:
 	employee() {};
 	employee(char * person, double value, int eff); // eff: 1-low; 2-neutral; 3-high
 
+	// string returns
+	std::string get_name() { std::string s = name; return s; }
+	std::string get_salary();
+
 	friend class store;
 };
 
@@ -125,7 +131,6 @@ class user_profile; // so it knows this exists
 class store
 {
 private:
-
 	std::list<instrument *> inventory;
 	std::list<employee *> staff;
 	enum area { poor, middle, rich } setting; // effect on buying formula
@@ -171,6 +176,7 @@ public:
 	// inventory management
 	int get_max_stock();
 	int get_stock();
+	std::list<instrument *> * get_inventory() { return &inventory; }
 	void buy_guitar(guitar * guitar); // needs access to user's attributes
 	void buy_piano(piano * piano); // to implement
 
@@ -189,6 +195,10 @@ public:
 
 	void fill_inventory(instrument * tab, int size); // allocates its own
 	void fill_staff(employee * tab, int size);	// allocates its own
+
+	// string returns
+	std::string get_name_cpp() { std::string s = name; return s; };
+	std::string get_value_cpp();
 
 	// friends
 	friend class user_profile;
@@ -239,7 +249,10 @@ public:
 	void load_store_inv(const user_profile * user, store & shop, int store_index);
 	void load_store_staff(const user_profile * user, store & shop, int store_index);
 
-	//friends
+	// string returns
+	std::string get_name_cpp() { std::string s = user; return s; }
+
+	// friends
 	friend class store;
 };
 

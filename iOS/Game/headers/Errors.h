@@ -17,17 +17,21 @@ namespace error {
 	void corrupt_profile();
 	void file_access();
 	void profile_not_found();
-}
+};
 
-class logger {
+class logger_file {
 private:
 	std::fstream file;
 	std::string file_name;
 
 public:
-	logger();
-	logger(std::string filename);
-	~logger();
+	logger_file();
+	logger_file(std::string filename);
+	~logger_file();
 	
 	void log(std::string);
+};
+
+namespace LOGGER {
+	extern void log(std::string str);
 };

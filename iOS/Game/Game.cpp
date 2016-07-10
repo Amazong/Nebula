@@ -6,6 +6,7 @@
 #include "headers\StateManager.h"
 #include "headers\GameStates.h"
 #include "headers\Crypto.h"
+#include "headers\GameMechanics.h"
 
 int main() {
 	//ShowWindow(GetConsoleWindow(), SW_HIDE);
@@ -37,11 +38,10 @@ int main() {
 	std::cin.get();
 	}*/
 	
-	logger logger;
-	logger.log("Program started");
+	LOGGER::log("Program started");
 
 	user_profile ACTIVE_USER;
-
+	
 	ACTIVE_USER.set_net_worth(2000000);
 	ACTIVE_USER.buy_store(new store(&ACTIVE_USER, "Downtown", 20000, 2));
 	ACTIVE_USER.set_active_store(ACTIVE_USER.get_back_store());
@@ -52,6 +52,9 @@ int main() {
 	ACTIVE_USER.get_active_store()->hire_employee(new employee("Jon Snow", 100000, 2));
 	ACTIVE_USER.get_active_store()->hire_employee(new employee("Sansa", 1000, 3));
 	
+	std::list<instrument *> * handler = ACTIVE_USER.get_active_store()->get_inventory();
+	handler->front()->set_price(1000);
+	handler->back()->set_price(50000);
 
 	ACTIVE_USER.get_active_store()->sell_algorithm();
 

@@ -9,6 +9,53 @@ void instrument::set_price(double price)
 	set_perceived_value(this->price / this->value);
 }
 
+std::string instrument::print_type_cpp()
+{
+	switch (own_type_piano) {
+	case 1:
+		return "digital";
+	case 2:
+		return "upright";
+	case 3:
+		return "grand";
+	default:
+		return "";
+	}
+	return std::string();
+}
+
+std::string instrument::get_value_cpp()
+{
+	int v = (int)(value * 100);
+	std::string s = std::to_string(v/100);
+	s += ".";
+	
+	if (v % 100 > 10) {
+		s += std::to_string(v % 100);
+	}
+	else {
+		(s += "0") += std::to_string(v % 100);
+	}
+
+	return s;
+}
+
+std::string instrument::get_price_cpp()
+{
+	int p = (int)(price * 100);
+	std::string s = std::to_string(p / 100);
+	s += ".";
+
+	if (p % 100 > 10) {
+		s += std::to_string(p % 100);
+	}
+	else {
+		(s += "0") += std::to_string(p % 100);
+	}
+
+	return s;
+}
+
 /*------------------------------ guitar ------------------------------*/
 
 guitar::guitar(double value, char * name)
@@ -133,6 +180,22 @@ employee::employee(char * person, double value, int eff) // eff: 1-low; 2-neutra
 	this->skill = efficiency(eff);
 }
 
+std::string employee::get_salary()
+{
+	int sal = (int)(salary * 100);
+	std::string s = std::to_string(sal / 100);
+	s += ".";
+
+	if (sal % 100 > 10) {
+		s += std::to_string(sal % 100);
+	}
+	else {
+		(s += "0") += std::to_string(sal % 100);
+	}
+
+	return s;
+}
+
 
 /*------------------------------ store ------------------------------*/
 
@@ -236,7 +299,9 @@ void store::buy_guitar(guitar * guitar)
 	if (user->net_worth >= guitar->value && inventory.size() < max_stock) // buying from wholesale
 	{
 		user->net_worth -= guitar->value;
-		this->inventory.push_back(guitar); 
+		this->inventory.push_back(guitar);
+		
+		LOGGER::log("Bought " + guitar->print_brand_cpp() + " guitar for " + guitar->get_value_cpp() + "£ (peanuts)");
 		return;
 	}
 	
@@ -249,6 +314,8 @@ void store::buy_piano(piano * piano)
 	{
 		user->net_worth -= piano->value;
 		this->inventory.push_back(piano);
+
+		LOGGER::log("Bought " + piano->print_type_cpp() + " " + piano->print_brand_cpp() + " piano for " + piano->get_value_cpp() + "£ (peanuts)");
 		return;
 	}
 
@@ -318,7 +385,7 @@ void store::sell_algorithm()
 		double desirability, service;
 
 		update_traffic();
-
+		
 		for (int i = traffic; i > 0; i--)
 		{
 			std::uniform_int_distribution<int> inventory_range(0, (inventory.size() - 1)); // random position to evaluate
@@ -347,13 +414,23 @@ void store::sell_algorithm()
 			double probability = desirability + service;
 
 			if (run_probability(probability)) {
+				if ((*instrument_it)->is_guitar) {
+					LOGGER::log("Sold " + (*instrument_it)->print_brand_cpp() + " guitar for " + (*instrument_it)->get_price_cpp() + "£ (peanuts)");
+				}
+				else {
+					LOGGER::log("Sold " + (*instrument_it)->print_type_cpp() + " " + (*instrument_it)->print_brand_cpp() + " piano for " + (*instrument_it)->get_price_cpp() + "£ (peanuts)");
+				}
+
 				sell_instrument(product_pos); // to be redefined upon piano class deployment	
+				
 				if (inventory.empty() || staff.empty()) {
 					for (int j = i; j > 0; j--) {
 						reputation += 1;
 						reputation *= 0.99;
 						reputation -= 1;
 					}
+					LOGGER::log("Inventory emptied"); 
+					LOGGER::log("Your inventory is empty. Your reputation has decreased");
 					break;
 				}
 				continue;
@@ -361,6 +438,7 @@ void store::sell_algorithm()
 			reputation += 1;
 			reputation *= 0.99;
 			reputation -= 1;
+			LOGGER::log("The client didn't buy anything. Your reputation has decreased");
 		}
 	}
 
@@ -368,6 +446,7 @@ void store::sell_algorithm()
 		reputation += 1;
 		reputation *= 0.99;
 		reputation -= 1;
+		LOGGER::log("Your inventory is empty. Reputation has decreased");
 		// deploy message your inventory is empty. (else)
 	}
 }
@@ -386,6 +465,7 @@ void store::sell_instrument(int position_offset)
 	reputation += 1;
 	reputation *= 1.01;
 	reputation -= 1;
+	LOGGER::log("You sold an item! Your reputation has increased");
 	if (reputation > 1) reputation = 1;
 
 	delete (*it); // memory management
@@ -397,6 +477,7 @@ void store::sell_instrument(int position_offset)
 void store::hire_employee(employee * employee)
 {
 	staff.push_back(employee); 
+	LOGGER::log("You just hired " + employee->get_name() + " for " + employee->get_salary());
 }
 
 void store::fire_employee(char * name)
@@ -405,13 +486,14 @@ void store::fire_employee(char * name)
 
 	for ( it = staff.begin() ; it != staff.end(); it++)
 	{
-
 		if (std::strcmp((*it)->name, name) == 0)
 		{
-
+			LOGGER::log("You just fired " + (*it)->get_name() + ". Will not be missed");
+			
 			delete (*it);
 			*it = nullptr;
 			staff.erase(it);
+
 			return;
 		}
 		
@@ -474,8 +556,6 @@ void store::fill_inventory(instrument * tab, int size)
 
 }
 
-
-
 void store::fill_staff(employee * tab, int size)
 {
 	//precaution
@@ -487,6 +567,22 @@ void store::fill_staff(employee * tab, int size)
 	}
 }
 
+std::string store::get_value_cpp()
+{
+	int v = (int)(value * 100);
+	std::string s = std::to_string(v / 100);
+	s += ".";
+
+	if (v % 100 > 10) {
+		s += std::to_string(v % 100);
+	}
+	else {
+		(s += "0") += std::to_string(v % 100);
+	}
+
+	return s;
+}
+
 
 /*------------------------------ user_profile ------------------------------*/
 
@@ -495,7 +591,6 @@ user_profile::user_profile(char * name)
 	strcpy_s(this->user, name);
 
 	weekly_expenses = reputation = net_worth = 0;
-
 }
 
 user_profile::user_profile(const user_profile & user)
@@ -558,6 +653,7 @@ void user_profile::buy_store(store * store)
 {
 	if (this->net_worth >= store->value)
 	{
+		LOGGER::log("You just bought " + store->get_name_cpp() + " for " + store->get_value_cpp());
 		this->net_worth -= store->value;
 		stores.push_back(store);
 	}
@@ -673,6 +769,8 @@ void user_profile::save_game()
 	if (fout.is_open() && ((&save) != nullptr))
 		fout.write((char *)&save, sizeof(save_user));
 
+	LOGGER::log("Game " + get_name_cpp() + " saved");
+
 	fout.close();
 }
 
@@ -755,6 +853,9 @@ void user_profile::load_game(std::string  profile_title)
 			if (line == profile_title)
 			{
 				load_user(profile_title);
+
+				LOGGER::log("Game " + get_name_cpp() + " loaded");
+
 				fin.close();
 				return;
 			}
@@ -762,12 +863,10 @@ void user_profile::load_game(std::string  profile_title)
 	}
 
 	error::trace_error(ErrNo::profile_not_found);
-
 }
 
 void user_profile::load_user(std::string & profile_title)
-{
-	
+{	
 	std::ifstream fin_2("saves/" + profile_title, std::ios::binary);
 
 	if (fin_2.fail())

@@ -42,7 +42,7 @@ void error::profile_not_found()
 	std::cerr << "Profile not found!";
 }
 
-logger::logger()
+logger_file::logger_file()
 {
 	SYSTEMTIME st;
 	GetLocalTime(&st);
@@ -66,7 +66,7 @@ logger::logger()
 		file << "                                              __\n";
 		file << "     ,                                      ,\" e`- - o\n";
 		file << "    ((                                     (  | __,'\n";
-		file << "     \\~----------------------------------' \_;/\n";
+		file << "     \\~----------------------------------' \\_;/\n";
 		file << "     (     Elvis Borges & João Ferreira       /\n";
 		file << "     /) ._________________________________.  )\n";
 		file << "    (( (                                  (( (\n";
@@ -81,7 +81,7 @@ logger::logger()
 	}
 }
 
-logger::logger(std::string filename)
+logger_file::logger_file(std::string filename)
 {
 	SYSTEMTIME st;
 	GetLocalTime(&st);
@@ -107,12 +107,12 @@ logger::logger(std::string filename)
 	}
 }
 
-logger::~logger()
+logger_file::~logger_file()
 {
 	file.close();
 }
 
-void logger::log(std::string str)
+void logger_file::log(std::string str)
 {
 	SYSTEMTIME st;
 	GetLocalTime(&st);
@@ -132,3 +132,11 @@ void logger::log(std::string str)
 	file << " - ";
 	file << str.c_str() << "." << std::endl;
 }
+
+namespace LOGGER {
+	logger_file * l = new logger_file;
+
+	void log(std::string str) {
+		return l->log(str);
+	}
+};
