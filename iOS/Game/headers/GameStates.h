@@ -64,9 +64,9 @@ public:
 class options_menu : public game_state
 {
 private:
-	const std::string options_str[4] = { "Back", "Music", "Difficulty", "Framerate" };
+	const std::string options_str[3] = { "Back", "Music", "Difficulty"};
 	sf::Font options_font;
-	sf::Text options[4];
+	sf::Text options[3];
 	double target_size;
 	sf::Clock t_clock;
 	sf::Texture background;

@@ -266,7 +266,7 @@ void options_menu::input()
 				
 				selection = -1; // this way the selection will always be -1 if it's not in one of the options
 			
-				for (int i = 0; i < 4; i++)
+				for (int i = 0; i < 3; i++)
 				{
 					if (options[i].getGlobalBounds().contains(mouse_pos))
 					{
@@ -316,7 +316,7 @@ void options_menu::draw(const float elapsed)
 {
 	game->window.draw(background_sprite); 
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		game->window.draw(options[i]);
 	}
@@ -332,7 +332,7 @@ void options_menu::setup_text()
 	int font_size = (int)(game->window.getSize().y / 13.5f); // from ideal 1080p ratios
 	int offset = (int)(game->window.getSize().y / 8.0f); // from ideal 1080p ratios
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		options[i].setFont(options_font);
 		options[i].setCharacterSize(font_size);
