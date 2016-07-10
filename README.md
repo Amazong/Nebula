@@ -10,20 +10,20 @@ O iOS - Instrument Outlet Simulator é um jogo de simulação. Nele, o jogador t
 ### Tecnologias Utilizadas
 
 ##### Para o código:
-- SFML.
-- GitHub, para controlo de versões e monitorização de bugs.
-- Visual Studio como IDE de C++.
+- **SFML**.
+- **GitHub**, para controlo de versões e monitorização de bugs.
+- **Visual Studio 2015** como IDE de C++.
  
 ##### Para colaboração:
-- Google Docs/Drawings para colaboração em tempo real e planeamento.
-- Slack para brainstorming, arquivo, comunicação geral.
+- **Google Docs/Drawings** para colaboração em tempo real e planeamento.
+- **Slack** para brainstorming, arquivo, comunicação geral.
 
 ##### Para design:
-- Photoshop para desenhar mockups e edição de fotos.
-- Marvel para sincronização de mockups e experimentação de UX.
+- **Photoshop** para desenhar mockups e edição de fotos.
+- **Marvel** para sincronização de mockups e experimentação de UX.
 
 ##### Para edição de música:
-- Adobe Audition, para edição das músicas, que gravámos na casa do João.
+- **Adobe Audition**, para edição das músicas, que gravámos na casa do João.
  
 
 ### Fontes:
