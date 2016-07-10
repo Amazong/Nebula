@@ -209,19 +209,29 @@ store::store(const store & shop)
 	value = shop.value;
 	traffic = shop.traffic;
 	buying_rate = shop.buying_rate;
+	placement = shop.placement;
 
 	inventory.clear();
 	staff.clear();
 }
 
-store::store(user_profile * current, char * name, int value, int areacode) // areacode: 0-poor; 1-middle; 2-rich 
+store::store(user_profile * current, char * name, int value, int areacode, int pop) // areacode: 0-poor; 1-middle; 2-rich 
 {
 	this->value = value;
 	this->user = current;
 	strcpy_s(this->name, name);
 
+	placement = static_cast<population>(pop);
+
 	this->setting = static_cast<area>(areacode);
 	this->max_stock = 50 + 10 * setting; // can be altered, formula for max inventory
+
+	double t;
+	t = 0.5 * ((3 - user->difficulty) / 3.0);
+	t += 0.5 * ((placement + 1) / 3.0);
+	t *= (5.0);
+	
+	traffic = (int)(t+0.5);
 
 	inventory.clear();
 	staff.clear();
@@ -255,6 +265,7 @@ store & store::operator=(const store & shop)
 	strcpy_s(this->name, shop.name);
 	inventory.clear();
 	staff.clear();
+	placement = shop.placement;
 
 	return(*this);
 }
