@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Errors.h"
 
 // suggested error naming scheme:
@@ -40,5 +39,104 @@ void error::file_access()
 
 void error::profile_not_found()
 {
-	std::cerr << "Profile not found ";
+	std::cerr << "Profile not found!";
 }
+
+logger_file::logger_file()
+{
+	SYSTEMTIME st;
+	GetLocalTime(&st);
+
+	file_name = "logs/log_";
+	file_name += (st.wDay >= 10) ? std::to_string(st.wDay) : "0" + std::to_string(st.wDay);
+	file_name += "-";
+	file_name += (st.wMonth >= 10) ? std::to_string(st.wMonth) : "0" + std::to_string(st.wMonth);
+	file_name += "-";
+	file_name += std::to_string(st.wYear);
+	file_name += ".txt";
+	
+	file.open(file_name, std::ios::in);
+
+	if (file.is_open()) {
+		file.close();
+		file.open(file_name, std::ios::app | std::ios::out);
+		file << "\n";
+		
+		// ASCII art:
+		file << "                                              __\n";
+		file << "     ,                                      ,\" e`- - o\n";
+		file << "    ((                                     (  | __,'\n";
+		file << "     \\~----------------------------------' \\_;/\n";
+		file << "     (     Elvis Borges & João Ferreira       /\n";
+		file << "     /) ._________________________________.  )\n";
+		file << "    (( (                                  (( (\n";
+		file << "     ``-'                                  ``-'\n";
+
+		
+		file << "\n\n";
+	}
+	else {
+		file.close();
+		file.open(file_name, std::ios::app | std::ios::out);
+	}
+}
+
+logger_file::logger_file(std::string filename)
+{
+	SYSTEMTIME st;
+	GetLocalTime(&st);
+
+	file_name = "logs/" + filename + "_";
+	file_name += (st.wDay >= 10) ? std::to_string(st.wDay) : "0" + std::to_string(st.wDay);
+	file_name += "-";
+	file_name += (st.wMonth >= 10) ? std::to_string(st.wMonth) : "0" + std::to_string(st.wMonth);
+	file_name += "-";
+	file_name += std::to_string(st.wYear);
+	file_name += ".txt";
+
+	file.open(file_name, std::ios::in);
+
+	if (file.is_open()) {
+		file.close();
+		file.open(file_name, std::ios::app | std::ios::out);
+		file << "\n-------------------------------------\n";
+	}
+	else {
+		file.close();
+		file.open(file_name, std::ios::app | std::ios::out);
+	}
+}
+
+logger_file::~logger_file()
+{
+	file.close();
+}
+
+void logger_file::log(std::string str)
+{
+	SYSTEMTIME st;
+	GetLocalTime(&st);
+
+	std::string partial;
+
+	partial = (st.wHour >= 10) ? std::to_string(st.wHour) : ("0" + std::to_string(st.wHour));
+	file << partial;
+	file << ":";
+	
+	partial = (st.wMinute >= 10) ? std::to_string(st.wMinute) : ("0" + std::to_string(st.wMinute));
+	file << partial;
+	file << ":";
+	
+	partial = (st.wSecond >= 10) ? std::to_string(st.wSecond) : ("0" + std::to_string(st.wSecond));
+	file << partial;
+	file << " - ";
+	file << str.c_str() << "." << std::endl;
+}
+
+namespace LOGGER {
+	logger_file * l = new logger_file;
+
+	void log(std::string str) {
+		return l->log(str);
+	}
+};

@@ -84,4 +84,7 @@ int state_manager::game_loop()
 		peek_state()->draw(elapsed.asSeconds());
 		window.display();
 	}
+
+	LOGGER::log("Program exited normally");
+	return 0;
 }

@@ -1,0 +1,15 @@
+02:13:26 - Program started.
+02:13:26 - Bought Downtown for 20000.00£ (peanuts).
+02:13:26 - Bought Larrivee guitar for 200.00£ (peanuts).
+02:13:26 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+02:13:26 - Hired Cersei for 200000.00£ (peanuts).
+02:13:26 - Hired Ned Stark for 5000.00£ (peanuts).
+02:13:26 - Hired Jon Snow for 100000.00£ (peanuts).
+02:13:26 - Hired Sansa for 1000.00£ (peanuts).
+02:13:26 - Sold Larrivee guitar for 1000.00£ (peanuts).
+02:13:26 - Sold an item! Your reputation has increased.
+02:13:26 - Sold digital Steinway & Sons piano for 50000.00£ (peanuts).
+02:13:26 - Sold an item! Your reputation has increased.
+02:13:26 - Inventory emptied.
+02:13:26 - Your inventory is empty. Your reputation has decreased.
+02:13:28 - Program exited normally.

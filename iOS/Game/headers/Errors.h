@@ -1,4 +1,8 @@
 #pragma once
+#include <iostream>
+#include <fstream>
+#include <Windows.h>
+#include <string>
 
 enum ErrNo
 {
@@ -13,4 +17,21 @@ namespace error {
 	void corrupt_profile();
 	void file_access();
 	void profile_not_found();
-}
+};
+
+class logger_file {
+private:
+	std::fstream file;
+	std::string file_name;
+
+public:
+	logger_file();
+	logger_file(std::string filename);
+	~logger_file();
+	
+	void log(std::string);
+};
+
+namespace LOGGER {
+	extern void log(std::string str);
+};

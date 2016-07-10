@@ -6,6 +6,7 @@
 #include "headers\StateManager.h"
 #include "headers\GameStates.h"
 #include "headers\Crypto.h"
+#include "headers\GameMechanics.h"
 
 int main() {
 	//ShowWindow(GetConsoleWindow(), SW_HIDE);
@@ -16,7 +17,8 @@ int main() {
 	/*if (render_splash() == 42) {
 		return error::file_access();
 	}*/
-
+	
+	/*{
 	// TESTING CRYPTO
 
 	CryptoKey k("LoremIpsum"); // include repeating mode
@@ -34,14 +36,37 @@ int main() {
 	if (!f.decrypt("meow.txt", k)) return -1;
 	std::cout << "Done!\n" << t1.getElapsedTime().asMicroseconds();
 	std::cin.get();
+	}*/
+	
+	LOGGER::log("Program started");
 
+	user_profile ACTIVE_USER;
+	
+	ACTIVE_USER.set_net_worth(2000000);
+	ACTIVE_USER.buy_store(new store(&ACTIVE_USER, "Downtown", 20000, 2));
+	ACTIVE_USER.set_active_store(ACTIVE_USER.get_back_store());
+	ACTIVE_USER.get_active_store()->buy_guitar(new guitar(200, "Larrivee"));
+	ACTIVE_USER.get_active_store()->buy_piano(new piano(piano_brands::Steinway, piano_type::Digital, quality::Poor));
+	ACTIVE_USER.get_active_store()->hire_employee(new employee("Cersei", 200000, 3));
+	ACTIVE_USER.get_active_store()->hire_employee(new employee("Ned Stark", 5000, 1));
+	ACTIVE_USER.get_active_store()->hire_employee(new employee("Jon Snow", 100000, 2));
+	ACTIVE_USER.get_active_store()->hire_employee(new employee("Sansa", 1000, 3));
+	
+	std::list<instrument *> * handler = ACTIVE_USER.get_active_store()->get_inventory();
+	handler->front()->set_price(1000);
+	handler->back()->set_price(50000);
 
+	ACTIVE_USER.get_active_store()->sell_algorithm();
+
+	
+
+	// ----------------------------------------------------------
 	std::string alala("Hello Game World, this is iOS.");
 
 	show_textbox(alala, 30, 16);
 	state_manager game;
 
 	game.push_state(new main_menu(&game)); // startup state
-	
+
 	return game.game_loop();
 }

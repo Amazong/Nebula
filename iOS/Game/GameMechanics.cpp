@@ -9,6 +9,53 @@ void instrument::set_price(double price)
 	set_perceived_value(this->price / this->value);
 }
 
+std::string instrument::print_type_cpp()
+{
+	switch (own_type_piano) {
+	case 1:
+		return "digital";
+	case 2:
+		return "upright";
+	case 3:
+		return "grand";
+	default:
+		return "";
+	}
+	return std::string();
+}
+
+std::string instrument::get_value_cpp()
+{
+	int v = (int)(value * 100);
+	std::string s = std::to_string(v/100);
+	s += ".";
+	
+	if (v % 100 > 10) {
+		s += std::to_string(v % 100);
+	}
+	else {
+		(s += "0") += std::to_string(v % 100);
+	}
+
+	return s;
+}
+
+std::string instrument::get_price_cpp()
+{
+	int p = (int)(price * 100);
+	std::string s = std::to_string(p / 100);
+	s += ".";
+
+	if (p % 100 > 10) {
+		s += std::to_string(p % 100);
+	}
+	else {
+		(s += "0") += std::to_string(p % 100);
+	}
+
+	return s;
+}
+
 /*------------------------------ guitar ------------------------------*/
 
 guitar::guitar(double value, char * name)
@@ -17,9 +64,19 @@ guitar::guitar(double value, char * name)
 	this->price = this->value = value;
 	strcpy_s(this->brand, name);
 
-	set_perceived_value(this->price / this->value);
+	own_brand_piano = piano_brands::NA;
+	own_type_piano = piano_type::NA;
+	own_quality = quality::NA;
 
+	set_perceived_value(this->price / this->value);
  }
+
+guitar::guitar(piano_brands::piano_brands brand, piano_type::piano_type type, quality::quality quality)
+{
+	own_brand_piano = piano_brands::NA;
+	own_type_piano = piano_type::NA;
+	own_quality = quality;
+}
 
 
 void guitar::set_perceived_value(double ratio)
@@ -41,14 +98,58 @@ void guitar::set_perceived_value(double ratio)
 
 /*------------------------------ piano ------------------------------*/
 
-piano::piano(double value, char * name)
+piano::piano(double value, char * brand) {
+	is_guitar = false;
+
+	this->price = this->value = value;
+
+	set_perceived_value(this->price/this->value);
+
+	for (int i = 0; i < 5; i++) {
+		if (strcmp(brand, piano_brands[i]) == 0) {
+			own_brand_piano = static_cast<piano_brands::piano_brands>(i+1);
+			strcpy_s(this->brand, brand);
+			break;
+		}
+		own_brand_piano = piano_brands::NA;
+	}
+
+	own_quality = quality::NA;
+	own_type_piano = piano_type::NA;
+}
+
+piano::piano(piano_brands::piano_brands brand, piano_type::piano_type type, quality::quality quality)
 {
 	is_guitar = false;
-	this->price = this->value = value;
-	strcpy_s(this->brand, name);
 
-	set_perceived_value(this->price / this->value);
+	// fuck you if NA
 
+	switch (type) { // set maximum price for type
+	case 1:
+		value = 1500;
+		break;
+	case 2:
+		value = 5000;
+		break;
+	case 3:
+		value = 50000;
+		break;
+	default:
+		break;
+	}
+	
+	value *= ((0.6 * brand + 0.4 * quality) / 4.2); // calculate real value
+
+	price = value;
+	own_brand_piano = brand;
+	own_type_piano = type;
+	own_quality = quality;
+	
+	if (own_brand_piano != 0){
+		strcpy_s(this->brand, piano_brands[own_brand_piano - 1]);
+	}
+
+	set_perceived_value(this->price / this->value); // update purchasing power
 }
 
 
@@ -58,13 +159,13 @@ void piano::set_perceived_value(double ratio)
 		purchasing_power = perceived_value::irresistible;
 	else if (ratio <= 1.5 && ratio > 0.1)
 		purchasing_power = perceived_value::cheap;
-	else if (ratio <= 3 && ratio > 1.5)
+	else if (ratio <= 2 && ratio > 1.5)
 		purchasing_power = perceived_value::neutral;
-	else if (ratio <= 5 && ratio > 3)
+	else if (ratio <= 3 && ratio > 2)
 		purchasing_power = perceived_value::high;
-	else if (ratio <= 10 && ratio > 5)
+	else if (ratio <= 5 && ratio > 3)
 		purchasing_power = perceived_value::overpriced;
-	else if (ratio > 10)
+	else if (ratio > 5)
 		purchasing_power = perceived_value::unattainable;
 }
 
@@ -72,11 +173,27 @@ void piano::set_perceived_value(double ratio)
 /*------------------------------ employee ------------------------------*/
 
 
-employee::employee(char * person, double value, int num) // num: 0-low; 1-neutral; 2-high
+employee::employee(char * person, double value, int eff) // eff: 1-low; 2-neutral; 3-high
 {
 	strcpy_s(this->name, person);
 	salary = value;
-	this->skill = efficiency(num);
+	this->skill = efficiency(eff);
+}
+
+std::string employee::get_salary()
+{
+	int sal = (int)(salary * 100);
+	std::string s = std::to_string(sal / 100);
+	s += ".";
+
+	if (sal % 100 > 10) {
+		s += std::to_string(sal % 100);
+	}
+	else {
+		(s += "0") += std::to_string(sal % 100);
+	}
+
+	return s;
 }
 
 
@@ -97,13 +214,13 @@ store::store(const store & shop)
 	staff.clear();
 }
 
-store::store(user_profile * current, char * name, int value, int num) // num: 0-poor; 1-middle; 2-rich 
+store::store(user_profile * current, char * name, int value, int areacode) // areacode: 0-poor; 1-middle; 2-rich 
 {
 	this->value = value;
 	this->user = current;
 	strcpy_s(this->name, name);
 
-	this->setting = static_cast<area>(num);
+	this->setting = static_cast<area>(areacode);
 	this->max_stock = 50 + 10 * setting; // can be altered, formula for max inventory
 
 	inventory.clear();
@@ -142,12 +259,49 @@ store & store::operator=(const store & shop)
 	return(*this);
 }
 
+// averages
+void store::update_average_purchasing_power() {
+	double purchasing_power = 0;
+	int n = 0;
+
+	for (auto it = inventory.begin(); it != inventory.end(); it++) {
+		purchasing_power += (*it)->get_perceived_value();
+		n++;
+	}
+	
+	if (n == 0) {
+		average_purchasing_power = -1;
+		return;
+	}
+
+	average_purchasing_power = purchasing_power / n;
+}
+
+void store::update_average_efficiency() {
+	double tot_efficiency = 0;
+	int n = 0;
+
+	for (auto it = staff.begin(); it != staff.end(); it++) {
+		tot_efficiency += (*it)->skill;
+		n++;
+	}
+
+	if (n == 0) {
+		average_efficiency = -1;
+		return;
+	}
+
+	average_efficiency = tot_efficiency / n;
+}
+
 void store::buy_guitar(guitar * guitar)
 {
 	if (user->net_worth >= guitar->value && inventory.size() < max_stock) // buying from wholesale
 	{
 		user->net_worth -= guitar->value;
-		this->inventory.push_back(guitar); 
+		this->inventory.push_back(guitar);
+		
+		LOGGER::log("Bought " + guitar->print_brand_cpp() + " guitar for " + guitar->get_value_cpp() + "£ (peanuts)");
 		return;
 	}
 	
@@ -160,10 +314,54 @@ void store::buy_piano(piano * piano)
 	{
 		user->net_worth -= piano->value;
 		this->inventory.push_back(piano);
+
+		LOGGER::log("Bought " + piano->print_type_cpp() + " " + piano->print_brand_cpp() + " piano for " + piano->get_value_cpp() + "£ (peanuts)");
 		return;
 	}
 
 	// else we need to deploy a message error (warning window)
+}
+
+bool store::run_probability(double prob)
+{
+	std::mt19937 random_numbers(rd());
+
+	std::uniform_real_distribution<double> range(0.0, 1.0);
+
+	double number = range(random_numbers);
+
+	if (number > prob) return false;
+	return true;
+}
+
+void store::update_traffic()
+{
+	double weeks_in_year = user->time_elapsed.asSeconds();
+	weeks_in_year = ((int)weeks_in_year % 520) / 10;
+
+	double traffic_double = 2.5 * (1 + reputation) + 2 * cos((weeks_in_year / 26) * (atan(1) * 4));
+	
+	switch (user->difficulty)
+	{
+	case 0:
+		traffic_double += 1;
+		break;
+	case 1:
+		break;
+	case 2:
+		traffic_double -= 1;
+		break;
+	default:
+		break;
+	}
+
+	if (traffic_double < 0) {
+		traffic = 0;
+		return;
+	}
+
+	traffic_double += 0.5;
+	traffic = (int)traffic_double;
 }
 
 int store::get_max_stock()
@@ -181,21 +379,76 @@ void store::sell_algorithm()
 	if (!inventory.empty()) // only when inventory is not empty
 	{
 		std::mt19937 random_numbers(rd()); // random number generator algorithm
-		int position;
+		int product_pos;
+		int employee_pos;
 
-		for ( int i = buying_rate ; i != 0; i-- )
+		double desirability, service;
+
+		update_traffic();
+		
+		for (int i = traffic; i > 0; i--)
 		{
-			std::uniform_int_distribution<int> inventory_range(0, (inventory.size() - 1)); // random position to eliminate
+			std::uniform_int_distribution<int> inventory_range(0, (inventory.size() - 1)); // random position to evaluate
+			std::uniform_int_distribution<int> staff_range(0, (staff.size() - 1)); // random staff member to help
 
-			position = inventory_range(random_numbers); // position 0 -> size-1
+			product_pos = inventory_range(random_numbers); // position 0 -> size-1
+			employee_pos = staff_range(random_numbers); // position 0 -> size-1
 
-			sell_instrument(position); // to be redefined upon piano class deployment
+			// do the math
+			update_averages();
 
+			std::list<instrument *>::iterator instrument_it = inventory.begin();
+			for (int j = product_pos; j > 0; j--) {
+				instrument_it++;
+			}
+			desirability = ((setting + 1)/3.0) * (0.3 * (get_average_purchasing_power() / 5.0) + 0.7 * ((*instrument_it)->get_perceived_value()) / 5.0);
+			desirability *= 0.6;
 
+			std::list<employee *>::iterator employee_it = staff.begin();
+			for (int j = employee_pos; j > 0; j--) {
+				employee_it++;
+			}
+			service = 0.3 * (get_average_efficiency() / 3.0) + 0.7 * ((*employee_it)->skill / 3.0);
+			service *= 0.4;
+
+			double probability = desirability + service;
+
+			if (run_probability(probability)) {
+				if ((*instrument_it)->is_guitar) {
+					LOGGER::log("Sold " + (*instrument_it)->print_brand_cpp() + " guitar for " + (*instrument_it)->get_price_cpp() + "£ (peanuts)");
+				}
+				else {
+					LOGGER::log("Sold " + (*instrument_it)->print_type_cpp() + " " + (*instrument_it)->print_brand_cpp() + " piano for " + (*instrument_it)->get_price_cpp() + "£ (peanuts)");
+				}
+
+				sell_instrument(product_pos); // to be redefined upon piano class deployment	
+				
+				if (inventory.empty() || staff.empty()) {
+					for (int j = i; j > 0; j--) {
+						reputation += 1;
+						reputation *= 0.99;
+						reputation -= 1;
+					}
+					LOGGER::log("Inventory emptied"); 
+					LOGGER::log("Your inventory is empty. Your reputation has decreased");
+					break;
+				}
+				continue;
+			}
+			reputation += 1;
+			reputation *= 0.99;
+			reputation -= 1;
+			LOGGER::log("The client didn't buy anything. Your reputation has decreased");
 		}
 	}
 
-	// deploy message your inventory is empty. (else)
+	else {
+		reputation += 1;
+		reputation *= 0.99;
+		reputation -= 1;
+		LOGGER::log("Your inventory is empty. Reputation has decreased");
+		// deploy message your inventory is empty. (else)
+	}
 }
 
 void store::sell_instrument(int position_offset)
@@ -209,7 +462,11 @@ void store::sell_instrument(int position_offset)
 
 	// *it -> pointer to guitar
 	user->net_worth += (*it)->price;
-	this->reputation += ((*it)->value * 0.05); // 5% of inventory's value added to store reputation
+	reputation += 1;
+	reputation *= 1.01;
+	reputation -= 1;
+	LOGGER::log("Sold an item! Your reputation has increased");
+	if (reputation > 1) reputation = 1;
 
 	delete (*it); // memory management
 
@@ -220,6 +477,7 @@ void store::sell_instrument(int position_offset)
 void store::hire_employee(employee * employee)
 {
 	staff.push_back(employee); 
+	LOGGER::log("Hired " + employee->get_name() + " for " + employee->get_salary() + "£ (peanuts)");
 }
 
 void store::fire_employee(char * name)
@@ -228,13 +486,14 @@ void store::fire_employee(char * name)
 
 	for ( it = staff.begin() ; it != staff.end(); it++)
 	{
-
 		if (std::strcmp((*it)->name, name) == 0)
 		{
-
+			LOGGER::log("Fired " + (*it)->get_name() + ". Will not be missed");
+			
 			delete (*it);
 			*it = nullptr;
 			staff.erase(it);
+
 			return;
 		}
 		
@@ -280,7 +539,7 @@ employee * store::staff_tab(int & size)
 	return (tab);
 }
 
-void store::fill_inventory(guitar * tab, int size)
+void store::fill_inventory(instrument * tab, int size)
 {
 	//precaution
 	inventory.clear();
@@ -288,17 +547,14 @@ void store::fill_inventory(guitar * tab, int size)
 	for (int i = 0; i < size; i++)
 	{
 		if (tab[i].is_guitar)
-			inventory.push_back(new guitar(tab[i]));
+			inventory.push_back(new guitar(tab[i].value, tab[i].brand));
 		else
 		{
-
-			inventory.push_back(new piano(tab[i].value, tab[i].brand));
+			inventory.push_back(new piano(tab[i].get_brand_piano(), tab[i].get_type_piano(), tab[i].get_quality()));
 		}
 	}
 
 }
-
-
 
 void store::fill_staff(employee * tab, int size)
 {
@@ -311,8 +567,21 @@ void store::fill_staff(employee * tab, int size)
 	}
 }
 
+std::string store::get_value_cpp()
+{
+	int v = (int)(value * 100);
+	std::string s = std::to_string(v / 100);
+	s += ".";
 
+	if (v % 100 > 10) {
+		s += std::to_string(v % 100);
+	}
+	else {
+		(s += "0") += std::to_string(v % 100);
+	}
 
+	return s;
+}
 
 
 /*------------------------------ user_profile ------------------------------*/
@@ -321,8 +590,7 @@ user_profile::user_profile(char * name)
 {
 	strcpy_s(this->user, name);
 
-	weekly_expenses = reputation = difficulty = net_worth = 0;
-
+	weekly_expenses = reputation = net_worth = 0;
 }
 
 user_profile::user_profile(const user_profile & user)
@@ -383,8 +651,9 @@ bool user_profile::set_active_store(unsigned int store_id)
 
 void user_profile::buy_store(store * store)
 {
-	if ( this->net_worth >= store->value)
+	if (this->net_worth >= store->value)
 	{
+		LOGGER::log("Bought " + store->get_name_cpp() + " for " + store->get_value_cpp() + "£ (peanuts)");
 		this->net_worth -= store->value;
 		stores.push_back(store);
 	}
@@ -392,11 +661,11 @@ void user_profile::buy_store(store * store)
 
 void user_profile::save_game()
 {
-
+	std::string user = "saves/";
 	if (!stores.empty())
 	{
 		std::list<store *>::iterator it = stores.begin();
-		int	 n_stores = stores.size(), n_staff, n_inventory;
+		int	n_stores = stores.size(), n_staff, n_inventory;
 
 		store * store_ptr = new store[n_stores];
 		store * temp = nullptr;
@@ -404,7 +673,7 @@ void user_profile::save_game()
 		guitar * inventory = nullptr;
 		employee * people = nullptr;
 
-		std::string user = user;
+		user += this->user;
 
 		for (int i = 0; i < n_stores && it != stores.end(); i++, it++)
 		{
@@ -438,47 +707,41 @@ void user_profile::save_game()
 
 		if (store_ptr != nullptr)
 		{
-			delete[]  store_ptr;
+			delete[] store_ptr;
 			store_ptr = nullptr;
 		}
 	} //if empty stores, it wont save any (empty stores). also, if stores file is corrupted, you'll be loaded with no store.
 
-	std::ifstream fin("users");
+	std::ifstream fin("saves/users");
 	std::ofstream fout;
 
 	if (fin.fail())
 	{
-
-		fout.open("users");
+		fout.open("saves/users");
 
 		if (fout.fail())
 			error::trace_error(ErrNo::file_access);
 			
-	
-
 		if (fout.is_open())
-			fout << user << "\n";
+			fout << this->user << "\n";
 
 		fout.close();
-
-
 	}
-	else //does not repeat writing the user  if already there 
+	else //does not repeat writing the user if already there 
 	{
 		std::string line, line_2 = user;
 		bool is_there = false;
 		while (std::getline(fin, line))
 		{
-			if (line_2 == line)
+			if (line_2 == line) {
 				is_there = true;
-
-			if (is_there)
 				break;
+			}
 		}
 
 		if (!is_there)
 		{
-			fout.open("users", std::ios::app);
+			fout.open("saves/users", std::ios::app);
 
 			if (fout.fail())
 				error::trace_error(ErrNo::file_access);
@@ -499,15 +762,16 @@ void user_profile::save_game()
 	save.net_worth = net_worth;
 	save.reputation = reputation;
 	save.weekly_expenses = weekly_expenses;
-	strcpy_s(save.user, user);
+	strcpy_s(save.user, this->user);
 
 	fout.seekp(0, std::ios::beg);
 
 	if (fout.is_open() && ((&save) != nullptr))
 		fout.write((char *)&save, sizeof(save_user));
 
-	fout.close();
+	LOGGER::log("Game " + get_name_cpp() + " saved");
 
+	fout.close();
 }
 
 void user_profile::save_inventories(std::string  user, const  guitar * tab, int size, int store_index)
@@ -575,9 +839,7 @@ void user_profile::save_stores(std::string  user, const store * tab, int size)
 
 void user_profile::load_game(std::string  profile_title)
 {
-
-	std::ifstream fin("users");
-
+	std::ifstream fin("saves/users");
 
 	if (fin.fail())
 		error::trace_error(ErrNo::file_access);
@@ -591,6 +853,9 @@ void user_profile::load_game(std::string  profile_title)
 			if (line == profile_title)
 			{
 				load_user(profile_title);
+
+				LOGGER::log("Game " + get_name_cpp() + " loaded");
+
 				fin.close();
 				return;
 			}
@@ -598,13 +863,11 @@ void user_profile::load_game(std::string  profile_title)
 	}
 
 	error::trace_error(ErrNo::profile_not_found);
-
 }
 
 void user_profile::load_user(std::string & profile_title)
-{
-
-	std::ifstream fin_2(profile_title, std::ios::binary);
+{	
+	std::ifstream fin_2("saves/" + profile_title, std::ios::binary);
 
 	if (fin_2.fail())
 		error::trace_error(ErrNo::file_access);
@@ -631,7 +894,8 @@ void user_profile::load_user(std::string & profile_title)
 
 void user_profile::load_stores(user_profile * user)
 {
-	std::string file_name = user->user;
+	std::string file_name = "saves/";
+	file_name += user->user;
 	file_name += ".Stores";
 
 	std::ifstream fin(file_name, std::ios::binary);
@@ -664,23 +928,20 @@ void user_profile::load_stores(user_profile * user)
 
 	for (int i = 0; tab_ptr != nullptr, i < size; i++)
 	{
-
-
 		user->stores.push_back(new store(tab_ptr[i]));
 
 		load_store_inv(user, (*stores.back()), i);
 		load_store_staff(user, (*stores.back()), i);
 	}
 
-
 	free(tab_ptr);
 	tab_ptr = nullptr;
-	
 }
 
 void user_profile::load_store_inv(const user_profile * user, store & shop, int store_index)
 {
-	std::string file_name = user->user;
+	std::string file_name = "saves/";
+	file_name += user->user;
 	file_name += ".Store_inventory";
 	file_name.push_back(store_index);
 
@@ -712,17 +973,16 @@ void user_profile::load_store_inv(const user_profile * user, store & shop, int s
 		return;
 	}
 
-
 	shop.fill_inventory(tab_ptr, size); // this function allocates its own 
 
 	free(tab_ptr);
 	tab_ptr = nullptr;
-
 }
 
 void user_profile::load_store_staff(const user_profile * user, store & shop, int store_index)
 {
-	std::string file_name = user->user;
+	std::string file_name = "saves/";
+	file_name += user->user;
 	file_name += ".Store_staff";
 	file_name.push_back(store_index);
 
@@ -730,7 +990,6 @@ void user_profile::load_store_staff(const user_profile * user, store & shop, int
 
 	if (fin.fail())
 		error::trace_error(ErrNo::file_access);
-
 
 	int size;
 	employee * tab_ptr = nullptr;
@@ -752,14 +1011,9 @@ void user_profile::load_store_staff(const user_profile * user, store & shop, int
 		error::trace_error(ErrNo::file_access);
 		return;
 	}
-
-
-	shop.fill_staff(tab_ptr, size); // this function  allocates its own 
-
-
-	free(tab_ptr);
-	tab_ptr = nullptr;
 	
+	shop.fill_staff(tab_ptr, size); // this function  allocates its own 
+	
+	free(tab_ptr);
+	tab_ptr = nullptr;	
 }
-
-
