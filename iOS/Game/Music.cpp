@@ -30,7 +30,6 @@ std::string Music::get_random()
 
 void Music::loop()
 {
-	sf::Time fade = sf::seconds(2.0f);
 	playing_now->setVolume(0);
 	playing_now->play();
 	LOGGER::log("Started playing " + playing_now_str);
@@ -108,10 +107,20 @@ void Music::loop()
 			continue;
 		}
 
+		if (!stop) continue;
+
 		while (stop) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		}
 
+		if (skip) { // accounts for skipping while stopped
+			delete playing_now;
+			playing_now = playing_next;
+			skip = false;
+			playing_next = new sf::Music;
+		}
+
+		// fade in for resuming after stopping
 		playing_now->setVolume(0);
 		playing_now->play();
 		for (float i = 0; i <= 100; i += 5) {
@@ -123,10 +132,10 @@ void Music::loop()
 }
 
 namespace MUSIC {
-	Music * m_player;
+	Music * m_player = nullptr;
 
 	Music * set_m_player() {
-		if (m_player != nullptr) m_player = new Music;
+		if (m_player == nullptr) m_player = new Music;
 		else {
 			delete m_player;
 			m_player = new Music;

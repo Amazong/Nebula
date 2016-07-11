@@ -10,6 +10,8 @@
 class Music
 {
 private:
+	sf::Time fade = sf::seconds(2.0f);
+
 	bool stop = false;
 	bool quit = false;
 	bool skip = false;
