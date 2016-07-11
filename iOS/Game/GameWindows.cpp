@@ -1,5 +1,5 @@
-#include "GameWindows.h"
-#include "Errors.h"
+#include "headers\GameWindows.h"
+#include "headers\Errors.h"
 
 int render_splash()
 {

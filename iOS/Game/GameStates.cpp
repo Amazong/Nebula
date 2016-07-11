@@ -113,8 +113,27 @@ void main_menu::input()
 						game->push_state(new options_menu(game)); //go to options
 						break;
 					case 3:
+					{
+						MUSIC::get_m_player()->set_quit(true);
+						
+						sf::RectangleShape closer;
+						closer.setSize(sf::Vector2f(game->window.getSize().x, game->window.getSize().y));
+						
+						sf::Clock clk;
+
+						for (int i = 0; i < 150; i += 2) {
+							clk.restart();
+
+							closer.setFillColor(sf::Color(0, 0, 0, i));
+							game->window.draw(closer);
+							game->window.display();
+
+							while (clk.getElapsedTime().asMilliseconds() < 15);
+						}
+
 						game->window.close(); //quit
 						break;
+					}
 					default:
 						break;
 					}
@@ -282,11 +301,19 @@ void options_menu::input()
 				switch (selection)
 				{
 					case 0:
-					{
 						game->pop_state();
 						return;
 						break;
-					}
+					case 1:
+						if (MUSIC::get_m_player()->get_stop() == true) MUSIC::get_m_player()->set_stop(false);
+						else MUSIC::get_m_player()->set_stop(true);
+						break;
+					case 2:
+						MUSIC::get_m_player()->set_skip(true);
+						break;
+
+					default:
+						break;
 					// to add actions
 				}
 

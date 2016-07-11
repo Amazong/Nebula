@@ -184,6 +184,7 @@
      ``-'                                  ``-'
 
 
+<<<<<<< HEAD
 23:17:11 - Program started.
 23:17:11 - Bought Downtown for 20000.00£ (peanuts).
 23:17:11 - Bought Larrivee guitar for 200.00£ (peanuts).
@@ -199,6 +200,9 @@
 23:17:11 - Inventory emptied.
 23:17:11 - Your inventory is empty. Your reputation has decreased.
 23:17:51 - Program exited normally.
+=======
+23:44:15 - Program started.
+>>>>>>> master
 
                                               __
      ,                                      ," e`- - o
@@ -210,6 +214,7 @@
      ``-'                                  ``-'
 
 
+<<<<<<< HEAD
 23:18:45 - Program started.
 23:18:45 - Bought Downtown for 20000.00£ (peanuts).
 23:18:45 - Bought Larrivee guitar for 200.00£ (peanuts).
@@ -224,6 +229,9 @@
 23:18:45 - The client didn't buy anything. Your reputation has decreased.
 23:18:45 - The client didn't buy anything. Your reputation has decreased.
 23:19:02 - Program exited normally.
+=======
+23:47:04 - Program started.
+>>>>>>> master
 
                                               __
      ,                                      ," e`- - o
@@ -235,6 +243,7 @@
      ``-'                                  ``-'
 
 
+<<<<<<< HEAD
 23:20:15 - Program started.
 23:20:15 - Bought Downtown for 20000.00£ (peanuts).
 23:20:15 - Bought Larrivee guitar for 200.00£ (peanuts).
@@ -251,6 +260,24 @@
 23:20:15 - Sold an item! Your reputation has increased.
 23:20:15 - Inventory emptied.
 23:20:15 - Your inventory is empty. Your reputation has decreased.
+=======
+23:48:28 - Program started.
+23:48:48 - Music started playing.
+23:48:54 - Bought Downtown for 20000.00£ (peanuts).
+23:48:54 - Bought Larrivee guitar for 200.00£ (peanuts).
+23:48:54 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+23:48:54 - Hired Cersei for 200000.00£ (peanuts).
+23:48:54 - Hired Ned Stark for 5000.00£ (peanuts).
+23:48:54 - Hired Jon Snow for 100000.00£ (peanuts).
+23:48:54 - Hired Sansa for 1000.00£ (peanuts).
+23:48:54 - The client didn't buy anything. Your reputation has decreased.
+23:48:54 - The client didn't buy anything. Your reputation has decreased.
+23:48:54 - The client didn't buy anything. Your reputation has decreased.
+23:48:54 - The client didn't buy anything. Your reputation has decreased.
+23:48:54 - Sold Larrivee guitar for 1000.00£ (peanuts).
+23:48:54 - Sold an item! Your reputation has increased.
+23:48:58 - Program exited normally.
+>>>>>>> master
 
                                               __
      ,                                      ," e`- - o
@@ -262,6 +289,7 @@
      ``-'                                  ``-'
 
 
+<<<<<<< HEAD
 23:20:41 - Program started.
 23:20:41 - Bought Downtown for 20000.00£ (peanuts).
 23:20:41 - Bought Larrivee guitar for 200.00£ (peanuts).
@@ -280,6 +308,25 @@
 23:20:41 - Inventory emptied.
 23:20:41 - Your inventory is empty. Your reputation has decreased.
 23:21:00 - Program exited normally.
+=======
+23:49:10 - Program started.
+23:49:12 - Music started playing.
+23:49:51 - Bought Downtown for 20000.00£ (peanuts).
+23:49:51 - Bought Larrivee guitar for 200.00£ (peanuts).
+23:49:51 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+23:49:51 - Hired Cersei for 200000.00£ (peanuts).
+23:49:51 - Hired Ned Stark for 5000.00£ (peanuts).
+23:49:51 - Hired Jon Snow for 100000.00£ (peanuts).
+23:49:51 - Hired Sansa for 1000.00£ (peanuts).
+23:49:51 - The client didn't buy anything. Your reputation has decreased.
+23:49:51 - Sold digital Steinway & Sons piano for 50000.00£ (peanuts).
+23:49:51 - Sold an item! Your reputation has increased.
+23:49:51 - Sold Larrivee guitar for 1000.00£ (peanuts).
+23:49:51 - Sold an item! Your reputation has increased.
+23:49:51 - Inventory emptied.
+23:49:51 - Your inventory is empty. Your reputation has decreased.
+23:49:53 - Program exited normally.
+>>>>>>> master
 
                                               __
      ,                                      ," e`- - o
@@ -291,6 +338,7 @@
      ``-'                                  ``-'
 
 
+<<<<<<< HEAD
 23:21:39 - Program started.
 23:21:39 - Bought Downtown for 20000.00£ (peanuts).
 23:21:39 - Bought Larrivee guitar for 200.00£ (peanuts).
@@ -306,6 +354,26 @@
 23:21:39 - Inventory emptied.
 23:21:39 - Your inventory is empty. Your reputation has decreased.
 23:21:54 - Program exited normally.
+=======
+23:51:25 - Program started.
+23:51:29 - Music started playing.
+23:51:36 - Bought Downtown for 20000.00£ (peanuts).
+23:51:36 - Bought Larrivee guitar for 200.00£ (peanuts).
+23:51:36 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+23:51:36 - Hired Cersei for 200000.00£ (peanuts).
+23:51:36 - Hired Ned Stark for 5000.00£ (peanuts).
+23:51:36 - Hired Jon Snow for 100000.00£ (peanuts).
+23:51:36 - Hired Sansa for 1000.00£ (peanuts).
+23:51:36 - Sold digital Steinway & Sons piano for 50000.00£ (peanuts).
+23:51:36 - Sold an item! Your reputation has increased.
+23:51:36 - The client didn't buy anything. Your reputation has decreased.
+23:51:36 - The client didn't buy anything. Your reputation has decreased.
+23:51:36 - Sold Larrivee guitar for 1000.00£ (peanuts).
+23:51:36 - Sold an item! Your reputation has increased.
+23:51:36 - Inventory emptied.
+23:51:36 - Your inventory is empty. Your reputation has decreased.
+23:51:39 - Program exited normally.
+>>>>>>> master
 
                                               __
      ,                                      ," e`- - o
@@ -317,6 +385,7 @@
      ``-'                                  ``-'
 
 
+<<<<<<< HEAD
 23:22:11 - Program started.
 23:22:11 - Bought Downtown for 20000.00£ (peanuts).
 23:22:11 - Bought Larrivee guitar for 200.00£ (peanuts).
@@ -335,6 +404,25 @@
 23:22:11 - Inventory emptied.
 23:22:11 - Your inventory is empty. Your reputation has decreased.
 23:22:28 - Program exited normally.
+=======
+23:54:23 - Program started.
+23:54:24 - Music started playing.
+23:54:26 - Bought Downtown for 20000.00£ (peanuts).
+23:54:26 - Bought Larrivee guitar for 200.00£ (peanuts).
+23:54:26 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+23:54:26 - Hired Cersei for 200000.00£ (peanuts).
+23:54:26 - Hired Ned Stark for 5000.00£ (peanuts).
+23:54:26 - Hired Jon Snow for 100000.00£ (peanuts).
+23:54:26 - Hired Sansa for 1000.00£ (peanuts).
+23:54:26 - Sold digital Steinway & Sons piano for 50000.00£ (peanuts).
+23:54:26 - Sold an item! Your reputation has increased.
+23:54:26 - The client didn't buy anything. Your reputation has decreased.
+23:54:26 - Sold Larrivee guitar for 1000.00£ (peanuts).
+23:54:26 - Sold an item! Your reputation has increased.
+23:54:26 - Inventory emptied.
+23:54:26 - Your inventory is empty. Your reputation has decreased.
+23:54:34 - Program exited normally.
+>>>>>>> master
 
                                               __
      ,                                      ," e`- - o
@@ -346,6 +434,7 @@
      ``-'                                  ``-'
 
 
+<<<<<<< HEAD
 23:22:43 - Program started.
 23:22:43 - Bought Downtown for 20000.00£ (peanuts).
 23:22:43 - Bought Larrivee guitar for 200.00£ (peanuts).
@@ -707,3 +796,21 @@
 23:58:09 - Inventory emptied.
 23:58:09 - Your inventory is empty. Your reputation has decreased.
 23:58:34 - Program exited normally.
+=======
+23:55:14 - Program started.
+23:55:25 - Music started playing.
+23:55:28 - Bought Downtown for 20000.00£ (peanuts).
+23:55:28 - Bought Larrivee guitar for 200.00£ (peanuts).
+23:55:28 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+23:55:28 - Hired Cersei for 200000.00£ (peanuts).
+23:55:28 - Hired Ned Stark for 5000.00£ (peanuts).
+23:55:28 - Hired Jon Snow for 100000.00£ (peanuts).
+23:55:28 - Hired Sansa for 1000.00£ (peanuts).
+23:55:28 - The client didn't buy anything. Your reputation has decreased.
+23:55:28 - Sold Larrivee guitar for 1000.00£ (peanuts).
+23:55:28 - Sold an item! Your reputation has increased.
+23:55:28 - The client didn't buy anything. Your reputation has decreased.
+23:55:28 - The client didn't buy anything. Your reputation has decreased.
+23:55:28 - The client didn't buy anything. Your reputation has decreased.
+23:55:32 - Program exited normally.
+>>>>>>> master
