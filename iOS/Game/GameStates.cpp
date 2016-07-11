@@ -453,6 +453,9 @@ void in_game::input()
 			}
 			case sf::Event::MouseButtonPressed:
 			{
+				if (handle_icons((sf::Vector2f) sf::Mouse::getPosition(game->window)))
+					return;
+
 				if (selection > 2 && event.mouseButton.button == sf::Mouse::Left)
 				{
 					options[(selection - 3)].setStyle(sf::Text::Italic);
@@ -695,6 +698,16 @@ void in_game::control_icon_animations(sf::Vector2f mouse_pos)
 		icons[5].setScale(0.2f, 0.2f);
 		icons[6].setScale(0.2f, 0.2f);
 	}
+}
+
+bool in_game::handle_icons(sf::Vector2f mouse_pos)
+{
+	if (icons[6].getGlobalBounds().contains(mouse_pos))
+	{
+		game->pop_state();
+		return(true);
+	}
+	return(false);
 }
 
 
