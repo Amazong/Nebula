@@ -16,12 +16,16 @@ int error::trace_error(int code) {
 	{
 	case 10:
 		error::corrupt_profile();
+		break;
 	case 42:
 		error::file_access();
+		break;
 	case 404:
 		error::profile_not_found();
+		break;
 	case 101:
 		error::capture_screen_error();
+		break;
 	default:
 		break;
 	}
