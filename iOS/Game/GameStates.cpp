@@ -203,9 +203,6 @@ void main_menu::update_save() // TO-DO
 }
 
 
-
-
-
 /*------------------------------Options Menu------------------------------*/
 
 
@@ -404,8 +401,13 @@ void in_game::input()
 		options[(selection - 3)].setColor(sf::Color::White);
 	}
 
+
+
 	while (game->window.pollEvent(event))
 	{
+		icons[5].setScale(0.2f, 0.2f);
+		icons[6].setScale(0.2f, 0.2f);
+
 		switch (event.type)
 		{
 			case sf::Event::KeyPressed:
@@ -442,6 +444,19 @@ void in_game::input()
 					options[(selection - 3)].setStyle(sf::Text::Underlined);
 				}
 
+				if (icons[5].getGlobalBounds().contains(mouse_pos))
+				{
+					icons[5].scale(1.1f, 1.1f);
+				}
+				else if (icons[6].getGlobalBounds().contains(mouse_pos))
+				{
+					icons[6].scale(1.1f, 1.1f);
+				}
+				else
+				{
+					icons[5].setScale(0.2f, 0.2f);
+					icons[6].setScale(0.2f, 0.2f);
+				}
 				std::cout << "           Selection " << selection << std::endl; //debug
 
 				
