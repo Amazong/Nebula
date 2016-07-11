@@ -22,7 +22,8 @@ private:
 		"Bossa2.ogg", "BossaBossa.ogg", "BossaBossaBossa.ogg", "Butterfly.ogg",
 		"Forever Young.ogg", "HotaruNoShikai.ogg", "InMyLife.ogg", "Kygo.ogg", 
 		"OpenGJam.ogg", "Paradise.ogg",	"SweetChildOMine.ogg", "Tears in Heaven.ogg" };
-	std::string playing_now_str; // for debugging purposes
+	std::string playing_now_str;
+	std::string playing_prev_str;
 	sf::Music *playing_now;
 	sf::Music *playing_next;
 

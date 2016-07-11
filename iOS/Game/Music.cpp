@@ -63,10 +63,17 @@ void Music::loop()
 		}
 
 		if (!stop) {
+			playing_prev_str = playing_now_str;
 			if (!playing_next->openFromFile("res/sound/" + get_random())) {
 				error::file_access();
 			}
-			
+
+			while (playing_now_str == playing_prev_str) { // prevents repeated songs
+				if (!playing_next->openFromFile("res/sound/" + get_random())) {
+					error::file_access();
+				}
+			}
+						
 			while (playing_now->getPlayingOffset() < (playing_now->getDuration() - fade)) {
 				std::this_thread::sleep_for(std::chrono::milliseconds(200)); // more CPU friendly
 				if (stop) {
