@@ -19,8 +19,8 @@ private:
 	void make_ok() { ok = true; }
 
 	friend class state_manager;
-public:
 
+public:
 	state_manager *game;
 
 	bool is_ok() { return ok; }
@@ -74,8 +74,6 @@ private:
 	const std::string options_str[3] = { "Back", "Music", "Difficulty"};
 	sf::Font options_font;
 	sf::Text options[3];
-	double target_size;
-	sf::Clock t_clock;
 	sf::Texture background;
 	sf::Sprite background_sprite;
 	sf::Sprite selector;
@@ -89,6 +87,32 @@ public:
 	void logic_update(const float elapsed);
 	void draw(const float elapsed);
 	
+	void setup_text();
+};
+
+/*------------------------------ Continue ------------------------------*/
+
+class continue_game : public game_state
+{
+private:
+	sf::Font font;
+	sf::Text title;
+	sf::Text saved_profiles[5];
+	int n_saves;
+	sf::Texture background_texture;
+	sf::Sprite background_sprite;
+
+	sf::RectangleShape continue_background;
+
+	int selection = -1; // by default nothing is selected
+
+public:
+	continue_game(state_manager * game_ptr, sf::Image background);
+
+	void input();
+	void logic_update(const float elapsed);
+	void draw(const float elapsed);
+
 	void setup_text();
 };
 

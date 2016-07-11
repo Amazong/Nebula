@@ -852,7 +852,7 @@ void user_profile::save_stores(std::string  user, const store * tab, int size)
 
 }
 
-void user_profile::load_game(std::string  profile_title)
+void user_profile::load_game(std::string profile_title)
 {
 	std::ifstream fin("saves/users");
 

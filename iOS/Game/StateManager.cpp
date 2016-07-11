@@ -60,7 +60,6 @@ void state_manager::change_state(game_state * state)
 	if (!states_stack.empty())
 		pop_state();
 	push_state(state);
-
 }
 
 int state_manager::game_loop()

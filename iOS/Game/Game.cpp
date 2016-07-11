@@ -48,7 +48,7 @@ int main() {
 	music_player = new std::thread(&Music::loop, MUSIC::get_m_player());
 	LOGGER::log("Music started playing");
 
-	MUSIC::get_m_player()->set_stop(true);
+	//MUSIC::get_m_player()->set_stop(true);
 
 
 
@@ -75,11 +75,16 @@ int main() {
 
 	
 
-	// ----------------------------------------------------------
+	/* ----------------------------------------------------------
 	std::string alala("Hello Game World, this is iOS.");
 
 	show_textbox(alala, 30, 16);
+	---------------------------------------------------------- */
+	
+	
+	
 	state_manager game;
+	//STATE::manager = &game;
 
 	game.push_state(new main_menu(&game)); // startup state
 
