@@ -7,7 +7,7 @@
 state_manager::state_manager()
 {
 	window.create(sf::VideoMode::getDesktopMode(), "iOS", sf::Style::Fullscreen);
-	window.create(sf::VideoMode(800,600), "iOS"); // for debugging
+	//window.create(sf::VideoMode(800,600), "iOS"); // for debugging
 	window.setFramerateLimit(60);  // default framerate
 }
 
@@ -60,7 +60,6 @@ void state_manager::change_state(game_state * state)
 	if (!states_stack.empty())
 		pop_state();
 	push_state(state);
-
 }
 
 int state_manager::game_loop()

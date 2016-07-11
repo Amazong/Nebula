@@ -19,8 +19,8 @@ private:
 	void make_ok() { ok = true; }
 
 	friend class state_manager;
-public:
 
+public:
 	state_manager *game;
 
 	bool is_ok() { return ok; }
@@ -74,8 +74,6 @@ private:
 	const std::string options_str[3] = { "Back", "Music", "Difficulty"};
 	sf::Font options_font;
 	sf::Text options[3];
-	double target_size;
-	sf::Clock t_clock;
 	sf::Texture background;
 	sf::Sprite background_sprite;
 	sf::Sprite selector;

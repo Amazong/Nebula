@@ -252,9 +252,7 @@ options_menu::options_menu(state_manager * game_ptr)
 	background_sprite.setScale(game->window.getSize().x / 1920.0f, game->window.getSize().y / 1080.0f);
 
 
-	selector.setScale(0.04f, 0.04f);
-
-	
+	selector.setScale(0.04f, 0.04f);	
 }
 
 void options_menu::input()
@@ -262,8 +260,6 @@ void options_menu::input()
 	sf::Event event;
 	sf::Vector2f mouse_pos(0.0f,0.0f); // by default 
 	
-
-
 	while (game->window.pollEvent(event))
 	{
 		switch (event.type)
@@ -291,7 +287,6 @@ void options_menu::input()
 				
 				std::cout << "           Selection " << selection << std::endl; //debug
 
-				t_clock.restart();
 				break;
 			}
 			case sf::Event::MouseButtonPressed:
@@ -585,28 +580,27 @@ void in_game::setup_options()
 			}
 			default:
 			{	
-				heat[i].scale(5.0 / 3.0, 1.0f);
+				heat[i].scale(5.0f / 3.0f, 1.0f);
 				heat[i].setFillColor(sf::Color::Transparent);
 				
 				if (i < 5)
 				{
-					heat[i].setPosition(options_pos.x  + (0.55 * rectangle_size.x), 0.82 * rectangle_size.x );
+					heat[i].setPosition(options_pos.x  + (0.55f * rectangle_size.x), 0.82f * rectangle_size.x );
 					if (i == 4)
-						heat[i].move( heat[i].getGlobalBounds().width + (0.35 * rectangle_size.x), 0);
+						heat[i].move(heat[i].getGlobalBounds().width + (0.35f * rectangle_size.x), 0.0f);
 
 				}
 				else
 				{
 					heat[i].setPosition(heat[3].getPosition());
-					heat[i].move(0, heat[i].getGlobalBounds().height + (0.225 * rectangle_size.x));
+					heat[i].move(0.0f, heat[i].getGlobalBounds().height + (0.225f * rectangle_size.x));
 					
 					if (i == 6)
-						heat[i].move(heat[i].getGlobalBounds().width + (0.35 * rectangle_size.x), 0);
+						heat[i].move(heat[i].getGlobalBounds().width + (0.35f * rectangle_size.x), 0.0f);
 				}
 
 				break;
 			}
-
 		}
 	}
 
@@ -620,16 +614,13 @@ void in_game::setup_options()
 		options[i].setOrigin((options[i].getGlobalBounds().width / 2.0f), (options[i].getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
 		options[i].setPosition(heat[(3 + i)].getPosition() );
 		options[i].move((heat[(3 + i)].getGlobalBounds().width / 2.0f), (heat[(3 + i)].getGlobalBounds().height / 2.3f));
-
 	}
-
-
 }
 
 void in_game::setup_indicators()
 {
 
-	int offset = heat[1].getGlobalBounds().height / 5.0f;
+	int offset = (int)(heat[1].getGlobalBounds().height / 5.0f);
 	
 	for (int i = 0; i < 5; i++)
 	{

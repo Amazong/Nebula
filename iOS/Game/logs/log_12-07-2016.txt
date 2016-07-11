@@ -1,0 +1,45 @@
+00:04:07 - Program started.
+00:04:07 - Music started playing.
+00:04:07 - Bought Downtown for 20000.00£ (peanuts).
+00:04:07 - Bought Larrivee guitar for 200.00£ (peanuts).
+00:04:07 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+00:04:07 - Hired Cersei for 200000.00£ (peanuts).
+00:04:07 - Hired Ned Stark for 5000.00£ (peanuts).
+00:04:07 - Hired Jon Snow for 100000.00£ (peanuts).
+00:04:07 - Hired Sansa for 1000.00£ (peanuts).
+00:04:07 - The client didn't buy anything. Your reputation has decreased.
+00:04:07 - The client didn't buy anything. Your reputation has decreased.
+00:04:07 - Started playing InMyLife.ogg.
+00:04:07 - Sold Larrivee guitar for 1000.00£ (peanuts).
+00:04:07 - Sold an item! Your reputation has increased.
+00:04:07 - The client didn't buy anything. Your reputation has decreased.
+00:04:07 - The client didn't buy anything. Your reputation has decreased.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+00:04:58 - Program started.
+00:04:58 - Music started playing.
+00:04:58 - Bought Downtown for 20000.00£ (peanuts).
+00:04:58 - Bought Larrivee guitar for 200.00£ (peanuts).
+00:04:58 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+00:04:58 - Hired Cersei for 200000.00£ (peanuts).
+00:04:58 - Hired Ned Stark for 5000.00£ (peanuts).
+00:04:58 - Hired Jon Snow for 100000.00£ (peanuts).
+00:04:58 - Hired Sansa for 1000.00£ (peanuts).
+00:04:58 - The client didn't buy anything. Your reputation has decreased.
+00:04:58 - The client didn't buy anything. Your reputation has decreased.
+00:04:58 - Sold Larrivee guitar for 1000.00£ (peanuts).
+00:04:58 - Sold an item! Your reputation has increased.
+00:04:58 - The client didn't buy anything. Your reputation has decreased.
+00:04:58 - The client didn't buy anything. Your reputation has decreased.
+00:04:58 - Started playing BossaBossaBossa.ogg.
+00:05:20 - Quitting music player.
+00:05:21 - Program exited normally.
