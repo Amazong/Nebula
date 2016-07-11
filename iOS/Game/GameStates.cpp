@@ -102,7 +102,7 @@ void main_menu::input()
 						game->push_state(new new_game1(game, game->window.capture()));
 						break;
 					case 1:
-						//continue game
+						game->push_state(new continue_game(game, game->window.capture()));
 						break;
 					case 2:
 						game->push_state(new options_menu(game)); //go to options
