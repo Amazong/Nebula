@@ -43,3 +43,172 @@
 00:04:58 - Started playing BossaBossaBossa.ogg.
 00:05:20 - Quitting music player.
 00:05:21 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+00:07:48 - Program started.
+00:07:48 - Music started playing.
+00:07:48 - Bought Downtown for 20000.00£ (peanuts).
+00:07:48 - Bought Larrivee guitar for 200.00£ (peanuts).
+00:07:48 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+00:07:48 - Hired Cersei for 200000.00£ (peanuts).
+00:07:48 - Hired Ned Stark for 5000.00£ (peanuts).
+00:07:48 - Hired Jon Snow for 100000.00£ (peanuts).
+00:07:48 - Hired Sansa for 1000.00£ (peanuts).
+00:07:48 - Sold Larrivee guitar for 1000.00£ (peanuts).
+00:07:48 - Sold an item! Your reputation has increased.
+00:07:48 - The client didn't buy anything. Your reputation has decreased.
+00:07:48 - The client didn't buy anything. Your reputation has decreased.
+00:07:48 - The client didn't buy anything. Your reputation has decreased.
+00:07:48 - The client didn't buy anything. Your reputation has decreased.
+00:07:48 - Started playing BackgroundProgression.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+00:09:39 - Program started.
+00:09:39 - Music started playing.
+00:09:39 - Bought Downtown for 20000.00£ (peanuts).
+00:09:39 - Bought Larrivee guitar for 200.00£ (peanuts).
+00:09:39 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+00:09:39 - Hired Cersei for 200000.00£ (peanuts).
+00:09:39 - Hired Ned Stark for 5000.00£ (peanuts).
+00:09:39 - Hired Jon Snow for 100000.00£ (peanuts).
+00:09:39 - Hired Sansa for 1000.00£ (peanuts).
+00:09:39 - Sold digital Steinway & Sons piano for 50000.00£ (peanuts).
+00:09:39 - Sold an item! Your reputation has increased.
+00:09:39 - Sold Larrivee guitar for 1000.00£ (peanuts).
+00:09:39 - Started playing BossaBossa.ogg.
+00:09:39 - Sold an item! Your reputation has increased.
+00:09:39 - Inventory emptied.
+00:09:39 - Your inventory is empty. Your reputation has decreased.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+00:10:04 - Program started.
+00:10:04 - Music started playing.
+00:10:04 - Bought Downtown for 20000.00£ (peanuts).
+00:10:04 - Bought Larrivee guitar for 200.00£ (peanuts).
+00:10:04 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+00:10:04 - Hired Cersei for 200000.00£ (peanuts).
+00:10:04 - Hired Ned Stark for 5000.00£ (peanuts).
+00:10:04 - Hired Jon Snow for 100000.00£ (peanuts).
+00:10:04 - Hired Sansa for 1000.00£ (peanuts).
+00:10:04 - The client didn't buy anything. Your reputation has decreased.
+00:10:04 - The client didn't buy anything. Your reputation has decreased.
+00:10:04 - The client didn't buy anything. Your reputation has decreased.
+00:10:04 - Sold Larrivee guitar for 1000.00£ (peanuts).
+00:10:04 - Started playing Kygo.ogg.
+00:10:04 - Sold an item! Your reputation has increased.
+00:10:04 - The client didn't buy anything. Your reputation has decreased.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+00:10:16 - Program started.
+00:10:16 - Music started playing.
+00:10:16 - Bought Downtown for 20000.00£ (peanuts).
+00:10:16 - Bought Larrivee guitar for 200.00£ (peanuts).
+00:10:16 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+00:10:16 - Hired Cersei for 200000.00£ (peanuts).
+00:10:16 - Hired Ned Stark for 5000.00£ (peanuts).
+00:10:16 - Hired Jon Snow for 100000.00£ (peanuts).
+00:10:16 - Hired Sansa for 1000.00£ (peanuts).
+00:10:16 - The client didn't buy anything. Your reputation has decreased.
+00:10:16 - The client didn't buy anything. Your reputation has decreased.
+00:10:16 - Sold Larrivee guitar for 1000.00£ (peanuts).
+00:10:16 - Sold an item! Your reputation has increased.
+00:10:16 - The client didn't buy anything. Your reputation has decreased.
+00:10:16 - The client didn't buy anything. Your reputation has decreased.
+00:10:16 - Started playing Tears in Heaven.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+00:10:27 - Program started.
+00:10:27 - Music started playing.
+00:10:27 - Bought Downtown for 20000.00£ (peanuts).
+00:10:27 - Bought Larrivee guitar for 200.00£ (peanuts).
+00:10:27 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+00:10:27 - Hired Cersei for 200000.00£ (peanuts).
+00:10:27 - Hired Ned Stark for 5000.00£ (peanuts).
+00:10:27 - Hired Jon Snow for 100000.00£ (peanuts).
+00:10:27 - Hired Sansa for 1000.00£ (peanuts).
+00:10:27 - Sold digital Steinway & Sons piano for 50000.00£ (peanuts).
+00:10:27 - Sold an item! Your reputation has increased.
+00:10:27 - The client didn't buy anything. Your reputation has decreased.
+00:10:27 - The client didn't buy anything. Your reputation has decreased.
+00:10:27 - Sold Larrivee guitar for 1000.00£ (peanuts).
+00:10:27 - Sold an item! Your reputation has increased.
+00:10:27 - Inventory emptied.
+00:10:27 - Your inventory is empty. Your reputation has decreased.
+00:10:27 - Started playing BossaBossa.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+00:10:43 - Program started.
+00:10:43 - Music started playing.
+00:10:43 - Bought Downtown for 20000.00£ (peanuts).
+00:10:43 - Bought Larrivee guitar for 200.00£ (peanuts).
+00:10:43 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+00:10:43 - Hired Cersei for 200000.00£ (peanuts).
+00:10:43 - Hired Ned Stark for 5000.00£ (peanuts).
+00:10:43 - Hired Jon Snow for 100000.00£ (peanuts).
+00:10:43 - Hired Sansa for 1000.00£ (peanuts).
+00:10:43 - Sold digital Steinway & Sons piano for 50000.00£ (peanuts).
+00:10:43 - Sold an item! Your reputation has increased.
+00:10:43 - The client didn't buy anything. Your reputation has decreased.
+00:10:43 - The client didn't buy anything. Your reputation has decreased.
+00:10:43 - The client didn't buy anything. Your reputation has decreased.
+00:10:43 - Started playing BackgroundProgression.ogg.
+00:10:43 - Sold Larrivee guitar for 1000.00£ (peanuts).
+00:10:43 - Sold an item! Your reputation has increased.
+00:10:43 - Inventory emptied.
+00:10:43 - Your inventory is empty. Your reputation has decreased.
+00:11:23 - Quitting music player.
+00:11:24 - Program exited normally.

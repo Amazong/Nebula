@@ -1045,6 +1045,8 @@ void continue_game::input()
 				return;
 			}
 
+			game->pop_state();
+			return;
 			break;
 		}
 		default:
