@@ -974,6 +974,8 @@ void new_game1::setup_options()
 
 }
 
+/*------------------------------ Continue ------------------------------*/
+
 continue_game::continue_game(state_manager * game_ptr, sf::Image background)
 {
 	game = game_ptr;
