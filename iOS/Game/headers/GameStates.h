@@ -151,3 +151,29 @@ public:
 	void draw(const float elapsed);
 	void setup_options();
 };
+
+/*------------------------------ Continue ------------------------------*/
+
+class continue_game : public game_state
+{
+private:
+	sf::Font font;
+	sf::Text title;
+	sf::Text saved_profiles[5];
+	int n_saves;
+	sf::Texture background_texture;
+	sf::Sprite background_sprite;
+
+	sf::RectangleShape continue_background;
+
+	int selection = -1; // by default nothing is selected
+
+public:
+	continue_game(state_manager * game_ptr, sf::Image background);
+
+	void input();
+	void logic_update(const float elapsed);
+	void draw(const float elapsed);
+
+	void setup_text();
+};
