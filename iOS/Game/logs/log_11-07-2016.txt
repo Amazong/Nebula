@@ -3820,3 +3820,456 @@ Hired Jon Snow for 100000.00£ (peanuts).
 19:02:09 - Inventory emptied.
 19:02:09 - Your inventory is empty. Your reputation has decreased.
 19:02:14 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:03:29 - Program started.
+19:03:30 - Music started playing.
+19:03:30 - Bought Downtown for 20000.00£ (peanuts).
+19:03:30 - Bought Larrivee guitar for 200.00£ (peanuts).
+19:03:30 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+19:03:30 - Hired Cersei for 200000.00£ (peanuts).
+19:03:30 - Hired Ned Stark for 5000.00£ (peanuts).
+19:03:30 - Hired Jon Snow for 100000.00£ (peanuts).
+19:03:30 - Hired Sansa for 1000.00£ (peanuts).
+19:03:30 - Sold digital Steinway & Sons piano for 50000.00£ (peanuts).
+19:03:30 - Sold an item! Your reputation has increased.
+19:03:30 - Sold Larrivee guitar for 1000.00£ (peanuts).
+19:03:30 - Sold an item! Your reputation has increased.
+19:03:30 - Inventory emptied.
+19:03:30 - Your inventory is empty. Your reputation has decreased.
+19:03:30 - Started playing Kygo.ogg.
+19:03:35 - Quitting music player.
+19:03:36 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:10:55 - Program started.
+19:10:55 - Music started playing.
+19:10:55 - Bought Downtown for 20000.00£ (peanuts).
+19:10:55 - Bought Larrivee guitar for 200.00£ (peanuts).
+19:10:55 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+19:10:55 - Hired Cersei for 200000.00£ (peanuts).
+19:10:55 - Hired Ned Stark for 5000.00£ (peanuts).
+19:10:55 - Hired Jon Snow for 100000.00£ (peanuts).
+19:10:55 - Hired Sansa for 1000.00£ (peanuts).
+19:10:55 - Sold Larrivee guitar for 1000.00£ (peanuts).
+19:10:55 - Sold an item! Your reputation has increased.
+19:10:55 - The client didn't buy anything. Your reputation has decreased.
+19:10:55 - The client didn't buy anything. Your reputation has decreased.
+19:10:55 - The client didn't buy anything. Your reputation has decreased.
+19:10:55 - The client didn't buy anything. Your reputation has decreased.
+19:10:55 - Started playing Bossa1.5.ogg.
+19:10:59 - Quitting music player.
+19:11:00 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:11:04 - Program started.
+19:11:04 - Music started playing.
+19:11:04 - Bought Downtown for 20000.00£ (peanuts).
+19:11:04 - Bought Larrivee guitar for 200.00£ (peanuts).
+19:11:04 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+19:11:04 - Hired Cersei for 200000.00£ (peanuts).
+19:11:04 - Hired Ned Stark for 5000.00£ (peanuts).
+19:11:04 - Hired Jon Snow for 100000.00£ (peanuts).
+19:11:04 - Hired Sansa for 1000.00£ (peanuts).
+19:11:04 - The client didn't buy anything. Your reputation has decreased.
+19:11:04 - The client didn't buy anything. Your reputation has decreased.
+19:11:04 - Sold Larrivee guitar for 1000.00£ (peanuts).
+19:11:04 - Sold an item! Your reputation has increased.
+19:11:04 - The client didn't buy anything. Your reputation has decreased.
+19:11:04 - The client didn't buy anything. Your reputation has decreased.
+19:11:04 - Started playing BossaBossa.ogg.
+19:11:08 - Stopping playback.
+19:11:32 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:11:51 - Program started.
+19:11:51 - Music started playing.
+19:11:51 - Bought Downtown for 20000.00£ (peanuts).
+19:11:51 - Bought Larrivee guitar for 200.00£ (peanuts).
+19:11:51 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+19:11:51 - Hired Cersei for 200000.00£ (peanuts).
+19:11:51 - Hired Ned Stark for 5000.00£ (peanuts).
+19:11:51 - Hired Jon Snow for 100000.00£ (peanuts).
+19:11:51 - Hired Sansa for 1000.00£ (peanuts).
+19:11:51 - The client didn't buy anything. Your reputation has decreased.
+19:11:51 - The client didn't buy anything. Your reputation has decreased.
+19:11:51 - The client didn't buy anything. Your reputation has decreased.
+19:11:51 - Sold digital Steinway & Sons piano for 50000.00£ (peanuts).
+19:11:51 - Sold an item! Your reputation has increased.
+19:11:51 - Sold Larrivee guitar for 1000.00£ (peanuts).
+19:11:51 - Sold an item! Your reputation has increased.
+19:11:51 - Inventory emptied.
+19:11:51 - Your inventory is empty. Your reputation has decreased.
+19:11:51 - Started playing Tears in Heaven.ogg.
+19:11:57 - Stopping playback.
+19:12:27 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:34:00 - Program started.
+19:34:00 - Music started playing.
+19:34:00 - Started playing BossaBossa.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:35:17 - Program started.
+19:35:17 - Music started playing.
+19:35:17 - Started playing OpenGJam.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:35:36 - Program started.
+19:35:36 - Music started playing.
+19:35:36 - Started playing Paradise.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:36:16 - Program started.
+19:36:16 - Music started playing.
+19:36:16 - Started playing Bossa2.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:37:24 - Program started.
+19:37:24 - Music started playing.
+19:37:24 - Started playing Butterfly.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:37:54 - Program started.
+19:37:54 - Music started playing.
+19:37:54 - Started playing Butterfly.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:38:21 - Program started.
+19:38:22 - Music started playing.
+19:38:22 - Started playing Tears in Heaven.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:38:37 - Program started.
+19:38:37 - Music started playing.
+19:38:37 - Started playing Kygo.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:39:17 - Program started.
+19:39:18 - Music started playing.
+19:39:18 - Started playing Bossa2.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:40:48 - Program started.
+19:40:48 - Music started playing.
+19:40:48 - Started playing InMyLife.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:41:39 - Program started.
+19:41:39 - Music started playing.
+19:41:39 - Started playing Paradise.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:43:53 - Program started.
+19:43:53 - Music started playing.
+19:43:53 - Started playing Kygo.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:44:00 - Program started.
+19:44:01 - Music started playing.
+19:44:01 - Started playing BackgroundProgression.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:44:26 - Program started.
+19:44:26 - Music started playing.
+19:44:26 - Started playing HotaruNoShikai.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:44:54 - Program started.
+19:44:54 - Music started playing.
+19:44:54 - Started playing Paradise.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:46:16 - Program started.
+19:46:16 - Music started playing.
+19:46:16 - Started playing InMyLife.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:46:31 - Program started.
+19:46:31 - Music started playing.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:48:19 - Program started.
+19:48:19 - Music started playing.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:48:55 - Program started.
+19:48:56 - Music started playing.
+19:48:57 - Started playing Kygo.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:50:00 - Program started.
+19:50:00 - Music started playing.
+19:50:00 - Started playing Paradise.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:50:32 - Program started.
+19:50:32 - Music started playing.
+19:50:32 - Started playing Bossa1.5.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:50:56 - Program started.
+19:50:56 - Music started playing.
+19:50:56 - Started playing Tears in Heaven.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:51:39 - Program started.
+19:51:40 - Music started playing.
+19:51:40 - Started playing BossaBossa.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:52:18 - Program started.
+19:52:18 - Music started playing.
+19:52:18 - Started playing Butterfly.ogg.

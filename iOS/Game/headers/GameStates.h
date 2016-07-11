@@ -1,9 +1,15 @@
 #pragma once
 #include <string>
+#include <iostream>
+//for debugging only
+#include <thread>
 #include "StateManager.h"
 #include "SFML\Graphics.hpp"
 #include "Music.h"
 #include "GameMechanics.h"
+#include "Errors.h"
+#include "GameWindows.h"
+
 
 class game_state  // base class common to all derived states.
 {

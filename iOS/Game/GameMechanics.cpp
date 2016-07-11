@@ -640,9 +640,13 @@ store * user_profile::get_active_store()
 	return active_store;
 }
 
-void user_profile::set_active_store(store * active_store_new)
+bool user_profile::set_active_store(store * active_store_new)
 {
-	active_store = active_store_new;
+	if (!stores.empty()){
+		active_store = active_store_new;
+		return true;
+	}
+	return false;
 }
 
 bool user_profile::set_active_store(unsigned int store_id)
@@ -1028,3 +1032,47 @@ void user_profile::load_store_staff(const user_profile * user, store & shop, int
 	free(tab_ptr);
 	tab_ptr = nullptr;	
 }
+
+std::string user_profile::get_balance_styled(int arg) const
+{
+	// Displays balance, according to predetermined style:
+	// For example, if (net_worth == 11234), will return 11.2K £
+
+	if (arg == 0) {
+		arg = (int)net_worth;
+	}
+
+	std::string s = "";
+
+	if (arg < 0) { // negative
+		s += "- ";
+		s += get_balance_styled(-arg);
+		return s;
+	}
+	else if (arg < 1000) { // display directly
+		s += std::to_string(arg).substr(0, 3);
+	}
+	else if (arg < 1000000) { // K range
+		s += std::to_string(arg / 1000).substr(0, 3); // How many K's
+		s += ".";
+		s += std::to_string(arg % 1000).substr(0, 1);
+		s += "K";
+	}
+	else if (arg < 1000000000) { // M range
+		s += std::to_string(arg / 1000000).substr(0, 3); // How many M's
+		s += ".";
+		s += std::to_string(arg % 1000000).substr(0, 1);
+		s += "M";
+	}
+	else {
+		s += "1 €"; // if the user has more than 1000000000 £, we display "1 €"
+					// small easter egg :)
+		return s;
+	}
+
+	s += " £";
+
+	return s;
+}
+
+

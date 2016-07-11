@@ -48,7 +48,7 @@ int main() {
 	music_player = new std::thread(&Music::loop, MUSIC::get_m_player());
 	LOGGER::log("Music started playing");
 
-
+	MUSIC::get_m_player()->set_stop(true);
 
 
 
@@ -57,6 +57,7 @@ int main() {
 	ACTIVE_USER.set_difficulty(1);
 	
 	ACTIVE_USER.set_net_worth(2000000);
+
 	ACTIVE_USER.buy_store(new store(&ACTIVE_USER, "Downtown", 20000, 2));
 	ACTIVE_USER.set_active_store(ACTIVE_USER.get_back_store());
 	ACTIVE_USER.get_active_store()->buy_guitar(new guitar(200, "Larrivee"));

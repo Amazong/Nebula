@@ -1,10 +1,5 @@
-#include <iostream>
-//for debugging only
-
-#include "SFML\Graphics.hpp"
 #include "headers\GameStates.h"
-#include "headers\Errors.h"
-#include <thread>
+
 
 /*------------------------------Main Menu------------------------------*/
 
@@ -735,6 +730,14 @@ bool in_game::handle_icons(sf::Vector2f mouse_pos)
 	if (icons[6].getGlobalBounds().contains(mouse_pos))
 	{
 		game->pop_state();
+		return(true);
+	}
+
+
+	if (icons[5].getGlobalBounds().contains(mouse_pos))
+	{
+		std::string a("hello");
+		show_textbox(a, 20, 12);
 		return(true);
 	}
 	return(false);
