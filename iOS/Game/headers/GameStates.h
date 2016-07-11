@@ -119,3 +119,29 @@ public:
 	void control_icon_animations(sf::Vector2f mouse_pos);
 	bool handle_icons(sf::Vector2f mouse_pos);
 };
+
+
+/*------------------------------ New_Game1 ------------------------------*/
+
+class new_game1 : public game_state
+{
+private:
+	const std::string options_str[6] = { "Username:", "Difficulty:", "Easy", "Medium" ,"Hard", "Continue" };
+	sf::Font options_font;
+	sf::String name = "";
+	sf::Text options[7];
+	sf::Text name_text;
+	sf::Texture background;
+	sf::Sprite background_sprite;
+	sf::RectangleShape text_enter;
+	sf::RectangleShape input_place;
+	int difficulty = 0; // 0 to 2
+	int selection = -1;
+public:
+	new_game1(state_manager * game, sf::Image Background);
+
+	void input();
+	void logic_update(const float elapsed);
+	void draw(const float elapsed);
+	void setup_options();
+};

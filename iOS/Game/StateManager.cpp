@@ -7,7 +7,7 @@
 state_manager::state_manager()
 {
 	window.create(sf::VideoMode::getDesktopMode(), "iOS", sf::Style::Fullscreen);
-	//window.create(sf::VideoMode(800,600), "iOS"); // for debugging
+	window.create(sf::VideoMode(800,600), "iOS"); // for debugging
 	window.setFramerateLimit(60);  // default framerate
 }
 

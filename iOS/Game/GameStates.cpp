@@ -104,7 +104,7 @@ void main_menu::input()
 					switch (selection) {
 					case 0:
 						//new game
-						game->push_state(new in_game(game));
+						game->push_state(new new_game1(game, game->window.capture()));
 						break;
 					case 1:
 						//continue game
@@ -712,7 +712,6 @@ void in_game::setup_icons()
 
 }
 
-
 void in_game::control_icon_animations(sf::Vector2f mouse_pos)
 {
 	if (icons[5].getGlobalBounds().contains(mouse_pos))
@@ -740,4 +739,235 @@ bool in_game::handle_icons(sf::Vector2f mouse_pos)
 	return(false);
 }
 
+
+/*------------------------------ New_Game1 ------------------------------*/
+
+new_game1::new_game1(state_manager * game, sf::Image Background_img)
+{
+	this->game = game;
+
+	if (!background.loadFromImage(Background_img))
+	{
+		complain(ErrNo::capture_screen_error);
+		return;
+	}
+
+	if (!options_font.loadFromFile("res/fonts/Roboto-Bold.ttf")) {
+		complain(ErrNo::file_access);
+		return;
+	}
+
+	background_sprite.setTexture(background);
+	
+
+	input_place.setFillColor(sf::Color::Color(0, 0, 0, 235));
+	input_place.setSize(sf::Vector2f((8.0f/16.0f) * game->window.getSize().x , (game->window.getSize().y * (2.0f/3.0f))));
+	input_place.setPosition(game->window.getSize().x * (7.0f / 16.0f), game->window.getSize().y / 5.5f);
+	input_place.setOutlineColor(sf::Color(72, 72, 72, 255));
+	input_place.setOutlineThickness(-3);
+
+	text_enter.setSize(sf::Vector2f(input_place.getGlobalBounds().width / 2.0f, input_place.getGlobalBounds().height / 6.0f));
+	text_enter.setOrigin(text_enter.getGlobalBounds().width / 2.0f, text_enter.getGlobalBounds().height / 2.0f);
+	text_enter.setFillColor(sf::Color::Color(72, 72, 72, 255));
+	text_enter.setPosition(input_place.getPosition().x + (input_place.getGlobalBounds().width / 2.0f), input_place.getPosition().y + (input_place.getGlobalBounds().height / 4.0f));
+
+	setup_options();
+}
+
+void new_game1::input()
+{
+	sf::Event event;
+	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default 
+
+
+
+
+	while (game->window.pollEvent(event))
+	{
+		for (int i = 2; i < 6; i++)
+		{
+			options[i].setStyle(sf::Text::Regular);
+		}
+		options[(difficulty + 2)].setColor(sf::Color::White);
+		
+		switch (event.type)
+		{
+		case sf::Event::KeyPressed:
+		{
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+				game->window.close();
+			break;
+		}
+		case sf::Event::MouseMoved:
+		{
+			mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
+			
+			selection = -1; // this way the selection will always be -1 if it's not in one of the options
+
+			for (int i = 2; i < 6; i++)
+			{
+				if (options[i].getGlobalBounds().contains(mouse_pos))
+				{
+					selection = i;
+				}
+			}
+			
+			text_enter.setScale(1.0f, 1.0f);
+
+			if (text_enter.getGlobalBounds().contains(mouse_pos))
+			{
+				selection = 9;
+				text_enter.scale(1.1f, 1.1f);
+			}
+
+			if (selection != 9)
+				text_enter.setFillColor(sf::Color(72, 72, 72, 255));
+			
+			
+			if (selection != -1 && selection != 9 && selection != (2 + difficulty))
+			{
+				options[selection].setStyle(sf::Text::Underlined);
+			}
+			
+
+			
+
+			std::cout << "           Selection " << selection << std::endl; //debug
+
+
+			break;
+		}
+		case sf::Event::MouseButtonPressed:
+		{
+			if (selection == -1) break;
+			switch (selection)
+			{
+				case 5:
+				{
+					game->push_state(new in_game(game));
+					return;
+					break;
+				}
+				case 9:
+				{
+					text_enter.setFillColor(sf::Color::White);
+					break;
+				}
+				default:
+				{
+					options[difficulty + 2].setColor(sf::Color(72, 72, 72, 255));
+					difficulty = selection - 2;
+					break;
+				}
+			
+			}
+
+			break;
+		}
+		case sf::Event::TextEntered:
+		{
+			if (text_enter.getFillColor() == sf::Color::White)
+			{
+				if (name.getSize() > 50)
+				{
+					if (event.text.unicode == 8)
+					{
+						if (name.isEmpty()) break;
+						name.erase(name.getSize() - 1);
+						name_text.setString(name);
+						name_text.setOrigin(name_text.getGlobalBounds().width / 2.0f, name_text.getGlobalBounds().height / 2.0f);
+						name_text.setPosition(text_enter.getPosition());
+						break;
+					}
+					break;
+				}
+				if (event.text.unicode < 128)
+				{
+					if (event.text.unicode == 8)
+					{
+						if (name.isEmpty()) break;
+						name.erase(name.getSize() - 1);
+						name_text.setString(name);
+						name_text.setOrigin(name_text.getGlobalBounds().width / 2.0f, name_text.getGlobalBounds().height / 2.0f);
+						name_text.setPosition(text_enter.getPosition());
+						break;
+					}
+
+					name += static_cast<char>(event.text.unicode);
+					name_text.setString(name);
+					name_text.setOrigin(name_text.getGlobalBounds().width / 2.0f, name_text.getGlobalBounds().height / 2.0f);
+					name_text.setPosition(text_enter.getPosition());
+				}
+			}
+			break;
+		}
+		default:
+			break;
+		}
+	}
+}
+
+void new_game1::logic_update(const float elapsed)
+{
+}
+
+void new_game1::draw(const float elapsed)
+{
+	game->window.draw(background_sprite);
+	game->window.draw(input_place);
+	game->window.draw(text_enter);
+
+	for (int i = 0; i < 6; i++)
+	{
+		game->window.draw(options[i]);
+	}
+
+	game->window.draw(name_text);
+}
+
+void new_game1::setup_options()
+{
+	
+	for (int i = 0; i < 6; i++)
+	{
+		options[i].setFont(options_font);
+		options[i].setCharacterSize((int)(game->window.getSize().y / 13.5f));
+		options[i].setString(options_str[i]);
+		options[i].setColor(sf::Color(72, 72, 72, 255));
+		options[i].setOrigin((options[i].getGlobalBounds().width / 2.0f), (options[i].getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
+		options[i].setPosition(text_enter.getPosition());
+		switch (i)
+		{
+			case 0:
+			{
+				options[i].move(0, -(input_place.getGlobalBounds().height / 5.0f));
+				break;
+			}
+			case 1:
+			{
+				options[i].move(0, input_place.getGlobalBounds().height / 5.0f);
+				break;
+			}
+			case 5:
+			{
+				options[i].move(0, (input_place.getGlobalBounds().height  * 3.0f )/ 5.0f);
+				break;
+			}
+			default:
+			{
+				options[i].move(0, (input_place.getGlobalBounds().height  * 2.0f) / 5.0f);
+				break;
+			}
+		}
+		
+	}
+
+	options[2].move(-(input_place.getGlobalBounds().width / 3.0f), 0);
+	options[4].move((input_place.getGlobalBounds().width / 3.0f), 0);
+
+	name_text.setFont(options_font);
+	name_text.setColor(sf::Color::Black);
+
+
+}
 

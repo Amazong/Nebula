@@ -20,6 +20,8 @@ int error::trace_error(int code) {
 		error::file_access();
 	case 404:
 		error::profile_not_found();
+	case 101:
+		error::capture_screen_error();
 	default:
 		break;
 	}
@@ -41,6 +43,12 @@ void error::profile_not_found()
 {
 	std::cerr << "Profile not found!";
 }
+
+void error::capture_screen_error()
+{
+	std::cerr << "Error with print screen!";
+}
+
 
 logger_file::logger_file()
 {
