@@ -212,7 +212,7 @@ class user_profile
 {
 private:
 	std::list<store *> stores;
-	store * active_store;
+	store * active_store = nullptr;
 	sf::Time time_elapsed = sf::seconds(0.0f);  // by omission time offset from 0 is 0. Used to calculate date (in game)
 
 	char user[51];
@@ -231,7 +231,7 @@ public:
 	void set_net_worth(int worth) { net_worth = worth; }
 
 	store * get_active_store();
-	void set_active_store(store * active_store_new);
+	bool set_active_store(store * active_store_new);
 	bool set_active_store(unsigned int store_id);
 
 	int get_difficulty() { return difficulty; }
@@ -251,7 +251,8 @@ public:
 	void load_store_staff(const user_profile * user, store & shop, int store_index);
 
 	// string returns
-	std::string get_name_cpp() { std::string s = user; return s; }
+	std::string get_name_cpp() const { std::string s = user; return s; }
+	std::string get_balance_styled(int arg = 0) const;
 
 	// friends
 	friend class store;

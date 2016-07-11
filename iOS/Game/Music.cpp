@@ -126,6 +126,10 @@ void Music::loop()
 		if (!stop) continue;
 
 		while (stop) {
+			if (playing_now->getStatus() == sf::SoundSource::Status::Playing) {
+				playing_now->stop();
+			}
+			
 			std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		}
 
