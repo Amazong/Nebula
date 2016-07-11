@@ -2197,3 +2197,206 @@
 03:11:33 - Inventory emptied.
 03:11:33 - Your inventory is empty. Your reputation has decreased.
 03:11:33 - Started playing BossaBossa.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+03:19:37 - Program started.
+03:19:37 - Music started playing.
+03:19:37 - Bought Downtown for 20000.00£ (peanuts).
+03:19:37 - Bought Larrivee guitar for 200.00£ (peanuts).
+03:19:37 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+03:19:37 - Hired Cersei for 200000.00£ (peanuts).
+03:19:37 - Hired Ned Stark for 5000.00£ (peanuts).
+03:19:37 - Hired Jon Snow for 100000.00£ (peanuts).
+03:19:37 - Hired Sansa for 1000.00£ (peanuts).
+03:19:37 - Sold digital Steinway & Sons piano for 50000.00£ (peanuts).
+03:19:37 - Sold an item! Your reputation has increased.
+03:19:37 - Started playing Bossa2.ogg.
+03:19:37 - Sold Larrivee guitar for 1000.00£ (peanuts).
+03:19:37 - Sold an item! Your reputation has increased.
+03:19:37 - Inventory emptied.
+03:19:37 - Your inventory is empty. Your reputation has decreased.
+03:20:27 - Stopping playback.
+03:20:32 - Started playing HotaruNoShikai.ogg.
+03:20:33 - Skipping song.
+03:20:39 - Started playing SweetChildOMine.ogg.
+03:20:39 - Skipping song.
+03:20:46 - Started playing Tears in Heaven.ogg.
+03:20:47 - Skipping song.
+03:21:03 - Started playing Tears in Heaven.ogg.
+03:21:04 - Skipping song.
+03:21:06 - Started playing Kygo.ogg.
+03:21:06 - Skipping song.
+03:21:11 - Started playing Butterfly.ogg.
+03:21:11 - Skipping song.
+03:21:12 - Started playing SweetChildOMine.ogg.
+03:21:12 - Skipping song.
+03:21:14 - Started playing Forever Young.ogg.
+03:21:15 - Skipping song.
+03:21:20 - Started playing BackgroundProgression.ogg.
+03:21:20 - Skipping song.
+03:21:22 - Started playing Kygo.ogg.
+03:21:23 - Skipping song.
+03:21:24 - Started playing Tears in Heaven.ogg.
+03:21:25 - Skipping song.
+03:21:26 - Started playing BossaBossa.ogg.
+03:21:27 - Skipping song.
+03:21:28 - Started playing HotaruNoShikai.ogg.
+03:21:29 - Skipping song.
+03:21:30 - Started playing Tears in Heaven.ogg.
+03:21:30 - Skipping song.
+03:21:32 - Started playing Paradise.ogg.
+03:21:32 - Skipping song.
+03:21:34 - Started playing BossaBossa.ogg.
+03:21:34 - Skipping song.
+03:21:36 - Started playing Butterfly.ogg.
+03:21:37 - Skipping song.
+03:21:38 - Started playing Forever Young.ogg.
+03:21:39 - Skipping song.
+03:21:40 - Started playing Paradise.ogg.
+03:21:40 - Skipping song.
+03:21:42 - Started playing OpenGJam.ogg.
+03:21:43 - Skipping song.
+03:21:48 - Started playing BackgroundProgression.ogg.
+03:21:49 - Skipping song.
+03:21:53 - Started playing BackgroundProgression.ogg.
+03:21:54 - Skipping song.
+03:21:57 - Started playing SweetChildOMine.ogg.
+03:21:57 - Skipping song.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+03:22:20 - Program started.
+03:22:20 - Music started playing.
+03:22:20 - Bought Downtown for 20000.00£ (peanuts).
+03:22:20 - Bought Larrivee guitar for 200.00£ (peanuts).
+03:22:20 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+03:22:20 - Hired Cersei for 200000.00£ (peanuts).
+03:22:20 - Hired Ned Stark for 5000.00£ (peanuts).
+03:22:20 - Hired Jon Snow for 100000.00£ (peanuts).
+03:22:20 - Hired Sansa for 1000.00£ (peanuts).
+03:22:20 - Sold digital Steinway & Sons piano for 50000.00£ (peanuts).
+03:22:20 - Started playing Bossa2.ogg.
+03:22:20 - Sold an item! Your reputation has increased.
+03:22:20 - Sold Larrivee guitar for 1000.00£ (peanuts).
+03:22:20 - Sold an item! Your reputation has increased.
+03:22:20 - Inventory emptied.
+03:22:20 - Your inventory is empty. Your reputation has decreased.
+03:22:32 - Stopping playback.
+03:22:38 - Stopping playback.
+03:22:40 - Started playing Bossa2.ogg.
+03:22:40 - Skipping song.
+03:22:41 - Started playing SweetChildOMine.ogg.
+03:22:42 - Skipping song.
+03:22:43 - Started playing Bossa2.ogg.
+03:22:44 - Skipping song.
+03:22:45 - Started playing OpenGJam.ogg.
+03:22:46 - Skipping song.
+03:22:49 - Started playing InMyLife.ogg.
+03:22:50 - Skipping song.
+03:23:07 - Started playing SweetChildOMine.ogg.
+03:23:07 - Skipping song.
+03:23:10 - Started playing InMyLife.ogg.
+03:23:10 - Skipping song.
+03:23:12 - Started playing Forever Young.ogg.
+03:23:12 - Skipping song.
+03:23:19 - Started playing Bossa2.ogg.
+03:23:19 - Skipping song.
+03:23:21 - Started playing Forever Young.ogg.
+03:23:21 - Skipping song.
+03:23:23 - Started playing BossaBossa.ogg.
+03:23:23 - Skipping song.
+03:23:25 - Started playing Kygo.ogg.
+03:23:25 - Skipping song.
+03:23:27 - Started playing BossaBossaBossa.ogg.
+03:23:27 - Skipping song.
+03:23:29 - Started playing SweetChildOMine.ogg.
+03:23:29 - Skipping song.
+03:23:31 - Started playing Butterfly.ogg.
+03:23:31 - Skipping song.
+03:23:33 - Started playing BackgroundProgression.ogg.
+03:23:33 - Skipping song.
+03:23:35 - Started playing Tears in Heaven.ogg.
+03:23:35 - Skipping song.
+03:23:37 - Started playing BossaBossaBossa.ogg.
+03:23:37 - Skipping song.
+03:23:39 - Started playing BossaBossa.ogg.
+03:23:39 - Skipping song.
+03:23:40 - Started playing OpenGJam.ogg.
+03:23:41 - Skipping song.
+03:23:42 - Started playing BossaBossa.ogg.
+03:23:43 - Skipping song.
+03:23:44 - Started playing Bossa1.5.ogg.
+03:23:44 - Skipping song.
+03:23:48 - Started playing BossaBossa.ogg.
+03:23:48 - Skipping song.
+03:23:49 - Started playing Forever Young.ogg.
+03:23:50 - Skipping song.
+03:23:51 - Started playing SweetChildOMine.ogg.
+03:23:52 - Skipping song.
+03:23:54 - Started playing Bossa1.5.ogg.
+03:23:55 - Skipping song.
+03:23:59 - Started playing BossaBossaBossa.ogg.
+03:23:59 - Skipping song.
+03:24:01 - Started playing InMyLife.ogg.
+03:24:02 - Skipping song.
+03:24:03 - Started playing Forever Young.ogg.
+03:24:03 - Skipping song.
+03:24:05 - Started playing BackgroundProgression.ogg.
+03:24:05 - Skipping song.
+03:24:07 - Started playing Butterfly.ogg.
+03:24:07 - Skipping song.
+03:24:09 - Started playing InMyLife.ogg.
+03:24:09 - Skipping song.
+03:24:10 - Started playing Forever Young.ogg.
+03:24:11 - Skipping song.
+03:24:12 - Started playing InMyLife.ogg.
+03:24:12 - Skipping song.
+03:24:13 - Started playing Paradise.ogg.
+03:24:13 - Skipping song.
+03:24:14 - Started playing Bossa2.ogg.
+03:24:15 - Skipping song.
+03:24:16 - Started playing BossaBossaBossa.ogg.
+03:24:17 - Skipping song.
+03:24:18 - Started playing Tears in Heaven.ogg.
+03:24:19 - Skipping song.
+03:24:20 - Started playing BossaBossaBossa.ogg.
+03:24:20 - Skipping song.
+03:24:21 - Started playing Tears in Heaven.ogg.
+03:24:22 - Skipping song.
+03:24:23 - Started playing OpenGJam.ogg.
+03:24:23 - Skipping song.
+03:24:24 - Started playing Tears in Heaven.ogg.
+03:24:25 - Skipping song.
+03:24:26 - Started playing BossaBossa.ogg.
+03:24:27 - Skipping song.
+03:24:28 - Started playing Paradise.ogg.
+03:24:29 - Skipping song.
+03:24:30 - Started playing BossaBossa.ogg.
+03:24:30 - Skipping song.
+03:24:34 - Started playing Tears in Heaven.ogg.
+03:24:35 - Skipping song.
+03:24:36 - Started playing SweetChildOMine.ogg.
+03:24:36 - Skipping song.
+03:24:37 - Started playing Butterfly.ogg.
+03:24:38 - Skipping song.
+03:24:39 - Started playing Paradise.ogg.
+03:24:40 - Skipping song.
+03:24:54 - Quitting music player.
+03:24:55 - Program exited normally.
