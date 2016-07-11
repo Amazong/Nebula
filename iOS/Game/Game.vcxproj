@@ -153,12 +153,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Crypto.cpp" />
+    <ClCompile Include="Errors.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMechanics.cpp" />
     <ClCompile Include="GameStates.cpp" />
-    <ClCompile Include="headers\Errors.cpp" />
-    <ClCompile Include="headers\GameWindows.cpp" />
-    <ClCompile Include="headers\StateManager.cpp" />
+    <ClCompile Include="GameWindows.cpp" />
+    <ClCompile Include="Music.cpp" />
+    <ClCompile Include="StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\Crypto.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="headers\GameMechanics.h" />
     <ClInclude Include="headers\GameStates.h" />
     <ClInclude Include="headers\GameWindows.h" />
+    <ClInclude Include="headers\Music.h" />
     <ClInclude Include="headers\StateManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
