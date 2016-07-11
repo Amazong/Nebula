@@ -974,3 +974,142 @@ void new_game1::setup_options()
 
 }
 
+continue_game::continue_game(state_manager * game_ptr, sf::Image background)
+{
+	game = game_ptr;
+	background_texture.loadFromImage(background);
+	background_sprite.setTexture(background_texture);
+
+	if (!font.loadFromFile("res/fonts/Roboto-Bold.ttf")) {
+		complain(ErrNo::file_access);
+		return;
+	}
+
+	continue_background.setFillColor(sf::Color::Color(0, 0, 0, 235));
+	continue_background.setSize(sf::Vector2f((8.0f / 16.0f) * game->window.getSize().x, (game->window.getSize().y * (2.0f / 3.0f))));
+	continue_background.setPosition(game->window.getSize().x * (7.0f / 16.0f), game->window.getSize().y / 5.5f);
+	continue_background.setOutlineColor(sf::Color(72, 72, 72, 255));
+	continue_background.setOutlineThickness(-3);
+
+	setup_text();
+}
+
+void continue_game::input()
+{
+	sf::Event event;
+	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default 
+
+	while (game->window.pollEvent(event))
+	{
+		switch (event.type)
+		{
+		case sf::Event::KeyPressed:
+		{
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+				game->window.close();
+			break;
+		}
+		case sf::Event::MouseMoved:
+		{
+			mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
+
+			selection = -1; // this way the selection will always be -1 if it's not in one of the options
+			for (int i = 0; i < n_saves; i++) {
+				saved_profiles[i].setColor(sf::Color(190, 190, 190, 255));
+			}
+
+			for (int i = 0; i < 3; i++)
+			{
+				if (saved_profiles[i].getGlobalBounds().contains(mouse_pos))
+				{
+					selection = i;
+					saved_profiles[i].setColor(sf::Color::White);
+					for (int j = 0; j < n_saves; j++) {
+						if (j == i) continue;
+						saved_profiles[j].setColor(sf::Color(190, 190, 190, 255));
+					}
+				}
+			}
+
+			break;
+		}
+		case sf::Event::MouseButtonPressed:
+		{
+			if (selection != -1) {
+				if (game->get_current_user() != nullptr) {
+					delete game->get_current_user();
+				}
+
+				std::string user = saved_profiles[selection].getString();
+				user.erase(0, 3);
+
+				game->set_current_user(new user_profile());
+
+				game->get_current_user()->load_user(user);
+
+				game->change_state(new in_game(game));
+
+				return;
+			}
+
+			break;
+		}
+		default:
+			break;
+		}
+	}
+}
+
+void continue_game::logic_update(const float elapsed)
+{
+}
+
+void continue_game::draw(const float elapsed)
+{
+	game->window.clear();
+	game->window.draw(background_sprite);
+	game->window.draw(continue_background);
+	game->window.draw(title);
+	for (int i = 0; i < n_saves; i++) {
+		game->window.draw(saved_profiles[i]);
+	}
+}
+
+void continue_game::setup_text()
+{
+	std::ifstream loader("saves/users");
+	std::string cur_prof;
+
+	n_saves = 0;
+
+	if (!loader.is_open()) {
+		return;
+	}
+
+	while (!loader.eof()) {
+		std::getline(loader, cur_prof);
+		if (cur_prof != "") {
+			saved_profiles[n_saves].setString(std::to_string(n_saves + 1) + ". " + cur_prof);
+			n_saves++;
+		}
+	}
+
+	title.setFont(font);
+	title.setString("Choose a profile:");
+	title.setCharacterSize(60);
+	title.setColor(sf::Color::White);
+	title.setPosition(continue_background.getPosition());
+
+	sf::FloatRect textRect = title.getLocalBounds();
+
+	title.move(sf::Vector2f(((continue_background.getLocalBounds().width - textRect.width) / 2.0f), 25));
+
+	for (int i = 0; i < n_saves; i++) {
+		saved_profiles[i].setFont(font);
+		saved_profiles[i].setCharacterSize(50);
+		saved_profiles[i].setColor(sf::Color(190, 190, 190, 255));
+		saved_profiles[i].setPosition(continue_background.getPosition());
+
+		saved_profiles[i].move(sf::Vector2f(70, i * 80 + (title.getLocalBounds().height + 100)));
+	}
+}
