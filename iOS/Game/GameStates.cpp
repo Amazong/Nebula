@@ -833,12 +833,19 @@ void new_game1::input()
 		}
 		case sf::Event::MouseButtonPressed:
 		{
+			mouse_pos = sf::Vector2f(sf::Mouse::getPosition());
+			if (!input_place.getGlobalBounds().contains(mouse_pos))
+			{
+				game->pop_state();
+				return;
+			}
+
 			if (selection == -1) break;
 			switch (selection)
 			{
 				case 5:
 				{
-					game->push_state(new in_game(game));
+					game->change_state(new in_game(game));
 					return;
 					break;
 				}
@@ -862,7 +869,7 @@ void new_game1::input()
 		{
 			if (text_enter.getFillColor() == sf::Color::White)
 			{
-				if (name.getSize() > 50)
+				if (name.getSize() > 50 || name_text.getGlobalBounds().width >= (text_enter.getGlobalBounds().width - 30) )
 				{
 					if (event.text.unicode == 8)
 					{
