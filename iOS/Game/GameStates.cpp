@@ -564,7 +564,7 @@ void in_game::setup_options()
 			case 0 :
 			{
 				heat[i].setPosition( 0 , 0 );
-				heat[i].setFillColor(sf::Color::Color(35,35,35,255));
+				heat[i].setFillColor(sf::Color::Color(53,53,53,255));
 				heat[i].setOutlineColor(sf::Color::Black);
 				heat[i].setOutlineThickness(-1);
 				break;
@@ -573,7 +573,7 @@ void in_game::setup_options()
 			{
 				heat[i].setPosition(0, rectangle_size.y);
 				heat[i].scale(1.0f, 2.0f);
-				heat[i].setFillColor(sf::Color::Color(28, 28, 28, 255));
+				heat[i].setFillColor(sf::Color::Color(40, 40, 40, 255));
 				heat[i].setOutlineColor(sf::Color::Black);
 				heat[i].setOutlineThickness(-1);
 				break;
@@ -581,7 +581,7 @@ void in_game::setup_options()
 			case 2:
 			{
 				heat[i].setPosition(0, 3.0f * rectangle_size.y);
-				heat[i].setFillColor(sf::Color::Color(28, 28, 28, 255));
+				heat[i].setFillColor(sf::Color::Color(40, 40, 40, 255));
 				heat[i].scale(1.0f,0.5f);
 				heat[i].setOutlineColor(sf::Color::Black);
 				heat[i].setOutlineThickness(-1);
