@@ -28,15 +28,23 @@ std::string Music::get_random()
 	return songs[index];
 }
 
+void Music::set_MAX_VOL(float v)
+{
+	if (v >= 0 && v <= 100) {
+		MAX_VOL = v;
+		playing_now->setVolume(v);
+		playing_next->setVolume(v);
+	}
+}
+
 void Music::loop()
 {
-	sf::Time fade = sf::seconds(2.0f);
 	playing_now->setVolume(0);
 	playing_now->play();
 	LOGGER::log("Started playing " + playing_now_str);
 	sf::Clock clk;
 	
-	for (float i = 0; i <= 100; i += 5) {
+	for (float i = 0; i <= MAX_VOL; i += 5) {
 		clk.restart();
 		playing_now->setVolume(i);
 		while (clk.getElapsedTime().asSeconds() < 0.1);
@@ -44,7 +52,7 @@ void Music::loop()
 	
 	while (true) {
 		if (quit) {
-			for (float i = 100; i >= 0; i -= 5) {
+			for (float i = MAX_VOL; i >= 0; i -= 5) {
 				clk.restart();
 				playing_now->setVolume(i);
 				while (clk.getElapsedTime().asSeconds() < 0.05);
@@ -55,14 +63,21 @@ void Music::loop()
 		}
 
 		if (!stop) {
+			playing_prev_str = playing_now_str;
 			if (!playing_next->openFromFile("res/sound/" + get_random())) {
 				error::file_access();
 			}
-			
+
+			while (playing_now_str == playing_prev_str) { // prevents repeated songs
+				if (!playing_next->openFromFile("res/sound/" + get_random())) {
+					error::file_access();
+				}
+			}
+						
 			while (playing_now->getPlayingOffset() < (playing_now->getDuration() - fade)) {
 				std::this_thread::sleep_for(std::chrono::milliseconds(200)); // more CPU friendly
 				if (stop) {
-					for (float i = 100; i >= 0; i -= 5) {
+					for (float i = MAX_VOL; i >= 0; i -= 5) {
 						clk.restart();
 						playing_now->setVolume(i);
 						while (clk.getElapsedTime().asSeconds() < 0.1);
@@ -83,9 +98,9 @@ void Music::loop()
 			playing_next->play();
 			LOGGER::log("Started playing " + playing_now_str);
 
-			for (float i = 0; i <= 100; i += 5) { // crossfade
+			for (float i = 0; i <= MAX_VOL; i += 5) { // crossfade
 				clk.restart();
-				playing_now->setVolume(100 - i);
+				playing_now->setVolume(MAX_VOL - i);
 				playing_next->setVolume(i);
 				while (clk.getElapsedTime().asSeconds() < 0.1);
 			}
@@ -108,13 +123,23 @@ void Music::loop()
 			continue;
 		}
 
+		if (!stop) continue;
+
 		while (stop) {
 			std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		}
 
+		if (skip) { // accounts for skipping while stopped
+			delete playing_now;
+			playing_now = playing_next;
+			skip = false;
+			playing_next = new sf::Music;
+		}
+
+		// fade in for resuming after stopping
 		playing_now->setVolume(0);
 		playing_now->play();
-		for (float i = 0; i <= 100; i += 5) {
+		for (float i = 0; i <= MAX_VOL; i += 5) {
 			clk.restart();
 			playing_now->setVolume(i);
 			while (clk.getElapsedTime().asSeconds() < 0.1);
@@ -123,10 +148,10 @@ void Music::loop()
 }
 
 namespace MUSIC {
-	Music * m_player;
+	Music * m_player = nullptr;
 
 	Music * set_m_player() {
-		if (m_player != nullptr) m_player = new Music;
+		if (m_player == nullptr) m_player = new Music;
 		else {
 			delete m_player;
 			m_player = new Music;

@@ -117,7 +117,10 @@ void main_menu::input()
 						MUSIC::get_m_player()->set_quit(true);
 						
 						sf::RectangleShape closer;
-						closer.setSize(sf::Vector2f(game->window.getSize().x, game->window.getSize().y));
+						float size_x, size_y;
+						size_x = (float)game->window.getSize().x;
+						size_y = (float)game->window.getSize().y;
+						closer.setSize(sf::Vector2f(size_x, size_y));
 						
 						sf::Clock clk;
 
