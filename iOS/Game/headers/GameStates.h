@@ -115,4 +115,5 @@ public:
 	void setup_options();
 	void setup_indicators();
 	void setup_icons();
+	void control_icon_animations(sf::Vector2f mouse_pos);
 };

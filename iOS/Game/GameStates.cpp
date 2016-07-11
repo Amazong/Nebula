@@ -444,19 +444,8 @@ void in_game::input()
 					options[(selection - 3)].setStyle(sf::Text::Underlined);
 				}
 
-				if (icons[5].getGlobalBounds().contains(mouse_pos))
-				{
-					icons[5].scale(1.1f, 1.1f);
-				}
-				else if (icons[6].getGlobalBounds().contains(mouse_pos))
-				{
-					icons[6].scale(1.1f, 1.1f);
-				}
-				else
-				{
-					icons[5].setScale(0.2f, 0.2f);
-					icons[6].setScale(0.2f, 0.2f);
-				}
+				control_icon_animations(mouse_pos);
+
 				std::cout << "           Selection " << selection << std::endl; //debug
 
 				
@@ -689,3 +678,23 @@ void in_game::setup_icons()
 	
 
 }
+
+
+void in_game::control_icon_animations(sf::Vector2f mouse_pos)
+{
+	if (icons[5].getGlobalBounds().contains(mouse_pos))
+	{
+		icons[5].scale(1.1f, 1.1f);
+	}
+	else if (icons[6].getGlobalBounds().contains(mouse_pos))
+	{
+		icons[6].scale(1.1f, 1.1f);
+	}
+	else
+	{
+		icons[5].setScale(0.2f, 0.2f);
+		icons[6].setScale(0.2f, 0.2f);
+	}
+}
+
+
