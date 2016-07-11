@@ -28,6 +28,15 @@ std::string Music::get_random()
 	return songs[index];
 }
 
+void Music::set_MAX_VOL(float v)
+{
+	if (v >= 0 && v <= 100) {
+		MAX_VOL = v;
+		playing_now->setVolume(v);
+		playing_next->setVolume(v);
+	}
+}
+
 void Music::loop()
 {
 	playing_now->setVolume(0);
@@ -35,7 +44,7 @@ void Music::loop()
 	LOGGER::log("Started playing " + playing_now_str);
 	sf::Clock clk;
 	
-	for (float i = 0; i <= 100; i += 5) {
+	for (float i = 0; i <= MAX_VOL; i += 5) {
 		clk.restart();
 		playing_now->setVolume(i);
 		while (clk.getElapsedTime().asSeconds() < 0.1);
@@ -43,7 +52,7 @@ void Music::loop()
 	
 	while (true) {
 		if (quit) {
-			for (float i = 100; i >= 0; i -= 5) {
+			for (float i = MAX_VOL; i >= 0; i -= 5) {
 				clk.restart();
 				playing_now->setVolume(i);
 				while (clk.getElapsedTime().asSeconds() < 0.05);
@@ -61,7 +70,7 @@ void Music::loop()
 			while (playing_now->getPlayingOffset() < (playing_now->getDuration() - fade)) {
 				std::this_thread::sleep_for(std::chrono::milliseconds(200)); // more CPU friendly
 				if (stop) {
-					for (float i = 100; i >= 0; i -= 5) {
+					for (float i = MAX_VOL; i >= 0; i -= 5) {
 						clk.restart();
 						playing_now->setVolume(i);
 						while (clk.getElapsedTime().asSeconds() < 0.1);
@@ -82,7 +91,7 @@ void Music::loop()
 			playing_next->play();
 			LOGGER::log("Started playing " + playing_now_str);
 
-			for (float i = 0; i <= 100; i += 5) { // crossfade
+			for (float i = 0; i <= MAX_VOL; i += 5) { // crossfade
 				clk.restart();
 				playing_now->setVolume(100 - i);
 				playing_next->setVolume(i);
@@ -123,7 +132,7 @@ void Music::loop()
 		// fade in for resuming after stopping
 		playing_now->setVolume(0);
 		playing_now->play();
-		for (float i = 0; i <= 100; i += 5) {
+		for (float i = 0; i <= MAX_VOL; i += 5) {
 			clk.restart();
 			playing_now->setVolume(i);
 			while (clk.getElapsedTime().asSeconds() < 0.1);
