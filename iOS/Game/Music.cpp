@@ -93,7 +93,7 @@ void Music::loop()
 
 			for (float i = 0; i <= MAX_VOL; i += 5) { // crossfade
 				clk.restart();
-				playing_now->setVolume(100 - i);
+				playing_now->setVolume(MAX_VOL - i);
 				playing_next->setVolume(i);
 				while (clk.getElapsedTime().asSeconds() < 0.1);
 			}
