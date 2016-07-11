@@ -96,6 +96,8 @@ private:
 	sf::Text options[4];
 	sf::Text indicators[5];
 	sf::RectangleShape heat[7];
+	sf::Sprite icons[7];
+	sf::Texture icons_texture[7];
 	double buying_rate;
 	int selection = -1;
 	store * active_store;
@@ -112,4 +114,5 @@ public:
 	void setup();
 	void setup_options();
 	void setup_indicators();
+	void setup_icons();
 };

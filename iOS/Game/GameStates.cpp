@@ -341,7 +341,9 @@ void options_menu::setup_text()
 		options[i].setOrigin((options[i].getGlobalBounds().width / 2.0f) , (options[i].getGlobalBounds().height / 2.0f) ); // origin of font in its geometric center
 		options[i].setPosition(starting_pos);
 
-		starting_pos.y += (i == 0) ? 2.5f * offset : offset;
+		starting_pos.y += (i == 0) ? 2.5f * offset : 1.3f * offset;
+		if (i == 0)
+			starting_pos.y += offset* 0.2f;
 	
 	}
 
@@ -361,6 +363,7 @@ in_game::in_game(state_manager * game_ptr)
 
 	setup_options();
 	setup_indicators();
+	setup_icons();
 }
 
 void in_game::update_buying_rate()
@@ -397,9 +400,8 @@ void in_game::input()
 	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default 
 	if (selection > 2)
 	{
-		options[(selection - 3)].setStyle(sf::Text::Regular);
+		options[(selection - 3)].setStyle(sf::Text::Underlined);
 		options[(selection - 3)].setColor(sf::Color::White);
-		heat[selection].setOutlineColor(sf::Color::White);
 	}
 
 	while (game->window.pollEvent(event))
@@ -415,7 +417,11 @@ void in_game::input()
 			case sf::Event::MouseMoved:
 			{
 				mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
-
+				if (selection > 2)
+				{
+					options[(selection - 3)].setScale(1.0f, 1.0f);
+					options[(selection - 3)].setStyle(sf::Text::Regular);
+				}
 
 				if (selection != -1)
 					heat[selection].setOutlineThickness(0);
@@ -431,7 +437,10 @@ void in_game::input()
 				}
 
 				if (selection != -1)
-					heat[selection].setOutlineThickness(-2);
+				{
+					options[(selection - 3)].scale(1.1f, 1.1f);
+					options[(selection - 3)].setStyle(sf::Text::Underlined);
+				}
 
 				std::cout << "           Selection " << selection << std::endl; //debug
 
@@ -444,7 +453,7 @@ void in_game::input()
 				{
 					options[(selection - 3)].setStyle(sf::Text::Italic);
 					options[(selection - 3)].setColor(sf::Color::Red);	
-					heat[selection].setOutlineColor(sf::Color::Red);
+					//options[(selection - 3)].scale(0.9f, 0.9f);
 				}
 				
 				switch(selection)
@@ -492,6 +501,8 @@ void in_game::draw(const float elapsed)
 
 	for(int i = 0 ; i < 5 ; i++)
 		game->window.draw(indicators[i]);
+	for (int i = 0; i < 7; i++)
+		game->window.draw(icons[i]);
 }		
 
 void in_game::setup()
@@ -516,21 +527,27 @@ void in_game::setup_options()
 			case 0 :
 			{
 				heat[i].setPosition( 0 , 0 );
-				heat[i].setFillColor(sf::Color::Blue);
+				heat[i].setFillColor(sf::Color::Color(35,35,35,255));
+				heat[i].setOutlineColor(sf::Color::Black);
+				heat[i].setOutlineThickness(-1);
 				break;
 			}
 			case 1:
 			{
 				heat[i].setPosition(0, rectangle_size.y);
 				heat[i].scale(1.0f, 2.0f);
-				heat[i].setFillColor(sf::Color::Transparent);
+				heat[i].setFillColor(sf::Color::Color(28, 28, 28, 255));
+				heat[i].setOutlineColor(sf::Color::Black);
+				heat[i].setOutlineThickness(-1);
 				break;
 			}
 			case 2:
 			{
 				heat[i].setPosition(0, 3.0f * rectangle_size.y);
-				heat[i].setFillColor(sf::Color::Green);
+				heat[i].setFillColor(sf::Color::Color(28, 28, 28, 255));
 				heat[i].scale(1.0f,0.5f);
+				heat[i].setOutlineColor(sf::Color::Black);
+				heat[i].setOutlineThickness(-1);
 				
 				break;
 			}
@@ -593,5 +610,67 @@ void in_game::setup_indicators()
 		indicators[i].move(heat[1].getGlobalBounds().width / 2.0f , (offset / 2.3f) + ( i*offset ) );
 
 	}
+
+}
+
+void in_game::setup_icons()
+{
+	std::string names[7] = { "bargraph.png","staff.png","inventory.png","shop.png","finance.png","save.png", "quit.png" };
+
+	for (int i = 0; i < 7; i++)
+	{
+		if (!icons_texture[i].loadFromFile("res/icons/" + names[i]))
+		{
+			complain(ErrNo::file_access);
+			return;
+		}
+
+		icons[i].setTexture(icons_texture[i]);
+		icons[i].setOrigin(icons[i].getGlobalBounds().width / 2.0f, icons[i].getGlobalBounds().height / 2.0f);
+		icons[i].scale(0.5f, 0.5f);
+		
+		
+		if (i == 2 || i == 3 )
+			icons[i].scale((i == 2) ? 1.2f : 0.8f, (i == 2) ? 1.2f : 0.8f);
+		
+
+		if(i > 4)
+			icons[i].setScale(0.20f, 0.20f);
+
+		
+
+		switch (i) // i refering to 
+		{
+		case 0: // bar graph
+		{
+			icons[i].setPosition(heat[0].getPosition().x + (heat[0].getGlobalBounds().width / 2.0f ), heat[0].getPosition().y + (heat[0].getGlobalBounds().height / 2.0f));
+			break;
+		}
+		case 5: // save 
+		{
+			icons[i].setPosition(heat[2].getPosition().x + (heat[2].getGlobalBounds().width / 4.0f), heat[2].getPosition().y + (heat[2].getGlobalBounds().height / 2.0f));
+			break;
+		}
+		case 6: // quit game
+		{
+			icons[i].setPosition(heat[2].getPosition().x + (heat[2].getGlobalBounds().width * (3.0f/4.0f)), heat[2].getPosition().y + (heat[2].getGlobalBounds().height / 2.0f));
+			break;
+		}
+
+		default: // everyhting else
+		{
+			icons[i].setPosition(heat[(i + 2)].getPosition().x + (heat[(i + 2)].getGlobalBounds().width / 2.0f), heat[(i + 2)].getPosition().y + (heat[(i + 2)].getGlobalBounds().height / 2.0f));
+			float temp = (i != 2) ? 1.5f : 2.0f;
+			if (i == 3) temp = 1.3f;
+			icons[i].move(0, -(icons[i].getGlobalBounds().height / temp));
+
+			break;
+		}
+
+		}
+		
+	}
+
+	
 
 }
