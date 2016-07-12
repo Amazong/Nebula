@@ -103,6 +103,7 @@ std::string instrument::get_quality_cpp()
 	case 3:
 		return "Great";
 	}
+	return "";
 }
 
 std::string instrument::get_perceived_value_cpp()
@@ -125,6 +126,7 @@ std::string instrument::get_perceived_value_cpp()
 	default:
 		break;
 	}
+	return "";
 }
 
 /*------------------------------ guitar ------------------------------*/
