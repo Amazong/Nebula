@@ -40,6 +40,9 @@ void main_menu::input()
 			{
 				if (event.key.alt && (event.key.code == sf::Keyboard::F4))
 					game->window.close();
+				else if (event.key.code == sf::Keyboard::S) {
+					MUSIC::get_m_player()->set_skip(true);
+				}
 				break;
 			}
 			case sf::Event::MouseMoved:
@@ -268,6 +271,9 @@ void options_menu::input()
 			{
 				if (event.key.alt && (event.key.code == sf::Keyboard::F4))
 					game->window.close();
+				else if (event.key.code == sf::Keyboard::S) {
+					MUSIC::get_m_player()->set_skip(true);
+				}
 				break;
 			}
 			case sf::Event::MouseMoved:
@@ -420,9 +426,7 @@ void in_game::input()
 		options[(selection - 3)].setStyle(sf::Text::Underlined);
 		options[(selection - 3)].setColor(sf::Color::White);
 	}
-
-
-
+	
 	while (game->window.pollEvent(event))
 	{
 		icons[5].setScale(0.2f, 0.2f);
@@ -434,6 +438,9 @@ void in_game::input()
 		{
 			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
 				game->window.close();
+			else if (event.key.code == sf::Keyboard::S) {
+				MUSIC::get_m_player()->set_skip(true);
+			}
 			break;
 		}
 		case sf::Event::MouseMoved:
@@ -811,6 +818,9 @@ void in_game_setup::input()
 		{
 			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
 				game->window.close();
+			else if (event.key.code == sf::Keyboard::S) {
+				MUSIC::get_m_player()->set_skip(true);
+			}
 			break;
 		}
 		case sf::Event::MouseMoved:
@@ -1184,6 +1194,9 @@ void new_game1::input()
 		{
 			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
 				game->window.close();
+			else if (event.key.code == sf::Keyboard::S) {
+				MUSIC::get_m_player()->set_skip(true);
+			}
 			break;
 		}
 		case sf::Event::MouseMoved:
@@ -1417,6 +1430,9 @@ void continue_game::input()
 		{
 			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
 				game->window.close();
+			else if (event.key.code == sf::Keyboard::S) {
+				MUSIC::get_m_player()->set_skip(true);
+			}
 			break;
 		}
 		case sf::Event::MouseMoved:
@@ -1686,51 +1702,56 @@ void inventory::input()
 		{
 			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
 				game->window.close();
+			else if (event.key.code == sf::Keyboard::S) {
+				MUSIC::get_m_player()->set_skip(true);
+			}
 			break;
 		}
 		case sf::Event::MouseMoved:
 		{
 			mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
-			if (selection > 2)
-			{
-				
-			}
 
-			if (selection != -1)
-				heat[selection].setOutlineThickness(0);
+			// update properties
+			for (int i = 0; i < 5; i++) {
+				if (currently_showing[i].getGlobalBounds().contains(mouse_pos) && currently_showing[i].getString() != "") {
+					int item_number = starting_index * 5 + i;
+					auto it = active_store->get_inventory()->begin();
 
-			selection = -1; // this way the selection will always be -1 if it's not in one of the options
+					for (int j = 0; j < item_number; j++) {
+						it++;
+					}
 
-			for (int i = 0; i < 4; i++)
-			{
-				if (heat[(3 + i)].getGlobalBounds().contains(mouse_pos))
-				{
-					selection = i + 3;
+					current_selection = *it;
+					
+					update_properties();
 				}
 			}
 
-			if (selection != -1)
-			{
-				
+			if (back.getGlobalBounds().contains(mouse_pos)) {
+				selection = 0;
+				back.setStyle(sf::Text::Bold);
 			}
-			
+			else if (buy.getGlobalBounds().contains(mouse_pos)) {
+				selection = 0;
+				buy.setStyle(sf::Text::Bold);
+			}
+			else {
+				selection = -1;
+				back.setStyle(sf::Text::Regular);
+			}			
+
 			break;
 		}
 		case sf::Event::MouseButtonPressed:
 		{
-			if (selection > 2 && event.mouseButton.button == sf::Mouse::Left)
-			{
-			
-			}
-
 			switch (selection)
 			{
 			case 0:
-			{
 				game->pop_state();
 				return;
-				break;
-			}
+			case 1:
+				// game->change_state(new inventory_buy(game));
+				return;
 			// to add actions
 			}
 
@@ -1753,6 +1774,7 @@ void inventory::draw(const float elapsed)
 	game->window.draw(details);
 	game->window.draw(buy);
 	game->window.draw(back);
+	game->window.draw(set_price);
 
 	for (int i = 0; i < 3; i++)
 		game->window.draw(heat[i]);
@@ -1765,6 +1787,19 @@ void inventory::draw(const float elapsed)
 
 	for (int i = 0; i < 5; i++)
 		game->window.draw(currently_showing[i]);
+
+	for (int i = 0; i < 6; i++)
+		game->window.draw(active_properties[i]);
+}
+
+void inventory::move_list_down()
+{
+	starting_index++;
+}
+
+void inventory::move_list_up()
+{
+	starting_index--;
 }
 
 void inventory::setup()
@@ -1817,6 +1852,7 @@ void inventory::setup_text()
 {
 	int offset = (int)(heat[1].getGlobalBounds().height / 5.0f);
 
+	// indicators
 	for (int i = 0; i < 5; i++)	{
 		indicators[i].setFont(font);
 		indicators[i].setCharacterSize((int)(game->window.getSize().y / 22.0f));
@@ -1827,6 +1863,7 @@ void inventory::setup_text()
 		indicators[i].move(heat[1].getGlobalBounds().width / 2.0f, (offset / 2.3f) + (i*offset));
 	}
 
+	// currently showing (list)
 	for (int i = 0; i < 5; i++) {
 		currently_showing[i].setFont(font);
 		currently_showing[i].setCharacterSize((int)(game->window.getSize().y / 16.0f));
@@ -1835,28 +1872,42 @@ void inventory::setup_text()
 	}
 	update_list();
 
-	buy.setFont(font);
-	buy.setColor(sf::Color::White);
-	buy.setCharacterSize(50);
-	buy.setString("Buy Inventory");
-	buy.setPosition((game->window.getSize().x - buy.getGlobalBounds().width - 50),
-		game->window.getSize().y - (float)2 * buy.getCharacterSize());
+	// buy
+	{
+		buy.setFont(font);
+		buy.setColor(sf::Color::White);
+		buy.setCharacterSize(50);
+		buy.setString("Buy Inventory");
+		buy.setPosition((game->window.getSize().x - buy.getGlobalBounds().width - 50),
+			game->window.getSize().y - (float)2 * buy.getCharacterSize());
+	}
 
-	back.setFont(font);
-	back.setColor(sf::Color::White);
-	back.setCharacterSize(50);
-	back.setString("Back");
-	back.setPosition(heat[0].getGlobalBounds().width + 50,
-		game->window.getSize().y - (float)2 * buy.getCharacterSize());
+	// back
+	{
+		back.setFont(font);
+		back.setColor(sf::Color::White);
+		back.setCharacterSize(50);
+		back.setString("Back");
+		back.setPosition(heat[0].getGlobalBounds().width + 50,
+			game->window.getSize().y - (float)2 * buy.getCharacterSize());
+	}
+
+	// set price
+	{
+		set_price.setFont(font);
+		set_price.setColor(sf::Color(70, 70, 70, 255));
+		set_price.setString("Set price");
+	}
 }
 
 void inventory::setup_icons()
 {
-	std::string names[3] = { "bargraph.png", "save.png", "quit.png" };
+	int i = 0;
+	std::string icon_names[3] = { "bargraph.png", "save.png", "quit.png" };
 
-	for (int i = 0; i < 3; i++)
+	for (i = 0; i < 3; i++)
 	{
-		if (!icons_texture[i].loadFromFile("res/icons/" + names[i]))
+		if (!icons_texture[i].loadFromFile("res/icons/" + icon_names[i]))
 		{
 			complain(ErrNo::file_access);
 			return;
@@ -1882,6 +1933,19 @@ void inventory::setup_icons()
 			break;
 		}
 	}
+
+	std::string scroll_names[2] = { "down_arrow.png", "up_arrow.png" };
+
+	for (i = 0; i < 2; i++)
+	{
+		if (!scroll_texture[i].loadFromFile("res/png/" + icon_names[i]))
+		{
+			complain(ErrNo::file_access);
+			return;
+		}
+
+		scroll[i].setTexture(scroll_texture[i]);
+	}
 }
 
 void inventory::update_list()
@@ -1897,6 +1961,54 @@ void inventory::update_list()
 			for (int j = i+1; j < 5; j++) {
 				currently_showing[j].setString("");
 			}
+			break;
+		}
+	}
+}
+
+void inventory::update_properties() {
+	// active_properties
+	int i = (current_selection->is_guitar) ? 3 : 5;
+	
+	if (i == 3) {
+		active_properties[4].setString("");
+		active_properties[5].setString("");
+	}
+
+	float base_size = (details.getGlobalBounds().height) / 19.0f;
+	unsigned int character_size = (int)(2 * base_size);
+
+	for (; i >= 0; i--) {
+		active_properties[i].setFont(font);
+		active_properties[i].setCharacterSize(character_size);
+		active_properties[i].setColor(sf::Color::White);
+		active_properties[i].setPosition(details.getPosition().x + 30,
+			details.getPosition().y + base_size + i * 3 * base_size);
+
+		switch (i) {
+		case 0:
+			active_properties[i].setString("Value: " + current_selection->style(current_selection->get_value()));
+			break;
+		case 1:
+			active_properties[i].setString("Price: " + current_selection->style(current_selection->get_price()));
+			set_price.setCharacterSize(active_properties[1].getCharacterSize());
+			set_price.setPosition(active_properties[1].getPosition());
+			set_price.setPosition(details.getPosition().x + details.getGlobalBounds().width - 30 - set_price.getGlobalBounds().width,
+				set_price.getPosition().y);
+			break;
+		case 2:
+			active_properties[i].setString("Perceived value: " + current_selection->get_perceived_value_cpp());
+			break;
+		case 3:
+			active_properties[i].setString("Quality: " + current_selection->get_quality_cpp());
+			break;
+		case 4:
+			active_properties[i].setString("Brand: " + current_selection->print_brand_cpp());
+			break;
+		case 5:
+			active_properties[i].setString("Type: " + current_selection->print_type_cpp());
+			break;
+		default:
 			break;
 		}
 	}

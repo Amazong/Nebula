@@ -56,6 +56,77 @@ std::string instrument::get_price_cpp()
 	return s;
 }
 
+std::string instrument::style(double d)
+{
+	std::string s = "";
+
+	if (d < 0) { // negative
+		s += "- ";
+		s += style(-d);
+		return s;
+	}
+	else if (d < 1000) { // display directly
+		s += std::to_string((int)d).substr(0, 3);
+	}
+	else if (d < 1000000) { // K range
+		s += std::to_string((int)d / 1000).substr(0, 3); // How many K's
+		s += ".";
+		s += std::to_string((int)d % 1000).substr(0, 1);
+		s += "K";
+	}
+	else if (d < 1000000000) { // M range
+		s += std::to_string((int)d / 1000000).substr(0, 3); // How many M's
+		s += ".";
+		s += std::to_string((int)d % 1000000).substr(0, 1);
+		s += "M";
+	}
+	else {
+		s += "1 €"; // if the user has more than 1000000000 £, we display "1 €"
+					// small easter egg :)
+		return s;
+	}
+
+	s += " £";
+
+	return s;
+}
+
+std::string instrument::get_quality_cpp()
+{
+	switch (get_quality()) {
+	case 0:
+		return "N/A";
+	case 1:
+		return "Poor";
+	case 2:
+		return "Fair";
+	case 3:
+		return "Great";
+	}
+}
+
+std::string instrument::get_perceived_value_cpp()
+{
+	set_perceived_value(price / value);
+	switch (get_perceived_value())
+	{
+	case 0:
+		return "Unattainable";
+	case 1:
+		return "Overpriced";
+	case 2:
+		return "High";
+	case 4:
+		return "Neutral";
+	case 5:
+		return "Cheap";
+	case 6:
+		return "Irresistible";
+	default:
+		break;
+	}
+}
+
 /*------------------------------ guitar ------------------------------*/
 
 guitar::guitar(double value, char * name)
