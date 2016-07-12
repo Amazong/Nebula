@@ -66,6 +66,9 @@ public:
 	std::string print_type_cpp();
 	std::string get_value_cpp();
 	std::string get_price_cpp();
+	std::string style(double d = 0);
+	std::string get_quality_cpp();
+	std::string get_perceived_value_cpp();
 
 	// friends
 	friend class store;

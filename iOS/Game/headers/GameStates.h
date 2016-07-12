@@ -257,15 +257,25 @@ private:
 	sf::Text title;
 	sf::Text buy;
 	sf::Text back;
+	sf::Text set_price;
+	sf::Text active_properties[6]; // value, price, perceived value, quality, brand, type (if piano)
 	sf::Text indicators[5];
 	sf::Text currently_showing[5];
 	sf::RectangleShape heat[3];
 	sf::RectangleShape details;
+	sf::RectangleShape price_setter;
+	std::string price_setter_str;
+	sf::Text price_setter_inside;
+	sf::Sprite scroll[2];
+	sf::Texture scroll_texture[2];
 	sf::Sprite icons[3];
-	sf::Texture icons_texture[7];
+	sf::Texture icons_texture[3];
+	
 	double buying_rate;
 	int selection = -1;
 	int starting_index = 0;
+	instrument * current_selection;
+
 	store * active_store;
 	user_profile * current_user;
 
@@ -274,6 +284,7 @@ private:
 	void setup_text();
 	void setup_icons();
 	void update_list();
+	void update_properties();
 
 public:
 	inventory(state_manager * game_ptr);
@@ -281,5 +292,7 @@ public:
 	void input();
 	void logic_update(const float elapsed);
 	void draw(const float elapsed);
+	void move_list_down();
+	void move_list_up();
 };
 
