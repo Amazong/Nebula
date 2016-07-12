@@ -38,7 +38,9 @@ user_profile * state_manager::get_current_user()
 
 void state_manager::set_current_user(user_profile * user)
 {
-	delete current_user;
+	if (current_user != nullptr)
+		delete current_user;
+
 	current_user = user;
 }
 

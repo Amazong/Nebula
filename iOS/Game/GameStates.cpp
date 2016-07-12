@@ -372,7 +372,7 @@ void options_menu::setup_text()
 in_game::in_game(state_manager * game_ptr)
 {
 	game = game_ptr;
-	
+
 	if (!options_font.loadFromFile("res/fonts/Roboto-Bold.ttf")) {
 		complain(ErrNo::file_access);
 		return;
@@ -430,87 +430,88 @@ void in_game::input()
 
 		switch (event.type)
 		{
-			case sf::Event::KeyPressed:
+		case sf::Event::KeyPressed:
+		{
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+				game->window.close();
+			break;
+		}
+		case sf::Event::MouseMoved:
+		{
+			mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
+			if (selection > 2)
 			{
-				if (event.key.alt && (event.key.code == sf::Keyboard::F4))
-					game->window.close();
-				break;
+				options[(selection - 3)].setScale(1.0f, 1.0f);
+				options[(selection - 3)].setStyle(sf::Text::Regular);
 			}
-			case sf::Event::MouseMoved:
+
+			if (selection != -1)
+				heat[selection].setOutlineThickness(0);
+
+			selection = -1; // this way the selection will always be -1 if it's not in one of the options
+
+			for (int i = 0; i < 4; i++)
 			{
-				mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
-				if (selection > 2)
+				if (heat[(3 + i)].getGlobalBounds().contains(mouse_pos))
 				{
-					options[(selection - 3)].setScale(1.0f, 1.0f);
-					options[(selection - 3)].setStyle(sf::Text::Regular);
+					selection = i + 3;
 				}
-
-				if (selection != -1)
-					heat[selection].setOutlineThickness(0);
-
-				selection = -1; // this way the selection will always be -1 if it's not in one of the options
-				
-				for (int i = 0; i < 4; i++)
-				{
-					if (heat[(3 + i)].getGlobalBounds().contains(mouse_pos))
-					{
-						selection = i + 3;
-					}
-				}
-
-				if (selection != -1)
-				{
-					options[(selection - 3)].scale(1.1f, 1.1f);
-					options[(selection - 3)].setStyle(sf::Text::Underlined);
-				}
-
-				control_icon_animations(mouse_pos);
-
-				std::cout << "           Selection " << selection << std::endl; //debug
-
-				
-				break;
 			}
-			case sf::Event::MouseButtonPressed:
+
+			if (selection != -1)
 			{
-				if (handle_icons((sf::Vector2f) sf::Mouse::getPosition(game->window)))
-					return;
-
-				if (selection > 2 && event.mouseButton.button == sf::Mouse::Left)
-				{
-					options[(selection - 3)].setStyle(sf::Text::Italic);
-					options[(selection - 3)].setColor(sf::Color::Red);	
-					//options[(selection - 3)].scale(0.9f, 0.9f);
-				}
-				
-				switch(selection)
-				{	
-					case 0:
-					{
-						game->pop_state();
-						return;
-						break;
-					}
-				// to add actions
-				}
-
-				break;
+				options[(selection - 3)].scale(1.1f, 1.1f);
+				options[(selection - 3)].setStyle(sf::Text::Underlined);
 			}
-			default:
+
+			control_icon_animations(mouse_pos);
+
+			std::cout << "           Selection " << selection << std::endl; //debug
+
+
+			break;
+		}
+		case sf::Event::MouseButtonPressed:
+		{
+			if (handle_icons((sf::Vector2f) sf::Mouse::getPosition(game->window)))
+				return;
+
+			if (selection > 2 && event.mouseButton.button == sf::Mouse::Left)
+			{
+				options[(selection - 3)].setStyle(sf::Text::Italic);
+				options[(selection - 3)].setColor(sf::Color::Red);
+				//options[(selection - 3)].scale(0.9f, 0.9f);
+			}
+
+			switch (selection)
+			{
+			case 0:
+				game->pop_state();
+				return;
 				break;
+			case 4:
+				game->push_state(new inventory(game));
+				break;
+			// to add actions
+			}
+
+			break;
+		}
+		default:
+			break;
 		}
 	}
-	
+
 }
 
 void in_game::logic_update(const float elapsed)
 {
-	
+
 	/*
 	update_buying_rate();
 	if (buying_rate > active_store->get_stock()) {
-		// if not enough items in stock, penalize player
-		active_store->set_reputation (active_store->get_reputation() * 0.9);
+	// if not enough items in stock, penalize player
+	active_store->set_reputation (active_store->get_reputation() * 0.9);
 	} */
 }
 
@@ -519,18 +520,18 @@ void in_game::draw(const float elapsed)
 	for (int i = 0; i < 7; i++)
 	{
 		game->window.draw(heat[i]);
-		
+
 	}
 
 	for (int i = 0; i < 4; i++)
 		game->window.draw(options[i]);
-	
 
-	for(int i = 0 ; i < 5 ; i++)
+
+	for (int i = 0; i < 5; i++)
 		game->window.draw(indicators[i]);
 	for (int i = 0; i < 7; i++)
 		game->window.draw(icons[i]);
-}		
+}
 
 void in_game::setup()
 {
@@ -540,71 +541,71 @@ void in_game::setup()
 
 void in_game::setup_options()
 {
-	sf::Vector2f rectangle_size(game->window.getSize().x / 5.8f , game->window.getSize().y /3.5f);
+	sf::Vector2f rectangle_size(game->window.getSize().x / 5.8f, game->window.getSize().y / 3.5f);
 	sf::Vector2f options_pos(game->window.getSize().x / 5.8f, 0);
-	
+
 	for (int i = 0; i < 7; i++)
 	{
 		heat[i].setSize(rectangle_size);
 		heat[i].setFillColor(sf::Color::White);
-		
+
 
 		switch (i)
 		{
-			case 0 :
-			{
-				heat[i].setPosition( 0 , 0 );
-				heat[i].setFillColor(sf::Color::Color(53,53,53,255));
-				heat[i].setOutlineColor(sf::Color::Black);
-				heat[i].setOutlineThickness(-1);
-				break;
-			}
-			case 1:
-			{
-				heat[i].setPosition(0, rectangle_size.y);
-				heat[i].scale(1.0f, 2.0f);
-				heat[i].setFillColor(sf::Color::Color(40, 40, 40, 255));
-				heat[i].setOutlineColor(sf::Color::Black);
-				heat[i].setOutlineThickness(-1);
-				break;
-			}
-			case 2:
-			{
-				heat[i].setPosition(0, 3.0f * rectangle_size.y);
-				heat[i].setFillColor(sf::Color::Color(40, 40, 40, 255));
-				heat[i].scale(1.0f,0.5f);
-				heat[i].setOutlineColor(sf::Color::Black);
-				heat[i].setOutlineThickness(-1);
-				
-				break;
-			}
-			default:
-			{	
-				heat[i].scale(5.0f / 3.0f, 1.0f);
-				heat[i].setFillColor(sf::Color::Transparent);
-				
-				if (i < 5)
-				{
-					heat[i].setPosition(options_pos.x  + (0.55f * rectangle_size.x), 0.82f * rectangle_size.x );
-					if (i == 4)
-						heat[i].move(heat[i].getGlobalBounds().width + (0.35f * rectangle_size.x), 0.0f);
+		case 0:
+		{
+			heat[i].setPosition(0, 0);
+			heat[i].setFillColor(sf::Color::Color(53, 53, 53, 255));
+			heat[i].setOutlineColor(sf::Color::Black);
+			heat[i].setOutlineThickness(-1);
+			break;
+		}
+		case 1:
+		{
+			heat[i].setPosition(0, rectangle_size.y);
+			heat[i].scale(1.0f, 2.0f);
+			heat[i].setFillColor(sf::Color::Color(40, 40, 40, 255));
+			heat[i].setOutlineColor(sf::Color::Black);
+			heat[i].setOutlineThickness(-1);
+			break;
+		}
+		case 2:
+		{
+			heat[i].setPosition(0, 3.0f * rectangle_size.y);
+			heat[i].setFillColor(sf::Color::Color(40, 40, 40, 255));
+			heat[i].scale(1.0f, 0.5f);
+			heat[i].setOutlineColor(sf::Color::Black);
+			heat[i].setOutlineThickness(-1);
 
-				}
-				else
-				{
-					heat[i].setPosition(heat[3].getPosition());
-					heat[i].move(0.0f, heat[i].getGlobalBounds().height + (0.225f * rectangle_size.x));
-					
-					if (i == 6)
-						heat[i].move(heat[i].getGlobalBounds().width + (0.35f * rectangle_size.x), 0.0f);
-				}
+			break;
+		}
+		default:
+		{
+			heat[i].scale(5.0f / 3.0f, 1.0f);
+			heat[i].setFillColor(sf::Color::Transparent);
 
-				break;
+			if (i < 5)
+			{
+				heat[i].setPosition(options_pos.x + (0.55f * rectangle_size.x), 0.82f * rectangle_size.x);
+				if (i == 4)
+					heat[i].move(heat[i].getGlobalBounds().width + (0.35f * rectangle_size.x), 0.0f);
+
 			}
+			else
+			{
+				heat[i].setPosition(heat[3].getPosition());
+				heat[i].move(0.0f, heat[i].getGlobalBounds().height + (0.225f * rectangle_size.x));
+
+				if (i == 6)
+					heat[i].move(heat[i].getGlobalBounds().width + (0.35f * rectangle_size.x), 0.0f);
+			}
+
+			break;
+		}
 		}
 	}
 
-	
+
 	for (int i = 0; i < 4; i++)
 	{
 		options[i].setFont(options_font);
@@ -612,7 +613,7 @@ void in_game::setup_options()
 		options[i].setString(options_str[i]);
 		options[i].setColor(sf::Color::White);
 		options[i].setOrigin((options[i].getGlobalBounds().width / 2.0f), (options[i].getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
-		options[i].setPosition(heat[(3 + i)].getPosition() );
+		options[i].setPosition(heat[(3 + i)].getPosition());
 		options[i].move((heat[(3 + i)].getGlobalBounds().width / 2.0f), (heat[(3 + i)].getGlobalBounds().height / 2.3f));
 	}
 }
@@ -621,7 +622,7 @@ void in_game::setup_indicators()
 {
 
 	int offset = (int)(heat[1].getGlobalBounds().height / 5.0f);
-	
+
 	for (int i = 0; i < 5; i++)
 	{
 		indicators[i].setFont(options_font);
@@ -630,7 +631,7 @@ void in_game::setup_indicators()
 		indicators[i].setColor(sf::Color::White);
 		indicators[i].setOrigin((indicators[i].getGlobalBounds().width / 2.0f), (indicators[i].getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
 		indicators[i].setPosition(heat[1].getPosition());
-		indicators[i].move(heat[1].getGlobalBounds().width / 2.0f , (offset / 2.3f) + ( i*offset ) );
+		indicators[i].move(heat[1].getGlobalBounds().width / 2.0f, (offset / 2.3f) + (i*offset));
 
 	}
 
@@ -651,22 +652,22 @@ void in_game::setup_icons()
 		icons[i].setTexture(icons_texture[i]);
 		icons[i].setOrigin(icons[i].getGlobalBounds().width / 2.0f, icons[i].getGlobalBounds().height / 2.0f);
 		icons[i].scale(0.5f, 0.5f);
-		
-		
-		if (i == 2 || i == 3 )
-			icons[i].scale((i == 2) ? 1.2f : 0.8f, (i == 2) ? 1.2f : 0.8f);
-		
 
-		if(i > 4)
+
+		if (i == 2 || i == 3)
+			icons[i].scale((i == 2) ? 1.2f : 0.8f, (i == 2) ? 1.2f : 0.8f);
+
+
+		if (i > 4)
 			icons[i].setScale(0.20f, 0.20f);
 
-		
+
 
 		switch (i) // i refering to 
 		{
 		case 0: // bar graph
 		{
-			icons[i].setPosition(heat[0].getPosition().x + (heat[0].getGlobalBounds().width / 2.0f ), heat[0].getPosition().y + (heat[0].getGlobalBounds().height / 2.0f));
+			icons[i].setPosition(heat[0].getPosition().x + (heat[0].getGlobalBounds().width / 2.0f), heat[0].getPosition().y + (heat[0].getGlobalBounds().height / 2.0f));
 			break;
 		}
 		case 5: // save 
@@ -676,7 +677,7 @@ void in_game::setup_icons()
 		}
 		case 6: // quit game
 		{
-			icons[i].setPosition(heat[2].getPosition().x + (heat[2].getGlobalBounds().width * (3.0f/4.0f)), heat[2].getPosition().y + (heat[2].getGlobalBounds().height / 2.0f));
+			icons[i].setPosition(heat[2].getPosition().x + (heat[2].getGlobalBounds().width * (3.0f / 4.0f)), heat[2].getPosition().y + (heat[2].getGlobalBounds().height / 2.0f));
 			break;
 		}
 
@@ -691,10 +692,10 @@ void in_game::setup_icons()
 		}
 
 		}
-		
+
 	}
 
-	
+
 
 }
 
@@ -1456,6 +1457,10 @@ void continue_game::input()
 
 				game->get_current_user()->load_user(user);
 
+				game->set_current_user(new user_profile());
+
+				game->get_current_user()->load_user(user);
+
 				game->change_state(new in_game(game));
 
 				return;
@@ -1526,294 +1531,9 @@ void continue_game::setup_text()
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*------------------------------    msg_box    ------------------------------*/
 
-
-msg_box::msg_box(state_manager * game_ptr,  sf::Image background_img, std::string str, unsigned int line_size, unsigned  int char_size)
+msg_box::msg_box(state_manager * game_ptr, sf::Image background_img, std::string str, unsigned int line_size, unsigned  int char_size)
 {
 	game = game_ptr;
 	this->line_size = line_size;
@@ -1847,11 +1567,11 @@ void msg_box::input()
 
 	while (game->window.pollEvent(event))
 	{
-			
+
 	}
 
 
-	
+
 }
 
 void msg_box::logic_update(const float elapsed)
@@ -1889,14 +1609,14 @@ void msg_box::show_textbox(std::string & str, unsigned int line_size, unsigned i
 	sf::Vector2f window_size(((line_size * char_size) / 2.0f) + (char_size * 3.0f), (char_size * 3.0f) + (text_size * char_size) + ((text_size - 1.0f) * offset));
 
 	box.setSize(sf::Vector2f(window_size.x, window_size.x + close.getGlobalBounds().height * 1.4f));
-	
+
 	offset = window_size.y / text_size;
 
 	box.setOrigin(box.getGlobalBounds().width / 2.0f, box.getGlobalBounds().height / 2.0f);
 	box.setPosition(game->window.getSize().x * 0.50f, game->window.getSize().y * 0.50f);
 
-	sf::Vector2f pos(box.getPosition().x, box.getPosition().y + (offset / 2.0f ));
-	  
+	sf::Vector2f pos(box.getPosition().x, box.getPosition().y + (offset / 2.0f));
+
 	for (int i = 0; i < text_size; i++, pos.y += offset)
 	{
 		options[i].setFont(options_font);
@@ -1912,7 +1632,7 @@ void msg_box::show_textbox(std::string & str, unsigned int line_size, unsigned i
 
 
 	(text_size == 1) ? delete placeholder : delete[] placeholder; //if size == 1 i used new, not new[]
-	//delete[] options;
+																	//delete[] options;
 
 }
 
@@ -1920,14 +1640,264 @@ void msg_box::setup_text()
 {
 	int font_size = (int)(game->window.getSize().y / 13.5f); // from ideal 1080p ratios
 
-	
-		close.setFont(options_font);
-		close.setCharacterSize(font_size);
-		close.setString("Close");
-		close.setColor(sf::Color::White);
-		close.setOrigin((close.getGlobalBounds().width / 2.0f), (close.getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
+
+	close.setFont(options_font);
+	close.setCharacterSize(font_size);
+	close.setString("Close");
+	close.setColor(sf::Color::White);
+	close.setOrigin((close.getGlobalBounds().width / 2.0f), (close.getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
 
 }
 
 
+/*------------------------------ Inventory ------------------------------*/
 
+inventory::inventory(state_manager * game_ptr)
+{
+	game = game_ptr;
+
+	if (!font.loadFromFile("res/fonts/Roboto-Bold.ttf")) {
+		complain(ErrNo::file_access);
+		return;
+	}
+
+	details.setFillColor(sf::Color::Color(170, 170, 170, 235));
+	details.setSize(sf::Vector2f((8.0f / 16.0f) * game->window.getSize().x, (game->window.getSize().y * (2.0f / 3.0f))));
+	details.setPosition(game->window.getSize().x * (7.0f / 16.0f), game->window.getSize().y / 5.5f);
+	details.setOutlineColor(sf::Color(100, 100, 100, 255));
+	details.setOutlineThickness(-3);
+
+	setup();
+}
+
+void inventory::input()
+{
+	sf::Event event;
+	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default 
+	
+	while (game->window.pollEvent(event))
+	{
+		icons[5].setScale(0.2f, 0.2f);
+		icons[6].setScale(0.2f, 0.2f);
+
+		switch (event.type)
+		{
+		case sf::Event::KeyPressed:
+		{
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+				game->window.close();
+			break;
+		}
+		case sf::Event::MouseMoved:
+		{
+			mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
+			if (selection > 2)
+			{
+				
+			}
+
+			if (selection != -1)
+				heat[selection].setOutlineThickness(0);
+
+			selection = -1; // this way the selection will always be -1 if it's not in one of the options
+
+			for (int i = 0; i < 4; i++)
+			{
+				if (heat[(3 + i)].getGlobalBounds().contains(mouse_pos))
+				{
+					selection = i + 3;
+				}
+			}
+
+			if (selection != -1)
+			{
+				
+			}
+			
+			break;
+		}
+		case sf::Event::MouseButtonPressed:
+		{
+			if (selection > 2 && event.mouseButton.button == sf::Mouse::Left)
+			{
+			
+			}
+
+			switch (selection)
+			{
+			case 0:
+			{
+				game->pop_state();
+				return;
+				break;
+			}
+			// to add actions
+			}
+
+			break;
+		}
+		default:
+			break;
+		}
+	}
+
+}
+
+void inventory::logic_update(const float elapsed)
+{
+
+}
+
+void inventory::draw(const float elapsed)
+{
+	game->window.draw(details);
+	game->window.draw(buy);
+	game->window.draw(back);
+
+	for (int i = 0; i < 3; i++)
+		game->window.draw(heat[i]);
+		
+	for (int i = 0; i < 5; i++)
+		game->window.draw(indicators[i]);
+
+	for (int i = 0; i < 3; i++)
+		game->window.draw(icons[i]);
+
+	for (int i = 0; i < 5; i++)
+		game->window.draw(currently_showing[i]);
+}
+
+void inventory::setup()
+{
+	current_user = game->get_current_user();
+	active_store = current_user->get_active_store();
+
+	setup_options();
+	setup_text();
+	setup_icons();
+}
+
+void inventory::setup_options()
+{
+	sf::Vector2f rectangle_size(game->window.getSize().x / 5.8f, game->window.getSize().y / 3.5f);
+	sf::Vector2f options_pos(game->window.getSize().x / 5.8f, 0);
+
+	for (int i = 0; i < 3; i++)
+	{
+		heat[i].setSize(rectangle_size);
+		heat[i].setFillColor(sf::Color::White);
+
+		switch (i)
+		{
+		case 0:
+			heat[i].setPosition(0, 0);
+			heat[i].setFillColor(sf::Color::Color(53, 53, 53, 255));
+			heat[i].setOutlineColor(sf::Color::Black);
+			heat[i].setOutlineThickness(-1);
+			break;
+		case 1:
+			heat[i].setPosition(0, rectangle_size.y);
+			heat[i].scale(1.0f, 2.0f);
+			heat[i].setFillColor(sf::Color::Color(40, 40, 40, 255));
+			heat[i].setOutlineColor(sf::Color::Black);
+			heat[i].setOutlineThickness(-1);
+			break;
+		case 2:
+			heat[i].setPosition(0, 3.0f * rectangle_size.y);
+			heat[i].setFillColor(sf::Color::Color(40, 40, 40, 255));
+			heat[i].scale(1.0f, 0.5f);
+			heat[i].setOutlineColor(sf::Color::Black);
+			heat[i].setOutlineThickness(-1);
+			break;
+		}
+	}
+}
+
+void inventory::setup_text()
+{
+	int offset = (int)(heat[1].getGlobalBounds().height / 5.0f);
+
+	for (int i = 0; i < 5; i++)	{
+		indicators[i].setFont(font);
+		indicators[i].setCharacterSize((int)(game->window.getSize().y / 22.0f));
+		indicators[i].setString(indicators_str[i]);
+		indicators[i].setColor(sf::Color::White);
+		indicators[i].setOrigin((indicators[i].getGlobalBounds().width / 2.0f), (indicators[i].getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
+		indicators[i].setPosition(heat[1].getPosition());
+		indicators[i].move(heat[1].getGlobalBounds().width / 2.0f, (offset / 2.3f) + (i*offset));
+	}
+
+	for (int i = 0; i < 5; i++) {
+		currently_showing[i].setFont(font);
+		currently_showing[i].setCharacterSize((int)(game->window.getSize().y / 16.0f));
+		currently_showing[i].setColor(sf::Color::White);
+		currently_showing[i].setPosition(heat[1].getGlobalBounds().width + 90, (2 * i * currently_showing[i].getCharacterSize() + game->window.getSize().y / 5.0f));
+	}
+	update_list();
+
+	buy.setFont(font);
+	buy.setColor(sf::Color::White);
+	buy.setCharacterSize(50);
+	buy.setString("Buy Inventory");
+	buy.setPosition((game->window.getSize().x - buy.getGlobalBounds().width - 50),
+		game->window.getSize().y - (float)2 * buy.getCharacterSize());
+
+	back.setFont(font);
+	back.setColor(sf::Color::White);
+	back.setCharacterSize(50);
+	back.setString("Back");
+	back.setPosition(heat[0].getGlobalBounds().width + 50,
+		game->window.getSize().y - (float)2 * buy.getCharacterSize());
+}
+
+void inventory::setup_icons()
+{
+	std::string names[3] = { "bargraph.png", "save.png", "quit.png" };
+
+	for (int i = 0; i < 3; i++)
+	{
+		if (!icons_texture[i].loadFromFile("res/icons/" + names[i]))
+		{
+			complain(ErrNo::file_access);
+			return;
+		}
+
+		icons[i].setTexture(icons_texture[i]);
+		icons[i].setOrigin(icons[i].getGlobalBounds().width / 2.0f, icons[i].getGlobalBounds().height / 2.0f);
+		icons[i].scale(0.5f, 0.5f);
+
+		if (i > 0)
+			icons[i].setScale(0.20f, 0.20f);
+		
+		switch (i) // i refering to 
+		{
+		case 0: // bar graph
+			icons[i].setPosition(heat[0].getPosition().x + (heat[0].getGlobalBounds().width / 2.0f), heat[0].getPosition().y + (heat[0].getGlobalBounds().height / 2.0f));
+			break;
+		case 1: // save 
+			icons[i].setPosition(heat[2].getPosition().x + (heat[2].getGlobalBounds().width / 4.0f), heat[2].getPosition().y + (heat[2].getGlobalBounds().height / 2.0f));
+			break;
+		case 2: // quit game
+			icons[i].setPosition(heat[2].getPosition().x + (heat[2].getGlobalBounds().width * (3.0f / 4.0f)), heat[2].getPosition().y + (heat[2].getGlobalBounds().height / 2.0f));
+			break;
+		}
+	}
+}
+
+void inventory::update_list()
+{
+	std::list<instrument *>::iterator it = current_user->get_active_store()->get_inventory()->begin();
+
+	for (int i = 0; i < starting_index * 5; i++) it++;
+
+	for (int i = 0; i < 5; i++) {
+		currently_showing[i].setString(std::to_string(starting_index * 5 + i + 1) + ". " + (*it)->print_brand_cpp());
+		it++;
+		if (it == current_user->get_active_store()->get_inventory()->end()) {
+			for (int j = i+1; j < 5; j++) {
+				currently_showing[j].setString("");
+			}
+			break;
+		}
+	}
+}

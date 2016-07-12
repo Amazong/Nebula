@@ -211,151 +211,6 @@ public:
 	void setup_text();
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*------------------------------    msg_box    ------------------------------*/
 
 
@@ -378,17 +233,52 @@ private:
 
 public:
 	msg_box(state_manager * game_ptr, sf::Image background_img, std::string str, unsigned int line_size, unsigned  int char_size);
-
+	
 	void input();
 	void logic_update(const float elapsed);
 	void draw(const float elapsed);
+
 	void show_textbox(std::string & str, unsigned int line_size, unsigned  int char_size); // function for message boxes., line size in chars.
 	void setup_text();
 };
 
-
-
-
 //sf::Vector2f starting_pos(game->window.getSize().x * 0.50f, game->window.getSize().y * 0.50f);
 //
 //close.setPosition(starting_pos);
+
+
+/*------------------------------ Inventory ------------------------------*/
+
+class inventory : public game_state
+{
+private:
+	const std::string indicators_str[5] = { "Balance", "Reputation", "Game Time", "Month's profits", "Year's Profits" };
+	sf::Font font;
+	sf::Text title;
+	sf::Text buy;
+	sf::Text back;
+	sf::Text indicators[5];
+	sf::Text currently_showing[5];
+	sf::RectangleShape heat[3];
+	sf::RectangleShape details;
+	sf::Sprite icons[3];
+	sf::Texture icons_texture[7];
+	double buying_rate;
+	int selection = -1;
+	int starting_index = 0;
+	store * active_store;
+	user_profile * current_user;
+
+	void setup();
+	void setup_options();
+	void setup_text();
+	void setup_icons();
+	void update_list();
+
+public:
+	inventory(state_manager * game_ptr);
+
+	void input();
+	void logic_update(const float elapsed);
+	void draw(const float elapsed);
+};

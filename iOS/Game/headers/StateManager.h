@@ -9,7 +9,7 @@ class game_state; //so state_manager knows this exists
 class state_manager
 {
 private:
-	user_profile * current_user = new user_profile();
+	user_profile * current_user = nullptr;
 
 public:
 	sf::RenderWindow window;
