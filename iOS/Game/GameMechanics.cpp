@@ -829,6 +829,23 @@ void user_profile::buy_store(store * store)
 	}
 }
 
+std::string user_profile::get_time_str() const
+{
+	std::string t;
+
+	int years = ((int)time_elapsed.asSeconds()) / (int)YEAR_TIME_SECS;
+
+	t += std::to_string(years);
+	t += "Y  ";
+
+	int weeks = (((int)time_elapsed.asSeconds()) % (int)YEAR_TIME_SECS) / (int)WEEK_TIME_SECS;
+
+	t += std::to_string(weeks);
+	t += "W";
+
+	return t;
+}
+
 void user_profile::save_game()
 {
 	std::string user = "saves/";

@@ -96,7 +96,10 @@ class in_game : public game_state
 {
 private:
 	const std::string options_str[4] = { "Staff", "Inventory", "Shop", "Finance" };
-	const std::string indicators_str[5] = {"Balance","Reputation","Game Time","Month's profits","Year's Profits"};
+	std::string indicators_str[5] = { "Balance", "Reputation", "Game Time", "Month's profits", "Year's Profits" };
+
+	sf::Time buffer = sf::seconds(0.0f);
+
 	sf::Font options_font;
 	sf::Text options[4];
 	sf::Text indicators[5];
@@ -118,7 +121,7 @@ public:
 
 	void setup();
 	void setup_options();
-	void setup_indicators();
+	void update_indicators();
 	void setup_icons();
 	void control_icon_animations(sf::Vector2f mouse_pos);
 	bool handle_icons(sf::Vector2f mouse_pos);
@@ -226,8 +229,6 @@ private:
 	sf::Text * options;
 	sf::Texture background;
 	sf::Sprite background_sprite;
-	sf::Sprite selector;
-	sf::Texture selector_text;
 	sf::RectangleShape box;
 	int text_size;
 	int selection = -1; // by default nothing is selected
@@ -253,25 +254,29 @@ public:
 class inventory : public game_state
 {
 private:
-	const std::string indicators_str[5] = { "Balance", "Reputation", "Game Time", "Month's profits", "Year's Profits" };
 	sf::Font font;
 	sf::Text title;
 	sf::Text buy;
 	sf::Text back;
 	sf::Text set_price;
+	sf::Text price_setter_inside;
 	sf::Text active_properties[6]; // value, price, perceived value, quality, brand, type (if piano)
-	sf::Text indicators[5];
 	sf::Text currently_showing[5];
-	sf::RectangleShape heat[3];
+	
+	std::string price_setter_str;
+
 	sf::RectangleShape details;
 	sf::RectangleShape price_setter;
-	std::string price_setter_str;
-	sf::Text price_setter_inside;
+	
 	sf::Sprite scroll[2];
 	sf::Texture scroll_texture[2];
+	
 	sf::Sprite icons[3];
 	sf::Texture icons_texture[3];
 	
+	sf::Sprite background;
+	sf::Texture backgroud_texture;
+
 	double buying_rate;
 	int selection = -1;
 	int starting_index = 0;
@@ -281,14 +286,13 @@ private:
 	user_profile * current_user;
 
 	void setup();
-	void setup_options();
 	void setup_text();
 	void setup_icons();
 	void update_list();
 	void update_properties();
 
 public:
-	inventory(state_manager * game_ptr);
+	inventory(state_manager * game_ptr, sf::Image print);
 
 	void input();
 	void logic_update(const float elapsed);

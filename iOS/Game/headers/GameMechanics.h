@@ -220,7 +220,7 @@ private:
 	std::list<store *> stores;
 	store * active_store = nullptr;
 	sf::Time time_elapsed = sf::seconds(0.0f); // by omission time offset from 0 is 0. Used to calculate date (in game)
-
+	
 	char user[51];
 	double weekly_expenses;
 	long double net_worth;
@@ -228,6 +228,8 @@ private:
 	int difficulty = -1; // difficulty: 0-easy; 1-medium; 2-hard
 
 public:
+	const float WEEK_TIME_SECS = 20.0f;
+	const float YEAR_TIME_SECS = WEEK_TIME_SECS * 52.0f;
 
 	user_profile() {};
 	user_profile(char * name);
@@ -248,6 +250,10 @@ public:
 
 	void set_user_name(std::string s) { strcpy_s(this->user, s.c_str()); }
 
+	std::string get_time_str() const;
+
+	double get_reputation() { return reputation; }
+
 	void save_game();
 	void save_inventories(std::string user, const guitar * tab, int size, int store_index);
 	void save_staff(std::string user, const employee * tab, int size, int store_index);
@@ -264,6 +270,7 @@ public:
 
 	// friends
 	friend class store;
+	friend class in_game;
 	friend class in_game_setup;
 };
 
