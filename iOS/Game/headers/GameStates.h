@@ -124,6 +124,41 @@ public:
 	bool handle_icons(sf::Vector2f mouse_pos);
 };
 
+/*---------------------------- InGameSetup ----------------------------*/
+
+class in_game_setup : public game_state
+{
+private:
+	const std::string options_str[4] = { "Staff", "Inventory", "Shop", "Finance" };
+	const std::string indicators_str[5] = { "Balance","Reputation","Game Time","Month's profits","Year's Profits" };
+	sf::Font options_font;
+	sf::Text start_text;
+	sf::Text options[4];
+	sf::Text indicators[5];
+	sf::RectangleShape heat[7];
+	sf::Sprite icons[7];
+	sf::Texture icons_texture[7];
+	double buying_rate;
+	int selection = -1;
+	store * active_store;
+	user_profile * current_user;
+	void update_buying_rate();
+
+public:
+	in_game_setup(state_manager * game_ptr);
+
+	void input();
+	void logic_update(const float elapsed);
+	void draw(const float elapsed);
+
+	void setup();
+	void setup_options();
+	void setup_indicators();
+	void setup_icons();
+	void control_icon_animations(sf::Vector2f mouse_pos);
+	bool handle_icons(sf::Vector2f mouse_pos);
+};
+
 
 /*------------------------------ New_Game1 ------------------------------*/
 

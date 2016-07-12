@@ -71,6 +71,65 @@ guitar::guitar(double value, char * name)
 	set_perceived_value(this->price / this->value);
  }
 
+guitar::guitar(std::string name)
+{
+	is_guitar = true;
+
+	std::random_device rd;
+
+	std::mt19937 random_numbers(rd());
+
+	std::string to_check[5] = { "Larrivee", "G&L", "Martin ", "PRS" ," Maton" };
+
+	for (int i = 0; i < 5; i++)
+	{
+		if (name == to_check[i])
+		{
+			int low, high;
+
+			switch (i)
+			{
+			case 0 :
+				low = 3000;
+				high = 5000;
+				break;
+			case 1:
+				low = 800;
+				high = 2500;
+				break;
+			case 2:
+				low = 1000;
+				high = 2000;
+				break;
+			case 3:
+				low = 3000;
+				high = 5000;
+				break;
+			case 4:
+				low = 1500;
+				high = 3000;
+				break;
+			
+
+			default:
+				break;
+			}
+			
+			std::uniform_int_distribution<int> range(low, high );
+
+			this->value = range(random_numbers);
+			this->price = this->value;
+		}
+
+	}
+
+	std::uniform_int_distribution<int> range(1, 3);
+	
+	this->own_quality = quality::quality(range(random_numbers));
+
+	double number = range(random_numbers);
+}
+
 guitar::guitar(piano_brands::piano_brands brand, piano_type::piano_type type, quality::quality quality)
 {
 	own_brand_piano = piano_brands::NA;
@@ -118,11 +177,31 @@ piano::piano(double value, char * brand) {
 	own_type_piano = piano_type::NA;
 }
 
+piano::piano(std::string name)
+{
+	piano_brands::piano_brands b;
+	piano_type::piano_type t;
+	quality::quality q;
+	
+	std::random_device rd;
+	std::mt19937 random_nubers(rd());
+
+	std::uniform_int_distribution<int> range1(1, 5);
+	b = static_cast<piano_brands::piano_brands>(range1(random_nubers));
+	
+	std::uniform_int_distribution<int> range2(1, 3);
+	t = static_cast<piano_type::piano_type>(range2(random_nubers));
+	
+	q = static_cast<quality::quality>(range2(random_nubers));
+	
+	*this = piano(b, t, q);
+}
+
 piano::piano(piano_brands::piano_brands brand, piano_type::piano_type type, quality::quality quality)
 {
 	is_guitar = false;
 
-	// fuck you if NA
+	if (brand == piano_brands::NA || type == piano_type::NA || quality == quality::NA) return;
 
 	switch (type) { // set maximum price for type
 	case 1:
