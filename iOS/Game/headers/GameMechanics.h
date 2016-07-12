@@ -34,7 +34,7 @@ namespace quality {
 class instrument
 {
 protected:
-	enum perceived_value { unattainable, overpriced, high, neutral, cheap, irresistible } purchasing_power; // price 0, .....  infinite
+	enum perceived_value { unattainable, overpriced, high, neutral, cheap, irresistible } purchasing_power; // price 0, ..... infinite
 																											// factors in guitar chosen to be sold, calculated from ratio between price and value
 	char brand[51] = "NA";
 	char piano_brands[5][51] = { "Roland", "Korg", "Kawai", "Yamaha", "Steinway & Sons" };
@@ -112,7 +112,7 @@ public:
 class employee
 {
 private:
-	enum efficiency { low = 1, neutral, high } skill;  //effect on buying formula
+	enum efficiency { low = 1, neutral, high } skill; //effect on buying formula
 	char name[51];
 	double salary;
 
@@ -219,7 +219,7 @@ class user_profile
 private:
 	std::list<store *> stores;
 	store * active_store = nullptr;
-	sf::Time time_elapsed = sf::seconds(0.0f);  // by omission time offset from 0 is 0. Used to calculate date (in game)
+	sf::Time time_elapsed = sf::seconds(0.0f); // by omission time offset from 0 is 0. Used to calculate date (in game)
 
 	char user[51];
 	double weekly_expenses;
@@ -249,10 +249,10 @@ public:
 	void set_user_name(std::string s) { strcpy_s(this->user, s.c_str()); }
 
 	void save_game();
-	void save_inventories(std::string  user, const guitar * tab, int size, int store_index);
-	void save_staff(std::string  user, const employee * tab, int size, int store_index);
-	void save_stores(std::string  user, const store * tab, int size);
-	void load_game(std::string  profile_title); // pass an object of save game instead of string
+	void save_inventories(std::string user, const guitar * tab, int size, int store_index);
+	void save_staff(std::string user, const employee * tab, int size, int store_index);
+	void save_stores(std::string user, const store * tab, int size);
+	void load_game(std::string profile_title); // pass an object of save game instead of string
 	void load_user(std::string & profile_title);
 	void load_stores(user_profile * user);
 	void load_store_inv(const user_profile * user, store & shop, int store_index);

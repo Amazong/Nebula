@@ -5,7 +5,7 @@
 
 main_menu::main_menu(state_manager * game_ptr)
 {
-	game = game_ptr;  // pointer to state manager
+	game = game_ptr; // pointer to state manager
 	
 	update_save();
 
@@ -558,13 +558,14 @@ void in_game::input()
 
 void in_game::logic_update(const float elapsed)
 {
+	//update_buying_rate();
+	//if (buying_rate > active_store->get_stock()) {
+	//
+	//	// if not enough items in stock, penalize player
+	//	active_store->set_reputation (active_store->get_reputation() * 0.9);
+	//}
 
-	/*
-	update_buying_rate();
-	if (buying_rate > active_store->get_stock()) {
-	// if not enough items in stock, penalize player
-	active_store->set_reputation (active_store->get_reputation() * 0.9);
-	} */
+	
 }
 
 void in_game::draw(const float elapsed)
@@ -903,10 +904,10 @@ void in_game_setup::input()
 					selection = i + 3;
 				}
 			}
-			if (start_text.getGlobalBounds().contains(mouse_pos) && !game->get_current_user()->stores.empty() && !game->get_current_user()->get_active_store()->staff.empty() && !game->get_current_user()->get_active_store()->inventory.empty()) //only let's you press when  you have stuff ready!
+			if (start_text.getGlobalBounds().contains(mouse_pos) && !game->get_current_user()->stores.empty() && !game->get_current_user()->get_active_store()->staff.empty() && !game->get_current_user()->get_active_store()->inventory.empty()) //only let's you press when you have stuff ready!
 				selection = 9;
 
-			if (selection != -1  && selection != 9)
+			if (selection != -1 && selection != 9)
 			{
 				options[(selection - 3)].scale(1.1f, 1.1f);
 				options[(selection - 3)].setStyle(sf::Text::Underlined);				
@@ -1444,12 +1445,12 @@ void new_game::setup_options()
 			}
 			case 5:
 			{
-				options[i].move(0, (input_place.getGlobalBounds().height  * 3.0f )/ 5.0f);
+				options[i].move(0, (input_place.getGlobalBounds().height * 3.0f )/ 5.0f);
 				break;
 			}
 			default:
 			{
-				options[i].move(0, (input_place.getGlobalBounds().height  * 2.0f) / 5.0f);
+				options[i].move(0, (input_place.getGlobalBounds().height * 2.0f) / 5.0f);
 				break;
 			}
 		}
@@ -1708,8 +1709,7 @@ void msg_box::input()
 				selection = 0;
 
 			std::cout << "           Selection " << selection << std::endl; //debug
-
-
+			
 			break;
 		}
 		case sf::Event::MouseButtonPressed:
@@ -1880,6 +1880,19 @@ void inventory::input()
 						if (price_setter_inside.getString().isEmpty()) break;
 						price_setter_str.erase(price_setter_str.length() - 1);
 						price_setter_inside.setString(price_setter_str + " £");
+					}
+					else if (event.text.unicode == 13) { // return
+						price_setter.setFillColor(sf::Color::Transparent);
+						set_price.setColor(sf::Color(70, 70, 70, 255));
+
+						current_selection->set_price(atof(price_setter_str.c_str()));
+
+						update_properties();
+					}
+					else if (event.text.unicode == 27) { // escape
+						price_setter.setFillColor(sf::Color::Transparent);
+						price_setter_inside.setString("");
+						set_price.setColor(sf::Color(70, 70, 70, 255));
 					}
 				}
 				else if (event.text.unicode == 8) // backspace

@@ -11,7 +11,7 @@
 #include "GameWindows.h"
 
 
-class game_state  // base class common to all derived states.
+class game_state // base class common to all derived states.
 {
 private:
 	bool ok = true; // by default, everything is fine
@@ -239,7 +239,7 @@ public:
 	void logic_update(const float elapsed);
 	void draw(const float elapsed);
 
-	void show_textbox(std::string & str, unsigned int line_size, unsigned  int char_size); // function for message boxes., line size in chars.
+	void show_textbox(std::string & str, unsigned int line_size, unsigned int char_size); // function for message boxes., line size in chars.
 	void setup_text();
 };
 

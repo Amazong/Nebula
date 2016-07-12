@@ -81,7 +81,7 @@ std::string instrument::style(double d)
 		s += "M";
 	}
 	else {
-		s += "1 €"; // if the user has more than 1000000000 £, we display "1 €"
+		s += "1 $"; // if the user has more than 1000000000 £, we display "1 $"
 					// small easter egg :)
 		return s;
 	}
@@ -618,7 +618,7 @@ void store::sell_instrument(int position_offset)
 {
 	std::list<instrument *>::iterator it = inventory.begin();
 
-	for ( ; position_offset != 0; position_offset--)  // proceding to position offset
+	for ( ; position_offset != 0; position_offset--) // proceding to position offset
 	{
 		it++;
 	}
@@ -944,9 +944,9 @@ void user_profile::save_game()
 	fout.close();
 }
 
-void user_profile::save_inventories(std::string  user, const  guitar * tab, int size, int store_index)
+void user_profile::save_inventories(std::string user, const guitar * tab, int size, int store_index)
 {
-	std::string file_name = user;   //std structure of naming files
+	std::string file_name = user; //std structure of naming files
 	file_name += ".Store_inventory";
 	file_name.push_back(char(store_index));
 
@@ -965,9 +965,9 @@ void user_profile::save_inventories(std::string  user, const  guitar * tab, int 
 	fout.close();
 }
 
-void user_profile::save_staff(std::string  user, const employee * tab, int size, int store_index)
+void user_profile::save_staff(std::string user, const employee * tab, int size, int store_index)
 {
-	std::string file_name = user;   //std structure of naming files
+	std::string file_name = user; //std structure of naming files
 	file_name += ".Store_staff";
 	file_name.push_back(char(store_index));
 
@@ -986,9 +986,9 @@ void user_profile::save_staff(std::string  user, const employee * tab, int size,
 	fout.close();
 }
 
-void user_profile::save_stores(std::string  user, const store * tab, int size)
+void user_profile::save_stores(std::string user, const store * tab, int size)
 {
-	std::string file_name = user;   //std structure of naming files
+	std::string file_name = user; //std structure of naming files
 	file_name += ".Stores";
 
 	std::ofstream fout(file_name, std::ios::binary | std::ios::trunc); //whatever was there is redefined
@@ -1131,7 +1131,7 @@ void user_profile::load_store_inv(const user_profile * user, store & shop, int s
 
 		tab_ptr = (guitar *) malloc (size * sizeof(guitar));
 
-		char  * ptr = (char *)(tab_ptr);
+		char * ptr = (char *)(tab_ptr);
 
 		fin.read(ptr, size * sizeof(guitar));
 
@@ -1182,7 +1182,7 @@ void user_profile::load_store_staff(const user_profile * user, store & shop, int
 		return;
 	}
 	
-	shop.fill_staff(tab_ptr, size); // this function  allocates its own 
+	shop.fill_staff(tab_ptr, size); // this function allocates its own 
 	
 	free(tab_ptr);
 	tab_ptr = nullptr;	
@@ -1220,7 +1220,7 @@ std::string user_profile::get_balance_styled(int arg) const
 		s += "M";
 	}
 	else {
-		s += "1 €"; // if the user has more than 1000000000 £, we display "1 €"
+		s += "1 $"; // if the user has more than 1000000000 £, we display "1 $"
 					// small easter egg :)
 		return s;
 	}
