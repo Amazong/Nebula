@@ -263,6 +263,9 @@ private:
 	sf::Text currently_showing[5];
 	sf::RectangleShape heat[3];
 	sf::RectangleShape details;
+	sf::RectangleShape price_setter;
+	std::string price_setter_str;
+	sf::Text price_setter_inside;
 	sf::Sprite scroll[2];
 	sf::Texture scroll_texture[2];
 	sf::Sprite icons[3];

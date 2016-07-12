@@ -117,11 +117,11 @@ std::string instrument::get_perceived_value_cpp()
 		return "Overpriced";
 	case 2:
 		return "High";
-	case 4:
+	case 3:
 		return "Neutral";
-	case 5:
+	case 4:
 		return "Cheap";
-	case 6:
+	case 5:
 		return "Irresistible";
 	default:
 		break;

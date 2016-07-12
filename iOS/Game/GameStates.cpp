@@ -43,6 +43,15 @@ void main_menu::input()
 				else if (event.key.code == sf::Keyboard::S) {
 					MUSIC::get_m_player()->set_skip(true);
 				}
+				else if (event.key.code == sf::Keyboard::M) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else if (event.key.code == sf::Keyboard::J) {
+					MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
+				}
+				else if (event.key.code == sf::Keyboard::K) {
+					MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
+				}
 				break;
 			}
 			case sf::Event::MouseMoved:
@@ -274,6 +283,15 @@ void options_menu::input()
 				else if (event.key.code == sf::Keyboard::S) {
 					MUSIC::get_m_player()->set_skip(true);
 				}
+				else if (event.key.code == sf::Keyboard::M) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else if (event.key.code == sf::Keyboard::J) {
+					MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
+				}
+				else if (event.key.code == sf::Keyboard::K) {
+					MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
+				}
 				break;
 			}
 			case sf::Event::MouseMoved:
@@ -440,6 +458,15 @@ void in_game::input()
 				game->window.close();
 			else if (event.key.code == sf::Keyboard::S) {
 				MUSIC::get_m_player()->set_skip(true);
+			}
+			else if (event.key.code == sf::Keyboard::M) {
+				MUSIC::get_m_player()->set_stop(true);
+			}
+			else if (event.key.code == sf::Keyboard::J) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
+			}
+			else if (event.key.code == sf::Keyboard::K) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
 			}
 			break;
 		}
@@ -821,6 +848,15 @@ void in_game_setup::input()
 			else if (event.key.code == sf::Keyboard::S) {
 				MUSIC::get_m_player()->set_skip(true);
 			}
+			else if (event.key.code == sf::Keyboard::M) {
+				MUSIC::get_m_player()->set_stop(true);
+			}
+			else if (event.key.code == sf::Keyboard::J) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
+			}
+			else if (event.key.code == sf::Keyboard::K) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
+			}
 			break;
 		}
 		case sf::Event::MouseMoved:
@@ -1197,6 +1233,15 @@ void new_game1::input()
 			else if (event.key.code == sf::Keyboard::S) {
 				MUSIC::get_m_player()->set_skip(true);
 			}
+			else if (event.key.code == sf::Keyboard::M) {
+				MUSIC::get_m_player()->set_stop(true);
+			}
+			else if (event.key.code == sf::Keyboard::J) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
+			}
+			else if (event.key.code == sf::Keyboard::K) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
+			}
 			break;
 		}
 		case sf::Event::MouseMoved:
@@ -1433,6 +1478,15 @@ void continue_game::input()
 			else if (event.key.code == sf::Keyboard::S) {
 				MUSIC::get_m_player()->set_skip(true);
 			}
+			else if (event.key.code == sf::Keyboard::M) {
+				MUSIC::get_m_player()->set_stop(true);
+			}
+			else if (event.key.code == sf::Keyboard::J) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
+			}
+			else if (event.key.code == sf::Keyboard::K) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
+			}
 			break;
 		}
 		case sf::Event::MouseMoved:
@@ -1462,10 +1516,6 @@ void continue_game::input()
 		case sf::Event::MouseButtonPressed:
 		{
 			if (selection != -1) {
-				if (game->get_current_user() != nullptr) {
-					delete game->get_current_user();
-				}
-
 				std::string user = saved_profiles[selection].getString();
 				user.erase(0, 3);
 
@@ -1683,18 +1733,97 @@ inventory::inventory(state_manager * game_ptr)
 	details.setOutlineColor(sf::Color(100, 100, 100, 255));
 	details.setOutlineThickness(-3);
 
+	price_setter.setFillColor(sf::Color::Transparent);
+
 	setup();
 }
 
 void inventory::input()
 {
 	sf::Event event;
-	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default 
-	
+	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default
+
 	while (game->window.pollEvent(event))
 	{
 		icons[5].setScale(0.2f, 0.2f);
 		icons[6].setScale(0.2f, 0.2f);
+
+		// if in input mode
+		if (price_setter.getFillColor() == sf::Color::White) {
+			if (event.type == sf::Event::TextEntered)
+			{
+				if (price_setter_str.length() > 50 || price_setter_inside.getGlobalBounds().width >= (price_setter.getGlobalBounds().width - 30))
+				{
+					if (event.text.unicode == 8) // backspace
+					{
+						if (price_setter_inside.getString().isEmpty()) break;
+						price_setter_str.erase(price_setter_str.length() - 1);
+						price_setter_inside.setString(price_setter_str + " £");
+					}
+				}
+				else if (event.text.unicode == 8) // backspace
+				{
+					try {
+						price_setter_str.at(0);
+						price_setter_str.erase(price_setter_str.length() - 1);
+						price_setter_inside.setString(price_setter_str + " £");
+					}
+					catch (const std::out_of_range) {
+						std::this_thread::sleep_for(std::chrono::milliseconds(200)); 
+						break; // otherwise, continue accepting numbers
+					}					
+				}
+				else if (event.text.unicode > 47 && event.text.unicode < 58) // numbers
+				{
+					int length = price_setter_str.length();
+
+					for (int i = 0; i < length; i++) {
+						if (price_setter_str.at(i) == '.') { // if there is a decimal point already
+							try {
+								price_setter_str.at(i + 2); // if the number is fully written, return
+							}
+							catch (const std::out_of_range) {
+								break; // otherwise, continue accepting numbers
+							}
+							return; // number has two decimal places
+						}
+					}
+					
+					price_setter_str += static_cast<char>(event.text.unicode);
+					price_setter_inside.setString(price_setter_str + " £");
+				}
+				else if (event.text.unicode == 46) // decimal point
+				{
+					int length = price_setter_str.length();
+
+					if (length == 0) {
+						price_setter_str = "0.";
+						price_setter_inside.setString(price_setter_str + " £");
+						return;
+					}
+
+					for (int i = 0; i < length; i++) {
+						if (price_setter_str.at(i) == '.') return;
+					}
+					price_setter_str += static_cast<char>(event.text.unicode);
+					price_setter_inside.setString(price_setter_str + " £");
+				}
+				else if (event.text.unicode == 13) { // return
+					price_setter.setFillColor(sf::Color::Transparent);
+					set_price.setColor(sf::Color(70, 70, 70, 255));
+
+					current_selection->set_price(atof(price_setter_str.c_str()));
+
+					update_properties();
+				}
+				else if (event.text.unicode == 27) { // escape
+					price_setter.setFillColor(sf::Color::Transparent);
+					price_setter_inside.setString("");
+					set_price.setColor(sf::Color(70, 70, 70, 255));
+				}
+			}
+			return;
+		}
 
 		switch (event.type)
 		{
@@ -1704,6 +1833,15 @@ void inventory::input()
 				game->window.close();
 			else if (event.key.code == sf::Keyboard::S) {
 				MUSIC::get_m_player()->set_skip(true);
+			}
+			else if (event.key.code == sf::Keyboard::M) {
+				MUSIC::get_m_player()->set_stop(true);
+			}
+			else if (event.key.code == sf::Keyboard::J) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
+			}
+			else if (event.key.code == sf::Keyboard::K) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
 			}
 			break;
 		}
@@ -1732,10 +1870,24 @@ void inventory::input()
 				back.setStyle(sf::Text::Bold);
 			}
 			else if (buy.getGlobalBounds().contains(mouse_pos)) {
-				selection = 0;
+				selection = 1;
 				buy.setStyle(sf::Text::Bold);
 			}
+			else if (set_price.getGlobalBounds().contains(mouse_pos)) {
+				selection = 2;
+			}
+			else if (icons[1].getGlobalBounds().contains(mouse_pos)) {
+				icons[1].setScale(0.3f, 0.3f);
+				selection = 3;
+			}
+			else if (icons[2].getGlobalBounds().contains(mouse_pos)) {
+				icons[2].setScale(0.3f, 0.3f);
+				selection = 4;
+			}
 			else {
+				icons[1].setScale(0.2f, 0.2f);
+				icons[2].setScale(0.2f, 0.2f);
+				
 				selection = -1;
 				back.setStyle(sf::Text::Regular);
 			}			
@@ -1744,13 +1896,27 @@ void inventory::input()
 		}
 		case sf::Event::MouseButtonPressed:
 		{
-			switch (selection)
+			switch (selection) // 0 - back; 1 - buy; 2 - set price; 3 - save; 4 - exit
 			{
 			case 0:
 				game->pop_state();
 				return;
 			case 1:
 				// game->change_state(new inventory_buy(game));
+				return;
+			case 2:
+				if (price_setter.getFillColor() == sf::Color::Transparent) {
+					price_setter.setFillColor(sf::Color::White);
+					set_price.setColor(sf::Color::Transparent);
+					price_setter_str = "";
+				}
+				return;
+			case 3:
+				// save game
+			case 4:
+				state_manager * aux = game;
+				aux->pop_state();
+				aux->pop_state();
 				return;
 			// to add actions
 			}
@@ -1775,6 +1941,8 @@ void inventory::draw(const float elapsed)
 	game->window.draw(buy);
 	game->window.draw(back);
 	game->window.draw(set_price);
+	game->window.draw(price_setter);
+	game->window.draw(price_setter_inside);
 
 	for (int i = 0; i < 3; i++)
 		game->window.draw(heat[i]);
@@ -1938,7 +2106,7 @@ void inventory::setup_icons()
 
 	for (i = 0; i < 2; i++)
 	{
-		if (!scroll_texture[i].loadFromFile("res/png/" + icon_names[i]))
+		if (!scroll_texture[i].loadFromFile("res/png/" + scroll_names[i]))
 		{
 			complain(ErrNo::file_access);
 			return;
@@ -1991,13 +2159,29 @@ void inventory::update_properties() {
 			break;
 		case 1:
 			active_properties[i].setString("Price: " + current_selection->style(current_selection->get_price()));
+			
 			set_price.setCharacterSize(active_properties[1].getCharacterSize());
 			set_price.setPosition(active_properties[1].getPosition());
 			set_price.setPosition(details.getPosition().x + details.getGlobalBounds().width - 30 - set_price.getGlobalBounds().width,
 				set_price.getPosition().y);
+
+			price_setter.setFillColor(sf::Color::Transparent);
+			price_setter.setPosition(set_price.getPosition());
+			price_setter.setSize(sf::Vector2f((float)set_price.getGlobalBounds().width, (float)set_price.getGlobalBounds().height));
+
+			// price setting text
+			price_setter_inside.setFont(font);
+			price_setter_inside.setColor(sf::Color::Black);
+			price_setter_inside.setString("");
+			price_setter_inside.setPosition(price_setter.getPosition().x + 5, price_setter.getPosition().y + 10);
+			
 			break;
 		case 2:
 			active_properties[i].setString("Perceived value: " + current_selection->get_perceived_value_cpp());
+
+			if (current_selection->get_perceived_value_cpp() == "Unattainable") active_properties[i].setCharacterSize(character_size - 10);
+			else active_properties[i].setCharacterSize(character_size);
+
 			break;
 		case 3:
 			active_properties[i].setString("Quality: " + current_selection->get_quality_cpp());
