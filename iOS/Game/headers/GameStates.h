@@ -210,3 +210,185 @@ public:
 
 	void setup_text();
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*------------------------------    msg_box    ------------------------------*/
+
+
+class msg_box : public game_state
+{
+private:
+	std::string str;
+	unsigned int line_size;
+	unsigned int char_size;
+	sf::Text close;
+	sf::Font options_font;
+	sf::Text * options;
+	sf::Texture background;
+	sf::Sprite background_sprite;
+	sf::Sprite selector;
+	sf::Texture selector_text;
+	sf::RectangleShape box;
+	int text_size;
+	int selection = -1; // by default nothing is selected
+
+public:
+	msg_box(state_manager * game_ptr, sf::Image background_img, std::string str, unsigned int line_size, unsigned  int char_size);
+
+	void input();
+	void logic_update(const float elapsed);
+	void draw(const float elapsed);
+	void show_textbox(std::string & str, unsigned int line_size, unsigned  int char_size); // function for message boxes., line size in chars.
+	void setup_text();
+};
+
+
+
+
+//sf::Vector2f starting_pos(game->window.getSize().x * 0.50f, game->window.getSize().y * 0.50f);
+//
+//close.setPosition(starting_pos);

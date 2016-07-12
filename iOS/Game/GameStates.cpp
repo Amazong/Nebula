@@ -726,8 +726,7 @@ bool in_game::handle_icons(sf::Vector2f mouse_pos)
 
 	if (icons[5].getGlobalBounds().contains(mouse_pos))
 	{
-		std::string a("hello");
-		show_textbox(a, 20, 12);
+		
 		return(true);
 	}
 	return(false);
@@ -786,6 +785,8 @@ void in_game_setup::update_buying_rate()
 
 void in_game_setup::input()
 {
+
+
 	sf::Event event;
 	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default 
 	if (selection > 2 && selection != 9)
@@ -833,7 +834,7 @@ void in_game_setup::input()
 					selection = i + 3;
 				}
 			}
-			if (start_text.getGlobalBounds().contains(mouse_pos) && !game->get_current_user()->stores.empty() && !game->get_current_user()->get_active_store()->staff.empty() && !game->get_current_user()->get_active_store()->inventory.empty())
+			if (start_text.getGlobalBounds().contains(mouse_pos) && !game->get_current_user()->stores.empty() && !game->get_current_user()->get_active_store()->staff.empty() && !game->get_current_user()->get_active_store()->inventory.empty()) //only let's you press when  you have stuff ready!
 				selection = 9;
 
 			if (selection != -1  && selection != 9)
@@ -1119,8 +1120,7 @@ bool in_game_setup::handle_icons(sf::Vector2f mouse_pos)
 
 	if (icons[5].getGlobalBounds().contains(mouse_pos))
 	{
-		std::string a("hello");
-		show_textbox(a, 20, 12);
+		
 		return(true);
 	}
 	return(false);
@@ -1253,7 +1253,8 @@ void new_game1::input()
 						break;
 					}
 					game->get_current_user()->set_user_name(name);
-					game->change_state(new in_game_setup(game));
+					game->push_state(new msg_box(game, game->window.capture(), "yap", 30, 12));
+					//game->change_state(new in_game_setup(game));
 					return;
 					break;
 				}
@@ -1523,3 +1524,410 @@ void continue_game::setup_text()
 		saved_profiles[i].move(sf::Vector2f(70, i * 80 + (title.getLocalBounds().height + 100)));
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*------------------------------    msg_box    ------------------------------*/
+
+
+msg_box::msg_box(state_manager * game_ptr,  sf::Image background_img, std::string str, unsigned int line_size, unsigned  int char_size)
+{
+	game = game_ptr;
+	this->line_size = line_size;
+	this->char_size = char_size;
+	this->str = str;
+
+	if (!background.loadFromImage(background_img)) {		//to deal with
+		complain(ErrNo::file_access);
+		return;
+	}
+
+	if (!options_font.loadFromFile("res/fonts/Roboto-Bold.ttf")) {
+		complain(ErrNo::file_access);
+		return;
+	}
+
+
+	setup_text();
+
+	background_sprite.setTexture(background);						//to deal with
+	background_sprite.setScale(game->window.getSize().x / 1920.0f, game->window.getSize().y / 1080.0f);
+
+	show_textbox(this->str, this->line_size, this->char_size); // function for message boxes., line size in chars.
+
+}
+
+void msg_box::input()
+{
+	sf::Event event;
+	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default 
+
+	while (game->window.pollEvent(event))
+	{
+			
+	}
+
+
+	
+}
+
+void msg_box::logic_update(const float elapsed)
+{
+	if (selection != -1)
+	{
+		selector.setOrigin((selector.getGlobalBounds().width / 2.0f), (selector.getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
+		selector.setPosition(options[selection].findCharacterPos(0).x, options[selection].getPosition().y); //position of first character
+		selector.move(-20.0f, 4);
+	}
+
+}
+
+void msg_box::draw(const float elapsed)
+{
+	game->window.draw(background_sprite);
+	game->window.draw(box);
+	for (int i = 0; i < text_size; i++)
+	{
+		game->window.draw(options[i]);
+	}
+}
+
+void msg_box::show_textbox(std::string & str, unsigned int line_size, unsigned int char_size)
+{
+	float offset = 0;
+
+
+
+	std::string * placeholder = get_string_tab(str, text_size, line_size);
+
+	options = new sf::Text[text_size];
+
+
+	sf::Vector2f window_size(((line_size * char_size) / 2.0f) + (char_size * 3.0f), (char_size * 3.0f) + (text_size * char_size) + ((text_size - 1.0f) * offset));
+
+	box.setSize(sf::Vector2f(window_size.x, window_size.x + close.getGlobalBounds().height * 1.4f));
+	
+	offset = window_size.y / text_size;
+
+	box.setOrigin(box.getGlobalBounds().width / 2.0f, box.getGlobalBounds().height / 2.0f);
+	box.setPosition(game->window.getSize().x * 0.50f, game->window.getSize().y * 0.50f);
+
+	sf::Vector2f pos(box.getPosition().x, box.getPosition().y + (offset / 2.0f ));
+	  
+	for (int i = 0; i < text_size; i++, pos.y += offset)
+	{
+		options[i].setFont(options_font);
+		options[i].setCharacterSize(char_size);
+		options[i].setString(placeholder[i]);
+		options[i].setColor(sf::Color::Black);
+		options[i].setOrigin((options[i].getGlobalBounds().width / 2.0f), (options[i].getGlobalBounds().height / 2.0f)); // origin in center.
+		options[i].setPosition(pos);
+
+		pos.y += char_size;
+	}
+
+
+
+	(text_size == 1) ? delete placeholder : delete[] placeholder; //if size == 1 i used new, not new[]
+	//delete[] options;
+
+}
+
+void msg_box::setup_text()
+{
+	int font_size = (int)(game->window.getSize().y / 13.5f); // from ideal 1080p ratios
+
+	
+		close.setFont(options_font);
+		close.setCharacterSize(font_size);
+		close.setString("Close");
+		close.setColor(sf::Color::White);
+		close.setOrigin((close.getGlobalBounds().width / 2.0f), (close.getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
+
+}
+
+
+
