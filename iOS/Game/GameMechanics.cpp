@@ -716,6 +716,9 @@ user_profile::~user_profile()
 
 store * user_profile::get_active_store()
 {
+	if (active_store == nullptr)
+		active_store = stores.front();
+
 	return active_store;
 }
 
@@ -1153,5 +1156,3 @@ std::string user_profile::get_balance_styled(int arg) const
 
 	return s;
 }
-
-
