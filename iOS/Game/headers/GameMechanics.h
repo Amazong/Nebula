@@ -205,6 +205,7 @@ public:
 
 	// friends
 	friend class user_profile;
+	friend class in_game_setup;
 };
 
 
@@ -260,5 +261,6 @@ public:
 
 	// friends
 	friend class store;
+	friend class in_game_setup;
 };
 

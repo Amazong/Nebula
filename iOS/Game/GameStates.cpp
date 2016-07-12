@@ -788,16 +788,20 @@ void in_game_setup::input()
 {
 	sf::Event event;
 	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default 
-	if (selection > 2)
+	if (selection > 2 && selection != 9)
 	{
 		options[(selection - 3)].setStyle(sf::Text::Underlined);
 		options[(selection - 3)].setColor(sf::Color::White);
+		start_text.setScale(1.0f, 1.0f);
 	}
+	
+
 
 	while (game->window.pollEvent(event))
 	{
 		icons[5].setScale(0.2f, 0.2f);
 		icons[6].setScale(0.2f, 0.2f);
+		start_text.setScale(1.0f, 1.0f);
 
 		switch (event.type)
 		{
@@ -811,13 +815,13 @@ void in_game_setup::input()
 		{
 			mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
 			
-			if (selection > 2)
+			if (selection > 2 && selection != 9)
 			{
 				options[(selection - 3)].setScale(1.0f, 1.0f);
 				options[(selection - 3)].setStyle(sf::Text::Regular);
 			}
 
-			if (selection != -1)
+			if (selection != -1 && selection != 9)
 				heat[selection].setOutlineThickness(0);
 
 			selection = -1; // this way the selection will always be -1 if it's not in one of the options
@@ -829,11 +833,24 @@ void in_game_setup::input()
 					selection = i + 3;
 				}
 			}
+			if (start_text.getGlobalBounds().contains(mouse_pos) && !game->get_current_user()->stores.empty() && !game->get_current_user()->get_active_store()->staff.empty() && !game->get_current_user()->get_active_store()->inventory.empty())
+				selection = 9;
 
-			if (selection != -1)
+			if (selection != -1  && selection != 9)
 			{
 				options[(selection - 3)].scale(1.1f, 1.1f);
-				options[(selection - 3)].setStyle(sf::Text::Underlined);
+				options[(selection - 3)].setStyle(sf::Text::Underlined);				
+			}
+
+			if (selection != 9)
+			{
+				start_text.setStyle(sf::Text::Regular);
+				start_text.setScale(1.0f, 1.0f);
+			}
+			else
+			{
+				start_text.setStyle(sf::Text::Underlined);
+				start_text.scale(1.1f, 1.1f);
 			}
 
 			control_icon_animations(mouse_pos);
@@ -848,21 +865,26 @@ void in_game_setup::input()
 			if (handle_icons((sf::Vector2f) sf::Mouse::getPosition(game->window)))
 				return;
 
-			if (selection > 2 && event.mouseButton.button == sf::Mouse::Left)
+			if (selection > 2 && selection != 9 && event.mouseButton.button == sf::Mouse::Left)
 			{
 				options[(selection - 3)].setStyle(sf::Text::Italic);
 				options[(selection - 3)].setColor(sf::Color::Red);
-				//options[(selection - 3)].scale(0.9f, 0.9f);
 			}
 
 			switch (selection)
 			{
-			case 0:
-			{
-				game->pop_state();
-				return;
-				break;
-			}
+				case 0:
+				{
+					game->pop_state();
+					return;
+					break;
+				}
+				case 9:
+				{
+					game->change_state(new in_game(game));
+					return;
+					break;
+				}
 			// to add actions
 			}
 
