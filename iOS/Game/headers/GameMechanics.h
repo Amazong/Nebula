@@ -80,6 +80,7 @@ class guitar : public instrument
 public:
 	guitar() {};
 	guitar(double value, char * brand); // sets a value and a brand
+	guitar(std::string name);
 	guitar(piano_brands::piano_brands brand, piano_type::piano_type type, quality::quality quality); // invalid, for guitars
 
 	void set_perceived_value(double ratio);
@@ -93,6 +94,7 @@ class piano : public instrument
 public:
 	piano() {};
 	piano(double value, char * brand);
+	piano(std::string name);
 	piano(piano_brands::piano_brands brand,
 		piano_type::piano_type type,
 		quality::quality quality); // sets a value and a brand
@@ -217,7 +219,7 @@ private:
 
 	char user[51];
 	double weekly_expenses;
-	double net_worth;
+	long double net_worth;
 	double reputation;
 	int difficulty = -1; // difficulty: 0-easy; 1-medium; 2-hard
 
@@ -228,7 +230,7 @@ public:
 	user_profile(const user_profile & user); // does not copy the std::lists nor active store
 	~user_profile();
 
-	void set_net_worth(int worth) { net_worth = worth; }
+	void set_net_worth(double worth) { net_worth = worth; }
 
 	store * get_active_store();
 	bool set_active_store(store * active_store_new);
@@ -239,6 +241,8 @@ public:
 
 	void buy_store(store * store);
 	store * get_back_store() { return stores.back(); }
+
+	void set_user_name(std::string s) { strcpy_s(this->user, s.c_str()); }
 
 	void save_game();
 	void save_inventories(std::string  user, const guitar * tab, int size, int store_index);

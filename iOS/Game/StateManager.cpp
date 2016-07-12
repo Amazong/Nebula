@@ -13,6 +13,8 @@ state_manager::state_manager()
 
 state_manager::~state_manager()
 {
+	delete current_user;
+	
 	while (!states_stack.empty())
 	{
 		pop_state();
@@ -36,6 +38,7 @@ user_profile * state_manager::get_current_user()
 
 void state_manager::set_current_user(user_profile * user)
 {
+	delete current_user;
 	current_user = user;
 }
 
