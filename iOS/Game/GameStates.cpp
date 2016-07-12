@@ -1519,9 +1519,13 @@ inventory::inventory(state_manager * game_ptr)
 		return;
 	}
 
-	setup_options();
-	setup_indicators();
-	setup_icons();
+	details.setFillColor(sf::Color::Color(170, 170, 170, 235));
+	details.setSize(sf::Vector2f((8.0f / 16.0f) * game->window.getSize().x, (game->window.getSize().y * (2.0f / 3.0f))));
+	details.setPosition(game->window.getSize().x * (7.0f / 16.0f), game->window.getSize().y / 5.5f);
+	details.setOutlineColor(sf::Color(100, 100, 100, 255));
+	details.setOutlineThickness(-3);
+
+	setup();
 }
 
 void inventory::input()
@@ -1567,19 +1571,11 @@ void inventory::input()
 			{
 				
 			}
-
-			control_icon_animations(mouse_pos);
-
-			std::cout << "           Selection " << selection << std::endl; //debug
-
-
+			
 			break;
 		}
 		case sf::Event::MouseButtonPressed:
 		{
-			if (handle_icons((sf::Vector2f) sf::Mouse::getPosition(game->window)))
-				return;
-
 			if (selection > 2 && event.mouseButton.button == sf::Mouse::Left)
 			{
 			
@@ -1612,6 +1608,10 @@ void inventory::logic_update(const float elapsed)
 
 void inventory::draw(const float elapsed)
 {
+	game->window.draw(details);
+	game->window.draw(buy);
+	game->window.draw(back);
+
 	for (int i = 0; i < 3; i++)
 		game->window.draw(heat[i]);
 		
@@ -1620,12 +1620,19 @@ void inventory::draw(const float elapsed)
 
 	for (int i = 0; i < 3; i++)
 		game->window.draw(icons[i]);
+
+	for (int i = 0; i < 5; i++)
+		game->window.draw(currently_showing[i]);
 }
 
 void inventory::setup()
 {
 	current_user = game->get_current_user();
 	active_store = current_user->get_active_store();
+
+	setup_options();
+	setup_text();
+	setup_icons();
 }
 
 void inventory::setup_options()
@@ -1664,13 +1671,11 @@ void inventory::setup_options()
 	}
 }
 
-void inventory::setup_indicators()
+void inventory::setup_text()
 {
-
 	int offset = (int)(heat[1].getGlobalBounds().height / 5.0f);
 
-	for (int i = 0; i < 5; i++)
-	{
+	for (int i = 0; i < 5; i++)	{
 		indicators[i].setFont(font);
 		indicators[i].setCharacterSize((int)(game->window.getSize().y / 22.0f));
 		indicators[i].setString(indicators_str[i]);
@@ -1678,9 +1683,29 @@ void inventory::setup_indicators()
 		indicators[i].setOrigin((indicators[i].getGlobalBounds().width / 2.0f), (indicators[i].getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
 		indicators[i].setPosition(heat[1].getPosition());
 		indicators[i].move(heat[1].getGlobalBounds().width / 2.0f, (offset / 2.3f) + (i*offset));
-
 	}
 
+	for (int i = 0; i < 5; i++) {
+		currently_showing[i].setFont(font);
+		currently_showing[i].setCharacterSize((int)(game->window.getSize().y / 16.0f));
+		currently_showing[i].setColor(sf::Color::White);
+		currently_showing[i].setPosition(heat[1].getGlobalBounds().width + 90, (2 * i * currently_showing[i].getCharacterSize() + game->window.getSize().y / 5.0f));
+	}
+	update_list();
+
+	buy.setFont(font);
+	buy.setColor(sf::Color::White);
+	buy.setCharacterSize(50);
+	buy.setString("Buy Inventory");
+	buy.setPosition((game->window.getSize().x - buy.getGlobalBounds().width - 50),
+		game->window.getSize().y - (float)2 * buy.getCharacterSize());
+
+	back.setFont(font);
+	back.setColor(sf::Color::White);
+	back.setCharacterSize(50);
+	back.setString("Back");
+	back.setPosition(heat[0].getGlobalBounds().width + 50,
+		game->window.getSize().y - (float)2 * buy.getCharacterSize());
 }
 
 void inventory::setup_icons()
@@ -1717,37 +1742,20 @@ void inventory::setup_icons()
 	}
 }
 
-void inventory::control_icon_animations(sf::Vector2f mouse_pos)
+void inventory::update_list()
 {
-	if (icons[5].getGlobalBounds().contains(mouse_pos))
-	{
-		icons[5].scale(1.1f, 1.1f);
-	}
-	else if (icons[6].getGlobalBounds().contains(mouse_pos))
-	{
-		icons[6].scale(1.1f, 1.1f);
-	}
-	else
-	{
-		icons[5].setScale(0.2f, 0.2f);
-		icons[6].setScale(0.2f, 0.2f);
-	}
-}
+	std::list<instrument *>::iterator it = current_user->get_active_store()->get_inventory()->begin();
 
-bool inventory::handle_icons(sf::Vector2f mouse_pos)
-{
-	if (icons[6].getGlobalBounds().contains(mouse_pos))
-	{
-		game->pop_state();
-		return(true);
-	}
+	for (int i = 0; i < starting_index * 5; i++) it++;
 
-
-	if (icons[5].getGlobalBounds().contains(mouse_pos))
-	{
-		std::string a("hello");
-		show_textbox(a, 20, 12);
-		return(true);
+	for (int i = 0; i < 5; i++) {
+		currently_showing[i].setString(std::to_string(starting_index * 5 + i + 1) + ". " + (*it)->print_brand_cpp());
+		it++;
+		if (it == current_user->get_active_store()->get_inventory()->end()) {
+			for (int j = i+1; j < 5; j++) {
+				currently_showing[j].setString("");
+			}
+			break;
+		}
 	}
-	return(false);
 }
