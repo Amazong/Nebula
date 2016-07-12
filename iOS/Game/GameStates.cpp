@@ -40,18 +40,22 @@ void main_menu::input()
 		{
 			case sf::Event::KeyPressed:
 			{
-				if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+				if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
 					game->window.close();
-				else if (event.key.code == sf::Keyboard::S) {
+				}
+				else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
 					MUSIC::get_m_player()->set_skip(true);
 				}
-				else if (event.key.code == sf::Keyboard::M) {
-					MUSIC::get_m_player()->set_stop(true);
+				else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+					if (MUSIC::get_m_player()->get_stop() == false) {
+						MUSIC::get_m_player()->set_stop(true);
+					}
+					else MUSIC::get_m_player()->set_stop(false);
 				}
-				else if (event.key.code == sf::Keyboard::J) {
+				else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
 					MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
 				}
-				else if (event.key.code == sf::Keyboard::K) {
+				else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
 					MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
 				}
 				break;
@@ -113,7 +117,7 @@ void main_menu::input()
 					switch (selection) {
 					case 0:
 						//new game
-						game->push_state(new new_game1(game, game->window.capture()));
+						game->push_state(new new_game(game, game->window.capture()));
 						break;
 					case 1:
 						game->push_state(new continue_game(game, game->window.capture()));
@@ -281,18 +285,22 @@ void options_menu::input()
 		{
 			case sf::Event::KeyPressed:
 			{
-				if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+				if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
 					game->window.close();
-				else if (event.key.code == sf::Keyboard::S) {
+				}
+				else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
 					MUSIC::get_m_player()->set_skip(true);
 				}
-				else if (event.key.code == sf::Keyboard::M) {
-					MUSIC::get_m_player()->set_stop(true);
+				else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+					if (MUSIC::get_m_player()->get_stop() == false) {
+						MUSIC::get_m_player()->set_stop(true);
+					}
+					else MUSIC::get_m_player()->set_stop(false);
 				}
-				else if (event.key.code == sf::Keyboard::J) {
+				else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
 					MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
 				}
-				else if (event.key.code == sf::Keyboard::K) {
+				else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
 					MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
 				}
 				break;
@@ -460,18 +468,22 @@ void in_game::input()
 		{
 		case sf::Event::KeyPressed:
 		{
-			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
 				game->window.close();
-			else if (event.key.code == sf::Keyboard::S) {
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
 				MUSIC::get_m_player()->set_skip(true);
 			}
-			else if (event.key.code == sf::Keyboard::M) {
-				MUSIC::get_m_player()->set_stop(true);
+			else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+				if (MUSIC::get_m_player()->get_stop() == false) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else MUSIC::get_m_player()->set_stop(false);
 			}
-			else if (event.key.code == sf::Keyboard::J) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
 			}
-			else if (event.key.code == sf::Keyboard::K) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
 			}
 			break;
@@ -849,18 +861,22 @@ void in_game_setup::input()
 		{
 		case sf::Event::KeyPressed:
 		{
-			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
 				game->window.close();
-			else if (event.key.code == sf::Keyboard::S) {
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
 				MUSIC::get_m_player()->set_skip(true);
 			}
-			else if (event.key.code == sf::Keyboard::M) {
-				MUSIC::get_m_player()->set_stop(true);
+			else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+				if (MUSIC::get_m_player()->get_stop() == false) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else MUSIC::get_m_player()->set_stop(false);
 			}
-			else if (event.key.code == sf::Keyboard::J) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
 			}
-			else if (event.key.code == sf::Keyboard::K) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
 			}
 			break;
@@ -1182,7 +1198,7 @@ bool in_game_setup::handle_icons(sf::Vector2f mouse_pos)
 
 /*------------------------------ New_Game1 ------------------------------*/
 
-new_game1::new_game1(state_manager * game, sf::Image Background_img)
+new_game::new_game(state_manager * game, sf::Image Background_img)
 {
 	this->game = game;
 
@@ -1214,14 +1230,11 @@ new_game1::new_game1(state_manager * game, sf::Image Background_img)
 	setup_options();
 }
 
-void new_game1::input()
+void new_game::input()
 {
 	sf::Event event;
 	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default 
-
-
-
-
+	
 	while (game->window.pollEvent(event))
 	{
 		for (int i = 2; i < 6; i++)
@@ -1234,18 +1247,22 @@ void new_game1::input()
 		{
 		case sf::Event::KeyPressed:
 		{
-			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
 				game->window.close();
-			else if (event.key.code == sf::Keyboard::S) {
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
 				MUSIC::get_m_player()->set_skip(true);
 			}
-			else if (event.key.code == sf::Keyboard::M) {
-				MUSIC::get_m_player()->set_stop(true);
+			else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+				if (MUSIC::get_m_player()->get_stop() == false) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else MUSIC::get_m_player()->set_stop(false);
 			}
-			else if (event.key.code == sf::Keyboard::J) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
 			}
-			else if (event.key.code == sf::Keyboard::K) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
 			}
 			break;
@@ -1258,6 +1275,11 @@ void new_game1::input()
 
 			for (int i = 2; i < 6; i++)
 			{
+				if (i == 5)
+				{
+					if (name.isEmpty())
+						continue;
+				}
 				if (options[i].getGlobalBounds().contains(mouse_pos))
 				{
 					selection = i;
@@ -1281,11 +1303,7 @@ void new_game1::input()
 				options[selection].setStyle(sf::Text::Underlined);
 			}
 			
-
-			
-
 			std::cout << "           Selection " << selection << std::endl; //debug
-
 
 			break;
 		}
@@ -1303,6 +1321,8 @@ void new_game1::input()
 			{
 				case 5:
 				{
+					game->set_current_user(new user_profile());
+
 					game->get_current_user()->set_difficulty(difficulty);
 					switch (difficulty) {
 					case 0:
@@ -1318,10 +1338,9 @@ void new_game1::input()
 						break;
 					}
 					game->get_current_user()->set_user_name(name);
-					game->push_state(new msg_box(game, game->window.capture(), "yap", 30, 12));
-					//game->change_state(new in_game_setup(game));
+
+					game->push_state(new msg_box(game, game->window.capture(), "Game created!", 50, 50, new in_game_setup(game)));
 					return;
-					break;
 				}
 				case 9:
 				{
@@ -1382,11 +1401,11 @@ void new_game1::input()
 	}
 }
 
-void new_game1::logic_update(const float elapsed)
+void new_game::logic_update(const float elapsed)
 {
 }
 
-void new_game1::draw(const float elapsed)
+void new_game::draw(const float elapsed)
 {
 	game->window.draw(background_sprite);
 	game->window.draw(input_place);
@@ -1400,7 +1419,7 @@ void new_game1::draw(const float elapsed)
 	game->window.draw(name_text);
 }
 
-void new_game1::setup_options()
+void new_game::setup_options()
 {
 	
 	for (int i = 0; i < 6; i++)
@@ -1479,18 +1498,22 @@ void continue_game::input()
 		{
 		case sf::Event::KeyPressed:
 		{
-			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
 				game->window.close();
-			else if (event.key.code == sf::Keyboard::S) {
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
 				MUSIC::get_m_player()->set_skip(true);
 			}
-			else if (event.key.code == sf::Keyboard::M) {
-				MUSIC::get_m_player()->set_stop(true);
+			else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+				if (MUSIC::get_m_player()->get_stop() == false) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else MUSIC::get_m_player()->set_stop(false);
 			}
-			else if (event.key.code == sf::Keyboard::J) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
 			}
-			else if (event.key.code == sf::Keyboard::K) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
 			}
 			break;
@@ -1605,12 +1628,13 @@ void continue_game::setup_text()
 
 /*------------------------------    msg_box    ------------------------------*/
 
-msg_box::msg_box(state_manager * game_ptr, sf::Image background_img, std::string str, unsigned int line_size, unsigned  int char_size)
+msg_box::msg_box(state_manager * game_ptr, sf::Image background_img, std::string str, unsigned int line_size, unsigned int char_size, game_state * next_state)
 {
 	game = game_ptr;
 	this->line_size = line_size;
 	this->char_size = char_size;
 	this->str = str;
+	this->next_state = next_state;
 
 	if (!background.loadFromImage(background_img)) {		//to deal with
 		complain(ErrNo::file_access);
@@ -1631,8 +1655,6 @@ msg_box::msg_box(state_manager * game_ptr, sf::Image background_img, std::string
 	show_textbox(this->str, this->line_size, this->char_size); // function for message boxes., line size in chars.
 
 	close.setPosition(box.getPosition().x, box.getPosition().y + (box.getGlobalBounds().height / (3.0f)));
-
-
 }
 
 void msg_box::input()
@@ -1649,8 +1671,24 @@ void msg_box::input()
 		{
 		case sf::Event::KeyPressed:
 		{
-			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
 				game->window.close();
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
+				MUSIC::get_m_player()->set_skip(true);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+				if (MUSIC::get_m_player()->get_stop() == false) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else MUSIC::get_m_player()->set_stop(false);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
+			}
 			break;
 		}
 		case sf::Event::MouseMoved:
@@ -1683,15 +1721,33 @@ void msg_box::input()
 				{
 					case -1:
 					{
+						if (next_state != nullptr) {
+							delete[] options;
+
+							state_manager * aux = game;
+							game_state * next = next_state;
+							aux->pop_state();
+							aux->change_state(next);
+							return;
+						}
+
 						game->pop_state();
 						return;
-						break;
 					}
 					case 1:
 					{
+						if (next_state != nullptr) {
+							delete[] options;
+
+							state_manager * aux = game;
+							game_state * next = next_state;
+							aux->pop_state();
+							aux->change_state(next);
+							return;
+						}
+						
 						game->pop_state();
 						return;
-						break;
 					}
 					default:
 						break;
@@ -1735,20 +1791,16 @@ void msg_box::draw(const float elapsed)
 void msg_box::show_textbox(std::string & str, unsigned int line_size, unsigned int char_size)
 {
 	float offset = 5;
-
-
-
+	
 	std::string * placeholder = get_string_tab(str, text_size, line_size);
 
 	options = new sf::Text[text_size];
-
-
+	
 	sf::Vector2f window_size(((line_size * char_size) / 2.0f) + (char_size * 3.0f), (char_size * 3.0f) + (text_size * char_size) + ((text_size - 1.0f) * offset));
 
 	box.setSize(sf::Vector2f(window_size.x, window_size.y + close.getGlobalBounds().height * 1.4f));
 	box.setFillColor(sf::Color(21, 21, 21, 255));
 	
-
 	box.setOrigin(box.getGlobalBounds().width / 2.0f, box.getGlobalBounds().height / 2.0f);
 	box.setPosition(game->window.getSize().x * 0.50f, game->window.getSize().y * 0.50f);
 	box.setOutlineThickness(-3);
@@ -1767,12 +1819,8 @@ void msg_box::show_textbox(std::string & str, unsigned int line_size, unsigned i
 
 		pos.y += char_size;
 	}
-
-
-
+	
 	(text_size == 1) ? delete placeholder : delete[] placeholder; //if size == 1 i used new, not new[]
-																	//delete[] options;
-
 }
 
 void msg_box::setup_text()
@@ -1902,18 +1950,22 @@ void inventory::input()
 		{
 		case sf::Event::KeyPressed:
 		{
-			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
 				game->window.close();
-			else if (event.key.code == sf::Keyboard::S) {
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
 				MUSIC::get_m_player()->set_skip(true);
 			}
-			else if (event.key.code == sf::Keyboard::M) {
-				MUSIC::get_m_player()->set_stop(true);
+			else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+				if (MUSIC::get_m_player()->get_stop() == false) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else MUSIC::get_m_player()->set_stop(false);
 			}
-			else if (event.key.code == sf::Keyboard::J) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
 			}
-			else if (event.key.code == sf::Keyboard::K) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
 			}
 			break;

@@ -160,9 +160,9 @@ public:
 };
 
 
-/*------------------------------ New_Game1 ------------------------------*/
+/*------------------------------ New_Game ------------------------------*/
 
-class new_game1 : public game_state
+class new_game : public game_state
 {
 private:
 	const std::string options_str[6] = { "Username:", "Difficulty:", "Easy", "Medium" ,"Hard", "Continue" };
@@ -177,7 +177,7 @@ private:
 	int difficulty = 0; // 0 to 2
 	int selection = -1;
 public:
-	new_game1(state_manager * game, sf::Image Background);
+	new_game(state_manager * game, sf::Image Background);
 
 	void input();
 	void logic_update(const float elapsed);
@@ -218,6 +218,7 @@ class msg_box : public game_state
 {
 private:
 	std::string str;
+	game_state * next_state;
 	unsigned int line_size;
 	unsigned int char_size;
 	sf::Text close;
@@ -232,7 +233,7 @@ private:
 	int selection = -1; // by default nothing is selected
 
 public:
-	msg_box(state_manager * game_ptr, sf::Image background_img, std::string str, unsigned int line_size, unsigned  int char_size);
+	msg_box(state_manager * game_ptr, sf::Image background_img, std::string str, unsigned int line_size, unsigned int char_size, game_state * next_state = nullptr);
 	
 	void input();
 	void logic_update(const float elapsed);
