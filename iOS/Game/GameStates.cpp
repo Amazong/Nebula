@@ -1889,6 +1889,7 @@ void inventory::input()
 				icons[2].setScale(0.2f, 0.2f);
 				
 				selection = -1;
+				buy.setStyle(sf::Text::Regular);
 				back.setStyle(sf::Text::Regular);
 			}			
 

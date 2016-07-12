@@ -5319,3 +5319,63 @@ Started playing Tears in Heaven.ogg.
 19:39:41 - Sold an item! Your reputation has increased.
 19:39:41 - Inventory emptied.
 19:39:41 - Your inventory is empty. Your reputation has decreased.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:41:05 - Program started.
+19:41:05 - Music started playing.
+19:41:05 - Bought Downtown for 20000.00£ (peanuts).
+19:41:05 - Bought Larrivee guitar for 200.00£ (peanuts).
+19:41:05 - Bought grand Korg piano for 23809.52£ (peanuts).
+19:41:05 - Hired Cersei for 200000.00£ (peanuts).
+19:41:05 - Hired Ned Stark for 5000.00£ (peanuts).
+19:41:05 - Hired Jon Snow for 100000.00£ (peanuts).
+19:41:05 - Hired Sansa for 1000.00£ (peanuts).
+19:41:05 - The client didn't buy anything. Your reputation has decreased.
+19:41:05 - The client didn't buy anything. Your reputation has decreased.
+19:41:05 - The client didn't buy anything. Your reputation has decreased.
+19:41:05 - Sold Larrivee guitar for 1000.00£ (peanuts).
+19:41:05 - Sold an item! Your reputation has increased.
+19:41:05 - Started playing Kygo.ogg.
+19:41:05 - Sold grand Korg piano for 50000.00£ (peanuts).
+19:41:05 - Sold an item! Your reputation has increased.
+19:41:05 - Inventory emptied.
+19:41:05 - Your inventory is empty. Your reputation has decreased.
+19:41:18 - Stopping playback.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+19:48:45 - Program started.
+19:48:45 - Music started playing.
+19:48:45 - Bought Downtown for 20000.00£ (peanuts).
+19:48:45 - Bought Larrivee guitar for 200.00£ (peanuts).
+19:48:45 - Bought grand Kawai piano for 26190.47£ (peanuts).
+19:48:45 - Hired Cersei for 200000.00£ (peanuts).
+19:48:45 - Hired Ned Stark for 5000.00£ (peanuts).
+19:48:45 - Hired Jon Snow for 100000.00£ (peanuts).
+19:48:45 - Hired Sansa for 1000.00£ (peanuts).
+19:48:45 - Sold grand Kawai piano for 50000.00£ (peanuts).
+19:48:45 - Sold an item! Your reputation has increased.
+19:48:45 - Sold Larrivee guitar for 1000.00£ (peanuts).
+19:48:45 - Sold an item! Your reputation has increased.
+19:48:45 - Inventory emptied.
+19:48:45 - Your inventory is empty. Your reputation has decreased.
+19:48:45 - Started playing Kygo.ogg.
+19:48:48 - Stopping playback.
+19:48:58 - Program exited normally.
