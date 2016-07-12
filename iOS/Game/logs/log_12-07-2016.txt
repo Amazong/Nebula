@@ -532,3 +532,31 @@ Hired Jon Snow for 100000.00£ (peanuts).
 00:33:02 - Your inventory is empty. Your reputation has decreased.
 00:33:50 - Quitting music player.
 00:33:51 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+12:04:17 - Program started.
+12:04:17 - Music started playing.
+12:04:17 - Bought Downtown for 20000.00£ (peanuts).
+12:04:17 - Bought Larrivee guitar for 200.00£ (peanuts).
+12:04:17 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+12:04:17 - Hired Cersei for 200000.00£ (peanuts).
+12:04:17 - Hired Ned Stark for 5000.00£ (peanuts).
+12:04:17 - Hired Jon Snow for 100000.00£ (peanuts).
+12:04:17 - Hired Sansa for 1000.00£ (peanuts).
+12:04:17 - Sold digital Steinway & Sons piano for 50000.00£ (peanuts).
+12:04:17 - Sold an item! Your reputation has increased.
+1212::04:04:17 - Sold Larrivee guitar for 1000.00£ (peanuts)17. - Started playing Tears in Heaven.ogg.
+
+12:04:17 - Sold an item! Your reputation has increased.
+12:04:17 - Inventory emptied.
+12:04:17 - Your inventory is empty. Your reputation has decreased.
+12:04:41 - Program exited normally.
