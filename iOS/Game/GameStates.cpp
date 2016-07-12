@@ -27,6 +27,8 @@ main_menu::main_menu(state_manager * game_ptr)
 
 	background_sprite.setTexture(background); // link sprite and texture
 	background_sprite.setScale(game->window.getSize().x / 1920.0f, game->window.getSize().y / 1080.0f);
+
+	
 }
 
 void main_menu::input()
@@ -184,6 +186,7 @@ void main_menu::draw(const float elapsed)
 		game->window.draw(options[i]);
 	}
 	game->window.draw(selector);
+
 }
 
 void main_menu::setup_text()
@@ -381,6 +384,9 @@ in_game::in_game(state_manager * game_ptr)
 	setup_options();
 	setup_indicators();
 	setup_icons();
+
+
+
 }
 
 void in_game::update_buying_rate()
@@ -1558,6 +1564,9 @@ msg_box::msg_box(state_manager * game_ptr, sf::Image background_img, std::string
 
 	show_textbox(this->str, this->line_size, this->char_size); // function for message boxes., line size in chars.
 
+	close.setPosition(box.getPosition().x, box.getPosition().y + (box.getGlobalBounds().height / (3.0f)));
+
+
 }
 
 void msg_box::input()
@@ -1567,9 +1576,69 @@ void msg_box::input()
 
 	while (game->window.pollEvent(event))
 	{
+		close.setScale(1.0f, 1.0f);
+		close.setStyle(sf::Text::Regular);
 
+		switch (event.type)
+		{
+		case sf::Event::KeyPressed:
+		{
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+				game->window.close();
+			break;
+		}
+		case sf::Event::MouseMoved:
+		{
+			mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
+
+			selection = -1; // this way the selection will always be -1 if it's not in one of the options
+			close.setScale(1.0f, 1.0f);
+			close.setStyle(sf::Text::Regular);
+			if (close.getGlobalBounds().contains(mouse_pos))
+			{
+				selection = 1;
+				close.setScale(1.1f, 1.1f);
+				close.setStyle(sf::Text::Underlined);
+			}
+			else if (box.getGlobalBounds().contains(mouse_pos))
+				selection = 0;
+
+			std::cout << "           Selection " << selection << std::endl; //debug
+
+
+			break;
+		}
+		case sf::Event::MouseButtonPressed:
+		{
+			
+			if (event.mouseButton.button == sf::Mouse::Left)
+			{
+				switch (selection)
+				{
+					case -1:
+					{
+						game->pop_state();
+						return;
+						break;
+					}
+					case 1:
+					{
+						game->pop_state();
+						return;
+						break;
+					}
+					default:
+						break;
+				}
+
+				
+			}
+			break;
+		}
+		default:
+			break;
+		}
 	}
-
 
 
 }
@@ -1593,11 +1662,13 @@ void msg_box::draw(const float elapsed)
 	{
 		game->window.draw(options[i]);
 	}
+
+	game->window.draw(close);
 }
 
 void msg_box::show_textbox(std::string & str, unsigned int line_size, unsigned int char_size)
 {
-	float offset = 0;
+	float offset = 5;
 
 
 
@@ -1608,21 +1679,23 @@ void msg_box::show_textbox(std::string & str, unsigned int line_size, unsigned i
 
 	sf::Vector2f window_size(((line_size * char_size) / 2.0f) + (char_size * 3.0f), (char_size * 3.0f) + (text_size * char_size) + ((text_size - 1.0f) * offset));
 
-	box.setSize(sf::Vector2f(window_size.x, window_size.x + close.getGlobalBounds().height * 1.4f));
-
-	offset = window_size.y / text_size;
+	box.setSize(sf::Vector2f(window_size.x, window_size.y + close.getGlobalBounds().height * 1.4f));
+	box.setFillColor(sf::Color(21, 21, 21, 255));
+	
 
 	box.setOrigin(box.getGlobalBounds().width / 2.0f, box.getGlobalBounds().height / 2.0f);
 	box.setPosition(game->window.getSize().x * 0.50f, game->window.getSize().y * 0.50f);
+	box.setOutlineThickness(-3);
+	box.setOutlineColor(sf::Color(72, 72, 72, 255));
 
-	sf::Vector2f pos(box.getPosition().x, box.getPosition().y + (offset / 2.0f));
+	sf::Vector2f pos(box.getPosition().x, box.getPosition().y - (box.getGlobalBounds().height / (2.8f)));
 
 	for (int i = 0; i < text_size; i++, pos.y += offset)
 	{
 		options[i].setFont(options_font);
 		options[i].setCharacterSize(char_size);
 		options[i].setString(placeholder[i]);
-		options[i].setColor(sf::Color::Black);
+		options[i].setColor(sf::Color::White);
 		options[i].setOrigin((options[i].getGlobalBounds().width / 2.0f), (options[i].getGlobalBounds().height / 2.0f)); // origin in center.
 		options[i].setPosition(pos);
 
@@ -1638,11 +1711,11 @@ void msg_box::show_textbox(std::string & str, unsigned int line_size, unsigned i
 
 void msg_box::setup_text()
 {
-	int font_size = (int)(game->window.getSize().y / 13.5f); // from ideal 1080p ratios
+	
 
 
 	close.setFont(options_font);
-	close.setCharacterSize(font_size);
+	close.setCharacterSize(char_size);
 	close.setString("Close");
 	close.setColor(sf::Color::White);
 	close.setOrigin((close.getGlobalBounds().width / 2.0f), (close.getGlobalBounds().height / 2.0f)); // origin of font in its geometric center

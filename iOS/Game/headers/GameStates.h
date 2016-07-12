@@ -282,3 +282,4 @@ public:
 	void logic_update(const float elapsed);
 	void draw(const float elapsed);
 };
+
