@@ -16,6 +16,7 @@ struct save_user //for saving user.
 	double net_worth;
 	double reputation;
 	int difficulty;
+	float time_elapsed;
 };
 
 /*------------------------------ instrument ------------------------------*/
@@ -59,10 +60,10 @@ public:
 	piano_type::piano_type get_type_piano() { return own_type_piano; }
 	quality::quality get_quality() { return own_quality; }
 
-	char * print_brand() { return brand; }
-	
 	// std::string returns
-	std::string print_brand_cpp() { std::string b = brand; return b; }
+	char * print_brand() { return brand; }
+	std::string print_brand_cpp();
+	std::string print_brand_cpp_short();
 	std::string print_type_cpp();
 	std::string get_value_cpp();
 	std::string get_price_cpp();
@@ -118,6 +119,7 @@ private:
 
 public:
 	employee() {};
+	employee(char * name);
 	employee(char * person, double value, int eff); // eff: 1-low; 2-neutral; 3-high
 
 	// string returns
@@ -154,14 +156,15 @@ private:
 	
 	unsigned int max_stock;
 	
-	int value;
+	double value;
 	int traffic;
 	int buying_rate; // each store has it's buying rate
 
 public:
 	store() {};
 	store(const store & shop); // does not copy the std::lists nor the user pointer
-	store(user_profile * current, char * name, int value, int areacode, int pop = 1); // areacode: 0-poor; 1-middle; 2-rich
+	store(user_profile * current, char * name, double value, int areacode, int pop = 1); // areacode: 0-poor; 1-middle; 2-rich
+	store(user_profile * current, char * name);
 	~store();
 
 	store & operator = (const store & store);
@@ -228,7 +231,7 @@ private:
 	int difficulty = -1; // difficulty: 0-easy; 1-medium; 2-hard
 
 public:
-	const float WEEK_TIME_SECS = 20.0f;
+	const float WEEK_TIME_SECS = 2.0f;
 	const float YEAR_TIME_SECS = WEEK_TIME_SECS * 52.0f;
 
 	user_profile() {};

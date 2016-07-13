@@ -23,12 +23,10 @@ state_manager::~state_manager()
 
 game_state * state_manager::peek_state() // does not pop
 {
-	if(states_stack.empty())
+	if (states_stack.empty())
 		return nullptr;
 	else
-	{
 		return(states_stack.top());
-	}
 }
 
 user_profile * state_manager::get_current_user()

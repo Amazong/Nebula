@@ -3,6 +3,7 @@
 #include <iostream>
 //for debugging only
 #include <thread>
+#include <deque>
 #include "StateManager.h"
 #include "SFML\Graphics.hpp"
 #include "Music.h"
@@ -100,16 +101,23 @@ private:
 
 	sf::Time buffer = sf::seconds(0.0f);
 
+	std::deque<long double> past_net_worths;
+	
 	sf::Font options_font;
 	sf::Text options[4];
 	sf::Text indicators[5];
 	sf::RectangleShape heat[7];
 	sf::Sprite icons[7];
 	sf::Texture icons_texture[7];
+
 	double buying_rate;
 	int selection = -1;
+	
+	int last_second = -1;
+
 	store * active_store;
 	user_profile * current_user;
+	
 	void update_buying_rate();
 
 public:
@@ -125,6 +133,11 @@ public:
 	void setup_icons();
 	void control_icon_animations(sf::Vector2f mouse_pos);
 	bool handle_icons(sf::Vector2f mouse_pos);
+
+	void add_profits(long double n_worth);
+	void update_profits();
+	
+	std::string style(long double d);
 };
 
 /*---------------------------- InGameSetup ----------------------------*/

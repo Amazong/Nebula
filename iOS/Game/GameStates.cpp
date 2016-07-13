@@ -541,6 +541,7 @@ void in_game::input()
 				return;
 				break;
 			case 4:
+				current_user->buy_store(new store(current_user, ""));
 				game->push_state(new inventory(game, game->window.capture()));
 				break;
 			// to add actions
@@ -572,7 +573,11 @@ void in_game::logic_update(const float elapsed)
 	}
 
 	if ((int)(current_user->time_elapsed.asSeconds()) % (int)current_user->WEEK_TIME_SECS == 0) {
-		indicators_str[2] = current_user->get_time_str();
+		if ((int)(current_user->time_elapsed.asSeconds()) != last_second) {
+			last_second = (int)(current_user->time_elapsed.asSeconds());
+			indicators_str[2] = current_user->get_time_str();
+			add_profits(this->current_user->net_worth);
+		}
 	}
 	
 	update_indicators();
@@ -581,15 +586,9 @@ void in_game::logic_update(const float elapsed)
 void in_game::draw(const float elapsed)
 {
 	for (int i = 0; i < 7; i++)
-	{
 		game->window.draw(heat[i]);
-
-	}
-
 	for (int i = 0; i < 4; i++)
 		game->window.draw(options[i]);
-
-
 	for (int i = 0; i < 5; i++)
 		game->window.draw(indicators[i]);
 	for (int i = 0; i < 7; i++)
@@ -683,7 +682,6 @@ void in_game::setup_options()
 
 void in_game::update_indicators()
 {
-
 	int offset = (int)(heat[1].getGlobalBounds().height / 5.0f);
 
 	indicators[0].setString(current_user->get_balance_styled());
@@ -700,17 +698,17 @@ void in_game::update_indicators()
 	else // > 0.75
 		indicators[1].setString("Apple-like");
 
+	indicators[2].setString(current_user->get_time_str());
+
 	for (int i = 0; i < 5; i++)
 	{
 		indicators[i].setFont(options_font);
 		indicators[i].setCharacterSize((int)(game->window.getSize().y / 22.0f));
-		if (i > 1) indicators[i].setString(indicators_str[i]);
 		indicators[i].setColor(sf::Color::White);
 		indicators[i].setOrigin((indicators[i].getGlobalBounds().width / 2.0f), (indicators[i].getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
 		indicators[i].setPosition(heat[1].getPosition());
 		indicators[i].move(heat[1].getGlobalBounds().width / 2.0f, (offset / 2.3f) + (i*offset));
 	}
-
 }
 
 void in_game::setup_icons()
@@ -803,10 +801,75 @@ bool in_game::handle_icons(sf::Vector2f mouse_pos)
 
 	if (icons[5].getGlobalBounds().contains(mouse_pos))
 	{
-		
+		current_user->save_game();
 		return(true);
 	}
 	return(false);
+}
+
+void in_game::add_profits(long double n_worth)
+{
+	past_net_worths.push_front(n_worth);
+
+	while (past_net_worths.size() > 52) {
+		past_net_worths.pop_back();
+	}
+
+	update_profits();	
+}
+
+void in_game::update_profits()
+{
+	// past 4 weeks
+	long double average = 0;
+	int lim = (past_net_worths.size() < 4) ? past_net_worths.size() : 4;
+	for (int i = 0; i < lim; i++) {
+		average += (past_net_worths.at(i) / (double)lim);
+	}
+	indicators[3].setString("AMP : " + style(average));
+
+	// last year
+	average = 0;
+	lim = (past_net_worths.size() < 52) ? past_net_worths.size() : 52;
+	for (int i = 0; i < lim; i++) {
+		average += (past_net_worths.at(i) / (double)lim);
+	}
+	indicators[4].setString("AYP : " + style(average));
+}
+
+std::string in_game::style(long double d)
+{
+	std::string s = "";
+
+	if (d < 0) { // negative
+		s += "- ";
+		s += style(-d);
+		return s;
+	}
+	else if (d < 1000) { // display directly
+		s += std::to_string((int)d).substr(0, 3);
+	}
+	else if (d < 1000000) { // K range
+		s += std::to_string((int)d / 1000).substr(0, 3); // How many K's
+		s += ".";
+		s += std::to_string((int)d % 1000).substr(0, 1);
+		s += "K";
+	}
+	else if (d < 1000000000) { // M range
+		s += std::to_string((int)d / 1000000).substr(0, 3); // How many M's
+		s += ".";
+		s += std::to_string((int)d % 1000000).substr(0, 1);
+		s += "M";
+	}
+	else {
+		s += "1 $"; // if the user has more than 1000000000 £, we display "1 $"
+					// small easter egg :)
+		return s;
+	}
+
+	s += " £";
+
+	return s;
 }
 
 
@@ -1551,7 +1614,7 @@ void continue_game::input()
 				saved_profiles[i].setColor(sf::Color(190, 190, 190, 255));
 			}
 
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < n_saves; i++)
 			{
 				if (saved_profiles[i].getGlobalBounds().contains(mouse_pos))
 				{
@@ -2015,10 +2078,18 @@ void inventory::input()
 			// update properties
 			for (int i = 0; i < 5; i++) {
 				if (currently_showing[i].getGlobalBounds().contains(mouse_pos) && currently_showing[i].getString() != "") {
+					int j;
 					int item_number = starting_index * 5 + i;
 					auto it = active_store->get_inventory()->begin();
 
-					for (int j = 0; j < item_number; j++) {
+					currently_showing[i].setStyle(sf::Text::Bold);
+
+					for (j = 0; j < 5; j++) {
+						if (j == i) continue;
+						currently_showing[j].setStyle(sf::Text::Regular);
+					}
+
+					for (j = 0; j < item_number; j++) {
 						it++;
 					}
 
@@ -2027,6 +2098,7 @@ void inventory::input()
 					set_price.setColor(sf::Color(70, 70, 70, 255));
 
 					update_properties();
+					return;
 				}
 			}
 
@@ -2202,7 +2274,7 @@ void inventory::update_list()
 	for (int i = 0; i < starting_index * 5; i++) it++;
 
 	for (int i = 0; i < 5; i++) {
-		currently_showing[i].setString(std::to_string(starting_index * 5 + i + 1) + ". " + (*it)->print_brand_cpp());
+		currently_showing[i].setString(std::to_string(starting_index * 5 + i + 1) + ". " + (*it)->print_brand_cpp_short());
 		it++;
 		if (it == current_user->get_active_store()->get_inventory()->end()) {
 			for (int j = i+1; j < 5; j++) {
