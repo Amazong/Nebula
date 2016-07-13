@@ -7,8 +7,17 @@ O iOS - Instrument Outlet Simulator é um jogo de simulação. Nele, o jogador t
 
 ### Funcionamento
 Quando o utilizador inicia o jogo pela primeira vez, será conduzido a um menu. Aqui, poderá tomar uma das seguintes decisões:
-1. **Criar um novo jogo** - neste caso, o utilizador irá configurar o seu perfil
-onde poderá configurar o seu perfil.
+
+1. **Criar um novo jogo** - neste caso, o utilizador irá configurar o seu perfil, e será levado a um ecrã onde poderá configurar a sua loja inicial e comprar instrumentos, para que possa então dar início ao seu jogo.
+2. **Carregar um jogo** - carrega um ficheiro gravado.
+3. **Opções** - permitem controlar a música.
+4. **Sair** - fecha o jogo
+
+Foram ainda configurados os seguintes atalhos:
+- alt+m - **Mute** - silencia a música
+- alt+s - **Skip** - salta a música
+- alt+j - baixa o volume
+- alt+k - aumenta o volume
 
 ### Estruturas de Dados
 No desenvolvimento deste jogo, utilizámos vectors, lists, stacks, deques e arrays. Existe uma entitade que gere os estados do jogo. Nela existe uma pilha, onde se encontram os diferentes estados actualmente carregados. Estes fazem a ligação com a interface gráfica.
@@ -28,7 +37,8 @@ Foi desenvolvido um algoritmo de encriptação, que se utilizou para encriptar o
 As listas foram extraídas de sites por um procedimento automático desenvolvido por nós, que optámos por não incluir no resultado final.
 
 ### Conclusão
-Apesar de infelizmente não termos conseguido entregar o projeto na data final sem erros na parte gráfica, o funcionamento do jogo está maioritariamente completo. Independentemente da avaliação, tencionamos continuar o desenvolvimento deste projecto, que se revelou muito enriquecedor para ambos os membros que o desenvolveram.
+Apesar de infelizmente não termos conseguido entregar o projeto na data final sem erros na parte gráfica, o funcionamento do jogo está maioritariamente completo. Adicionalmente, a implementação das partes que não conseguimos incluir nesta versão que enviamos seria em grande medida análoga a implementações que foram já feitas.
+Independentemente da avaliação, tencionamos continuar o desenvolvimento deste projecto, que se revelou muito enriquecedor para ambos os membros que o desenvolveram.
 
 
 ### Tecnologias Utilizadas
