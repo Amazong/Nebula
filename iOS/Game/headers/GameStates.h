@@ -464,3 +464,52 @@ public:
 };
 
 
+
+/*------------------------------ staff ------------------------------*/
+
+class staff : public game_state
+{
+private:
+	sf::Image in_game_printscr;
+
+	sf::Font font;
+	sf::Text title;
+	sf::Text buy;
+	sf::Text back;
+	sf::Text fire_employee;
+	sf::Text active_properties[2]; // salary, skill
+	sf::Text currently_showing[5];
+
+	std::string active_employee_str;
+
+	sf::RectangleShape details;
+
+	sf::Sprite scroll[2];
+	sf::Texture scroll_texture[2];
+
+	sf::Sprite background;
+	sf::Texture backgroud_texture;
+
+	double buying_rate;
+	int selection = -1;
+	int starting_index = 0;
+	employee * current_selection;
+
+	store * active_store;
+	user_profile * current_user;
+
+	void setup();
+	void setup_text();
+	void setup_icons();
+	void update_list();
+	void update_properties();
+
+public:
+	staff(state_manager * game_ptr, sf::Image print);
+
+	void input();
+	void logic_update(const float elapsed);
+	void draw(const float elapsed);
+	void move_list_down();
+	void move_list_up();
+};

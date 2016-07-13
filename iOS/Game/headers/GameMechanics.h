@@ -125,8 +125,11 @@ public:
 	// string returns
 	std::string get_name() { std::string s = name; return s; }
 	std::string get_salary();
+	std::string get_efficiency(int num);
+
 
 	friend class store;
+	friend class staff;
 };
 
 
@@ -216,6 +219,7 @@ public:
 	friend class in_game_setup;
 	friend class finance;
 	friend class store_state;
+	friend class staff;
 };
 
 
@@ -282,5 +286,6 @@ public:
 	friend class in_game_setup;
 	friend class finance;
 	friend class store_state;
+	friend class staff;
 };
 

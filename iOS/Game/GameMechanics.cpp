@@ -417,6 +417,19 @@ std::string employee::get_salary()
 	return s;
 }
 
+std::string employee::get_efficiency(int num)
+{
+	std::string temp;
+
+	if (num == 1)
+		temp = "Low";
+	else if (num == 2)
+		temp = "Neutral";
+	else
+		temp = "High";
+	return temp;
+}
+
 
 /*------------------------------ store ------------------------------*/
 
