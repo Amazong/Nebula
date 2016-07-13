@@ -4,6 +4,7 @@
 //for debugging only
 #include <thread>
 #include <deque>
+#include <list>
 #include "StateManager.h"
 #include "SFML\Graphics.hpp"
 #include "Music.h"
@@ -267,6 +268,8 @@ public:
 class inventory : public game_state
 {
 private:
+	sf::Image in_game_printscr;
+
 	sf::Font font;
 	sf::Text title;
 	sf::Text buy;
@@ -314,3 +317,50 @@ public:
 	void move_list_up();
 };
 
+class inventory_buy : public game_state
+{
+private:
+	list<instrument *> purchaseable;
+
+	sf::Font font;
+	sf::Text title;
+	sf::Text back;
+	sf::Text buy_selection;
+	sf::Text price_setter_inside;
+	sf::Text active_properties[4]; // value, quality, brand, type (if piano)
+	sf::Text currently_showing[5];
+
+	std::string price_setter_str;
+
+	sf::RectangleShape details;
+	sf::RectangleShape price_setter;
+
+	sf::Sprite icons[3];
+	sf::Texture icons_texture[3];
+
+	sf::Sprite background;
+	sf::Texture backgroud_texture;
+
+	double buying_rate;
+	int selection = -1;
+	int starting_index = 0;
+	instrument * current_selection;
+
+	store * active_store;
+	user_profile * current_user;
+
+	void setup();
+	void setup_text();
+	void setup_purchaseable();
+	void update_list();
+	void update_properties();
+
+public:
+	inventory_buy(state_manager * game_ptr, sf::Image print);
+
+	void input();
+	void logic_update(const float elapsed);
+	void draw(const float elapsed);
+	void move_list_down();
+	void move_list_up();
+};

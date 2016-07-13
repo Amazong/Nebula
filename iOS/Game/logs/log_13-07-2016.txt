@@ -1251,3 +1251,47 @@
 11:34:27 - Sold an item! Your reputation has increased.
 11:34:30 - Quitting music player.
 11:34:32 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+11:42:52 - Program started.
+11:42:52 - Music started playing.
+11:42:52 - Bought Downtown for 20000.00£ (peanuts).
+11:42:52 - Bought Larrivee guitar for 200.00£ (peanuts).
+11:42:52 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+11:42:52 - Bought Martin guitar for 400.00£ (peanuts).
+11:42:52 - Bought upright Kawai piano for 3571.42£ (peanuts).
+11:42:52 - Bought Maton guitar for 600.00£ (peanuts).
+11:42:52 - Bought grand Yamaha piano for 38095.23£ (peanuts).
+11:42:52 - Bought Larrivee guitar for 200.00£ (peanuts).
+11:42:52 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+11:42:52 - Bought Martin guitar for 400.00£ (peanuts).
+11:42:52 - Bought upright Roland piano for 1190.47£ (peanuts).
+11:42:52 - Bought Maton guitar for 600.00£ (peanuts).
+11:42:52 - Bought upright Roland piano for 2142.85£ (peanuts).
+11:42:52 - Hired Cersei for 200000.00£ (peanuts).
+11:42:52 - Hired Ned Stark for 5000.00£ (peanuts).
+11:42:52 - Hired Jon Snow for 100000.00£ (peanuts).
+11:42:52 - Started playing BossaBossa.ogg.
+11:42:52 - Hired Sansa for 1000.00£ (peanuts).
+11:42:52 - Game Lady Stark saved.
+11:42:52 - The client didn't buy anything. Your reputation has decreased.
+11:42:52 - Sold Maton guitar for 600.00£ (peanuts).
+11:42:52 - Sold an item! Your reputation has increased.
+11:42:52 - Sold grand Yamaha piano for 38095.23£ (peanuts).
+11:42:52 - Sold an item! Your reputation has increased.
+11:42:52 - Sold Maton guitar for 600.00£ (peanuts).
+11:42:52 - Sold an item! Your reputation has increased.
+11:42:52 - The client didn't buy anything. Your reputation has decreased.
+11:43:10 - Bought  for 642602.48£ (peanuts).
+11:43:31 - Started playing Kygo.ogg.
+11:45:13 - Bought  for 356689.16£ (peanuts).
+11:45:36 - Program exited normally.
