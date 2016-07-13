@@ -8742,3 +8742,304 @@ Started playing HotaruNoShikai.ogg.
 22:32:10 - Sold an item! Your reputation has increased.
 22:32:19 - Quitting music player.
 22:32:20 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+22:57:56 - Program started.
+22:57:56 - Music started playing.
+22:57:56 - Bought Downtown for 20000.00£ (peanuts).
+22:57:56 - Bought Larrivee guitar for 200.00£ (peanuts).
+22:57:56 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+22:57:56 - Bought Martin guitar for 400.00£ (peanuts).
+22:57:56 - Bought upright Kawai piano for 3095.23£ (peanuts).
+22:2257::56 - 57Bought Maton guitar for 600.00£ (peanuts):.
+56 - Started playing Butterfly.ogg.
+22:57:56 - Bought upright Korg piano for 2380.95£ (peanuts).
+22:57:56 - Bought Larrivee guitar for 200.00£ (peanuts).
+22:57:56 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+22:57:56 - Bought Martin guitar for 400.00£ (peanuts).
+22:57:56 - Bought grand Korg piano for 19047.61£ (peanuts).
+22:57:56 - Bought Maton guitar for 600.00£ (peanuts).
+22:57:56 - Bought upright Korg piano for 2857.14£ (peanuts).
+22:57:56 - Hired Cersei for 200000.00£ (peanuts).
+22:57:56 - Hired Ned Stark for 5000.00£ (peanuts).
+22:57:56 - Hired Jon Snow for 100000.00£ (peanuts).
+22:57:56 - Hired Sansa for 1000.00£ (peanuts).
+22:57:56 - Game Lady Stark saved.
+22:57:56 - Sold upright Korg piano for 2380.95£ (peanuts).
+22:57:56 - Sold an item! Your reputation has increased.
+22:57:56 - The client didn't buy anything. Your reputation has decreased.
+22:57:56 - Sold upright Korg piano for 50000.00£ (peanuts).
+22:57:56 - Sold an item! Your reputation has increased.
+22:57:56 - Sold grand Steinway & Sons piano for 50000.00£ (peanuts).
+22:57:56 - Sold an item! Your reputation has increased.
+22:57:56 - Sold Martin guitar for 400.00£ (peanuts).
+22:57:56 - Sold an item! Your reputation has increased.
+22:58:07 - Quitting music player.
+22:58:08 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+22:59:27 - Program started.
+22:59:27 - Music started playing.
+22:59:27 - Bought Downtown for 20000.00£ (peanuts).
+22:59:27 - Bought Larrivee guitar for 200.00£ (peanuts).
+22:59:27 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+22:59:27 - Bought Martin guitar for 400.00£ (peanuts).
+22:59:27 - Bought upright Steinway & Sons piano for 5000.00£ (peanuts).
+22:59:27 - Bought Maton guitar for 600.00£ (peanuts).
+22:59:27 - Bought digital Kawai piano for 928.57£ (peanuts).
+22:59:27 - Bought Larrivee guitar for 200.00£ (peanuts).
+22:59:27 - Started playing HotaruNoShikai.ogg.
+22:59:27 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+22:59:27 - Bought Martin guitar for 400.00£ (peanuts).
+22:59:27 - Bought digital Steinway & Sons piano for 1357.14£ (peanuts).
+22:59:27 - Bought Maton guitar for 600.00£ (peanuts).
+22:59:27 - Bought grand Kawai piano for 26190.47£ (peanuts).
+22:59:27 - Hired Cersei for 200000.00£ (peanuts).
+22:59:27 - Hired Ned Stark for 5000.00£ (peanuts).
+22:59:27 - Hired Jon Snow for 100000.00£ (peanuts).
+22:59:27 - Hired Sansa for 1000.00£ (peanuts).
+22:59:27 - Game Lady Stark saved.
+22:59:27 - Sold digital Steinway & Sons piano for 1357.14£ (peanuts).
+22:59:27 - Sold an item! Your reputation has increased.
+22:59:27 - The client didn't buy anything. Your reputation has decreased.
+22:59:27 - The client didn't buy anything. Your reputation has decreased.
+22:59:27 - The client didn't buy anything. Your reputation has decreased.
+22:59:27 - Sold Maton guitar for 600.00£ (peanuts).
+22:59:27 - Sold an item! Your reputation has increased.
+22:59:35 - Hired Antone for 32832.11£ (peanuts).
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+23:00:09 - Program started.
+23:00:09 - Music started playing.
+23:00:09 - Bought Downtown for 20000.00£ (peanuts).
+23:00:09 - Bought Larrivee guitar for 200.00£ (peanuts).
+23:00:09 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+23:00:09 - Bought Martin guitar for 400.00£ (peanuts).
+23:00:09 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+23:00:09 - Bought Maton guitar for 600.00£ (peanuts).
+23:00:09 - Bought digital Roland piano for 357.14£ (peanuts).
+23:00:09 - Started playing OpenGJam.ogg.
+23:00:09 - Bought Larrivee guitar for 200.00£ (peanuts).
+23:00:09 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+23:00:09 - Bought Martin guitar for 400.00£ (peanuts).
+23:00:09 - Bought upright Kawai piano for 3571.42£ (peanuts).
+23:00:09 - Bought Maton guitar for 600.00£ (peanuts).
+23:00:09 - Bought upright Kawai piano for 3095.23£ (peanuts).
+23:00:09 - Hired Cersei for 200000.00£ (peanuts).
+23:00:09 - Hired Ned Stark for 5000.00£ (peanuts).
+23:00:09 - Hired Jon Snow for 100000.00£ (peanuts).
+23:00:09 - Hired Sansa for 1000.00£ (peanuts).
+23:00:09 - Game Lady Stark saved.
+23:00:09 - The client didn't buy anything. Your reputation has decreased.
+23:00:09 - The client didn't buy anything. Your reputation has decreased.
+23:00:09 - Sold grand Steinway & Sons piano for 50000.00£ (peanuts).
+23:00:09 - Sold an item! Your reputation has increased.
+23:00:09 - Sold upright Kawai piano for 3571.42£ (peanuts).
+23:00:09 - Sold an item! Your reputation has increased.
+23:00:09 - The client didn't buy anything. Your reputation has decreased.
+23:00:16 - Hired Mia for 16005.40£ (peanuts).
+23:00:17 - Hired Mia for 16005.40£ (peanuts).
+23:00:17 - Hired Mia for 16005.40£ (peanuts).
+23:00:18 - Hired Mia for 16005.40£ (peanuts).
+23:00:18 - Hired Mia for 16005.40£ (peanuts).
+23:00:19 - Hired Mia for 16005.40£ (peanuts).
+23:00:19 - Hired Mia for 16005.40£ (peanuts).
+23:00:19 - Hired Mia for 16005.40£ (peanuts).
+23:00:19 - Hired Mia for 16005.40£ (peanuts).
+23:00:20 - Hired Mia for 16005.40£ (peanuts).
+23:00:20 - Hired Mia for 16005.40£ (peanuts).
+23:00:20 - Hired Mia for 16005.40£ (peanuts).
+23:00:23 - Quitting music player.
+23:00:24 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+23:04:06 - Program started.
+23:04:06 - Music started playing.
+23:04:06 - Bought Downtown for 20000.00£ (peanuts).
+23:04:06 - Bought Larrivee guitar for 200.00£ (peanuts).
+23:04:06 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+23:04:06 - Bought Martin guitar for 400.00£ (peanuts).
+23:04:06 - Bought grand Steinway & Sons piano for 40476.19£ (peanuts).
+23:04:06 - Bought Maton guitar for 600.00£ (peanuts).
+23:04:06 - Bought upright Roland piano for 1666.66£ (peanuts).
+23:04:06 - Bought Larrivee guitar for 200.00£ (peanuts).
+2323::04:04:06 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+06 - Started playing BackgroundProgression.ogg.
+23:04:06 - Bought Martin guitar for 400.00£ (peanuts).
+23:04:06 - Bought digital Kawai piano for 1071.42£ (peanuts).
+23:04:06 - Bought Maton guitar for 600.00£ (peanuts).
+23:04:06 - Bought upright Kawai piano for 2619.04£ (peanuts).
+23:04:06 - Hired Cersei for 200000.00£ (peanuts).
+23:04:06 - Hired Ned Stark for 5000.00£ (peanuts).
+23:04:06 - Hired Jon Snow for 100000.00£ (peanuts).
+23:04:06 - Hired Sansa for 1000.00£ (peanuts).
+23:04:06 - Game Lady Stark saved.
+23:04:06 - Sold Maton guitar for 600.00£ (peanuts).
+23:04:06 - Sold an item! Your reputation has increased.
+23:04:06 - Sold digital Kawai piano for 1071.42£ (peanuts).
+23:04:06 - Sold an item! Your reputation has increased.
+23:04:06 - Sold upright Kawai piano for 50000.00£ (peanuts).
+23:04:06 - Sold an item! Your reputation has increased.
+23:04:06 - The client didn't buy anything. Your reputation has decreased.
+23:04:06 - Sold Martin guitar for 400.00£ (peanuts).
+23:04:06 - Sold an item! Your reputation has increased.
+23:04:17 - Hired Eugene for 27606.67£ (peanuts).
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+23:07:08 - Program started.
+23:07:08 - Music started playing.
+23:07:08 - Bought Downtown for 20000.00£ (peanuts).
+23:07:08 - Bought Larrivee guitar for 200.00£ (peanuts).
+23:07:08 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+23:07:08 - Bought Martin guitar for 400.00£ (peanuts).
+23:07:08 - Bought digital Roland piano for 500.00£ (peanuts).
+23:07:08 - Bought Maton guitar for 600.00£ (peanuts).
+23:07:08 - Bought digital Steinway & Sons piano for 1214.28£ (peanuts).
+23:07:08 - Bought Larrivee guitar for 200.00£ (peanuts).
+23:07:08 - Started playing Tears in Heaven.ogg.
+23:07:08 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+23:07:08 - Bought Martin guitar for 400.00£ (peanuts).
+23:07:08 - Bought upright Korg piano for 1904.76£ (peanuts).
+23:07:08 - Bought Maton guitar for 600.00£ (peanuts).
+23:07:08 - Bought digital Roland piano for 357.14£ (peanuts).
+23:07:08 - Hired Cersei for 200000.00£ (peanuts).
+23:07:08 - Hired Ned Stark for 5000.00£ (peanuts).
+23:07:08 - Hired Jon Snow for 100000.00£ (peanuts).
+23:07:08 - Hired Sansa for 1000.00£ (peanuts).
+23:07:08 - Game Lady Stark saved.
+23:07:08 - Sold grand Steinway & Sons piano for 50000.00£ (peanuts).
+23:07:08 - Sold an item! Your reputation has increased.
+23:07:08 - The client didn't buy anything. Your reputation has decreased.
+23:07:08 - Sold digital Roland piano for 500.00£ (peanuts).
+23:07:08 - Sold an item! Your reputation has increased.
+23:07:08 - Sold grand Steinway & Sons piano for 50000.00£ (peanuts).
+23:07:08 - Sold an item! Your reputation has increased.
+23:07:08 - Sold upright Korg piano for 1904.76£ (peanuts).
+23:07:08 - Sold an item! Your reputation has increased.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+23:09:31 - Program started.
+23:09:31 - Music started playing.
+23:09:31 - Bought Downtown for 20000.00£ (peanuts).
+23:09:31 - Bought Larrivee guitar for 200.00£ (peanuts).
+23:09:31 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+23:09:31 - Bought Martin guitar for 400.00£ (peanuts).
+23:09:31 - Bought digital Steinway & Sons piano for 1500.00£ (peanuts).
+23:09:31 - Bought Maton guitar for 600.00£ (peanuts).
+23:09:31 - Bought grand Steinway & Sons piano for 45238.09£ (peanuts).
+23:23:0909::3131 -  - Started playing OpenGJam.oggBought Larrivee guitar for 200.00£ (peanuts)..
+
+23:09:31 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+23:09:31 - Bought Martin guitar for 400.00£ (peanuts).
+23:09:31 - Bought upright Yamaha piano for 3333.33£ (peanuts).
+23:09:31 - Bought Maton guitar for 600.00£ (peanuts).
+23:09:31 - Bought grand Roland piano for 16666.66£ (peanuts).
+23:09:31 - Hired Cersei for 200000.00£ (peanuts).
+23:09:31 - Hired Ned Stark for 5000.00£ (peanuts).
+23:09:31 - Hired Jon Snow for 100000.00£ (peanuts).
+23:09:31 - Hired Sansa for 1000.00£ (peanuts).
+23:09:31 - Game Lady Stark saved.
+23:09:31 - The client didn't buy anything. Your reputation has decreased.
+23:09:31 - Sold Larrivee guitar for 200.00£ (peanuts).
+23:09:31 - Sold an item! Your reputation has increased.
+23:09:31 - The client didn't buy anything. Your reputation has decreased.
+23:09:31 - Sold grand Roland piano for 50000.00£ (peanuts).
+23:09:31 - Sold an item! Your reputation has increased.
+23:09:31 - Sold grand Steinway & Sons piano for 50000.00£ (peanuts).
+23:09:31 - Sold an item! Your reputation has increased.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+23:09:42 - Program started.
+23:09:42 - Music started playing.
+23:09:42 - Bought Downtown for 20000.00£ (peanuts).
+23:09:42 - Bought Larrivee guitar for 200.00£ (peanuts).
+23:09:42 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+23:09:42 - Bought Martin guitar for 400.00£ (peanuts).
+23:09:42 - Bought grand Korg piano for 19047.61£ (peanuts).
+23:09:42 - Bought Maton guitar for 600.00£ (peanuts).
+23:09:42 - Bought grand Korg piano for 19047.61£ (peanuts).
+23:09:23:42 - Started playing InMyLife.ogg.
+09:42 - Bought Larrivee guitar for 200.00£ (peanuts).
+23:09:42 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+23:09:42 - Bought Martin guitar for 400.00£ (peanuts).
+23:09:42 - Bought digital Steinway & Sons piano for 1500.00£ (peanuts).
+23:09:42 - Bought Maton guitar for 600.00£ (peanuts).
+23:09:42 - Bought upright Yamaha piano for 3333.33£ (peanuts).
+23:09:42 - Hired Cersei for 200000.00£ (peanuts).
+23:09:42 - Hired Ned Stark for 5000.00£ (peanuts).
+23:09:42 - Hired Jon Snow for 100000.00£ (peanuts).
+23:09:42 - Hired Sansa for 1000.00£ (peanuts).
+23:09:42 - Game Lady Stark saved.
+23:09:42 - Sold Larrivee guitar for 200.00£ (peanuts).
+23:09:42 - Sold an item! Your reputation has increased.
+23:09:42 - Sold Martin guitar for 400.00£ (peanuts).
+23:09:42 - Sold an item! Your reputation has increased.
+23:09:42 - Sold Maton guitar for 600.00£ (peanuts).
+23:09:42 - Sold an item! Your reputation has increased.
+23:09:42 - Sold Larrivee guitar for 1000.00£ (peanuts).
+23:09:42 - Sold an item! Your reputation has increased.
+23:09:42 - Sold grand Korg piano for 19047.61£ (peanuts).
+23:09:42 - Sold an item! Your reputation has increased.

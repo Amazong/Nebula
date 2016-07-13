@@ -130,6 +130,7 @@ public:
 
 	friend class store;
 	friend class staff;
+	friend class staff_hire;
 };
 
 
@@ -198,7 +199,7 @@ public:
 	void sell_instrument(int position_offset);
 
 	// staff management
-	void hire_employee(employee * employee);
+	bool hire_employee(employee * employee);
 	void fire_employee(char * name);
 
 	// instrument, guitar and piano all have the same sizes
