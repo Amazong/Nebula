@@ -2491,7 +2491,7 @@ void store_buy::input()
 
 					current_selection = *it;
 
-					set_active_store.setColor(sf::Color(70, 70, 70, 255));
+					buy.setColor(sf::Color(70, 70, 70, 255));
 
 					update_properties();
 					return;
@@ -2506,16 +2506,16 @@ void store_buy::input()
 				selection = 1;
 				buy.setStyle(sf::Text::Bold);
 			}
-			else if (set_active_store.getGlobalBounds().contains(mouse_pos)) {
+			else if (buy.getGlobalBounds().contains(mouse_pos)) {
 				selection = 2;
-				set_active_store.setStyle(sf::Text::Bold);
+				buy.setStyle(sf::Text::Bold);
 
 			}
 			else {
 				selection = -1;
 				buy.setStyle(sf::Text::Regular);
 				back.setStyle(sf::Text::Regular);
-				set_active_store.setStyle(sf::Text::Regular);
+				buy.setStyle(sf::Text::Regular);
 			}
 
 			break;
@@ -2567,7 +2567,7 @@ void store_buy::draw(const float elapsed)
 	game->window.draw(details);
 	game->window.draw(buy);
 	game->window.draw(back);
-	game->window.draw(set_active_store);
+	game->window.draw(buy);
 	
 	int i;
 	
@@ -2620,16 +2620,16 @@ void store_buy::setup_text()
 
 	//set active store
 	{
-		set_active_store.setFont(font);
-		set_active_store.setColor(sf::Color::Transparent);
-		set_active_store.setString("Set active store");
+		buy.setFont(font);
+		buy.setColor(sf::Color::Transparent);
+		buy.setString("Buy");
 	}
 }
 
 void store_buy::setup_purchaseables()
 {
 	for (int i = 0; i < 5; i++) {
-		purchaseables.push_back(new store(current_user, ""));
+		purchaseables.push_front(new store(current_user, ""));
 	}
 }
 
@@ -2676,8 +2676,8 @@ void store_buy::update_properties() {
 		case 1:
 			active_properties[i].setString("Area: " + current_selection->get_area(int(current_selection->setting)));
 
-			set_active_store.setCharacterSize(active_properties[1].getCharacterSize());
-			set_active_store.setPosition(details.getPosition().x + details.getGlobalBounds().width - 30 - set_active_store.getGlobalBounds().width,
+			buy.setCharacterSize(active_properties[1].getCharacterSize());
+			buy.setPosition(details.getPosition().x + details.getGlobalBounds().width - 30 - buy.getGlobalBounds().width,
 				active_properties[1].getPosition().y);
 			break;
 		case 2:
