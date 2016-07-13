@@ -2883,7 +2883,7 @@ void finance::draw(const float elapsed)
 	{
 		if (i > 2)
 		{
-			if ((starting_index + 1) * 5 >= current_user->stores.size())
+			if ((starting_index + 1) * 5 >= (int)(current_user->stores.size()))
 				icons[3].setScale(0.0f, 0.0f);
 
 			if (starting_index == 0)
@@ -3191,7 +3191,7 @@ bool finance::handle_icons(sf::Vector2f mouse_pos)
 
 	if (icons[3].getGlobalBounds().contains(mouse_pos)) // down
 	{
-		if ((starting_index + 1) * 5 < current_user->stores.size()) {
+		if ((starting_index + 1) * 5 < (int)(current_user->stores.size())) {
 			move_list_down();
 			icons[4].setScale(0.4f, 0.4f);
 		}
@@ -3521,7 +3521,7 @@ void store_state::draw(const float elapsed)
 	game->window.draw(set_active_store);
 	
 
-	if ((starting_index + 1) * 5 >= current_user->stores.size())
+	if ((starting_index + 1) * 5 >= (int)(current_user->stores.size()))
 		scroll[0].setScale(0.0f, 0.0f);
 
 	if (starting_index == 0)
