@@ -2800,25 +2800,7 @@ void finance::input()
 
 			selection = -1; // this way the selection will always be -1 if it's not in one of the options
 
-<<<<<<< HEAD
-							/*for (int i = 0; i < 4; i++)
-							{
-							if (heat[(3 + i)].getGlobalBounds().contains(mouse_pos))
-							{
-							selection = i + 3;
-							}
-							}
-							*/
 
-							/*if (selection != -1)
-							{
-							options[(selection - 3)].scale(1.1f, 1.1f);
-							options[(selection - 3)].setStyle(sf::Text::Underlined);
-							}
-							*/
-
-=======
-			//options 7 = back
 			if (options[7].getGlobalBounds().contains(mouse_pos))
 			{
 				options[7].scale(1.1f, 1.1f);
@@ -2831,7 +2813,7 @@ void finance::input()
 				options[7].setStyle(sf::Text::Regular);
 				options[7].setScale(1.0f, 1.0f);
 			}
->>>>>>> Finance
+
 			control_icon_animations(mouse_pos);
 
 			std::cout << "           Selection " << selection << std::endl; //debug
@@ -2844,25 +2826,7 @@ void finance::input()
 			if (handle_icons((sf::Vector2f) sf::Mouse::getPosition(game->window))) //handles input for icons and for back;
 				return;
 
-			/*if (selection != -1 && event.mouseButton.button == sf::Mouse::Left)
-			{
-			//options[(selection - 3)].setStyle(sf::Text::Italic);
-			//options[(selection - 3)].setColor(sf::Color::Red);
-			//options[(selection - 3)].scale(0.9f, 0.9f);
-			}
-			switch (selection)
-			{
-			case 0:
-			game->pop_state();
-			return;
-			break;
-			case 4:
-			current_user->buy_store(new store(current_user, ""));
-			game->push_state(new inventory(game, game->window.capture()));
-			break;
-			// to add actions
-			}
-			*/
+
 			break;
 		}
 		default:
@@ -3137,18 +3101,9 @@ void finance::setup_icons()
 				icons[i].setPosition(heat[2].getPosition().x + (heat[2].getGlobalBounds().width * (3.0f / 4.0f)), heat[2].getPosition().y + (heat[2].getGlobalBounds().height / 2.0f));
 				break;
 			}
-
-<<<<<<< HEAD
-		default: // everyhting else
-		{
-			icons[i].setPosition(game->window.getPosition().x / 2.0f, game->window.getPosition().y / 2.0f);
-			if (i == 4)
-				icons[i].move(0, icons[i].getGlobalBounds().height / 1.8f);
-			break;
-		}
-=======
 			default: // everyhting else
 			{
+
 				icons[i].setPosition(options[6].getPosition());
 				icons[i].move(0, icons[i].getGlobalBounds().height * 1.1f);
 				
@@ -3159,7 +3114,7 @@ void finance::setup_icons()
 
 				break;
 			}
->>>>>>> Finance
+
 
 		}
 

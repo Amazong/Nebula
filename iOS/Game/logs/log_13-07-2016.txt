@@ -5187,3 +5187,49 @@ Started playing HotaruNoShikai.ogg.
 17:06:42 - Sold an item! Your reputation has increased.
 17:07:08 - Quitting music player.
 17:07:09 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+17:13:21 - Program started.
+17:13:21 - Music started playing.
+17:13:21 - Bought Downtown for 20000.00£ (peanuts).
+17:13:21 - Bought Larrivee guitar for 200.00£ (peanuts).
+17:13:21 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+17:13:21 - Bought Martin guitar for 400.00£ (peanuts).
+17:13:21 - Bought grand Korg piano for 23809.52£ (peanuts).
+17:13:21 - Bought Maton guitar for 600.00£ (peanuts).
+17:13:21 - Bought digital Kawai piano for 785.71£ (peanuts).
+1717::13:13:21 - Started playing Bossa1.5.ogg.
+21 - Bought Larrivee guitar for 200.00£ (peanuts).
+17:13:21 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+17:13:21 - Bought Martin guitar for 400.00£ (peanuts).
+17:13:21 - Bought upright Roland piano for 1666.66£ (peanuts).
+17:13:21 - Bought Maton guitar for 600.00£ (peanuts).
+17:13:21 - Bought upright Korg piano for 1904.76£ (peanuts).
+17:13:21 - Hired Cersei for 200000.00£ (peanuts).
+17:13:21 - Hired Ned Stark for 5000.00£ (peanuts).
+17:13:21 - Hired Jon Snow for 100000.00£ (peanuts).
+17:13:21 - Hired Sansa for 1000.00£ (peanuts).
+17:13:21 - Game Lady Stark saved.
+17:13:21 - Sold grand Korg piano for 23809.52£ (peanuts).
+17:13:21 - Sold an item! Your reputation has increased.
+17:13:21 - The client didn't buy anything. Your reputation has decreased.
+17:13:21 - Sold Martin guitar for 400.00£ (peanuts).
+17:13:21 - Sold an item! Your reputation has increased.
+17:13:21 - Sold grand Steinway & Sons piano for 50000.00£ (peanuts).
+17:13:21 - Sold an item! Your reputation has increased.
+17:13:21 - The client didn't buy anything. Your reputation has decreased.
+17:13:28 - Bought  for 183301.30£ (peanuts).
+17:13:34 - Bought Larrivee guitar for 3654.00£ (peanuts).
+17:13:53 - Bought upright Yamaha piano for 3809.52£ (peanuts).
+17:14:15 - Bought G&L guitar for 2019.00£ (peanuts).
+17:14:48 - Quitting music player.
+17:14:49 - Program exited normally.
