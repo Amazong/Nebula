@@ -521,7 +521,7 @@ store::store(user_profile * current, char * name)
 	std::uniform_int_distribution<int> stock_range(50, 100);
 
 	s = stock_range(random_numbers);
-	s *= (((a + 1) / 3.0) * (current->difficulty + 1) / 3.0);
+	s = (int)((double)s * (((a + 1) / 3.0) * (current->difficulty + 1) / 3.0));
 	s = (int)((double)s * modulate);
 
 	*this = store(current, n, v, a, s, p);
@@ -811,6 +811,10 @@ void store::sell_instrument(int position_offset)
 
 bool store::hire_employee(employee * employee)
 {
+	if (user->get_balance() < employee->salary) {
+		return false;
+	}
+	
 	staff.push_back(employee); 
 	LOGGER::log("Hired " + employee->get_name() + " for " + employee->get_salary() + "£ (peanuts)");
 	return(true);
@@ -965,11 +969,7 @@ store * user_profile::get_active_store()
 {
 	if (active_store == nullptr)
 	{
-		if (stores.empty())
-		{
-			stores.push_back(new store(this, ""));
-			active_store = stores.front();
-		}
+		active_store = stores.front();
 	}
 	return active_store;
 }
@@ -1160,6 +1160,11 @@ void user_profile::save_inventories(std::string user, const guitar * tab, int si
 		fout.write((char*)tab, size * sizeof(guitar));
 
 	fout.close();
+
+	CryptoKey k(user);
+	CryptoFile f(file_name, statuses::plaintext);
+
+	f.encrypt(file_name + "_encrypted", k);
 }
 
 void user_profile::save_staff(std::string user, const employee * tab, int size, int store_index)
@@ -1181,6 +1186,11 @@ void user_profile::save_staff(std::string user, const employee * tab, int size, 
 		fout.write((char*)tab, size * sizeof(employee));
 
 	fout.close();
+
+	CryptoKey k(user);
+	CryptoFile f(file_name, statuses::plaintext);
+
+	f.encrypt(file_name + "_encrypted", k);
 }
 
 void user_profile::save_stores(std::string user, const store * tab, int size)
@@ -1202,6 +1212,10 @@ void user_profile::save_stores(std::string user, const store * tab, int size)
 
 	fout.close();
 
+	CryptoKey k(user);
+	CryptoFile f(file_name, statuses::plaintext);
+
+	f.encrypt(file_name + "_encrypted", k);
 }
 
 void user_profile::load_game(std::string profile_title)
@@ -1265,6 +1279,11 @@ void user_profile::load_stores(user_profile * user)
 	file_name += user->user;
 	file_name += ".Stores";
 
+	CryptoKey k(user->get_name_cpp());
+	CryptoFile f(file_name + "_encrypted", statuses::encrypted);
+
+	f.decrypt(file_name, k);
+
 	std::ifstream fin(file_name, std::ios::binary);
 
 	if (fin.fail())
@@ -1314,6 +1333,11 @@ void user_profile::load_store_inv(const user_profile * user, store & shop, int s
 	file_name += ".Store_inventory";
 	file_name.push_back(store_index + 65);
 
+	CryptoKey k(user->get_name_cpp());
+	CryptoFile f(file_name + "_encrypted", statuses::encrypted);
+
+	f.decrypt(file_name, k);
+
 	std::ifstream fin(file_name, std::ios::binary);
 
 	if (fin.fail())
@@ -1356,6 +1380,11 @@ void user_profile::load_store_staff(const user_profile * user, store & shop, int
 	file_name += user->user;
 	file_name += ".Store_staff";
 	file_name.push_back(store_index + 65);
+
+	CryptoKey k(user->get_name_cpp());
+	CryptoFile f(file_name + "_encrypted", statuses::encrypted);
+
+	f.decrypt(file_name, k);
 
 	std::ifstream fin(file_name, std::ios::binary);
 

@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <math.h>
 #include "Errors.h"
+#include "Crypto.h"
 
 struct save_user //for saving user.
 {
@@ -177,6 +178,8 @@ public:
 	void set_reputation(double rep) { reputation = rep; };
 	double get_reputation() { return reputation; };
 
+	double get_value() { return value; }
+
 	std::string get_area(int num);
 	std::string get_population(int num);
 	std::string get_buying_rate();
@@ -223,7 +226,7 @@ public:
 	friend class finance;
 	friend class store_state;
 	friend class store_buy;
-
+	
 	friend class staff;
 };
 
@@ -293,5 +296,6 @@ public:
 	friend class store_state;
 	friend class store_buy;
 	friend class staff;
+	friend class new_game;
 };
 

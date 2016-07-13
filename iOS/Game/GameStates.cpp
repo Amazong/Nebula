@@ -1448,7 +1448,16 @@ void new_game::input()
 						break;
 					}
 					game->get_current_user()->set_user_name(name);
-					game->push_state(new msg_box(game, game->window.capture(), "Game created!",20, 50, new in_game_setup(game)));
+
+					game->get_current_user()->stores.push_back(new store(game->get_current_user(), ""));
+					
+					/*game->get_current_user()->set_net_worth(game->get_current_user()->net_worth -
+						game->get_current_user()->get_back_store()->get_value());
+					*/
+
+					game->get_current_user()->set_net_worth(game->get_current_user()->net_worth - 200000);
+
+					game->push_state(new msg_box(game, game->window.capture(), "Game created! We've given you a store. Now buy your first employee and instrument!", 20, 50, new in_game_setup(game)));
 					return;
 				}
 				case 9:
@@ -4487,14 +4496,12 @@ void staff_hire::input()
 					}
 					delete (*it);
 				}
-
 				
-					if (!current_user->get_active_store()->hire_employee(to_buy)) {
-						delete to_buy;
-						game->change_state(new msg_box(game, game->window.capture(), "You don't have money for that!", 35, 50));
-					}
+				if (!current_user->get_active_store()->hire_employee(to_buy)) {
+					delete to_buy;
+					game->change_state(new msg_box(game, game->window.capture(), "You don't have money for that!", 35, 50));
+				}
 
-					break;
 				game->pop_state();
 				return;
 			}
@@ -4571,9 +4578,8 @@ void staff_hire::setup_text()
 
 void staff_hire::setup_purchaseable()
 {
-	employee * new_employees;
-	
-	
+	// employee * new_employees = nullptr;
+		
 	for (int i = 0; i < 5; i++)
 	{
 		purchaseable.push_back(new employee(""));
