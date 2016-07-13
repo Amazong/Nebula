@@ -20,33 +20,6 @@ int main() {
 		return error::file_access();
 	}*/
 	
-	{
-	// TESTING CRYPTO
-
-	sf::Time elapsed;
-
-	CryptoKey k("Elvis"); // include repeating mode
-
-	CryptoFile f("LoremIpsum.txt", statuses::plaintext);
-	
-	std::cout << "Working..." << std::endl;
-	sf::Clock t1;
-	if (!(f.encrypt("encrypted", k) == 0)) return -1;
-	elapsed = t1.getElapsedTime();
-	std::cout << "Done!\n" << elapsed.asMicroseconds();
-	std::cin.get();
-
-	f.set_file("encrypted");
-	f.set_status(statuses::encrypted);
-	std::cout << "Working..." << std::endl;
-	t1.restart();	
-	if (!(f.decrypt("meow.txt", k) == 0)) return -1;
-	elapsed = t1.getElapsedTime();
-	std::cout << "Done!\n" << elapsed.asMicroseconds();
-	std::cin.get();
-	}
-	
-
 	LOGGER::log("Program started");
 
 	MUSIC::set_m_player();
