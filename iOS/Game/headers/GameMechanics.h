@@ -186,8 +186,8 @@ public:
 	int get_max_stock();
 	int get_stock();
 	std::list<instrument *> * get_inventory() { return &inventory; }
-	void buy_guitar(guitar * guitar); // needs access to user's attributes
-	void buy_piano(piano * piano); // to implement
+	bool buy_guitar(guitar * guitar); // needs access to user's attributes
+	bool buy_piano(piano * piano); // to implement
 
 	void sell_algorithm();
 	void sell_instrument(int position_offset);
@@ -255,7 +255,8 @@ public:
 
 	std::string get_time_str() const;
 
-	double get_reputation() { return reputation; }
+	long double get_balance() const { return net_worth; }
+	double get_reputation() const { return reputation; }
 
 	void save_game();
 	void save_inventories(std::string user, const guitar * tab, int size, int store_index);
