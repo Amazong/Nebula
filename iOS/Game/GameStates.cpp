@@ -544,6 +544,12 @@ void in_game::input()
 				current_user->buy_store(new store(current_user, ""));
 				game->push_state(new inventory(game, game->window.capture()));
 				break;
+			case 5:
+				break;
+			case 6:
+				game->push_state(new finance(game));
+				return;
+				break;
 			// to add actions
 			}
 
@@ -2382,4 +2388,466 @@ void inventory::update_properties() {
 			break;
 		}
 	}
+}
+
+
+
+
+/*------------------------------ finance ------------------------------*/
+
+finance::finance(state_manager * game_ptr)
+{
+	game = game_ptr;
+
+	current_user = game_ptr->get_current_user();
+
+	if (!options_font.loadFromFile("res/fonts/Roboto-Bold.ttf")) {
+		complain(ErrNo::file_access);
+		return;
+	}
+
+	setup_options();
+	update_indicators();
+	setup_icons();
+}
+
+void finance::update_buying_rate()
+{
+	buying_rate = active_store->get_max_stock() * // theoretical maximum
+		active_store->get_reputation() * 2;
+	if (buying_rate > 0) {
+		switch (current_user->get_difficulty())
+		{
+		case 0:
+			buying_rate *= 2.0; // can be adjusted later, according to game balance
+			break;
+		case 1:
+			buying_rate *= 1.5; // can be adjusted later, according to game balance
+			break;
+		case 2:
+			// rate stays as is
+			break;
+		default:
+			// something is wrong with the user profile
+
+			// log corrupt profile error
+
+			complain(ErrNo::corrupt_profile);
+			return;
+			break;
+		}
+	}
+}
+
+void finance::input()
+{
+	sf::Event event;
+	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default 
+	if (selection != -1)
+	{
+		//options[(selection - 3)].setStyle(sf::Text::Underlined);
+		//options[(selection - 3)].setColor(sf::Color::White);
+	}
+
+	while (game->window.pollEvent(event))
+	{
+		icons[1].setScale(0.2f, 0.2f);
+		icons[2].setScale(0.2f, 0.2f);
+
+		switch (event.type)
+		{
+		case sf::Event::KeyPressed:
+		{
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
+				game->window.close();
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
+				MUSIC::get_m_player()->set_skip(true);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+				if (MUSIC::get_m_player()->get_stop() == false) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else MUSIC::get_m_player()->set_stop(false);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
+			}
+			break;
+		}
+		case sf::Event::MouseMoved:
+		{
+			mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
+			if (selection != -1)
+			{
+				//options[(selection - 3)].setScale(1.0f, 1.0f);
+				//options[(selection - 3)].setStyle(sf::Text::Regular);
+			}
+
+			selection = -1; // this way the selection will always be -1 if it's not in one of the options
+
+			/*for (int i = 0; i < 4; i++)
+			{
+				if (heat[(3 + i)].getGlobalBounds().contains(mouse_pos))
+				{
+					selection = i + 3;
+				}
+			}
+			*/
+
+			/*if (selection != -1)
+			{
+				options[(selection - 3)].scale(1.1f, 1.1f);
+				options[(selection - 3)].setStyle(sf::Text::Underlined);
+			}
+			*/
+
+			control_icon_animations(mouse_pos);
+
+			std::cout << "           Selection " << selection << std::endl; //debug
+
+
+			break;
+		}
+		case sf::Event::MouseButtonPressed:
+		{
+			if (handle_icons((sf::Vector2f) sf::Mouse::getPosition(game->window))) //handles input for icons
+				return;
+
+			/*if (selection != -1 && event.mouseButton.button == sf::Mouse::Left)
+			{
+				//options[(selection - 3)].setStyle(sf::Text::Italic);
+				//options[(selection - 3)].setColor(sf::Color::Red);
+				//options[(selection - 3)].scale(0.9f, 0.9f);
+			}
+
+			switch (selection)
+			{
+			case 0:
+				game->pop_state();
+				return;
+				break;
+			case 4:
+				current_user->buy_store(new store(current_user, ""));
+				game->push_state(new inventory(game, game->window.capture()));
+				break;
+				// to add actions
+			}
+			*/
+			break;
+		}
+		default:
+			break;
+		}
+	}
+
+}
+
+void finance::logic_update(const float elapsed)
+{
+	//update_buying_rate();
+	//if (buying_rate > active_store->get_stock()) {
+	//
+	//	// if not enough items in stock, penalize player
+	//	active_store->set_reputation (active_store->get_reputation() * 0.9);
+	//}
+
+	current_user->time_elapsed += sf::Time(sf::seconds(elapsed));
+	buffer += sf::Time(sf::seconds(elapsed));
+
+	if (buffer >= sf::Time(sf::seconds(current_user->WEEK_TIME_SECS))) {
+		buffer -= sf::Time(sf::seconds(current_user->WEEK_TIME_SECS));
+	}
+
+	if ((int)(current_user->time_elapsed.asSeconds()) % (int)current_user->WEEK_TIME_SECS == 0) {
+		if ((int)(current_user->time_elapsed.asSeconds()) != last_second) {
+			last_second = (int)(current_user->time_elapsed.asSeconds());
+			indicators_str[2] = current_user->get_time_str();
+			add_profits(this->current_user->net_worth);
+		}
+	}
+
+	update_indicators();
+}
+
+void finance::draw(const float elapsed)
+{
+	for (int i = 0; i < 3; i++)
+		game->window.draw(heat[i]);
+	for (int i = 0; i < 5; i++)
+		game->window.draw(indicators[i]);
+	for (int i = 0; i < 5; i++)
+		game->window.draw(icons[i]);
+}
+
+void finance::setup()
+{
+	current_user = game->get_current_user();
+	active_store = current_user->get_active_store();
+}
+
+void finance::setup_options()
+{
+	sf::Vector2f rectangle_size(game->window.getSize().x / 5.8f, game->window.getSize().y / 3.5f);
+	sf::Vector2f options_pos(game->window.getSize().x / 5.8f, 0);
+
+	for (int i = 0; i < 3; i++)
+	{
+		heat[i].setSize(rectangle_size);
+		heat[i].setFillColor(sf::Color::White);
+
+
+		switch (i)
+		{
+			case 0:
+			{
+				heat[i].setPosition(0, 0);
+				heat[i].setFillColor(sf::Color::Color(53, 53, 53, 255));
+				heat[i].setOutlineColor(sf::Color::Black);
+				heat[i].setOutlineThickness(-1);
+				break;
+			}
+			case 1:
+			{
+				heat[i].setPosition(0, rectangle_size.y);
+				heat[i].scale(1.0f, 2.0f);
+				heat[i].setFillColor(sf::Color::Color(40, 40, 40, 255));
+				heat[i].setOutlineColor(sf::Color::Black);
+				heat[i].setOutlineThickness(-1);
+				break;
+			}
+			case 2:
+			{
+				heat[i].setPosition(0, 3.0f * rectangle_size.y);
+				heat[i].setFillColor(sf::Color::Color(40, 40, 40, 255));
+				heat[i].scale(1.0f, 0.5f);
+				heat[i].setOutlineColor(sf::Color::Black);
+				heat[i].setOutlineThickness(-1);
+
+				break;
+			}
+			default:
+				break;
+		}
+	}
+}
+
+void finance::update_indicators()
+{
+	int offset = (int)(heat[1].getGlobalBounds().height / 5.0f);
+
+	indicators[0].setString(current_user->get_balance_styled());
+	double rep = current_user->get_reputation();
+
+	if (rep < -0.75) // -1 -> -0.75
+		indicators[1].setString("Comcast");
+	else if (rep < -0.25) // -0.75 -> -0.25
+		indicators[1].setString("NOS");
+	else if (rep < 0.25) // -0.25 -> 0.25
+		indicators[1].setString("Meh.");
+	else if (rep < 0.75) // 0.25 -> 0.75
+		indicators[1].setString("Google-like");
+	else // > 0.75
+		indicators[1].setString("Apple-like");
+
+	indicators[2].setString(current_user->get_time_str());
+
+	for (int i = 0; i < 5; i++)
+	{
+		indicators[i].setFont(options_font);
+		indicators[i].setCharacterSize((int)(game->window.getSize().y / 22.0f));
+		indicators[i].setColor(sf::Color::White);
+		indicators[i].setOrigin((indicators[i].getGlobalBounds().width / 2.0f), (indicators[i].getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
+		indicators[i].setPosition(heat[1].getPosition());
+		indicators[i].move(heat[1].getGlobalBounds().width / 2.0f, (offset / 2.3f) + (i*offset));
+	}
+}
+
+void finance::setup_icons()
+{
+	std::string names[5] = { "bargraph.png","save.png", "quit.png", "down_arrow.png", "up_arrow.png" };
+
+	for (int i = 0; i < 5; i++)
+	{
+		if (i < 3)
+		{
+			if (!icons_texture[i].loadFromFile("res/icons/" + names[i]))
+			{
+				complain(ErrNo::file_access);
+				return;
+			}
+		}
+		else
+		{
+			if (!icons_texture[i].loadFromFile("res/png/" + names[i]))
+			{
+				complain(ErrNo::file_access);
+				return;
+			}
+		}
+
+		icons[i].setTexture(icons_texture[i]);
+		icons[i].setOrigin(icons[i].getGlobalBounds().width / 2.0f, icons[i].getGlobalBounds().height / 2.0f);
+		icons[i].scale(0.5f, 0.5f);
+
+
+		if (i == 1 || i == 2)
+			icons[i].setScale(0.20f, 0.20f);
+
+
+		if (i > 2)
+			icons[i].setScale(0.4, 0.4);
+
+
+
+		switch (i) // i refering to for 
+		{
+		case 0: // bar graph
+		{
+			icons[i].setPosition(heat[0].getPosition().x + (heat[0].getGlobalBounds().width / 2.0f), heat[0].getPosition().y + (heat[0].getGlobalBounds().height / 2.0f));
+			break;
+		}
+		case 1: // save 
+		{
+			icons[i].setPosition(heat[2].getPosition().x + (heat[2].getGlobalBounds().width / 4.0f), heat[2].getPosition().y + (heat[2].getGlobalBounds().height / 2.0f));
+			break;
+		}
+		case 2: // quit game
+		{
+			icons[i].setPosition(heat[2].getPosition().x + (heat[2].getGlobalBounds().width * (3.0f / 4.0f)), heat[2].getPosition().y + (heat[2].getGlobalBounds().height / 2.0f));
+			break;
+		}
+
+		default: // everyhting else
+		{
+			icons[i].setPosition(game->window.getPosition().x / 2.0f , game->window.getPosition().y / 2.0f);
+			if (i == 4)
+				icons[i].move(0, icons[i].getGlobalBounds().height / 1.8f);
+			break;
+		}
+
+		}
+
+	}
+
+
+
+}
+
+void finance::control_icon_animations(sf::Vector2f mouse_pos)
+{
+	if (icons[1].getGlobalBounds().contains(mouse_pos))
+		icons[1].scale(1.1f, 1.1f);
+	else if (icons[2].getGlobalBounds().contains(mouse_pos))
+		icons[2].scale(1.1f, 1.1f);
+	else if (icons[3].getGlobalBounds().contains(mouse_pos))
+		icons[3].scale(1.1f, 1.1f);
+	else if (icons[4].getGlobalBounds().contains(mouse_pos))
+		icons[4].scale(1.1f, 1.1f);
+	else
+	{
+		icons[1].setScale(0.2f, 0.2f);
+		icons[2].setScale(0.2f, 0.2f);
+		icons[3].setScale(0.4f, 0.4f);
+		icons[4].setScale(0.4f, 0.4f);
+	}
+}
+
+bool finance::handle_icons(sf::Vector2f mouse_pos)
+{
+	if (icons[2].getGlobalBounds().contains(mouse_pos))
+	{
+		game->pop_state();
+		return(true);
+	}
+
+
+	if (icons[1].getGlobalBounds().contains(mouse_pos))
+	{
+		current_user->save_game();
+		return(true);
+	}
+
+	if (icons[3].getGlobalBounds().contains(mouse_pos))
+	{
+		//to do
+		return(true);
+	}
+
+	if (icons[4].getGlobalBounds().contains(mouse_pos))
+	{
+		//to do
+		return(true);
+	}
+
+
+	return(false);
+}
+
+void finance::add_profits(long double n_worth)
+{
+	past_net_worths.push_front(n_worth);
+
+	while (past_net_worths.size() > 52) {
+		past_net_worths.pop_back();
+	}
+
+	update_profits();
+}
+
+void finance::update_profits()
+{
+	// past 4 weeks
+	long double average = 0;
+	int lim = (past_net_worths.size() < 4) ? past_net_worths.size() : 4;
+	for (int i = 0; i < lim; i++) {
+		average += (past_net_worths.at(i) / (double)lim);
+	}
+	indicators[3].setString("AMP : " + style(average));
+
+	// last year
+	average = 0;
+	lim = (past_net_worths.size() < 52) ? past_net_worths.size() : 52;
+	for (int i = 0; i < lim; i++) {
+		average += (past_net_worths.at(i) / (double)lim);
+	}
+	indicators[4].setString("AYP : " + style(average));
+}
+
+std::string finance::style(long double d)
+{
+	std::string s = "";
+
+	if (d < 0) { // negative
+		s += "- ";
+		s += style(-d);
+		return s;
+	}
+	else if (d < 1000) { // display directly
+		s += std::to_string((int)d).substr(0, 3);
+	}
+	else if (d < 1000000) { // K range
+		s += std::to_string((int)d / 1000).substr(0, 3); // How many K's
+		s += ".";
+		s += std::to_string((int)d % 1000).substr(0, 1);
+		s += "K";
+	}
+	else if (d < 1000000000) { // M range
+		s += std::to_string((int)d / 1000000).substr(0, 3); // How many M's
+		s += ".";
+		s += std::to_string((int)d % 1000000).substr(0, 1);
+		s += "M";
+	}
+	else {
+		s += "1 $"; // if the user has more than 1000000000 £, we display "1 $"
+					// small easter egg :)
+		return s;
+	}
+
+	s += " £";
+
+	return s;
 }

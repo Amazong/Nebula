@@ -275,5 +275,6 @@ public:
 	friend class store;
 	friend class in_game;
 	friend class in_game_setup;
+	friend class finance;
 };
 

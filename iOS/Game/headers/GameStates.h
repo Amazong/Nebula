@@ -314,3 +314,56 @@ public:
 	void move_list_up();
 };
 
+
+
+
+/*------------------------------  Finance  ------------------------------*/
+
+
+
+class finance : public game_state
+{
+private:
+
+	std::string indicators_str[5] = { "Balance", "Reputation", "Game Time", "Month's profits", "Year's Profits" };
+
+	sf::Time buffer = sf::seconds(0.0f);
+
+	std::deque<long double> past_net_worths;
+
+	sf::Font options_font;
+
+	sf::Text indicators[5];
+	sf::RectangleShape heat[3];
+	sf::Sprite icons[5];
+	sf::Texture icons_texture[5];
+
+	double buying_rate;
+	int selection = -1;
+
+	int last_second = -1;
+
+	store * active_store;
+	user_profile * current_user;
+
+	void update_buying_rate();
+
+public:
+	finance(state_manager * game_ptr);
+
+	void input();
+	void logic_update(const float elapsed);
+	void draw(const float elapsed);
+
+	void setup();
+	void setup_options();
+	void update_indicators();
+	void setup_icons();
+	void control_icon_animations(sf::Vector2f mouse_pos);
+	bool handle_icons(sf::Vector2f mouse_pos);
+
+	void add_profits(long double n_worth);
+	void update_profits();
+
+	std::string style(long double d);
+};
