@@ -12,9 +12,9 @@ CryptoKey::CryptoKey(const CryptoKey & k)
 	*this = CryptoKey(k.get_key());
 }
 
-CryptoKey::CryptoKey(std::string new_key, mode mod, char repeater)
+CryptoKey::CryptoKey(std::string new_key)
 {
-	set_key(new_key, mod, repeater);
+	set_key(new_key);
 }
 
 bool CryptoKey::set_key(std::string new_key, mode mod, char repeater)
@@ -226,7 +226,7 @@ int CryptoFile::encrypt(std::string target_name, const CryptoKey & key, bool ove
 
 	// output encrypted content
 	for (i = 0; i < length; i++) {
-		target << (int)chunk[i] << ",";
+		target << chunk[i];
 	}
 
 	target.close();
@@ -241,7 +241,7 @@ int CryptoFile::encrypt(std::string target_name, const CryptoKey & key, bool ove
 		}
 		length--; // to compensate for last increment
 
-		// encrypt chunk
+				  // encrypt chunk
 		for (i = 0; i < n_runs; i++, k++) {
 			for (j = 0; j < length; j++) {
 				chunk[j] ^= k.get_char(j);
@@ -250,7 +250,7 @@ int CryptoFile::encrypt(std::string target_name, const CryptoKey & key, bool ove
 
 		// output encrypted content
 		for (i = 0; i < length; i++) {
-			target << (int)chunk[i];
+			target << chunk[i];
 		}
 	}
 
@@ -298,12 +298,10 @@ int CryptoFile::decrypt(std::string target_name, const CryptoKey & key, bool ove
 	if (source.fail()) return -2;
 
 	char * chunk = new char[32000];
-	std::string aux;
 
 	// get message content to RAM
 	for (length = 0; !source.eof() && length < 32000; length++) {
-		std::getline(source, aux, ',');
-		chunk[length] = (char)(atoi(aux.c_str()));
+		chunk[length] = source.get();
 	}
 	length--; // to compensate for last increment
 
@@ -345,7 +343,7 @@ int CryptoFile::decrypt(std::string target_name, const CryptoKey & key, bool ove
 
 		// output encrypted content
 		for (i = 0; i < length; i++) {
-			target << (char)chunk[i];
+			target << chunk[i];
 		}
 	}
 
