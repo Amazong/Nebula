@@ -19,7 +19,7 @@ int main() {
 	/*if (render_splash() == 42) {
 		return error::file_access();
 	}*/
-	/*
+	
 	{
 	// TESTING CRYPTO
 
@@ -45,7 +45,7 @@ int main() {
 	std::cout << "Done!\n" << elapsed.asMicroseconds();
 	std::cin.get();
 	}
-	*/
+	
 
 	LOGGER::log("Program started");
 

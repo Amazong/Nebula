@@ -201,7 +201,7 @@ int CryptoFile::encrypt(std::string target_name, const CryptoKey & key, bool ove
 		return (encrypt(target_name + "_" + std::to_string(i), key));
 	}
 
-	std::ifstream source(filename);
+	std::ifstream source(filename, std::fstream::binary);
 	if (source.fail()) return -2;
 
 	char * chunk = new char[32000];
@@ -222,7 +222,7 @@ int CryptoFile::encrypt(std::string target_name, const CryptoKey & key, bool ove
 		}
 	}
 
-	std::ofstream target(target_name, std::fstream::trunc);
+	std::ofstream target(target_name, std::fstream::trunc | std::fstream::binary);
 
 	// output encrypted content
 	for (i = 0; i < length; i++) {
@@ -294,7 +294,7 @@ int CryptoFile::decrypt(std::string target_name, const CryptoKey & key, bool ove
 		return (encrypt(target_name + "_" + std::to_string(i), key));
 	}
 
-	std::ifstream source(filename);
+	std::ifstream source(filename, std::fstream::binary);
 	if (source.fail()) return -2;
 
 	char * chunk = new char[32000];
@@ -315,7 +315,7 @@ int CryptoFile::decrypt(std::string target_name, const CryptoKey & key, bool ove
 		}
 	}
 
-	std::ofstream target(target_name, std::fstream::trunc);
+	std::ofstream target(target_name, std::fstream::trunc | std::fstream::binary);
 
 	// output encrypted content
 	for (i = 0; i < length; i++) {
@@ -334,7 +334,7 @@ int CryptoFile::decrypt(std::string target_name, const CryptoKey & key, bool ove
 		}
 		length--; // to compensate for last increment
 
-				  // decrypt chunk
+		// decrypt chunk
 		for (i = 0; i < n_runs; i++, k++) {
 			for (j = 0; j < length; j++) {
 				chunk[j] ^= k.get_char(j);
