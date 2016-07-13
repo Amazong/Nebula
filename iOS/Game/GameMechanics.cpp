@@ -162,18 +162,24 @@ guitar::guitar(double value, char * name)
 
 guitar::guitar(std::string name)
 {
+	std::string n = name;
+
+	bool exists = false;
 	is_guitar = true;
+	own_brand_piano = piano_brands::NA;
+	own_type_piano = piano_type::NA;
 
 	std::random_device rd;
-
 	std::mt19937 random_numbers(rd());
 
 	std::string to_check[5] = { "Larrivee", "G&L", "Martin", "PRS" ,"Maton" };
 
 	for (int i = 0; i < 5; i++)
 	{
-		if (name == to_check[i])
+		if (n == to_check[i])
 		{
+			exists = true;
+			
 			int low, high;
 
 			switch (i)
@@ -198,25 +204,29 @@ guitar::guitar(std::string name)
 				low = 1500;
 				high = 3000;
 				break;
-			
-
 			default:
 				break;
 			}
 			
-			std::uniform_int_distribution<int> range(low, high );
+			std::uniform_int_distribution<int> range(low, high);
 
+			strcpy_s(this->brand, to_check[i].c_str());
 			this->value = range(random_numbers);
-			this->price = this->value;
+			this->set_price(this->value);
+			break;
 		}
+	}
 
+	if (!exists) { // make exist
+		std::uniform_int_distribution<int> name_range(0, 4);
+		n = to_check[name_range(rd)];
+		*this = guitar(n);
+		return;
 	}
 
 	std::uniform_int_distribution<int> range(1, 3);
 	
 	this->own_quality = quality::quality(range(random_numbers));
-
-	double number = range(random_numbers);
 }
 
 guitar::guitar(piano_brands::piano_brands brand, piano_type::piano_type type, quality::quality quality)
@@ -413,7 +423,7 @@ std::string employee::get_salary()
 
 store::store(const store & shop)
 {
-	this->setting = shop.setting;
+	setting = shop.setting;
 	strcpy_s(this->name, shop.name);
 	reputation = shop.reputation;
 	max_stock = shop.max_stock;
@@ -541,7 +551,7 @@ void store::update_average_efficiency() {
 	average_efficiency = tot_efficiency / n;
 }
 
-void store::buy_guitar(guitar * guitar)
+bool store::buy_guitar(guitar * guitar)
 {
 	if (user->net_worth >= guitar->value && inventory.size() < max_stock) // buying from wholesale
 	{
@@ -549,13 +559,13 @@ void store::buy_guitar(guitar * guitar)
 		this->inventory.push_back(guitar);
 		
 		LOGGER::log("Bought " + guitar->print_brand_cpp() + " guitar for " + guitar->get_value_cpp() + "£ (peanuts)");
-		return;
+		return true;
 	}
-	
-	// else we need to deploy a message error (warning window)
+
+	return false;
 }
 
-void store::buy_piano(piano * piano)
+bool store::buy_piano(piano * piano)
 {
 	if (user->net_worth >= piano->value && inventory.size() < max_stock) // buying from wholesale
 	{
@@ -563,10 +573,10 @@ void store::buy_piano(piano * piano)
 		this->inventory.push_back(piano);
 
 		LOGGER::log("Bought " + piano->print_type_cpp() + " " + piano->print_brand_cpp() + " piano for " + piano->get_value_cpp() + "£ (peanuts)");
-		return;
+		return true;
 	}
 
-	// else we need to deploy a message error (warning window)
+	return false;
 }
 
 bool store::run_probability(double prob)
@@ -1202,6 +1212,8 @@ void user_profile::load_stores(user_profile * user)
 	for (int i = 0; tab_ptr != nullptr, i < size; i++)
 	{
 		user->stores.push_back(new store(tab_ptr[i]));
+
+		user->stores.back()->user = user;
 
 		load_store_inv(user, (*stores.back()), i);
 		load_store_staff(user, (*stores.back()), i);

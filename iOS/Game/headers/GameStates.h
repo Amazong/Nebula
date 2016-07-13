@@ -287,9 +287,6 @@ private:
 	sf::Sprite scroll[2];
 	sf::Texture scroll_texture[2];
 	
-	sf::Sprite icons[3];
-	sf::Texture icons_texture[3];
-	
 	sf::Sprite background;
 	sf::Texture backgroud_texture;
 
@@ -326,24 +323,16 @@ private:
 	sf::Text title;
 	sf::Text back;
 	sf::Text buy_selection;
-	sf::Text price_setter_inside;
 	sf::Text active_properties[4]; // value, quality, brand, type (if piano)
 	sf::Text currently_showing[5];
 
-	std::string price_setter_str;
-
 	sf::RectangleShape details;
-	sf::RectangleShape price_setter;
-
-	sf::Sprite icons[3];
-	sf::Texture icons_texture[3];
-
+	
 	sf::Sprite background;
 	sf::Texture backgroud_texture;
 
 	double buying_rate;
 	int selection = -1;
-	int starting_index = 0;
 	instrument * current_selection;
 
 	store * active_store;
@@ -361,6 +350,4 @@ public:
 	void input();
 	void logic_update(const float elapsed);
 	void draw(const float elapsed);
-	void move_list_down();
-	void move_list_up();
 };

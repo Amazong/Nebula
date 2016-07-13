@@ -186,8 +186,8 @@ public:
 	int get_max_stock();
 	int get_stock();
 	std::list<instrument *> * get_inventory() { return &inventory; }
-	void buy_guitar(guitar * guitar); // needs access to user's attributes
-	void buy_piano(piano * piano); // to implement
+	bool buy_guitar(guitar * guitar); // needs access to user's attributes
+	bool buy_piano(piano * piano); // to implement
 
 	void sell_algorithm();
 	void sell_instrument(int position_offset);
