@@ -11,14 +11,13 @@
 #include "headers\GameMechanics.h"
 
 int main() {
-	//ShowWindow(GetConsoleWindow(), SW_HIDE);
+	ShowWindow(GetConsoleWindow(), SW_HIDE);
 	// uncomment line above to show console
-	
 
 	// while debugging, I'll leave the splash screen commented
-	/*if (render_splash() == 42) {
-		return error::file_access();
-	}*/
+	if (render_splash() == 42) {
+		return ErrNo::file_access;
+	}
 	
 	LOGGER::log("Program started");
 
