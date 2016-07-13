@@ -16,6 +16,7 @@ struct save_user //for saving user.
 	double net_worth;
 	double reputation;
 	int difficulty;
+	float time_elapsed;
 };
 
 /*------------------------------ instrument ------------------------------*/
@@ -34,7 +35,7 @@ namespace quality {
 class instrument
 {
 protected:
-	enum perceived_value { unattainable, overpriced, high, neutral, cheap, irresistible } purchasing_power; // price 0, .....  infinite
+	enum perceived_value { unattainable, overpriced, high, neutral, cheap, irresistible } purchasing_power; // price 0, ..... infinite
 																											// factors in guitar chosen to be sold, calculated from ratio between price and value
 	char brand[51] = "NA";
 	char piano_brands[5][51] = { "Roland", "Korg", "Kawai", "Yamaha", "Steinway & Sons" };
@@ -59,10 +60,10 @@ public:
 	piano_type::piano_type get_type_piano() { return own_type_piano; }
 	quality::quality get_quality() { return own_quality; }
 
-	char * print_brand() { return brand; }
-	
 	// std::string returns
-	std::string print_brand_cpp() { std::string b = brand; return b; }
+	char * print_brand() { return brand; }
+	std::string print_brand_cpp();
+	std::string print_brand_cpp_short();
 	std::string print_type_cpp();
 	std::string get_value_cpp();
 	std::string get_price_cpp();
@@ -112,12 +113,13 @@ public:
 class employee
 {
 private:
-	enum efficiency { low = 1, neutral, high } skill;  //effect on buying formula
+	enum efficiency { low = 1, neutral, high } skill; //effect on buying formula
 	char name[51];
 	double salary;
 
 public:
 	employee() {};
+	employee(char * name);
 	employee(char * person, double value, int eff); // eff: 1-low; 2-neutral; 3-high
 
 	// string returns
@@ -154,14 +156,15 @@ private:
 	
 	unsigned int max_stock;
 	
-	int value;
+	double value;
 	int traffic;
 	int buying_rate; // each store has it's buying rate
 
 public:
 	store() {};
 	store(const store & shop); // does not copy the std::lists nor the user pointer
-	store(user_profile * current, char * name, int value, int areacode, int pop = 1); // areacode: 0-poor; 1-middle; 2-rich
+	store(user_profile * current, char * name, double value, int areacode, int pop = 1); // areacode: 0-poor; 1-middle; 2-rich
+	store(user_profile * current, char * name);
 	~store();
 
 	store & operator = (const store & store);
@@ -219,8 +222,8 @@ class user_profile
 private:
 	std::list<store *> stores;
 	store * active_store = nullptr;
-	sf::Time time_elapsed = sf::seconds(0.0f);  // by omission time offset from 0 is 0. Used to calculate date (in game)
-
+	sf::Time time_elapsed = sf::seconds(0.0f); // by omission time offset from 0 is 0. Used to calculate date (in game)
+	
 	char user[51];
 	double weekly_expenses;
 	long double net_worth;
@@ -228,6 +231,8 @@ private:
 	int difficulty = -1; // difficulty: 0-easy; 1-medium; 2-hard
 
 public:
+	const float WEEK_TIME_SECS = 2.0f;
+	const float YEAR_TIME_SECS = WEEK_TIME_SECS * 52.0f;
 
 	user_profile() {};
 	user_profile(char * name);
@@ -248,11 +253,15 @@ public:
 
 	void set_user_name(std::string s) { strcpy_s(this->user, s.c_str()); }
 
+	std::string get_time_str() const;
+
+	double get_reputation() { return reputation; }
+
 	void save_game();
-	void save_inventories(std::string  user, const guitar * tab, int size, int store_index);
-	void save_staff(std::string  user, const employee * tab, int size, int store_index);
-	void save_stores(std::string  user, const store * tab, int size);
-	void load_game(std::string  profile_title); // pass an object of save game instead of string
+	void save_inventories(std::string user, const guitar * tab, int size, int store_index);
+	void save_staff(std::string user, const employee * tab, int size, int store_index);
+	void save_stores(std::string user, const store * tab, int size);
+	void load_game(std::string profile_title); // pass an object of save game instead of string
 	void load_user(std::string & profile_title);
 	void load_stores(user_profile * user);
 	void load_store_inv(const user_profile * user, store & shop, int store_index);
@@ -264,6 +273,7 @@ public:
 
 	// friends
 	friend class store;
+	friend class in_game;
 	friend class in_game_setup;
 };
 

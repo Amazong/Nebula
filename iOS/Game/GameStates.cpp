@@ -5,7 +5,7 @@
 
 main_menu::main_menu(state_manager * game_ptr)
 {
-	game = game_ptr;  // pointer to state manager
+	game = game_ptr; // pointer to state manager
 	
 	update_save();
 
@@ -40,18 +40,22 @@ void main_menu::input()
 		{
 			case sf::Event::KeyPressed:
 			{
-				if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+				if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
 					game->window.close();
-				else if (event.key.code == sf::Keyboard::S) {
+				}
+				else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
 					MUSIC::get_m_player()->set_skip(true);
 				}
-				else if (event.key.code == sf::Keyboard::M) {
-					MUSIC::get_m_player()->set_stop(true);
+				else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+					if (MUSIC::get_m_player()->get_stop() == false) {
+						MUSIC::get_m_player()->set_stop(true);
+					}
+					else MUSIC::get_m_player()->set_stop(false);
 				}
-				else if (event.key.code == sf::Keyboard::J) {
+				else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
 					MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
 				}
-				else if (event.key.code == sf::Keyboard::K) {
+				else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
 					MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
 				}
 				break;
@@ -113,7 +117,7 @@ void main_menu::input()
 					switch (selection) {
 					case 0:
 						//new game
-						game->push_state(new new_game1(game, game->window.capture()));
+						game->push_state(new new_game(game, game->window.capture()));
 						break;
 					case 1:
 						game->push_state(new continue_game(game, game->window.capture()));
@@ -281,18 +285,22 @@ void options_menu::input()
 		{
 			case sf::Event::KeyPressed:
 			{
-				if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+				if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
 					game->window.close();
-				else if (event.key.code == sf::Keyboard::S) {
+				}
+				else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
 					MUSIC::get_m_player()->set_skip(true);
 				}
-				else if (event.key.code == sf::Keyboard::M) {
-					MUSIC::get_m_player()->set_stop(true);
+				else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+					if (MUSIC::get_m_player()->get_stop() == false) {
+						MUSIC::get_m_player()->set_stop(true);
+					}
+					else MUSIC::get_m_player()->set_stop(false);
 				}
-				else if (event.key.code == sf::Keyboard::J) {
+				else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
 					MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
 				}
-				else if (event.key.code == sf::Keyboard::K) {
+				else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
 					MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
 				}
 				break;
@@ -400,17 +408,16 @@ in_game::in_game(state_manager * game_ptr)
 {
 	game = game_ptr;
 
+	current_user = game_ptr->get_current_user();
+
 	if (!options_font.loadFromFile("res/fonts/Roboto-Bold.ttf")) {
 		complain(ErrNo::file_access);
 		return;
 	}
 
 	setup_options();
-	setup_indicators();
+	update_indicators();
 	setup_icons();
-
-
-
 }
 
 void in_game::update_buying_rate()
@@ -460,18 +467,22 @@ void in_game::input()
 		{
 		case sf::Event::KeyPressed:
 		{
-			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
 				game->window.close();
-			else if (event.key.code == sf::Keyboard::S) {
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
 				MUSIC::get_m_player()->set_skip(true);
 			}
-			else if (event.key.code == sf::Keyboard::M) {
-				MUSIC::get_m_player()->set_stop(true);
+			else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+				if (MUSIC::get_m_player()->get_stop() == false) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else MUSIC::get_m_player()->set_stop(false);
 			}
-			else if (event.key.code == sf::Keyboard::J) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
 			}
-			else if (event.key.code == sf::Keyboard::K) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
 			}
 			break;
@@ -530,7 +541,8 @@ void in_game::input()
 				return;
 				break;
 			case 4:
-				game->push_state(new inventory(game));
+				current_user->buy_store(new store(current_user, ""));
+				game->push_state(new inventory(game, game->window.capture()));
 				break;
 			// to add actions
 			}
@@ -546,27 +558,37 @@ void in_game::input()
 
 void in_game::logic_update(const float elapsed)
 {
+	//update_buying_rate();
+	//if (buying_rate > active_store->get_stock()) {
+	//
+	//	// if not enough items in stock, penalize player
+	//	active_store->set_reputation (active_store->get_reputation() * 0.9);
+	//}
+	
+	current_user->time_elapsed += sf::Time(sf::seconds(elapsed));
+	buffer += sf::Time(sf::seconds(elapsed));
 
-	/*
-	update_buying_rate();
-	if (buying_rate > active_store->get_stock()) {
-	// if not enough items in stock, penalize player
-	active_store->set_reputation (active_store->get_reputation() * 0.9);
-	} */
+	if (buffer >= sf::Time(sf::seconds(current_user->WEEK_TIME_SECS))) {
+		buffer -= sf::Time(sf::seconds(current_user->WEEK_TIME_SECS));
+	}
+
+	if ((int)(current_user->time_elapsed.asSeconds()) % (int)current_user->WEEK_TIME_SECS == 0) {
+		if ((int)(current_user->time_elapsed.asSeconds()) != last_second) {
+			last_second = (int)(current_user->time_elapsed.asSeconds());
+			indicators_str[2] = current_user->get_time_str();
+			add_profits(this->current_user->net_worth);
+		}
+	}
+	
+	update_indicators();
 }
 
 void in_game::draw(const float elapsed)
 {
 	for (int i = 0; i < 7; i++)
-	{
 		game->window.draw(heat[i]);
-
-	}
-
 	for (int i = 0; i < 4; i++)
 		game->window.draw(options[i]);
-
-
 	for (int i = 0; i < 5; i++)
 		game->window.draw(indicators[i]);
 	for (int i = 0; i < 7; i++)
@@ -658,23 +680,35 @@ void in_game::setup_options()
 	}
 }
 
-void in_game::setup_indicators()
+void in_game::update_indicators()
 {
-
 	int offset = (int)(heat[1].getGlobalBounds().height / 5.0f);
+
+	indicators[0].setString(current_user->get_balance_styled());
+	double rep = current_user->get_reputation();
+
+	if (rep < -0.75) // -1 -> -0.75
+		indicators[1].setString("Comcast");
+	else if (rep < -0.25) // -0.75 -> -0.25
+		indicators[1].setString("NOS");
+	else if (rep < 0.25) // -0.25 -> 0.25
+		indicators[1].setString("Meh.");
+	else if (rep < 0.75) // 0.25 -> 0.75
+		indicators[1].setString("Google-like");
+	else // > 0.75
+		indicators[1].setString("Apple-like");
+
+	indicators[2].setString(current_user->get_time_str());
 
 	for (int i = 0; i < 5; i++)
 	{
 		indicators[i].setFont(options_font);
 		indicators[i].setCharacterSize((int)(game->window.getSize().y / 22.0f));
-		indicators[i].setString(indicators_str[i]);
 		indicators[i].setColor(sf::Color::White);
 		indicators[i].setOrigin((indicators[i].getGlobalBounds().width / 2.0f), (indicators[i].getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
 		indicators[i].setPosition(heat[1].getPosition());
 		indicators[i].move(heat[1].getGlobalBounds().width / 2.0f, (offset / 2.3f) + (i*offset));
-
 	}
-
 }
 
 void in_game::setup_icons()
@@ -767,10 +801,75 @@ bool in_game::handle_icons(sf::Vector2f mouse_pos)
 
 	if (icons[5].getGlobalBounds().contains(mouse_pos))
 	{
-		
+		current_user->save_game();
 		return(true);
 	}
 	return(false);
+}
+
+void in_game::add_profits(long double n_worth)
+{
+	past_net_worths.push_front(n_worth);
+
+	while (past_net_worths.size() > 52) {
+		past_net_worths.pop_back();
+	}
+
+	update_profits();	
+}
+
+void in_game::update_profits()
+{
+	// past 4 weeks
+	long double average = 0;
+	int lim = (past_net_worths.size() < 4) ? past_net_worths.size() : 4;
+	for (int i = 0; i < lim; i++) {
+		average += (past_net_worths.at(i) / (double)lim);
+	}
+	indicators[3].setString("AMP : " + style(average));
+
+	// last year
+	average = 0;
+	lim = (past_net_worths.size() < 52) ? past_net_worths.size() : 52;
+	for (int i = 0; i < lim; i++) {
+		average += (past_net_worths.at(i) / (double)lim);
+	}
+	indicators[4].setString("AYP : " + style(average));
+}
+
+std::string in_game::style(long double d)
+{
+	std::string s = "";
+
+	if (d < 0) { // negative
+		s += "- ";
+		s += style(-d);
+		return s;
+	}
+	else if (d < 1000) { // display directly
+		s += std::to_string((int)d).substr(0, 3);
+	}
+	else if (d < 1000000) { // K range
+		s += std::to_string((int)d / 1000).substr(0, 3); // How many K's
+		s += ".";
+		s += std::to_string((int)d % 1000).substr(0, 1);
+		s += "K";
+	}
+	else if (d < 1000000000) { // M range
+		s += std::to_string((int)d / 1000000).substr(0, 3); // How many M's
+		s += ".";
+		s += std::to_string((int)d % 1000000).substr(0, 1);
+		s += "M";
+	}
+	else {
+		s += "1 $"; // if the user has more than 1000000000 £, we display "1 $"
+					// small easter egg :)
+		return s;
+	}
+
+	s += " £";
+
+	return s;
 }
 
 
@@ -849,18 +948,22 @@ void in_game_setup::input()
 		{
 		case sf::Event::KeyPressed:
 		{
-			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
 				game->window.close();
-			else if (event.key.code == sf::Keyboard::S) {
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
 				MUSIC::get_m_player()->set_skip(true);
 			}
-			else if (event.key.code == sf::Keyboard::M) {
-				MUSIC::get_m_player()->set_stop(true);
+			else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+				if (MUSIC::get_m_player()->get_stop() == false) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else MUSIC::get_m_player()->set_stop(false);
 			}
-			else if (event.key.code == sf::Keyboard::J) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
 			}
-			else if (event.key.code == sf::Keyboard::K) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
 			}
 			break;
@@ -887,10 +990,10 @@ void in_game_setup::input()
 					selection = i + 3;
 				}
 			}
-			if (start_text.getGlobalBounds().contains(mouse_pos) && !game->get_current_user()->stores.empty() && !game->get_current_user()->get_active_store()->staff.empty() && !game->get_current_user()->get_active_store()->inventory.empty()) //only let's you press when  you have stuff ready!
+			if (start_text.getGlobalBounds().contains(mouse_pos) && !game->get_current_user()->stores.empty() && !game->get_current_user()->get_active_store()->staff.empty() && !game->get_current_user()->get_active_store()->inventory.empty()) //only let's you press when you have stuff ready!
 				selection = 9;
 
-			if (selection != -1  && selection != 9)
+			if (selection != -1 && selection != 9)
 			{
 				options[(selection - 3)].scale(1.1f, 1.1f);
 				options[(selection - 3)].setStyle(sf::Text::Underlined);				
@@ -1182,7 +1285,7 @@ bool in_game_setup::handle_icons(sf::Vector2f mouse_pos)
 
 /*------------------------------ New_Game1 ------------------------------*/
 
-new_game1::new_game1(state_manager * game, sf::Image Background_img)
+new_game::new_game(state_manager * game, sf::Image Background_img)
 {
 	this->game = game;
 
@@ -1214,14 +1317,11 @@ new_game1::new_game1(state_manager * game, sf::Image Background_img)
 	setup_options();
 }
 
-void new_game1::input()
+void new_game::input()
 {
 	sf::Event event;
 	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default 
-
-
-
-
+	
 	while (game->window.pollEvent(event))
 	{
 		for (int i = 2; i < 6; i++)
@@ -1234,18 +1334,22 @@ void new_game1::input()
 		{
 		case sf::Event::KeyPressed:
 		{
-			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
 				game->window.close();
-			else if (event.key.code == sf::Keyboard::S) {
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
 				MUSIC::get_m_player()->set_skip(true);
 			}
-			else if (event.key.code == sf::Keyboard::M) {
-				MUSIC::get_m_player()->set_stop(true);
+			else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+				if (MUSIC::get_m_player()->get_stop() == false) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else MUSIC::get_m_player()->set_stop(false);
 			}
-			else if (event.key.code == sf::Keyboard::J) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
 			}
-			else if (event.key.code == sf::Keyboard::K) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
 			}
 			break;
@@ -1258,6 +1362,11 @@ void new_game1::input()
 
 			for (int i = 2; i < 6; i++)
 			{
+				if (i == 5)
+				{
+					if (name.isEmpty())
+						continue;
+				}
 				if (options[i].getGlobalBounds().contains(mouse_pos))
 				{
 					selection = i;
@@ -1281,11 +1390,7 @@ void new_game1::input()
 				options[selection].setStyle(sf::Text::Underlined);
 			}
 			
-
-			
-
 			std::cout << "           Selection " << selection << std::endl; //debug
-
 
 			break;
 		}
@@ -1303,6 +1408,8 @@ void new_game1::input()
 			{
 				case 5:
 				{
+					game->set_current_user(new user_profile());
+
 					game->get_current_user()->set_difficulty(difficulty);
 					switch (difficulty) {
 					case 0:
@@ -1318,10 +1425,9 @@ void new_game1::input()
 						break;
 					}
 					game->get_current_user()->set_user_name(name);
-					game->push_state(new msg_box(game, game->window.capture(), "yap", 30, 12));
-					//game->change_state(new in_game_setup(game));
+
+					game->push_state(new msg_box(game, game->window.capture(), "Game created!",20, 50, new in_game_setup(game)));
 					return;
-					break;
 				}
 				case 9:
 				{
@@ -1382,11 +1488,11 @@ void new_game1::input()
 	}
 }
 
-void new_game1::logic_update(const float elapsed)
+void new_game::logic_update(const float elapsed)
 {
 }
 
-void new_game1::draw(const float elapsed)
+void new_game::draw(const float elapsed)
 {
 	game->window.draw(background_sprite);
 	game->window.draw(input_place);
@@ -1400,7 +1506,7 @@ void new_game1::draw(const float elapsed)
 	game->window.draw(name_text);
 }
 
-void new_game1::setup_options()
+void new_game::setup_options()
 {
 	
 	for (int i = 0; i < 6; i++)
@@ -1425,12 +1531,12 @@ void new_game1::setup_options()
 			}
 			case 5:
 			{
-				options[i].move(0, (input_place.getGlobalBounds().height  * 3.0f )/ 5.0f);
+				options[i].move(0, (input_place.getGlobalBounds().height * 3.0f )/ 5.0f);
 				break;
 			}
 			default:
 			{
-				options[i].move(0, (input_place.getGlobalBounds().height  * 2.0f) / 5.0f);
+				options[i].move(0, (input_place.getGlobalBounds().height * 2.0f) / 5.0f);
 				break;
 			}
 		}
@@ -1479,18 +1585,22 @@ void continue_game::input()
 		{
 		case sf::Event::KeyPressed:
 		{
-			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
 				game->window.close();
-			else if (event.key.code == sf::Keyboard::S) {
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
 				MUSIC::get_m_player()->set_skip(true);
 			}
-			else if (event.key.code == sf::Keyboard::M) {
-				MUSIC::get_m_player()->set_stop(true);
+			else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+				if (MUSIC::get_m_player()->get_stop() == false) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else MUSIC::get_m_player()->set_stop(false);
 			}
-			else if (event.key.code == sf::Keyboard::J) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
 			}
-			else if (event.key.code == sf::Keyboard::K) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
 			}
 			break;
@@ -1504,7 +1614,7 @@ void continue_game::input()
 				saved_profiles[i].setColor(sf::Color(190, 190, 190, 255));
 			}
 
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < n_saves; i++)
 			{
 				if (saved_profiles[i].getGlobalBounds().contains(mouse_pos))
 				{
@@ -1605,12 +1715,13 @@ void continue_game::setup_text()
 
 /*------------------------------    msg_box    ------------------------------*/
 
-msg_box::msg_box(state_manager * game_ptr, sf::Image background_img, std::string str, unsigned int line_size, unsigned  int char_size)
+msg_box::msg_box(state_manager * game_ptr, sf::Image background_img, std::string str, unsigned int line_size, unsigned int char_size, game_state * next_state)
 {
 	game = game_ptr;
 	this->line_size = line_size;
 	this->char_size = char_size;
 	this->str = str;
+	this->next_state = next_state;
 
 	if (!background.loadFromImage(background_img)) {		//to deal with
 		complain(ErrNo::file_access);
@@ -1630,9 +1741,7 @@ msg_box::msg_box(state_manager * game_ptr, sf::Image background_img, std::string
 
 	show_textbox(this->str, this->line_size, this->char_size); // function for message boxes., line size in chars.
 
-	close.setPosition(box.getPosition().x, box.getPosition().y + (box.getGlobalBounds().height / (3.0f)));
-
-
+	close.setPosition(box.getPosition().x, box.getPosition().y + (box.getGlobalBounds().height / (3.6f)));
 }
 
 void msg_box::input()
@@ -1649,8 +1758,24 @@ void msg_box::input()
 		{
 		case sf::Event::KeyPressed:
 		{
-			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
 				game->window.close();
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
+				MUSIC::get_m_player()->set_skip(true);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+				if (MUSIC::get_m_player()->get_stop() == false) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else MUSIC::get_m_player()->set_stop(false);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
+			}
 			break;
 		}
 		case sf::Event::MouseMoved:
@@ -1670,8 +1795,7 @@ void msg_box::input()
 				selection = 0;
 
 			std::cout << "           Selection " << selection << std::endl; //debug
-
-
+			
 			break;
 		}
 		case sf::Event::MouseButtonPressed:
@@ -1683,15 +1807,33 @@ void msg_box::input()
 				{
 					case -1:
 					{
+						if (next_state != nullptr) {
+							delete[] options;
+
+							state_manager * aux = game;
+							game_state * next = next_state;
+							aux->pop_state();
+							aux->change_state(next);
+							return;
+						}
+
 						game->pop_state();
 						return;
-						break;
 					}
 					case 1:
 					{
+						if (next_state != nullptr) {
+							delete[] options;
+
+							state_manager * aux = game;
+							game_state * next = next_state;
+							aux->pop_state();
+							aux->change_state(next);
+							return;
+						}
+						
 						game->pop_state();
 						return;
-						break;
 					}
 					default:
 						break;
@@ -1711,12 +1853,6 @@ void msg_box::input()
 
 void msg_box::logic_update(const float elapsed)
 {
-	if (selection != -1)
-	{
-		selector.setOrigin((selector.getGlobalBounds().width / 2.0f), (selector.getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
-		selector.setPosition(options[selection].findCharacterPos(0).x, options[selection].getPosition().y); //position of first character
-		selector.move(-20.0f, 4);
-	}
 
 }
 
@@ -1735,20 +1871,16 @@ void msg_box::draw(const float elapsed)
 void msg_box::show_textbox(std::string & str, unsigned int line_size, unsigned int char_size)
 {
 	float offset = 5;
-
-
-
+	
 	std::string * placeholder = get_string_tab(str, text_size, line_size);
 
 	options = new sf::Text[text_size];
-
-
+	
 	sf::Vector2f window_size(((line_size * char_size) / 2.0f) + (char_size * 3.0f), (char_size * 3.0f) + (text_size * char_size) + ((text_size - 1.0f) * offset));
 
 	box.setSize(sf::Vector2f(window_size.x, window_size.y + close.getGlobalBounds().height * 1.4f));
 	box.setFillColor(sf::Color(21, 21, 21, 255));
 	
-
 	box.setOrigin(box.getGlobalBounds().width / 2.0f, box.getGlobalBounds().height / 2.0f);
 	box.setPosition(game->window.getSize().x * 0.50f, game->window.getSize().y * 0.50f);
 	box.setOutlineThickness(-3);
@@ -1767,12 +1899,8 @@ void msg_box::show_textbox(std::string & str, unsigned int line_size, unsigned i
 
 		pos.y += char_size;
 	}
-
-
-
+	
 	(text_size == 1) ? delete placeholder : delete[] placeholder; //if size == 1 i used new, not new[]
-																	//delete[] options;
-
 }
 
 void msg_box::setup_text()
@@ -1791,7 +1919,7 @@ void msg_box::setup_text()
 
 /*------------------------------ Inventory ------------------------------*/
 
-inventory::inventory(state_manager * game_ptr)
+inventory::inventory(state_manager * game_ptr, sf::Image print)
 {
 	game = game_ptr;
 
@@ -1799,6 +1927,14 @@ inventory::inventory(state_manager * game_ptr)
 		complain(ErrNo::file_access);
 		return;
 	}
+
+	if (!backgroud_texture.loadFromImage(print)) {
+		complain(ErrNo::file_access);
+		return;
+	}
+
+	background.setTexture(backgroud_texture, true);
+	background.setTextureRect(sf::IntRect(0, 0, (int)(game->window.getSize().x / 5.8f), (int)(game->window.getSize().y - (game->window.getSize().y / 7.0f))));
 
 	details.setFillColor(sf::Color::Color(170, 170, 170, 235));
 	details.setSize(sf::Vector2f((8.0f / 16.0f) * game->window.getSize().x, (game->window.getSize().y * (2.0f / 3.0f))));
@@ -1832,6 +1968,19 @@ void inventory::input()
 						if (price_setter_inside.getString().isEmpty()) break;
 						price_setter_str.erase(price_setter_str.length() - 1);
 						price_setter_inside.setString(price_setter_str + " £");
+					}
+					else if (event.text.unicode == 13) { // return
+						price_setter.setFillColor(sf::Color::Transparent);
+						set_price.setColor(sf::Color(70, 70, 70, 255));
+
+						current_selection->set_price(atof(price_setter_str.c_str()));
+
+						update_properties();
+					}
+					else if (event.text.unicode == 27) { // escape
+						price_setter.setFillColor(sf::Color::Transparent);
+						price_setter_inside.setString("");
+						set_price.setColor(sf::Color(70, 70, 70, 255));
 					}
 				}
 				else if (event.text.unicode == 8) // backspace
@@ -1902,18 +2051,22 @@ void inventory::input()
 		{
 		case sf::Event::KeyPressed:
 		{
-			if (event.key.alt && (event.key.code == sf::Keyboard::F4))
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
 				game->window.close();
-			else if (event.key.code == sf::Keyboard::S) {
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
 				MUSIC::get_m_player()->set_skip(true);
 			}
-			else if (event.key.code == sf::Keyboard::M) {
-				MUSIC::get_m_player()->set_stop(true);
+			else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+				if (MUSIC::get_m_player()->get_stop() == false) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else MUSIC::get_m_player()->set_stop(false);
 			}
-			else if (event.key.code == sf::Keyboard::J) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
 			}
-			else if (event.key.code == sf::Keyboard::K) {
+			else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
 				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
 			}
 			break;
@@ -1925,16 +2078,27 @@ void inventory::input()
 			// update properties
 			for (int i = 0; i < 5; i++) {
 				if (currently_showing[i].getGlobalBounds().contains(mouse_pos) && currently_showing[i].getString() != "") {
+					int j;
 					int item_number = starting_index * 5 + i;
 					auto it = active_store->get_inventory()->begin();
 
-					for (int j = 0; j < item_number; j++) {
+					currently_showing[i].setStyle(sf::Text::Bold);
+
+					for (j = 0; j < 5; j++) {
+						if (j == i) continue;
+						currently_showing[j].setStyle(sf::Text::Regular);
+					}
+
+					for (j = 0; j < item_number; j++) {
 						it++;
 					}
 
 					current_selection = *it;
 					
+					set_price.setColor(sf::Color(70, 70, 70, 255));
+
 					update_properties();
+					return;
 				}
 			}
 
@@ -2011,19 +2175,14 @@ void inventory::logic_update(const float elapsed)
 
 void inventory::draw(const float elapsed)
 {
+	game->window.draw(background);
 	game->window.draw(details);
 	game->window.draw(buy);
 	game->window.draw(back);
 	game->window.draw(set_price);
 	game->window.draw(price_setter);
 	game->window.draw(price_setter_inside);
-
-	for (int i = 0; i < 3; i++)
-		game->window.draw(heat[i]);
-		
-	for (int i = 0; i < 5; i++)
-		game->window.draw(indicators[i]);
-
+			
 	for (int i = 0; i < 3; i++)
 		game->window.draw(icons[i]);
 
@@ -2049,68 +2208,18 @@ void inventory::setup()
 	current_user = game->get_current_user();
 	active_store = current_user->get_active_store();
 
-	setup_options();
 	setup_text();
 	setup_icons();
 }
 
-void inventory::setup_options()
-{
-	sf::Vector2f rectangle_size(game->window.getSize().x / 5.8f, game->window.getSize().y / 3.5f);
-	sf::Vector2f options_pos(game->window.getSize().x / 5.8f, 0);
-
-	for (int i = 0; i < 3; i++)
-	{
-		heat[i].setSize(rectangle_size);
-		heat[i].setFillColor(sf::Color::White);
-
-		switch (i)
-		{
-		case 0:
-			heat[i].setPosition(0, 0);
-			heat[i].setFillColor(sf::Color::Color(53, 53, 53, 255));
-			heat[i].setOutlineColor(sf::Color::Black);
-			heat[i].setOutlineThickness(-1);
-			break;
-		case 1:
-			heat[i].setPosition(0, rectangle_size.y);
-			heat[i].scale(1.0f, 2.0f);
-			heat[i].setFillColor(sf::Color::Color(40, 40, 40, 255));
-			heat[i].setOutlineColor(sf::Color::Black);
-			heat[i].setOutlineThickness(-1);
-			break;
-		case 2:
-			heat[i].setPosition(0, 3.0f * rectangle_size.y);
-			heat[i].setFillColor(sf::Color::Color(40, 40, 40, 255));
-			heat[i].scale(1.0f, 0.5f);
-			heat[i].setOutlineColor(sf::Color::Black);
-			heat[i].setOutlineThickness(-1);
-			break;
-		}
-	}
-}
-
 void inventory::setup_text()
 {
-	int offset = (int)(heat[1].getGlobalBounds().height / 5.0f);
-
-	// indicators
-	for (int i = 0; i < 5; i++)	{
-		indicators[i].setFont(font);
-		indicators[i].setCharacterSize((int)(game->window.getSize().y / 22.0f));
-		indicators[i].setString(indicators_str[i]);
-		indicators[i].setColor(sf::Color::White);
-		indicators[i].setOrigin((indicators[i].getGlobalBounds().width / 2.0f), (indicators[i].getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
-		indicators[i].setPosition(heat[1].getPosition());
-		indicators[i].move(heat[1].getGlobalBounds().width / 2.0f, (offset / 2.3f) + (i*offset));
-	}
-
 	// currently showing (list)
 	for (int i = 0; i < 5; i++) {
 		currently_showing[i].setFont(font);
 		currently_showing[i].setCharacterSize((int)(game->window.getSize().y / 16.0f));
 		currently_showing[i].setColor(sf::Color::White);
-		currently_showing[i].setPosition(heat[1].getGlobalBounds().width + 90, (2 * i * currently_showing[i].getCharacterSize() + game->window.getSize().y / 5.0f));
+		currently_showing[i].setPosition((game->window.getSize().x / 5.8f) + 90, (2 * i * currently_showing[i].getCharacterSize() + game->window.getSize().y / 5.0f));
 	}
 	update_list();
 
@@ -2130,55 +2239,23 @@ void inventory::setup_text()
 		back.setColor(sf::Color::White);
 		back.setCharacterSize(50);
 		back.setString("Back");
-		back.setPosition(heat[0].getGlobalBounds().width + 50,
+		back.setPosition((game->window.getSize().x / 5.8f) + 50,
 			game->window.getSize().y - (float)2 * buy.getCharacterSize());
 	}
 
 	// set price
 	{
 		set_price.setFont(font);
-		set_price.setColor(sf::Color(70, 70, 70, 255));
+		set_price.setColor(sf::Color::Transparent);
 		set_price.setString("Set price");
 	}
 }
 
 void inventory::setup_icons()
 {
-	int i = 0;
-	std::string icon_names[3] = { "bargraph.png", "save.png", "quit.png" };
-
-	for (i = 0; i < 3; i++)
-	{
-		if (!icons_texture[i].loadFromFile("res/icons/" + icon_names[i]))
-		{
-			complain(ErrNo::file_access);
-			return;
-		}
-
-		icons[i].setTexture(icons_texture[i]);
-		icons[i].setOrigin(icons[i].getGlobalBounds().width / 2.0f, icons[i].getGlobalBounds().height / 2.0f);
-		icons[i].scale(0.5f, 0.5f);
-
-		if (i > 0)
-			icons[i].setScale(0.20f, 0.20f);
-		
-		switch (i) // i refering to 
-		{
-		case 0: // bar graph
-			icons[i].setPosition(heat[0].getPosition().x + (heat[0].getGlobalBounds().width / 2.0f), heat[0].getPosition().y + (heat[0].getGlobalBounds().height / 2.0f));
-			break;
-		case 1: // save 
-			icons[i].setPosition(heat[2].getPosition().x + (heat[2].getGlobalBounds().width / 4.0f), heat[2].getPosition().y + (heat[2].getGlobalBounds().height / 2.0f));
-			break;
-		case 2: // quit game
-			icons[i].setPosition(heat[2].getPosition().x + (heat[2].getGlobalBounds().width * (3.0f / 4.0f)), heat[2].getPosition().y + (heat[2].getGlobalBounds().height / 2.0f));
-			break;
-		}
-	}
-
 	std::string scroll_names[2] = { "down_arrow.png", "up_arrow.png" };
 
-	for (i = 0; i < 2; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		if (!scroll_texture[i].loadFromFile("res/png/" + scroll_names[i]))
 		{
@@ -2197,7 +2274,7 @@ void inventory::update_list()
 	for (int i = 0; i < starting_index * 5; i++) it++;
 
 	for (int i = 0; i < 5; i++) {
-		currently_showing[i].setString(std::to_string(starting_index * 5 + i + 1) + ". " + (*it)->print_brand_cpp());
+		currently_showing[i].setString(std::to_string(starting_index * 5 + i + 1) + ". " + (*it)->print_brand_cpp_short());
 		it++;
 		if (it == current_user->get_active_store()->get_inventory()->end()) {
 			for (int j = i+1; j < 5; j++) {

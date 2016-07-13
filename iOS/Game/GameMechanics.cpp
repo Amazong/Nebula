@@ -9,6 +9,22 @@ void instrument::set_price(double price)
 	set_perceived_value(this->price / this->value);
 }
 
+std::string instrument::print_brand_cpp()
+{
+	std::string b = brand;
+
+	return b;
+}
+
+std::string instrument::print_brand_cpp_short()
+{
+	std::string b = brand;
+
+	if (strcmp(brand, "Steinway & Sons") == 0) b = "S&S";
+
+	return b;
+}
+
 std::string instrument::print_type_cpp()
 {
 	switch (own_type_piano) {
@@ -81,7 +97,7 @@ std::string instrument::style(double d)
 		s += "M";
 	}
 	else {
-		s += "1 €"; // if the user has more than 1000000000 £, we display "1 €"
+		s += "1 $"; // if the user has more than 1000000000 £, we display "1 $"
 					// small easter egg :)
 		return s;
 	}
@@ -152,7 +168,7 @@ guitar::guitar(std::string name)
 
 	std::mt19937 random_numbers(rd());
 
-	std::string to_check[5] = { "Larrivee", "G&L", "Martin ", "PRS" ," Maton" };
+	std::string to_check[5] = { "Larrivee", "G&L", "Martin", "PRS" ,"Maton" };
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -325,6 +341,52 @@ void piano::set_perceived_value(double ratio)
 /*------------------------------ employee ------------------------------*/
 
 
+employee::employee(char * name)
+{
+	std::random_device rd;
+	std::mt19937 random_numbers(rd());
+	char n[51];
+	strcpy_s(n, name);
+
+	if (strcmp(name, "") == 0) {
+		std::uniform_int_distribution<int> range(0, 499);
+
+		std::ifstream names("res/text/names_500.txt");
+		if (!names.is_open()) {
+			error::trace_error(ErrNo::file_access);
+		}
+				
+		int index = range(random_numbers);
+		
+		while (names.getline(n, 50, '\n')) {
+			index--;
+			if (index < 0) break;
+		}
+		
+		n[50] = '\0'; // precaution
+		
+		names.close();
+	}
+
+	int e;
+	double v, modulate;
+
+	std::uniform_int_distribution<int> range1(1, 3);
+	std::normal_distribution<double> range2(1, 0.2);
+
+	e = range1(random_numbers);
+
+	do {
+		modulate = range2(random_numbers);
+	} while (modulate < 0.6 || modulate > 1.4);
+
+	v = 20000;
+	v *= ((e + 1) / 3.0);
+	v *= modulate;
+
+	*this = employee(n, v, e);
+}
+
 employee::employee(char * person, double value, int eff) // eff: 1-low; 2-neutral; 3-high
 {
 	strcpy_s(this->name, person);
@@ -367,7 +429,7 @@ store::store(const store & shop)
 	staff.clear();
 }
 
-store::store(user_profile * current, char * name, int value, int areacode, int pop) // areacode: 0-poor; 1-middle; 2-rich 
+store::store(user_profile * current, char * name, double value, int areacode, int pop) // areacode: 0-poor; 1-middle; 2-rich 
 {
 	this->value = value;
 	this->user = current;
@@ -387,6 +449,31 @@ store::store(user_profile * current, char * name, int value, int areacode, int p
 
 	inventory.clear();
 	staff.clear();
+}
+
+store::store(user_profile * current, char * name)
+{
+	int a, p;
+	double v, modulate;
+	
+	std::random_device rd;
+	std::mt19937 random_numbers(rd());
+
+	std::uniform_int_distribution<int> range1(1, 3);
+	std::normal_distribution<double> range2(1, 0.2);
+	
+	a = static_cast<area>(range1(random_numbers));
+	p = static_cast<population>(range1(random_numbers));
+
+	do {
+		modulate = range2(random_numbers);
+	} while (modulate < 0.6 || modulate > 1.4);
+	
+	v = 300000;
+	v *= ((a+1) / 3.0) * ((p+1) / 3.0);
+	v *= modulate;
+
+	*this = store(current, name, v, a, p);
 }
 
 store::~store()
@@ -618,7 +705,7 @@ void store::sell_instrument(int position_offset)
 {
 	std::list<instrument *>::iterator it = inventory.begin();
 
-	for ( ; position_offset != 0; position_offset--)  // proceding to position offset
+	for ( ; position_offset != 0; position_offset--) // proceding to position offset
 	{
 		it++;
 	}
@@ -764,6 +851,7 @@ user_profile::user_profile(const user_profile & user)
 	net_worth = user.net_worth;
 	reputation = user.reputation;
 	difficulty = user.difficulty;
+	time_elapsed = user.time_elapsed;
 }
 
 user_profile::~user_profile()
@@ -827,6 +915,23 @@ void user_profile::buy_store(store * store)
 		this->net_worth -= store->value;
 		stores.push_back(store);
 	}
+}
+
+std::string user_profile::get_time_str() const
+{
+	std::string t;
+
+	int years = ((int)time_elapsed.asSeconds()) / (int)YEAR_TIME_SECS;
+
+	t += std::to_string(years);
+	t += "Y  ";
+
+	int weeks = (((int)time_elapsed.asSeconds()) % (int)YEAR_TIME_SECS) / (int)WEEK_TIME_SECS;
+
+	t += std::to_string(weeks);
+	t += "W";
+
+	return t;
 }
 
 void user_profile::save_game()
@@ -899,7 +1004,7 @@ void user_profile::save_game()
 	}
 	else //does not repeat writing the user if already there 
 	{
-		std::string line, line_2 = user;
+		std::string line, line_2 = this->user;
 		bool is_there = false;
 		while (std::getline(fin, line))
 		{
@@ -916,7 +1021,7 @@ void user_profile::save_game()
 			if (fout.fail())
 				error::trace_error(ErrNo::file_access);
 
-			fout << user << "\n";
+			fout << this->user << "\n";
 
 			fout.close();
 		}
@@ -932,6 +1037,7 @@ void user_profile::save_game()
 	save.net_worth = net_worth;
 	save.reputation = reputation;
 	save.weekly_expenses = weekly_expenses;
+	save.time_elapsed = time_elapsed.asSeconds();
 	strcpy_s(save.user, this->user);
 
 	fout.seekp(0, std::ios::beg);
@@ -944,9 +1050,9 @@ void user_profile::save_game()
 	fout.close();
 }
 
-void user_profile::save_inventories(std::string  user, const  guitar * tab, int size, int store_index)
+void user_profile::save_inventories(std::string user, const guitar * tab, int size, int store_index)
 {
-	std::string file_name = user;   //std structure of naming files
+	std::string file_name = user; //std structure of naming files
 	file_name += ".Store_inventory";
 	file_name.push_back(char(store_index));
 
@@ -965,9 +1071,9 @@ void user_profile::save_inventories(std::string  user, const  guitar * tab, int 
 	fout.close();
 }
 
-void user_profile::save_staff(std::string  user, const employee * tab, int size, int store_index)
+void user_profile::save_staff(std::string user, const employee * tab, int size, int store_index)
 {
-	std::string file_name = user;   //std structure of naming files
+	std::string file_name = user; //std structure of naming files
 	file_name += ".Store_staff";
 	file_name.push_back(char(store_index));
 
@@ -986,9 +1092,9 @@ void user_profile::save_staff(std::string  user, const employee * tab, int size,
 	fout.close();
 }
 
-void user_profile::save_stores(std::string  user, const store * tab, int size)
+void user_profile::save_stores(std::string user, const store * tab, int size)
 {
-	std::string file_name = user;   //std structure of naming files
+	std::string file_name = user; //std structure of naming files
 	file_name += ".Stores";
 
 	std::ofstream fout(file_name, std::ios::binary | std::ios::trunc); //whatever was there is redefined
@@ -1057,8 +1163,8 @@ void user_profile::load_user(std::string & profile_title)
 	this->net_worth = load[0].net_worth;
 	this->reputation = load[0].reputation;
 	this->difficulty = load[0].difficulty;
-
-
+	this->time_elapsed = sf::Time(sf::seconds(load[0].time_elapsed));		
+	
 	load_stores(this);
 }
 
@@ -1131,7 +1237,7 @@ void user_profile::load_store_inv(const user_profile * user, store & shop, int s
 
 		tab_ptr = (guitar *) malloc (size * sizeof(guitar));
 
-		char  * ptr = (char *)(tab_ptr);
+		char * ptr = (char *)(tab_ptr);
 
 		fin.read(ptr, size * sizeof(guitar));
 
@@ -1182,7 +1288,7 @@ void user_profile::load_store_staff(const user_profile * user, store & shop, int
 		return;
 	}
 	
-	shop.fill_staff(tab_ptr, size); // this function  allocates its own 
+	shop.fill_staff(tab_ptr, size); // this function allocates its own 
 	
 	free(tab_ptr);
 	tab_ptr = nullptr;	
@@ -1220,7 +1326,7 @@ std::string user_profile::get_balance_styled(int arg) const
 		s += "M";
 	}
 	else {
-		s += "1 €"; // if the user has more than 1000000000 £, we display "1 €"
+		s += "1 $"; // if the user has more than 1000000000 £, we display "1 $"
 					// small easter egg :)
 		return s;
 	}

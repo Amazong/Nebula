@@ -3,6 +3,7 @@
 #include <iostream>
 //for debugging only
 #include <thread>
+#include <deque>
 #include "StateManager.h"
 #include "SFML\Graphics.hpp"
 #include "Music.h"
@@ -11,7 +12,7 @@
 #include "GameWindows.h"
 
 
-class game_state  // base class common to all derived states.
+class game_state // base class common to all derived states.
 {
 private:
 	bool ok = true; // by default, everything is fine
@@ -96,17 +97,27 @@ class in_game : public game_state
 {
 private:
 	const std::string options_str[4] = { "Staff", "Inventory", "Shop", "Finance" };
-	const std::string indicators_str[5] = {"Balance","Reputation","Game Time","Month's profits","Year's Profits"};
+	std::string indicators_str[5] = { "Balance", "Reputation", "Game Time", "Month's profits", "Year's Profits" };
+
+	sf::Time buffer = sf::seconds(0.0f);
+
+	std::deque<long double> past_net_worths;
+	
 	sf::Font options_font;
 	sf::Text options[4];
 	sf::Text indicators[5];
 	sf::RectangleShape heat[7];
 	sf::Sprite icons[7];
 	sf::Texture icons_texture[7];
+
 	double buying_rate;
 	int selection = -1;
+	
+	int last_second = -1;
+
 	store * active_store;
 	user_profile * current_user;
+	
 	void update_buying_rate();
 
 public:
@@ -118,10 +129,15 @@ public:
 
 	void setup();
 	void setup_options();
-	void setup_indicators();
+	void update_indicators();
 	void setup_icons();
 	void control_icon_animations(sf::Vector2f mouse_pos);
 	bool handle_icons(sf::Vector2f mouse_pos);
+
+	void add_profits(long double n_worth);
+	void update_profits();
+	
+	std::string style(long double d);
 };
 
 /*---------------------------- InGameSetup ----------------------------*/
@@ -160,9 +176,9 @@ public:
 };
 
 
-/*------------------------------ New_Game1 ------------------------------*/
+/*------------------------------ New_Game ------------------------------*/
 
-class new_game1 : public game_state
+class new_game : public game_state
 {
 private:
 	const std::string options_str[6] = { "Username:", "Difficulty:", "Easy", "Medium" ,"Hard", "Continue" };
@@ -177,7 +193,7 @@ private:
 	int difficulty = 0; // 0 to 2
 	int selection = -1;
 public:
-	new_game1(state_manager * game, sf::Image Background);
+	new_game(state_manager * game, sf::Image Background);
 
 	void input();
 	void logic_update(const float elapsed);
@@ -218,6 +234,7 @@ class msg_box : public game_state
 {
 private:
 	std::string str;
+	game_state * next_state;
 	unsigned int line_size;
 	unsigned int char_size;
 	sf::Text close;
@@ -225,20 +242,18 @@ private:
 	sf::Text * options;
 	sf::Texture background;
 	sf::Sprite background_sprite;
-	sf::Sprite selector;
-	sf::Texture selector_text;
 	sf::RectangleShape box;
 	int text_size;
 	int selection = -1; // by default nothing is selected
 
 public:
-	msg_box(state_manager * game_ptr, sf::Image background_img, std::string str, unsigned int line_size, unsigned  int char_size);
+	msg_box(state_manager * game_ptr, sf::Image background_img, std::string str, unsigned int line_size, unsigned int char_size, game_state * next_state = nullptr);
 	
 	void input();
 	void logic_update(const float elapsed);
 	void draw(const float elapsed);
 
-	void show_textbox(std::string & str, unsigned int line_size, unsigned  int char_size); // function for message boxes., line size in chars.
+	void show_textbox(std::string & str, unsigned int line_size, unsigned int char_size); // function for message boxes., line size in chars.
 	void setup_text();
 };
 
@@ -252,25 +267,29 @@ public:
 class inventory : public game_state
 {
 private:
-	const std::string indicators_str[5] = { "Balance", "Reputation", "Game Time", "Month's profits", "Year's Profits" };
 	sf::Font font;
 	sf::Text title;
 	sf::Text buy;
 	sf::Text back;
 	sf::Text set_price;
+	sf::Text price_setter_inside;
 	sf::Text active_properties[6]; // value, price, perceived value, quality, brand, type (if piano)
-	sf::Text indicators[5];
 	sf::Text currently_showing[5];
-	sf::RectangleShape heat[3];
+	
+	std::string price_setter_str;
+
 	sf::RectangleShape details;
 	sf::RectangleShape price_setter;
-	std::string price_setter_str;
-	sf::Text price_setter_inside;
+	
 	sf::Sprite scroll[2];
 	sf::Texture scroll_texture[2];
+	
 	sf::Sprite icons[3];
 	sf::Texture icons_texture[3];
 	
+	sf::Sprite background;
+	sf::Texture backgroud_texture;
+
 	double buying_rate;
 	int selection = -1;
 	int starting_index = 0;
@@ -280,14 +299,13 @@ private:
 	user_profile * current_user;
 
 	void setup();
-	void setup_options();
 	void setup_text();
 	void setup_icons();
 	void update_list();
 	void update_properties();
 
 public:
-	inventory(state_manager * game_ptr);
+	inventory(state_manager * game_ptr, sf::Image print);
 
 	void input();
 	void logic_update(const float elapsed);
