@@ -1,0 +1,27 @@
+01:58:52 - Program started.
+01:58:52 - Music started playing.
+01:58:52 - Bought Downtown for 20000.00£ (peanuts).
+01:58:52 - Bought Larrivee guitar for 200.00£ (peanuts).
+01:58:52 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+01:58:52 - Bought Martin guitar for 400.00£ (peanuts).
+01:58:52 - Bought grand Roland piano for 16666.66£ (peanuts).
+01:58:52 - Bought Maton guitar for 600.00£ (peanuts).
+01:58:52 - Bought upright Steinway & Sons piano for 4523.80£ (peanuts).
+01:58:52 - Hired Cersei for 200000.00£ (peanuts).
+01:58:52 - Hired Ned Stark for 5000.00£ (peanuts).
+01:58:52 - Hired Jon Snow for 100000.00£ (peanuts).
+01:58:52 - Started playing OpenGJam.ogg.
+01:58:52 - Hired Sansa for 1000.00£ (peanuts).
+01:58:52 - Game Lady Stark saved.
+01:58:52 - Sold Martin guitar for 400.00£ (peanuts).
+01:58:52 - Sold an item! Your reputation has increased.
+01:58:52 - Sold Maton guitar for 600.00£ (peanuts).
+01:58:52 - Sold an item! Your reputation has increased.
+01:58:52 - Sold upright Steinway & Sons piano for 50000.00£ (peanuts).
+01:58:52 - Sold an item! Your reputation has increased.
+01:58:52 - Sold grand Roland piano for 16666.66£ (peanuts).
+01:58:52 - Sold an item! Your reputation has increased.
+01:58:52 - Sold grand Steinway & Sons piano for 50000.00£ (peanuts).
+01:58:52 - Sold an item! Your reputation has increased.
+01:58:55 - Quitting music player.
+01:58:56 - Program exited normally.
