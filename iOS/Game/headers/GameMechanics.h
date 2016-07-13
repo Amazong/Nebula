@@ -175,6 +175,8 @@ public:
 
 	std::string get_area(int num);
 	std::string get_population(int num);
+	std::string get_buying_rate();
+
 	// averages
 	void update_average_purchasing_power();
 	void update_average_efficiency();
@@ -216,6 +218,7 @@ public:
 	friend class in_game_setup;
 	friend class finance;
 	friend class store_state;
+	friend class store_buy;
 };
 
 
@@ -282,5 +285,6 @@ public:
 	friend class in_game_setup;
 	friend class finance;
 	friend class store_state;
+	friend class store_buy;
 };
 

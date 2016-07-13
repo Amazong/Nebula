@@ -460,11 +460,34 @@ store::store(user_profile * current, char * name, double value, int areacode, in
 
 store::store(user_profile * current, char * name)
 {
-	int a, p;
-	double v, modulate;
-	
 	std::random_device rd;
 	std::mt19937 random_numbers(rd());
+	
+	char n[51];
+	strcpy_s(n, name);
+
+	if (strcmp(name, "") == 0) {
+		std::uniform_int_distribution<int> range(0, 208);
+
+		std::ifstream names("res/text/cities_209.txt");
+		if (!names.is_open()) {
+			error::trace_error(ErrNo::file_access);
+		}
+
+		int index = range(random_numbers);
+
+		while (names.getline(n, 50, '\n')) {
+			index--;
+			if (index < 0) break;
+		}
+
+		n[50] = '\0'; // precaution
+
+		names.close();
+	}
+
+	int a, p;
+	double v, modulate;	
 
 	std::uniform_int_distribution<int> range1(1, 3);
 	std::normal_distribution<double> range2(1, 0.2);
@@ -480,7 +503,7 @@ store::store(user_profile * current, char * name)
 	v *= ((a+1) / 3.0) * ((p+1) / 3.0);
 	v *= modulate;
 
-	*this = store(current, name, v, a, p);
+	*this = store(current, n, v, a, p);
 }
 
 store::~store()
@@ -542,6 +565,12 @@ std::string store::get_population(int num)
 		temp = "City";
 
 	return temp;
+}
+
+std::string store::get_buying_rate()
+{
+	if (buying_rate < 0) return "0";
+	return std::to_string(buying_rate);
 }
 
 // averages

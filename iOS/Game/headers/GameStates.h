@@ -314,6 +314,49 @@ public:
 	void move_list_up();
 };
 
+/*------------------------------ store_buy ------------------------------*/
+
+class store_buy : public game_state {
+private:
+	sf::Image in_game_printscr;
+
+	sf::Font font;
+	sf::Text title;
+	sf::Text buy;
+	sf::Text back;
+	sf::Text set_active_store;
+	sf::Text active_properties[5]; // value, area, population, max stock, BR
+	sf::Text currently_showing[5];
+
+	std::string active_store_str;
+
+	sf::RectangleShape details;
+	
+	sf::Sprite background;
+	sf::Texture backgroud_texture;
+
+	double buying_rate;
+	int selection = -1;
+	int starting_index = 0;
+	store * current_selection;
+
+	store * active_store;
+	user_profile * current_user;
+
+	void setup();
+	void setup_text();
+	void setup_icons();
+	void update_list();
+	void update_properties();
+
+public:
+	store_buy(state_manager * game_ptr, sf::Image print);
+
+	void input();
+	void logic_update(const float elapsed);
+	void draw(const float elapsed);
+};
+
 /*------------------------------  Finance  ------------------------------*/
 
 class finance : public game_state

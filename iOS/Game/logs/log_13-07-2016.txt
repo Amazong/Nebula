@@ -8020,3 +8020,94 @@ Started playing HotaruNoShikai.ogg.
 21:45:27 - Sold an item! Your reputation has increased.
 21:45:27 - The client didn't buy anything. Your reputation has decreased.
 21:45:37 - Stopping playback.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+21:54:14 - Program started.
+21:54:14 - Music started playing.
+21:54:14 - Bought Downtown for 20000.00£ (peanuts).
+21:54:14 - Bought Larrivee guitar for 200.00£ (peanuts).
+21:54:14 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+21:54:14 - Bought Martin guitar for 400.00£ (peanuts).
+21:54:14 - Bought upright Roland piano for 2142.85£ (peanuts).
+21:54:14 - Bought Maton guitar for 600.00£ (peanuts).
+21:54:14 - Bought upright Steinway & Sons piano for 5000.00£ (peanuts).
+21:54:14 - Bought Larrivee guitar for 200.00£ (peanuts).
+21:54:14 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+21:54:14 - Bought Martin guitar for 400.00£ (peanuts).
+21:54:14 - Bought digital Korg piano for 571.42£ (peanuts).
+21:54:14 - Started playing Paradise.ogg.
+21:54:14 - Bought Maton guitar for 600.00£ (peanuts).
+21:54:14 - Bought upright Korg piano for 2380.95£ (peanuts).
+21:54:14 - Hired Cersei for 200000.00£ (peanuts).
+21:54:14 - Hired Ned Stark for 5000.00£ (peanuts).
+21:54:14 - Hired Jon Snow for 100000.00£ (peanuts).
+21:54:14 - Hired Sansa for 1000.00£ (peanuts).
+21:54:14 - Game Lady Stark saved.
+21:54:14 - Sold Larrivee guitar for 1000.00£ (peanuts).
+21:54:14 - Sold an item! Your reputation has increased.
+21:54:14 - Sold Maton guitar for 600.00£ (peanuts).
+21:54:14 - Sold an item! Your reputation has increased.
+21:54:14 - Sold Maton guitar for 600.00£ (peanuts).
+21:54:14 - Sold an item! Your reputation has increased.
+21:54:14 - Sold Martin guitar for 400.00£ (peanuts).
+21:54:14 - Sold an item! Your reputation has increased.
+21:54:14 - Sold Martin guitar for 400.00£ (peanuts).
+21:54:14 - Sold an item! Your reputation has increased.
+21:54:32 - Bought Wuhan for 413545.40£ (peanuts).
+21:54:48 - Bought Austin for 617833.24£ (peanuts).
+21:54:48 - Bought Stockholm for 559808.27£ (peanuts).
+21:54:49 - Bought Doha for 128808.60£ (peanuts).
+21:55:06 - Bought Ahmedabad for 134297.81£ (peanuts).
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+21:57:37 - Program started.
+21:57:38 - Music started playing.
+21:57:38 - Bought Downtown for 20000.00£ (peanuts).
+21:57:38 - Bought Larrivee guitar for 200.00£ (peanuts).
+21:57:38 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+21:57:38 - Bought Martin guitar for 400.00£ (peanuts).
+21:57:38 - Bought upright Roland piano for 1666.66£ (peanuts).
+21:57:38 - Bought Maton guitar for 600.00£ (peanuts).
+21:57:38 - Bought digital Korg piano for 714.28£ (peanuts).
+21:57:38 - Bought Larrivee guitar for 200.00£ (peanuts).
+21:57:38 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+21:57:38 - Bought Martin guitar for 400.00£ (peanuts).
+21:21:57:57:38 - Bought upright Yamaha piano for 4285.71£ (peanuts).
+38 - Started playing Tears in Heaven.ogg.
+21:57:38 - Bought Maton guitar for 600.00£ (peanuts).
+21:57:38 - Bought digital Korg piano for 857.14£ (peanuts).
+21:57:38 - Hired Cersei for 200000.00£ (peanuts).
+21:57:38 - Hired Ned Stark for 5000.00£ (peanuts).
+21:57:38 - Hired Jon Snow for 100000.00£ (peanuts).
+21:57:38 - Hired Sansa for 1000.00£ (peanuts).
+21:57:38 - Game Lady Stark saved.
+21:57:38 - Sold Larrivee guitar for 200.00£ (peanuts).
+21:57:38 - Sold an item! Your reputation has increased.
+21:57:38 - Sold Larrivee guitar for 1000.00£ (peanuts).
+21:57:38 - Sold an item! Your reputation has increased.
+21:57:38 - Sold Maton guitar for 600.00£ (peanuts).
+21:57:38 - Sold an item! Your reputation has increased.
+21:57:38 - Sold digital Korg piano for 714.28£ (peanuts).
+21:57:38 - Sold an item! Your reputation has increased.
+21:57:38 - Sold Maton guitar for 600.00£ (peanuts).
+21:57:38 - Sold an item! Your reputation has increased.
+21:57:48 - Quitting music player.
+21:57:49 - Program exited normally.

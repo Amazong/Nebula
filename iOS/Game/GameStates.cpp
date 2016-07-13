@@ -2405,6 +2405,301 @@ void inventory::update_properties() {
 	}
 }
 
+/*------------------------------ store_buy ------------------------------*/
+
+store_buy::store_buy(state_manager * game_ptr, sf::Image print)
+{
+	game = game_ptr;
+	in_game_printscr = print;
+
+	if (!font.loadFromFile("res/fonts/Roboto-Bold.ttf")) {
+		complain(ErrNo::file_access);
+		return;
+	}
+
+	if (!backgroud_texture.loadFromImage(print)) {
+		complain(ErrNo::file_access);
+		return;
+	}
+
+	background.setTexture(backgroud_texture, true);
+	background.setTextureRect(sf::IntRect(0, 0, (int)(game->window.getSize().x / 5.8f), (int)(game->window.getSize().y - (game->window.getSize().y / 7.0f))));
+
+	details.setFillColor(sf::Color::Color(170, 170, 170, 235));
+	details.setSize(sf::Vector2f((8.0f / 16.0f) * game->window.getSize().x, (game->window.getSize().y * (2.0f / 3.0f))));
+	details.setPosition(game->window.getSize().x * (7.0f / 16.0f), game->window.getSize().y / 5.5f);
+	details.setOutlineColor(sf::Color(100, 100, 100, 255));
+	details.setOutlineThickness(-3);
+
+	setup();
+}
+
+void store_buy::input()
+{
+	sf::Event event;
+	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default
+
+	while (game->window.pollEvent(event))
+	{
+		// if in input mode
+
+		switch (event.type)
+		{
+		case sf::Event::KeyPressed:
+		{
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
+				game->window.close();
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
+				MUSIC::get_m_player()->set_skip(true);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+				if (MUSIC::get_m_player()->get_stop() == false) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else MUSIC::get_m_player()->set_stop(false);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
+			}
+			break;
+		}
+		case sf::Event::MouseMoved:
+		{
+			mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
+
+			// update properties
+			for (int i = 0; i < 5; i++) {
+				if (currently_showing[i].getGlobalBounds().contains(mouse_pos) && currently_showing[i].getString() != "") {
+					int j;
+					int item_number = starting_index * 5 + i;
+					auto it = current_user->stores.begin();
+
+					currently_showing[i].setStyle(sf::Text::Bold);
+
+					for (j = 0; j < 5; j++) {
+						if (j == i) continue;
+						currently_showing[j].setStyle(sf::Text::Regular);
+					}
+
+					for (j = 0; j < item_number; j++) {
+						it++;
+					}
+
+					current_selection = *it;
+
+					set_active_store.setColor(sf::Color(70, 70, 70, 255));
+
+					update_properties();
+					return;
+				}
+			}
+
+			if (back.getGlobalBounds().contains(mouse_pos)) {
+				selection = 0;
+				back.setStyle(sf::Text::Bold);
+			}
+			else if (buy.getGlobalBounds().contains(mouse_pos)) {
+				selection = 1;
+				buy.setStyle(sf::Text::Bold);
+			}
+			else if (set_active_store.getGlobalBounds().contains(mouse_pos)) {
+				selection = 2;
+				set_active_store.setStyle(sf::Text::Bold);
+
+			}
+			else {
+				selection = -1;
+				buy.setStyle(sf::Text::Regular);
+				back.setStyle(sf::Text::Regular);
+				set_active_store.setStyle(sf::Text::Regular);
+			}
+
+			break;
+		}
+		case sf::Event::MouseButtonPressed:
+		{
+			state_manager * aux = game;
+			switch (selection) // 0 - back; 1 - buy; 2 - set_active_store; 3 - move down; 4 - move up
+			{
+			case 0:
+				game->pop_state();
+				return;
+			case 1:
+				//game->push_state(new store_buy_buy(game, in_game_printscr));
+				return;
+			case 2:
+				//to do
+				if (!current_user->set_active_store(current_selection)) {
+
+				}
+				// to do
+				return;
+			case 3:
+				
+				break;
+			case 4:
+				
+				break;
+				// to add actions
+			}
+		}
+		default:
+			break;
+
+		}
+	}
+
+}
+
+void store_buy::logic_update(const float elapsed)
+{
+	update_list();
+	update_properties();
+}
+
+void store_buy::draw(const float elapsed)
+{
+	game->window.draw(background);
+	game->window.draw(details);
+	game->window.draw(buy);
+	game->window.draw(back);
+	game->window.draw(set_active_store);
+	
+	int i;
+	
+	for (i = 0; i < 5; i++)
+		game->window.draw(currently_showing[i]);
+
+	for (i = 0; i < 5; i++)
+		game->window.draw(active_properties[i]);
+}
+
+void store_buy::setup()
+{
+	current_user = game->get_current_user();
+	active_store = current_user->get_active_store();
+
+	setup_text();
+	setup_icons();
+}
+
+void store_buy::setup_text()
+{
+	// currently showing (list)
+	for (int i = 0; i < 5; i++) {
+		currently_showing[i].setFont(font);
+		currently_showing[i].setCharacterSize((int)(game->window.getSize().y / 16.0f));
+		currently_showing[i].setColor(sf::Color::White);
+		currently_showing[i].setPosition((game->window.getSize().x / 5.8f) + 90, (2 * i * currently_showing[i].getCharacterSize() + game->window.getSize().y / 5.0f));
+	}
+	update_list();
+
+	// buy
+	{
+		buy.setFont(font);
+		buy.setColor(sf::Color::White);
+		buy.setCharacterSize(50);
+		buy.setString("Buy store");
+		buy.setPosition((game->window.getSize().x - buy.getGlobalBounds().width - 50),
+			game->window.getSize().y - (float)2 * buy.getCharacterSize());
+	}
+
+	// back
+	{
+		back.setFont(font);
+		back.setColor(sf::Color::White);
+		back.setCharacterSize(50);
+		back.setString("Back");
+		back.setPosition((game->window.getSize().x / 5.8f) + 50,
+			game->window.getSize().y - (float)2 * buy.getCharacterSize());
+	}
+
+	//set active store
+	{
+		set_active_store.setFont(font);
+		set_active_store.setColor(sf::Color::Transparent);
+		set_active_store.setString("Set active store");
+	}
+}
+
+void store_buy::setup_icons()
+{
+
+}
+
+void store_buy::update_list()
+{
+	int i;
+	std::list<store *>::iterator it = current_user->stores.begin();
+
+	for (i = 0; i < starting_index * 5; i++) it++;
+
+	for (i = 0; i < 5; i++) {
+		currently_showing[i].setString(std::to_string(starting_index * 5 + i + 1) + ". " + (*it)->get_name_cpp());
+		it++;
+		if (it == current_user->stores.end()) {
+			for (int j = i + 1; j < 5; j++) {
+				currently_showing[j].setString("");
+			}
+			break;
+		}
+	}
+}
+
+void store_buy::update_properties() {
+	int i = 0;
+
+	if (current_selection == nullptr) {
+		for (; i < 5; i++) {
+			active_properties[i].setString("");
+		}
+		return;
+	}
+
+	// active_properties
+	i = 4;
+
+	float base_size = (details.getGlobalBounds().height) / 19.0f;
+	unsigned int character_size = (int)(2 * base_size);
+
+	for (; i >= 0; i--) {
+		active_properties[i].setFont(font);
+		active_properties[i].setCharacterSize(character_size);
+		active_properties[i].setColor(sf::Color::White);
+		active_properties[i].setPosition(details.getPosition().x + 30,
+			details.getPosition().y + base_size + i * 3 * base_size);
+
+		switch (i) {
+		case 0:
+			active_properties[i].setString("Value: " + current_selection->get_value_cpp());
+			break;
+		case 1:
+			active_properties[i].setString("Area: " + current_selection->get_area(int(current_selection->setting)));
+
+			set_active_store.setCharacterSize(active_properties[1].getCharacterSize());
+			set_active_store.setPosition(details.getPosition().x + details.getGlobalBounds().width - 30 - set_active_store.getGlobalBounds().width,
+				active_properties[1].getPosition().y);
+			break;
+		case 2:
+			active_properties[i].setString("Population: " + current_selection->get_population(int(current_selection->placement)));
+			active_properties[i].setCharacterSize(character_size);
+			break;
+		case 3:
+			active_properties[i].setString("Max Stock: " + std::to_string(current_selection->get_max_stock()));
+			break;
+		case 4:
+			active_properties[i].setString("Buying Rate: " + current_selection->get_buying_rate());
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 /*---------------------------- Inventory_Buy ----------------------------*/
 
 inventory_buy::inventory_buy(state_manager * game_ptr, sf::Image print)
@@ -3691,7 +3986,7 @@ void store_state::update_properties() {
 			active_properties[i].setString("Max Stock: " + std::to_string(current_selection->get_max_stock()));
 			break;
 		case 4:
-			active_properties[i].setString("Buying Rate: " + std::to_string(current_selection->buying_rate));
+			active_properties[i].setString("Buying Rate: " + current_selection->get_buying_rate());
 			break;
 		default:
 			break;
