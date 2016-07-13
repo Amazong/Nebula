@@ -48,6 +48,11 @@ void error::profile_not_found()
 	std::cerr << "Profile not found!";
 }
 
+void error::too_many_iterations()
+{
+	std::cerr << "Either that loop is too long, or you're REALLY unlucky!";
+}
+
 void error::capture_screen_error()
 {
 	std::cerr << "Error with print screen!";

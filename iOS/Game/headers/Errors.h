@@ -9,7 +9,8 @@ enum ErrNo
 	corrupt_profile = 10,
 	file_access = 42,
 	profile_not_found = 404,
-	capture_screen_error = 101
+	capture_screen_error = 101,
+	too_many_iterations = 99
 };
 
 namespace error {
@@ -19,6 +20,7 @@ namespace error {
 	void corrupt_profile();
 	void file_access();
 	void profile_not_found();
+	void too_many_iterations();
 };
 
 class logger_file {
