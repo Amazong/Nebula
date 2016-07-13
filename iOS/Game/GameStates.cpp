@@ -537,6 +537,7 @@ void in_game::input()
 			switch (selection)
 			{
 			case 3:	
+				game->push_state(new staff(game, game->window.capture()));
 				return;
 				break;
 
@@ -1042,12 +1043,28 @@ void in_game_setup::input()
 					return;
 					break;
 				}
+				case 3:
+					game->push_state(new staff(game, game->window.capture()));
+					return;
+					break;
+
+				case 4:
+					game->push_state(new inventory(game, game->window.capture()));
+					break;
+				case 5:
+					game->push_state(new store_state(game, game->window.capture()));
+					break;
+				case 6:
+					game->push_state(new finance(game));
+					return;
+					break;
 				case 9:
 				{
 					game->change_state(new in_game(game));
 					return;
 					break;
 				}
+
 			// to add actions
 			}
 
@@ -3991,3 +4008,625 @@ void store_state::update_properties() {
 }
 
 
+
+
+/*------------------------------ staff ------------------------------*/
+
+staff::staff(state_manager * game_ptr, sf::Image print)
+{
+	game = game_ptr;
+	in_game_printscr = print;
+
+	if (!font.loadFromFile("res/fonts/Roboto-Bold.ttf")) {
+		complain(ErrNo::file_access);
+		return;
+	}
+
+	if (!backgroud_texture.loadFromImage(print)) {
+		complain(ErrNo::file_access);
+		return;
+	}
+
+	background.setTexture(backgroud_texture, true);
+	background.setTextureRect(sf::IntRect(0, 0, (int)(game->window.getSize().x / 5.8f), (int)(game->window.getSize().y - (game->window.getSize().y / 7.0f))));
+
+	details.setFillColor(sf::Color::Color(170, 170, 170, 235));
+	details.setSize(sf::Vector2f((8.0f / 16.0f) * game->window.getSize().x, (game->window.getSize().y * (2.0f / 3.0f))));
+	details.setPosition(game->window.getSize().x * (7.0f / 16.0f), game->window.getSize().y / 5.5f);
+	details.setOutlineColor(sf::Color(100, 100, 100, 255));
+	details.setOutlineThickness(-3);
+
+	setup();
+}
+
+void staff::input()
+{
+	sf::Event event;
+	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default
+
+	while (game->window.pollEvent(event))
+	{
+		// if in input mode
+
+		switch (event.type)
+		{
+		case sf::Event::KeyPressed:
+		{
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
+				game->window.close();
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
+				MUSIC::get_m_player()->set_skip(true);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+				if (MUSIC::get_m_player()->get_stop() == false) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else MUSIC::get_m_player()->set_stop(false);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
+			}
+			break;
+		}
+		case sf::Event::MouseMoved:
+		{
+			mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
+
+			// update properties
+			for (int i = 0; i < 5; i++) {
+				if (currently_showing[i].getGlobalBounds().contains(mouse_pos) && currently_showing[i].getString() != "") {
+					int j;
+					int item_number = starting_index * 5 + i;
+					auto it = current_user->get_active_store()->staff.begin();
+
+					currently_showing[i].setStyle(sf::Text::Bold);
+
+					for (j = 0; j < 5; j++) {
+						if (j == i) continue;
+						currently_showing[j].setStyle(sf::Text::Regular);
+					}
+
+					for (j = 0; j < item_number; j++) {
+						it++;
+					}
+
+					current_selection = *it;
+
+					fire_employee.setColor(sf::Color(70, 70, 70, 255));
+
+					update_properties();
+					return;
+				}
+			}
+
+			if (back.getGlobalBounds().contains(mouse_pos)) {
+				selection = 0;
+				back.setStyle(sf::Text::Bold);
+			}
+			else if (buy.getGlobalBounds().contains(mouse_pos)) {
+				selection = 1;
+				buy.setStyle(sf::Text::Bold);
+			}
+			else if (fire_employee.getGlobalBounds().contains(mouse_pos)) {
+				selection = 2;
+				fire_employee.setStyle(sf::Text::Bold);
+
+			}
+			else if (scroll[0].getGlobalBounds().contains(mouse_pos)) {
+				scroll[0].setScale(0.5f, 0.5f);
+				selection = 3;
+			}
+			else if (scroll[1].getGlobalBounds().contains(mouse_pos)) {
+				scroll[1].setScale(0.5f, 0.5f);
+				selection = 4;
+			}
+			else {
+				scroll[0].setScale(0.4f, 0.4f);
+				scroll[1].setScale(0.4f, 0.4f);
+				selection = -1;
+				buy.setStyle(sf::Text::Regular);
+				back.setStyle(sf::Text::Regular);
+				fire_employee.setStyle(sf::Text::Regular);
+			}
+
+			break;
+		}
+		case sf::Event::MouseButtonPressed:
+		{
+			state_manager * aux = game;
+			switch (selection) // 0 - back; 1 - buy; 2 - set_active_store; 3 - move down; 4 - move up
+			{
+			case 0:
+				game->pop_state();
+				return;
+			case 1:
+				game->push_state(new staff_hire(game, in_game_printscr));
+				return;
+			case 2:
+			{	current_user->get_active_store()->fire_employee(current_selection->name);
+				std::list<employee *>::iterator it = current_user->get_active_store()->staff.begin();
+				for (int i = 0; i < starting_index * 5; i++) it++;
+				current_selection = *it;
+				update_properties();
+				return;
+			}
+			case 3:
+				if ((starting_index + 1) * 5 < (int)current_user->get_active_store()->staff.size()) {
+					move_list_down();
+					scroll[1].setScale(0.4f, 0.4f);
+				}
+				break;
+			case 4:
+				if (starting_index != 0) {
+					move_list_up();
+					scroll[0].setScale(0.4f, 0.4f);
+				}
+				break;
+				// to add actions
+			}
+		}
+		default:
+			break;
+
+		}
+	}
+
+}
+
+void staff::logic_update(const float elapsed)
+{
+	update_list();
+	update_properties();
+}
+
+void staff::draw(const float elapsed)
+{
+	game->window.draw(background);
+	game->window.draw(details);
+	game->window.draw(buy);
+	game->window.draw(back);
+	game->window.draw(fire_employee);
+
+
+	if ((starting_index + 1) * 5 >= (int)(current_user->get_active_store()->staff.size()))
+		scroll[0].setScale(0.0f, 0.0f);
+
+	if (starting_index == 0)
+		scroll[1].setScale(0.0f, 0.0f);
+
+	int i;
+	for (i = 0; i < 2; i++)
+		game->window.draw(scroll[i]);
+
+	for (i = 0; i < 5; i++)
+		game->window.draw(currently_showing[i]);
+
+	for (i = 0; i < 2; i++)
+		game->window.draw(active_properties[i]);
+}
+
+void staff::move_list_down()
+{
+	starting_index++;
+
+	update_list();
+	current_selection = nullptr;
+	fire_employee.setColor(sf::Color::Transparent);
+	update_properties();
+}
+
+void staff::move_list_up()
+{
+	starting_index--;
+
+	update_list();
+	current_selection = nullptr;
+	fire_employee.setColor(sf::Color::Transparent);
+	update_properties();
+}
+
+void staff::setup()
+{
+	current_user = game->get_current_user();
+	active_store = current_user->get_active_store();
+
+	setup_text();
+	setup_icons();
+
+	update_list();
+}
+
+void staff::setup_text()
+{
+	// currently showing (list)
+	for (int i = 0; i < 5; i++) {
+		currently_showing[i].setFont(font);
+		currently_showing[i].setString("hm");
+		currently_showing[i].setCharacterSize((int)(game->window.getSize().y / 16.0f));
+		currently_showing[i].setColor(sf::Color::White);
+		currently_showing[i].setPosition((game->window.getSize().x / 5.8f) + 90, (2 * i * currently_showing[i].getCharacterSize() + game->window.getSize().y / 5.0f));
+	}
+	update_list();
+
+	// buy
+	{
+		buy.setFont(font);
+		buy.setColor(sf::Color::White);
+		buy.setCharacterSize(50);
+		buy.setString("Hire Employees");
+		buy.setPosition((game->window.getSize().x - buy.getGlobalBounds().width - 50),
+			game->window.getSize().y - (float)2 * buy.getCharacterSize());
+	}
+
+	// back
+	{
+		back.setFont(font);
+		back.setColor(sf::Color::White);
+		back.setCharacterSize(50);
+		back.setString("Back");
+		back.setPosition((game->window.getSize().x / 5.8f) + 50,
+		game->window.getSize().y - (float)2 * buy.getCharacterSize());
+	}
+
+	//fire employee
+	{
+		fire_employee.setFont(font);
+		fire_employee.setColor(sf::Color::Transparent);
+		fire_employee.setString("Fire");
+	}
+}
+
+void staff::setup_icons()
+{
+	std::string scroll_names[2] = { "down_arrow.png", "up_arrow.png" };
+
+	for (int i = 0; i < 2; i++)
+	{
+		if (!scroll_texture[i].loadFromFile("res/png/" + scroll_names[i]))
+		{
+			complain(ErrNo::file_access);
+			return;
+		}
+
+		scroll[i].setTexture(scroll_texture[i]);
+		scroll[i].setOrigin((scroll[i].getGlobalBounds().width / 2.0f), (scroll[i].getGlobalBounds().height / 2.0f));
+		scroll[i].setScale(0.4f, 0.4f);
+
+	}
+
+	scroll[0].setPosition(10 + currently_showing[0].getPosition().x + scroll[0].getGlobalBounds().width / 2.0f,
+		currently_showing[0].getPosition().y - (1.0f / 2.0f)*scroll[0].getGlobalBounds().height);
+	scroll[1].setPosition(currently_showing[0].getPosition().x + currently_showing[0].getGlobalBounds().width - scroll[1].getGlobalBounds().width - 10 + scroll[1].getGlobalBounds().width / 2.0f,
+		currently_showing[0].getPosition().y - (1.0f / 2.0f)*scroll[1].getGlobalBounds().height);
+}
+
+void staff::update_list()
+{
+	int i;
+	std::list<employee *>::iterator it = current_user->get_active_store()->staff.begin();
+
+	for (i = 0; i < starting_index * 5; i++) it++;
+
+	for (i = 0; i < 5; i++) {
+		currently_showing[i].setString(std::to_string(starting_index * 5 + i + 1) + ". " + (*it)->get_name());
+		it++;
+		if (it == current_user->get_active_store()->staff.end()) {
+			for (int j = i + 1; j < 5; j++) {
+				currently_showing[j].setString("");
+			}
+			break;
+		}
+	}
+}
+
+void staff::update_properties() {
+	int i = 0;
+
+	if (current_selection == nullptr) {
+		for (; i < 5; i++) {
+			active_properties[i].setString("");
+		}
+		return;
+	}
+
+	// active_properties
+	i = 1;
+
+	float base_size = (details.getGlobalBounds().height) / 19.0f;
+	unsigned int character_size = (int)(2 * base_size);
+
+	for (; i >= 0; i--) {
+		active_properties[i].setFont(font);
+		active_properties[i].setCharacterSize(character_size);
+		active_properties[i].setColor(sf::Color::White);
+		active_properties[i].setPosition(details.getPosition().x + 30,
+			details.getPosition().y + base_size + i * 3 * base_size);
+
+		switch (i) {
+		case 0:
+			active_properties[i].setString("Salary: " + current_selection->get_salary());
+			break;
+		case 1:
+			active_properties[i].setString("Skill: " + current_selection->get_efficiency(int(current_selection->skill)));
+			fire_employee.setOrigin((fire_employee.getGlobalBounds().width / 2.0f), (fire_employee.getGlobalBounds().height / 2.0f));
+			fire_employee.setCharacterSize(active_properties[1].getCharacterSize());
+			fire_employee.setPosition(details.getPosition().x + (details.getGlobalBounds().width /2.0f) , details.getPosition().y + (details.getGlobalBounds().height / 2.0f));
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+
+
+/*---------------------------- staff_hire ----------------------------*/
+
+staff_hire::staff_hire(state_manager * game_ptr, sf::Image print)
+{
+	game = game_ptr;
+
+	if (!font.loadFromFile("res/fonts/Roboto-Bold.ttf")) {
+		complain(ErrNo::file_access);
+		return;
+	}
+
+	if (!backgroud_texture.loadFromImage(print)) {
+		complain(ErrNo::file_access);
+		return;
+	}
+
+	background.setTexture(backgroud_texture, true);
+	background.setTextureRect(sf::IntRect(0, 0, (int)(game->window.getSize().x / 5.8f), (int)(game->window.getSize().y - (game->window.getSize().y / 7.0f))));
+
+	details.setFillColor(sf::Color::Color(170, 170, 170, 235));
+	details.setSize(sf::Vector2f((8.0f / 16.0f) * game->window.getSize().x, (game->window.getSize().y * (2.0f / 3.0f))));
+	details.setPosition(game->window.getSize().x * (7.0f / 16.0f), game->window.getSize().y / 5.5f);
+	details.setOutlineColor(sf::Color(100, 100, 100, 255));
+	details.setOutlineThickness(-3);
+
+	setup();
+}
+
+void staff_hire::input()
+{
+	sf::Event event;
+	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default
+
+	while (game->window.pollEvent(event))
+	{
+		switch (event.type)
+		{
+		case sf::Event::KeyPressed:
+		{
+			if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
+				game->window.close();
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
+				MUSIC::get_m_player()->set_skip(true);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+				if (MUSIC::get_m_player()->get_stop() == false) {
+					MUSIC::get_m_player()->set_stop(true);
+				}
+				else MUSIC::get_m_player()->set_stop(false);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
+			}
+			else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
+				MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
+			}
+			break;
+		}
+		case sf::Event::MouseMoved:
+		{
+			mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
+
+			// update properties
+			for (int i = 0; i < 5; i++) {
+				if (currently_showing[i].getGlobalBounds().contains(mouse_pos) && currently_showing[i].getString() != "") {
+					int j;
+					auto it = purchaseable.begin();
+
+					currently_showing[i].setStyle(sf::Text::Bold);
+
+					for (j = 0; j < 5; j++) {
+						if (j == i) continue;
+						currently_showing[j].setStyle(sf::Text::Regular);
+					}
+
+					for (j = 0; j < i; j++) {
+						it++;
+					}
+
+					current_selection = *it;
+
+					hire_selection.setColor(sf::Color(70, 70, 70, 255));
+
+					update_properties();
+					return;
+				}
+			}
+
+			if (back.getGlobalBounds().contains(mouse_pos)) {
+				selection = 0;
+				back.setStyle(sf::Text::Bold);
+			}
+			else if (hire_selection.getGlobalBounds().contains(mouse_pos)) {
+				selection = 2;
+			}
+			else {
+				selection = -1;
+				back.setStyle(sf::Text::Regular);
+			}
+
+			break;
+		}
+		case sf::Event::MouseButtonPressed:
+		{
+			state_manager * aux = game;
+			employee * to_buy = nullptr;
+			std::vector<employee *>::iterator it = purchaseable.begin();
+
+			switch (selection) {
+			case 0:
+				game->pop_state();
+				return;
+			case 1:
+				// game->change_state(new staff_hire_buy(game));
+				return;
+			case 2:
+				for (int j = 0; j < 5 && it != purchaseable.end(); j++, it++) {
+					if ((*it) == current_selection) {
+						to_buy = (*it);
+						continue;
+					}
+					delete (*it);
+				}
+
+				
+					if (!current_user->get_active_store()->hire_employee(to_buy)) {
+						delete to_buy;
+						game->change_state(new msg_box(game, game->window.capture(), "You don't have money for that!", 35, 50));
+					}
+
+					break;
+				game->pop_state();
+				return;
+			}
+			break;
+		}
+		default:
+			break;
+		}
+	}
+
+}
+
+void staff_hire::logic_update(const float elapsed)
+{
+
+}
+
+void staff_hire::draw(const float elapsed)
+{
+	game->window.draw(background);
+	game->window.draw(details);
+	game->window.draw(back);
+	game->window.draw(hire_selection);
+
+	int i;
+
+	for (i = 0; i < 5; i++)
+		game->window.draw(currently_showing[i]);
+
+	for (i = 0; i < 2; i++)
+		game->window.draw(active_properties[i]);
+}
+
+void staff_hire::setup()
+{
+	current_user = game->get_current_user();
+	active_store = current_user->get_active_store();
+
+	setup_purchaseable();
+	setup_text();
+}
+
+void staff_hire::setup_text()
+{
+	// currently showing (list)
+	for (int i = 0; i < 5; i++) {
+		currently_showing[i].setFont(font);
+		currently_showing[i].setCharacterSize((int)(game->window.getSize().y / 16.0f));
+		currently_showing[i].setColor(sf::Color::White);
+		currently_showing[i].setPosition((game->window.getSize().x / 5.8f) + 90, (2 * i * currently_showing[i].getCharacterSize() + game->window.getSize().y / 5.0f));
+	}
+	update_list();
+
+	// back
+	{
+		back.setFont(font);
+		back.setColor(sf::Color::White);
+		back.setCharacterSize(50);
+		back.setString("Back");
+		back.setPosition((game->window.getSize().x / 5.8f) + 50,
+			game->window.getSize().y - (float)2 * back.getCharacterSize());
+	}
+
+	// buy_selection
+	{
+		hire_selection.setFont(font);
+		hire_selection.setColor(sf::Color::Transparent);
+		hire_selection.setCharacterSize(150);
+		hire_selection.setString("Hire");
+		hire_selection.setPosition(details.getPosition().x - hire_selection.getGlobalBounds().width / 2.0f + details.getGlobalBounds().width / 2.0f,
+			details.getPosition().y + details.getGlobalBounds().height - hire_selection.getGlobalBounds().height * 1.5f);
+	}
+}
+
+void staff_hire::setup_purchaseable()
+{
+	employee * new_employees;
+	
+	
+	for (int i = 0; i < 5; i++)
+	{
+		purchaseable.push_back(new employee(""));
+	}
+
+}
+
+void staff_hire::update_list()
+{
+	std::vector<employee *>::iterator it = purchaseable.begin();
+
+	for (int i = 0; i < 5; i++) {
+		currently_showing[i].setString(std::to_string(i + 1) + ". " + (*it)->get_name());
+		it++;
+		if (it == purchaseable.end()) {
+			for (int j = i + 1; j < 5; j++) {
+				currently_showing[j].setString("");
+			}
+			break;
+		}
+	}
+}
+
+void staff_hire::update_properties() {
+	if (current_selection == nullptr) {
+		for (int i = 0; i < 2; i++) {
+			active_properties[i].setString("");
+		}
+		return;
+	}
+
+	// active_properties
+	int i = 1;
+	float base_size = (details.getGlobalBounds().height) / 19.0f;
+	unsigned int character_size = (int)(2 * base_size);
+
+	for (; i >= 0; i--) {
+		active_properties[i].setFont(font);
+		active_properties[i].setCharacterSize(character_size);
+		active_properties[i].setColor(sf::Color::White);
+		active_properties[i].setPosition(details.getPosition().x + 30,
+			details.getPosition().y + base_size + i * 3 * base_size);
+
+		switch (i) {
+		case 0:
+			active_properties[i].setString("Salary: " + current_selection->get_salary());
+			break;
+		case 1:
+			active_properties[i].setString("Efficiency: " + current_selection->get_efficiency((int)current_selection->skill));
+			break;
+		default:
+			break;
+		}
+	}
+}

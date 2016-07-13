@@ -417,6 +417,19 @@ std::string employee::get_salary()
 	return s;
 }
 
+std::string employee::get_efficiency(int num)
+{
+	std::string temp;
+
+	if (num == 1)
+		temp = "Low";
+	else if (num == 2)
+		temp = "Neutral";
+	else
+		temp = "High";
+	return temp;
+}
+
 
 /*------------------------------ store ------------------------------*/
 
@@ -796,10 +809,11 @@ void store::sell_instrument(int position_offset)
 	inventory.erase(it);
 }
 
-void store::hire_employee(employee * employee)
+bool store::hire_employee(employee * employee)
 {
 	staff.push_back(employee); 
 	LOGGER::log("Hired " + employee->get_name() + " for " + employee->get_salary() + "£ (peanuts)");
+	return(true);
 }
 
 void store::fire_employee(char * name)
@@ -950,8 +964,13 @@ user_profile::~user_profile()
 store * user_profile::get_active_store()
 {
 	if (active_store == nullptr)
-		active_store = stores.front();
-
+	{
+		if (stores.empty())
+		{
+			stores.push_back(new store(""));
+			active_store = stores.front();
+		}
+	}
 	return active_store;
 }
 
