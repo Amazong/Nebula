@@ -5322,3 +5322,89 @@ Started playing HotaruNoShikai.ogg.
 17:35:16 - Sold an item! Your reputation has increased.
 17:35:25 - Sold an item! Your reputation has increased.
 17:35:34 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+20:45:33 - Program started.
+20:45:33 - Music started playing.
+20:45:33 - Bought Downtown for 20000.00£ (peanuts).
+20:45:33 - Bought Larrivee guitar for 200.00£ (peanuts).
+20:45:33 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+20:45:33 - Bought Martin guitar for 400.00£ (peanuts).
+20:45:33 - Bought grand Yamaha piano for 38095.23£ (peanuts).
+20:45:33 - Bought Maton guitar for 600.00£ (peanuts).
+20:45:33 - Bought grand Roland piano for 11904.76£ (peanuts).
+20:45:33 - Bought Larrivee guitar for 200.00£ (peanuts).
+20:45:33 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+20:45:33 - Started playing Bossa1.5.ogg.
+20:45:33 - Bought Martin guitar for 400.00£ (peanuts).
+20:45:33 - Bought upright Roland piano for 1666.66£ (peanuts).
+20:45:33 - Bought Maton guitar for 600.00£ (peanuts).
+20:45:33 - Bought upright Korg piano for 2857.14£ (peanuts).
+20:45:33 - Hired Cersei for 200000.00£ (peanuts).
+20:45:33 - Hired Ned Stark for 5000.00£ (peanuts).
+20:45:34 - Hired Jon Snow for 100000.00£ (peanuts).
+20:45:34 - Hired Sansa for 1000.00£ (peanuts).
+20:45:34 - Game Lady Stark saved.
+20:45:34 - Sold grand Steinway & Sons piano for 50000.00£ (peanuts).
+20:45:34 - Sold an item! Your reputation has increased.
+20:45:34 - Sold upright Roland piano for 1666.66£ (peanuts).
+20:45:34 - Sold an item! Your reputation has increased.
+20:45:34 - The client didn't buy anything. Your reputation has decreased.
+20:45:34 - The client didn't buy anything. Your reputation has decreased.
+20:45:34 - Sold Larrivee guitar for 200.00£ (peanuts).
+20:45:34 - Sold an item! Your reputation has increased.
+20:45:43 - Quitting music player.
+20:45:44 - Program exited normally.

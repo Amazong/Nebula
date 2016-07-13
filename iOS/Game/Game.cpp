@@ -19,26 +19,33 @@ int main() {
 	/*if (render_splash() == 42) {
 		return error::file_access();
 	}*/
-	
-	/*{
+	/*
+	{
 	// TESTING CRYPTO
 
-	CryptoKey k("LoremIpsum"); // include repeating mode
+	sf::Time elapsed;
 
-	CryptoFile f("meow.txt", statuses::plaintext);
+	CryptoKey k("HelloWorld"); // include repeating mode
+
+	CryptoFile f("LoremIpsum.txt", statuses::plaintext);
 	
-	sf::Clock t1;
 	std::cout << "Working..." << std::endl;
-	if (!f.encrypt("encrypted", k)) return -1;
-	std::cout << "Done!\n" << t1.getElapsedTime().asMicroseconds();
+	sf::Clock t1;
+	if (!(f.encrypt("encrypted", k) == 0)) return -1;
+	elapsed = t1.getElapsedTime();
+	std::cout << "Done!\n" << elapsed.asMicroseconds();
 	std::cin.get();
 
-	t1.restart();
+	f.set_file("encrypted");
+	f.set_status(statuses::encrypted);
 	std::cout << "Working..." << std::endl;
-	if (!f.decrypt("meow.txt", k)) return -1;
-	std::cout << "Done!\n" << t1.getElapsedTime().asMicroseconds();
+	t1.restart();	
+	if (!(f.decrypt("meow.txt", k) == 0)) return -1;
+	elapsed = t1.getElapsedTime();
+	std::cout << "Done!\n" << elapsed.asMicroseconds();
 	std::cin.get();
-	}*/
+	}
+	*/
 
 	LOGGER::log("Program started");
 
