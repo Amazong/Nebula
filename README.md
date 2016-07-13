@@ -39,7 +39,7 @@ As listas foram extraídas de sites por um procedimento automático, que optámo
 - **Marvel** para sincronização de mockups e experimentação de UX.
 
 ##### Para edição de música:
-- **Adobe Audition**, para edição das músicas, que gravámos na casa do João.
+- Com o **Adobe Audition**, o João editou as músicas que o Elvis gravou em casa do João.
  
 
 ### Fontes:
