@@ -324,7 +324,7 @@ public:
 class finance : public game_state
 {
 private:
-
+	std::string options_str[3] = {"Finance", "Stores:", "Close"};
 	std::string indicators_str[5] = { "Balance", "Reputation", "Game Time", "Month's profits", "Year's Profits" };
 
 	sf::Time buffer = sf::seconds(0.0f);
@@ -337,6 +337,10 @@ private:
 	sf::RectangleShape heat[3];
 	sf::Sprite icons[5];
 	sf::Texture icons_texture[5];
+
+	sf::Text options[9];
+	sf::RectangleShape store_box[5];
+	sf::Text store_box_text[5];
 
 	double buying_rate;
 	int selection = -1;

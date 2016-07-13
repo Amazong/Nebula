@@ -2604,6 +2604,8 @@ void finance::draw(const float elapsed)
 		game->window.draw(indicators[i]);
 	for (int i = 0; i < 5; i++)
 		game->window.draw(icons[i]);
+	for (int i = 0; i < 5; i++)
+		game->window.draw(store_box[i]);
 }
 
 void finance::setup()
@@ -2656,6 +2658,27 @@ void finance::setup_options()
 				break;
 		}
 	}
+
+	sf::Vector2f size = sf::Vector2f(game->window.getSize().x / 2.0f, game->window.getSize().y / 15.0f);
+	
+	for (int i = 0; i < 5; i++)
+	{
+		store_box[i].setFillColor(sf::Color(170, 170, 170, 235));
+		store_box[i].setSize(size);
+		store_box[i].setOrigin((store_box[i].getGlobalBounds().width / 2.0f), (store_box[i].getGlobalBounds().height / 2.0f));
+		store_box[i].setPosition(game->window.getSize().x * (2.0f/3.0f), (game->window.getSize().y / 3.5f) + (store_box[i].getGlobalBounds().height) );
+		store_box[i].move(0, (i * store_box[i].getGlobalBounds().height  * 1.15f));
+	}
+
+
+	for (int i = 6; i > 9; i++)
+	{
+		options[i].setString(options_str[(i - 6)]);
+		options[i].setCharacterSize((int)(game->window.getSize().y / 16.0f));
+
+
+	}
+	
 }
 
 void finance::update_indicators()
