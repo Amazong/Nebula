@@ -1,5 +1,5 @@
 # iOS - Instrument Outlet Simulator
-##The one place for all your instrument needs.
+## The one place for all your instrument needs.
 
 
 ### Introdução
@@ -11,16 +11,24 @@ Quando o utilizador inicia o jogo pela primeira vez, será conduzido a um menu. 
 onde poderá configurar o seu perfil.
 
 ### Estruturas de Dados
-Como está estruturado
+No desenvolvimento deste jogo, utilizámos vectors, lists, stacks, deques e arrays. Existe uma entitade que gere os estados do jogo. Nela existe uma pilha, onde se encontram os diferentes estados actualmente carregados. Estes fazem a ligação com a interface gráfica.
+
+Internamente, existe um perfil de utilizador, que contém uma lista de lojas. Uma destas é a principal, mas cada uma delas tem uma lista de instrumentos, uma lista de funcionários. A classe "instrumento" é uma classe abstrata que possui duas classes derivadas - a classe guitarra e a classe piano.
+
+Todas estas estruturas são dinamicamente alocadas, e possuem propriedades que as tentam tornar tão diversificadas como possível.
 
 ### Algoritmos
-e.g. algoritmo de compra, etc.
+Vários algoritmos para geração aleatória de classes foram implementados. Adicionalmente, o algoritmo de compra também é de interesse, uma vez que tira partido das propriedades das restantes estruturas de dados.
+
+O algoritmo de gravação de jogo é modular, permitindo guardar para cada loja os seus instrumentos e empregados em ficheiros distintos. Isto permite um processo de gravação mais rápido, eficaz e prático.
+
+Foi desenvolvido um algoritmo de encriptação, que se utilizou para encriptar os ficheiros de gravação de jogo.
 
 ### Listas de texto
-As listas foram extraídas de sites por um procedimento automático, que optámos por não incluir no resultado final.
+As listas foram extraídas de sites por um procedimento automático desenvolvido por nós, que optámos por não incluir no resultado final.
 
 ### Conclusão
-
+Apesar de infelizmente não termos conseguido entregar o projeto na data final sem erros na parte gráfica, o funcionamento do jogo está maioritariamente completo. Independentemente da avaliação, tencionamos continuar o desenvolvimento deste projecto, que se revelou muito enriquecedor para ambos os membros que o desenvolveram.
 
 
 ### Tecnologias Utilizadas
