@@ -16,6 +16,9 @@ Como está estruturado
 ### Algoritmos
 e.g. algoritmo de compra, etc.
 
+### Listas de texto
+As listas foram extraídas de sites por um procedimento automático, que optámos por não incluir no resultado final.
+
 ### Conclusão
 
 
