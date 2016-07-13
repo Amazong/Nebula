@@ -1950,6 +1950,17 @@ inventory::inventory(state_manager * game_ptr, sf::Image print)
 	details.setOutlineThickness(-3);
 
 	price_setter.setFillColor(sf::Color::Transparent);
+	price_setter.setOrigin(set_price.getGlobalBounds().width / 2.0f, set_price.getGlobalBounds().height / 2.0f);
+	price_setter.setPosition(set_price.getPosition() +
+		sf::Vector2f(set_price.getGlobalBounds().width / 2.0f, set_price.getGlobalBounds().height / 2.0f));
+	price_setter.move(0, 10);
+	price_setter.setSize(sf::Vector2f((float)set_price.getGlobalBounds().width, (float)set_price.getGlobalBounds().height));
+
+	// price setting text
+	price_setter_inside.setFont(font);
+	price_setter_inside.setColor(sf::Color::Black);
+	price_setter_inside.setString("");
+	price_setter_inside.setPosition(price_setter.getGlobalBounds().left + 5, price_setter.getGlobalBounds().top + 15);
 
 	setup();
 }
@@ -1963,7 +1974,9 @@ void inventory::input()
 	{
 		// if in input mode
 		if (price_setter.getFillColor() == sf::Color::White) {
+			price_setter_inside.setColor(sf::Color::Black);
 			if (price_setter_str == "") price_setter_inside.setString(" £");
+			
 			if (event.type == sf::Event::TextEntered)
 			{
 				if (price_setter_str.length() > 50 || price_setter_inside.getGlobalBounds().width >= (price_setter.getGlobalBounds().width - 30))
@@ -2037,6 +2050,7 @@ void inventory::input()
 				}
 				else if (event.text.unicode == 13) { // return
 					price_setter.setFillColor(sf::Color::Transparent);
+					price_setter_inside.setColor(sf::Color::Transparent);
 					set_price.setColor(sf::Color(70, 70, 70, 255));
 
 					current_selection->set_price(atof(price_setter_str.c_str()));
@@ -2045,6 +2059,7 @@ void inventory::input()
 				}
 				else if (event.text.unicode == 27) { // escape
 					price_setter.setFillColor(sf::Color::Transparent);
+					price_setter_inside.setColor(sf::Color::Transparent);
 					price_setter_inside.setString("");
 					set_price.setColor(sf::Color(70, 70, 70, 255));
 				}
@@ -2180,8 +2195,8 @@ void inventory::input()
 
 void inventory::logic_update(const float elapsed)
 {
-	//update_list();
-	//update_properties();
+	update_list();
+	update_properties();
 }
 
 void inventory::draw(const float elapsed)
@@ -2359,19 +2374,14 @@ void inventory::update_properties() {
 			set_price.setPosition(details.getPosition().x + details.getGlobalBounds().width - 30 - set_price.getGlobalBounds().width,
 				active_properties[1].getPosition().y);
 
-			price_setter.setFillColor(sf::Color::Transparent);
 			price_setter.setOrigin(set_price.getGlobalBounds().width / 2.0f, set_price.getGlobalBounds().height / 2.0f);
 			price_setter.setPosition(set_price.getPosition() +
 				sf::Vector2f(set_price.getGlobalBounds().width / 2.0f, set_price.getGlobalBounds().height / 2.0f));
 			price_setter.move(0, 10);
 			price_setter.setSize(sf::Vector2f((float)set_price.getGlobalBounds().width, (float)set_price.getGlobalBounds().height));
-
-			// price setting text
-			price_setter_inside.setFont(font);
-			price_setter_inside.setColor(sf::Color::Black);
-			price_setter_inside.setString("");
-			price_setter_inside.setPosition(price_setter.getGlobalBounds().left + 5, price_setter.getGlobalBounds().top + 15);
 			
+			price_setter_inside.setPosition(price_setter.getGlobalBounds().left + 5, price_setter.getGlobalBounds().top + 15);
+
 			break;
 		case 2:
 			active_properties[i].setString("Perceived value: " + current_selection->get_perceived_value_cpp());
