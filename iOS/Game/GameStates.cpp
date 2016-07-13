@@ -1456,7 +1456,7 @@ void new_game::input()
 					*/
 
 					game->get_current_user()->set_net_worth(game->get_current_user()->net_worth - 200000);
-
+					game->get_current_user()->set_active_store(game->get_current_user()->stores.back());
 					game->push_state(new msg_box(game, game->window.capture(), "Game created! We've given you a store. Now buy your first employee and instrument!", 20, 50, new in_game_setup(game)));
 					return;
 				}

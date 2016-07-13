@@ -115,7 +115,7 @@ class employee
 {
 private:
 	enum efficiency { low = 1, neutral, high } skill; //effect on buying formula
-	char name[51];
+	char name[51] = "";
 	double salary;
 
 public:
