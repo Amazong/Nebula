@@ -25,7 +25,7 @@ int main() {
 
 	sf::Time elapsed;
 
-	CryptoKey k("HelloWorld"); // include repeating mode
+	CryptoKey k("Elvis"); // include repeating mode
 
 	CryptoFile f("LoremIpsum.txt", statuses::plaintext);
 	
