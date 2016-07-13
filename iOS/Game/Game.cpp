@@ -64,6 +64,12 @@ int main() {
 	ACTIVE_USER.get_active_store()->buy_piano(new piano(""));
 	ACTIVE_USER.get_active_store()->buy_guitar(new guitar(600, "Maton"));
 	ACTIVE_USER.get_active_store()->buy_piano(new piano(""));
+	ACTIVE_USER.get_active_store()->buy_guitar(new guitar(200, "Larrivee"));
+	ACTIVE_USER.get_active_store()->buy_piano(new piano(piano_brands::Steinway, piano_type::Grand, quality::Great));
+	ACTIVE_USER.get_active_store()->buy_guitar(new guitar(400, "Martin"));
+	ACTIVE_USER.get_active_store()->buy_piano(new piano(""));
+	ACTIVE_USER.get_active_store()->buy_guitar(new guitar(600, "Maton"));
+	ACTIVE_USER.get_active_store()->buy_piano(new piano(""));
 	ACTIVE_USER.get_active_store()->hire_employee(new employee("Cersei", 200000, 3));
 	ACTIVE_USER.get_active_store()->hire_employee(new employee("Ned Stark", 5000, 1));
 	ACTIVE_USER.get_active_store()->hire_employee(new employee("Jon Snow", 100000, 2));
