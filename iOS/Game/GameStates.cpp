@@ -2201,14 +2201,14 @@ void inventory::draw(const float elapsed)
 	game->window.draw(price_setter_inside);
 	
 	if (starting_index != current_user->get_active_store()->get_stock() / 5)
-		scroll[0].setScale(0.4, 0.4);
+		scroll[0].setScale(0.4f, 0.4f);
 	else
-		scroll[0].setScale(0.0, 0.0);
+		scroll[0].setScale(0.0f, 0.0f);
 
 	if (starting_index != 0)
-		scroll[1].setScale(0.4, 0.4);
+		scroll[1].setScale(0.4f, 0.4f);
 	else
-		scroll[1].setScale(0.0, 0.0);
+		scroll[1].setScale(0.0f, 0.0f);
 			
 	int i;
 	for (i = 0; i < 2; i++)
@@ -2306,7 +2306,7 @@ void inventory::setup_icons()
 
 		scroll[i].setTexture(scroll_texture[i]);
 		scroll[i].setOrigin((scroll[i].getGlobalBounds().width / 2.0f), (scroll[i].getGlobalBounds().height / 2.0f));
-		scroll[i].setScale(0.4, 0.4);	
+		scroll[i].setScale(0.4f, 0.4f);	
 
 	}
 
