@@ -426,7 +426,7 @@ private:
 	sf::Text buy;
 	sf::Text back;
 	sf::Text set_active_store;
-	sf::Text active_properties[6]; // value, area, population, name, max stock, BR
+	sf::Text active_properties[5]; // value, area, population, max stock, BR
 	sf::Text currently_showing[5];
 
 	std::string active_store_str;

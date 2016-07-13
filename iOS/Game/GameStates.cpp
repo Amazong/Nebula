@@ -3484,7 +3484,7 @@ void store_state::input()
 						// to do
 					return;
 				case 3:
-					if ((starting_index + 1) * 5 < current_user->get_active_store()->get_stock()) {
+					if ((starting_index + 1) * 5 < (int)current_user->stores.size()) {
 						move_list_down();
 						scroll[1].setScale(0.4f, 0.4f);
 					}
@@ -3534,7 +3534,7 @@ void store_state::draw(const float elapsed)
 	for (i = 0; i < 5; i++)
 		game->window.draw(currently_showing[i]);
 
-	for (i = 0; i < 6; i++)
+	for (i = 0; i < 5; i++)
 		game->window.draw(active_properties[i]);
 }
 
@@ -3650,16 +3650,17 @@ void store_state::update_list()
 }
 
 void store_state::update_properties() {
+	int i = 0;
+	
 	if (current_selection == nullptr) {
-		for (int i = 0; i < 6; i++) {
+		for (; i < 5; i++) {
 			active_properties[i].setString("");
 		}
 		return;
 	}
 
 	// active_properties
-	int i = 5;
-
+	i = 4;
 
 	float base_size = (details.getGlobalBounds().height) / 19.0f;
 	unsigned int character_size = (int)(2 * base_size);
@@ -3676,8 +3677,6 @@ void store_state::update_properties() {
 			active_properties[i].setString("Value: " + current_selection->get_value_cpp());
 			break;
 		case 1:
-			
-
 			active_properties[i].setString("Area: " + current_selection->get_area(int(current_selection->setting)));
 
 			set_active_store.setCharacterSize(active_properties[1].getCharacterSize());
@@ -3689,12 +3688,9 @@ void store_state::update_properties() {
 			active_properties[i].setCharacterSize(character_size);
 			break;
 		case 3:
-			active_properties[i].setString("Name: " + current_selection->get_name_cpp());
-			break;
-		case 4:
 			active_properties[i].setString("Max Stock: " + std::to_string(current_selection->get_max_stock()));
 			break;
-		case 5:
+		case 4:
 			active_properties[i].setString("Buying Rate: " + std::to_string(current_selection->buying_rate));
 			break;
 		default:
