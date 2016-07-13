@@ -2572,7 +2572,7 @@ void inventory_buy::input()
 				if (currently_showing[i].getGlobalBounds().contains(mouse_pos) && currently_showing[i].getString() != "") {
 					int j;
 					int item_number = starting_index * 5 + i;
-					auto it = active_store->get_inventory_buy()->begin();
+					auto it = purchaseable.begin();
 
 					currently_showing[i].setStyle(sf::Text::Bold);
 
@@ -2748,20 +2748,42 @@ void inventory_buy::setup_text()
 
 void inventory_buy::setup_purchaseable()
 {
-	
+	guitar * new_guitar;
+	piano * new_piano;
+	int sel;
+
+	std::random_device rd;
+	std::mt19937 random_numbers(rd());
+	std::uniform_int_distribution<int> range(0, 1);
+
+	for (int i = 0; i < 5; i++) {
+		sel = range(random_numbers);
+		if (sel == 0) {
+			do {
+				new_guitar = new guitar("");
+			} while (new_guitar->get_value() > current_user->get_balance());
+			purchaseable.push_back(new_guitar);
+		}
+		else {
+			do {
+				new_piano = new piano("");
+			} while (new_piano->get_value() > current_user->get_balance());
+			purchaseable.push_back(new_piano);
+		}
+	}
 }
 
 void inventory_buy::update_list()
 {
 	int i;
-	std::list<instrument *>::iterator it = current_user->get_active_store()->get_inventory_buy()->begin();
+	std::list<instrument *>::iterator it = purchaseable.begin();
 
 	for (i = 0; i < starting_index * 5; i++) it++;
 
 	for (i = 0; i < 5; i++) {
 		currently_showing[i].setString(std::to_string(starting_index * 5 + i + 1) + ". " + (*it)->print_brand_cpp_short());
 		it++;
-		if (it == current_user->get_active_store()->get_inventory_buy()->end()) {
+		if (it == purchaseable.end()) {
 			for (int j = i + 1; j < 5; j++) {
 				currently_showing[j].setString("");
 			}

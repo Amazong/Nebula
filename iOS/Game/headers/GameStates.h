@@ -320,7 +320,7 @@ public:
 class inventory_buy : public game_state
 {
 private:
-	list<instrument *> purchaseable;
+	std::list<instrument *> purchaseable;
 
 	sf::Font font;
 	sf::Text title;
