@@ -2153,7 +2153,8 @@ void inventory::input()
 				// game->change_state(new inventory_buy(game));
 				return;
 			case 2:
-				if (price_setter.getFillColor() == sf::Color::Transparent) {
+				if (price_setter.getFillColor() == sf::Color::Transparent &&
+					set_price.getColor() != sf::Color::Transparent) {
 					price_setter.setFillColor(sf::Color::White);
 					set_price.setColor(sf::Color::Transparent);
 					price_setter_str = "";
@@ -2198,17 +2199,28 @@ void inventory::draw(const float elapsed)
 	game->window.draw(set_price);
 	game->window.draw(price_setter);
 	game->window.draw(price_setter_inside);
-			
-	for (int i = 0; i < 3; i++)
-		game->window.draw(icons[i]);
 	
-	for (int i = 0; i < 2; i++)
+	if (starting_index != current_user->get_active_store()->get_stock() / 5)
+		scroll[0].setScale(0.4, 0.4);
+	else
+		scroll[0].setScale(0.0, 0.0);
+
+	if (starting_index != 0)
+		scroll[1].setScale(0.4, 0.4);
+	else
+		scroll[1].setScale(0.0, 0.0);
+			
+	int i;
+	for (i = 0; i < 2; i++)
 		game->window.draw(scroll[i]);
 
-	for (int i = 0; i < 5; i++)
+	for (i = 0; i < 3; i++)
+		game->window.draw(icons[i]);
+	
+	for (i = 0; i < 5; i++)
 		game->window.draw(currently_showing[i]);
 
-	for (int i = 0; i < 6; i++)
+	for (i = 0; i < 6; i++)
 		game->window.draw(active_properties[i]);
 }
 
@@ -2217,7 +2229,8 @@ void inventory::move_list_down()
 	starting_index++;
 
 	update_list();
-	selection = -1;
+	current_selection = nullptr;
+	set_price.setColor(sf::Color::Transparent);
 	update_properties();
 }
 
@@ -2226,7 +2239,8 @@ void inventory::move_list_up()
 	starting_index--;
 
 	update_list();
-	selection = -1;
+	current_selection = nullptr;
+	set_price.setColor(sf::Color::Transparent);
 	update_properties();
 }
 
@@ -2304,11 +2318,12 @@ void inventory::setup_icons()
 
 void inventory::update_list()
 {
+	int i;
 	std::list<instrument *>::iterator it = current_user->get_active_store()->get_inventory()->begin();
 
-	for (int i = 0; i < starting_index * 5; i++) it++;
+	for (i = 0; i < starting_index * 5; i++) it++;
 
-	for (int i = 0; i < 5; i++) {
+	for (i = 0; i < 5; i++) {
 		currently_showing[i].setString(std::to_string(starting_index * 5 + i + 1) + ". " + (*it)->print_brand_cpp_short());
 		it++;
 		if (it == current_user->get_active_store()->get_inventory()->end()) {
@@ -2321,6 +2336,13 @@ void inventory::update_list()
 }
 
 void inventory::update_properties() {
+	if (current_selection == nullptr) {
+		for (int i = 0; i < 6; i++) {
+			active_properties[i].setString("");
+		}
+		return;
+	}	
+	
 	// active_properties
 	int i = (current_selection->is_guitar) ? 3 : 5;
 	
