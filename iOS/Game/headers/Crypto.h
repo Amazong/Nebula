@@ -10,23 +10,33 @@ class CryptoKey
 {
 private:
 	char *key = new char[33]; // 32 * 8 = 256 bits
-	int reps; // number of times that the encryption algorithm is run; depends on key.
+	int reps = 0; // number of times that the encryption algorithm is run; depends on key.
 
-public:
-	CryptoKey();
-	CryptoKey(std::string new_key);
-
-	bool set_key(std::string new_key, mode mod = repeating);
-	void update_repetitions();
-	
 	CryptoKey * increment();
 	CryptoKey * decrement();
 
+	CryptoKey * operator ++ (int);
+	CryptoKey * operator -- (int);
+
+public:
+	CryptoKey();
+	CryptoKey(const CryptoKey &k);
+	CryptoKey(std::string new_key, mode mod = repeating, char repeater = '0');
+	~CryptoKey();
+
+	bool set_key(std::string new_key, mode mod = repeating, char repeater = '0');
+	void update_repetitions();
+
 	char get_char(int i) const;
 	int get_repetitions() const;
+
 	std::string get_key() const;
 
-	~CryptoKey();
+	CryptoKey get_decrypt_key() const;
+
+	CryptoKey * operator = (CryptoKey k);
+
+	friend class CryptoFile;
 };
 
 class CryptoFile
@@ -34,13 +44,7 @@ class CryptoFile
 private:
 	// Variables
 	std::string filename;
-	std::string temp_filename;
-	std::string old_filename;
 	statuses status;
-
-	// Crypto Functions
-	bool encrypt_private(std::string target_name, CryptoKey &key, int run = 0, int limit = 500);
-	bool decrypt_private(std::string target_name, CryptoKey &key, std::ios_base::streampos &n_chars, int run = 0, int limit = 500);
 
 public:
 	CryptoFile(std::string name, statuses stat);
@@ -48,8 +52,8 @@ public:
 	bool set_file(std::string name);
 	void set_status(statuses stat);
 
-	bool encrypt(std::string target_name, CryptoKey &key);
-	bool decrypt(std::string target_name, CryptoKey &key, int run = 0);
+	int encrypt(std::string target_name, const CryptoKey &key, bool overwrite = 0);
+	int decrypt(std::string target_name, const CryptoKey &key, bool overwrite = 0);
 
 	~CryptoFile();
 };

@@ -1,20 +1,23 @@
 #include "headers/Crypto.h"
 
-
 // ------------------------- CRYPTO KEY -------------------------
+
 CryptoKey::CryptoKey()
 {
 	set_key("");
-	update_repetitions();
 }
 
-CryptoKey::CryptoKey(std::string new_key)
+CryptoKey::CryptoKey(const CryptoKey & k)
 {
-	set_key(new_key);
-	update_repetitions();
+	*this = CryptoKey(k.get_key());
 }
 
-bool CryptoKey::set_key(std::string new_key, mode mod)
+CryptoKey::CryptoKey(std::string new_key, mode mod, char repeater)
+{
+	set_key(new_key, mod, repeater);
+}
+
+bool CryptoKey::set_key(std::string new_key, mode mod, char repeater)
 {
 	if (new_key.empty()) {
 		strcpy_s(key, 33, "00000000000000000000000000000000");
@@ -22,7 +25,7 @@ bool CryptoKey::set_key(std::string new_key, mode mod)
 	}
 
 	int length = new_key.length();
-		
+
 	if (mod == repeating) {
 		for (int i = 0; i < 32; i++) {
 			key[i] = new_key.at(i % length);
@@ -34,10 +37,10 @@ bool CryptoKey::set_key(std::string new_key, mode mod)
 			key[i] = new_key.at(i);
 		}
 		for (; i < 32; i++) {
-			key[i] = 0;
+			key[i] = repeater;
 		}
 	}
-	
+
 	key[32] = '\0';
 
 	update_repetitions();
@@ -47,20 +50,16 @@ bool CryptoKey::set_key(std::string new_key, mode mod)
 
 void CryptoKey::update_repetitions()
 {
-	reps = 999;
-	return;
-	//
-
 	int reps = 1;
 	for (int i = 0; i < 32; i++) {
-
 		if (key[i] == '0') continue;
+
 		reps *= (int)(key[i]); // alternately multiply and add
 		i++;
 		reps += (int)(key[i]);
 
 		reps %= 65536; // reps will be between 0-65536
-		
+
 		if (reps == 0) reps = 1; // modulo op can return 0
 								 // need to safeguard against that
 	}
@@ -87,12 +86,24 @@ CryptoKey * CryptoKey::decrement()
 
 char CryptoKey::get_char(int i) const
 {
-	return key[i];
+	return key[i % 32];
 }
 
 int CryptoKey::get_repetitions() const
 {
 	return reps;
+}
+
+CryptoKey CryptoKey::get_decrypt_key() const
+{
+	CryptoKey k(*this);
+	k.update_repetitions();
+
+	for (int i = 0; i < reps - 1; i++) {
+		k++;
+	}
+
+	return k;
 }
 
 std::string CryptoKey::get_key() const
@@ -104,6 +115,23 @@ std::string CryptoKey::get_key() const
 	}
 
 	return key;
+}
+
+CryptoKey * CryptoKey::operator=(CryptoKey k)
+{
+	set_key(k.get_key());
+
+	return this;
+}
+
+CryptoKey * CryptoKey::operator++(int)
+{
+	return increment();
+}
+
+CryptoKey * CryptoKey::operator--(int)
+{
+	return decrement();
 }
 
 CryptoKey::~CryptoKey()
@@ -124,7 +152,17 @@ CryptoFile::CryptoFile(std::string name, statuses stat)
 
 bool CryptoFile::set_file(std::string name)
 {
+	std::ifstream fin(name);
+
+	if (fin.fail()) {
+		filename = "";
+		return false;
+	}
+
+	fin.close();
+
 	filename = name;
+
 	return true;
 }
 
@@ -133,166 +171,194 @@ void CryptoFile::set_status(statuses stat)
 	status = stat;
 }
 
-bool CryptoFile::encrypt(std::string target_name, CryptoKey & key)
+int CryptoFile::encrypt(std::string target_name, const CryptoKey & key, bool overwrite)
 {
-	if (status != statuses::plaintext) {
-		std::cerr << "File is already encrypted!";
-		return false;
+	// return values:
+	// 0 - all OK
+	// -1 - couldn't open target without overwriting
+	// -2 - couldn't open source
+	// -3 - file can't be encrypted, because it is not plaintext
+
+	if (status != statuses::plaintext) return -3;
+
+	int length, j, i;
+	length = j = i = 0;
+
+	std::ifstream fin(target_name);
+
+	if (!fin.fail() && !overwrite) { // file exists and we do not want to overwrite
+		do {
+			i++;
+			if (i == 10) break;
+			fin.close();
+			fin.open(target_name + "_" + std::to_string(i));
+		} while (!fin.fail());
+
+		if (i == 10) return -1;
+
+		fin.close();
+
+		return (encrypt(target_name + "_" + std::to_string(i), key));
 	}
 
-	// number of reps will always be >1000
+	std::ifstream source(filename);
+	if (source.fail()) return -2;
 
-	encrypt_private(("_" + filename), key); // first 500
+	char * chunk = new char[32000];
 
-	for (int i = 1; i < key.get_repetitions() / 500; i++) {
-		encrypt_private(target_name, key);
+	// get message content to RAM
+	for (length = 0; !source.eof() && length < 32000; length++) {
+		chunk[length] = source.get();
 	}
-	
-	if (key.get_repetitions() % 500 != 0) {
-		encrypt_private(target_name, key, 0, key.get_repetitions() % 500);
-	}
+	length--; // to compensate for last increment
 
-	set_status(encrypted);
+	CryptoKey k(key);
+	int n_runs = k.get_repetitions();
 
-	return true;
-}
-
-bool CryptoFile::encrypt_private(std::string target_name, CryptoKey &key, int run, int limit)
-{
-	std::ifstream * in = new std::ifstream;
-	std::ofstream * out = new std::ofstream;
-
-	in->open(filename, std::ifstream::binary);
-	if (!in->is_open()) return false;
-
-	if (run == 0) {
-		old_filename = filename;
-		filename = target_name;
-		temp_filename = "_" + filename;
+	// encrypt chunk
+	for (i = 0; i < n_runs; i++, k++) {
+		for (j = 0; j < length; j++) {
+			chunk[j] ^= k.get_char(j);
+		}
 	}
 
-	out->open(temp_filename, std::ofstream::binary | std::ofstream::trunc);
+	std::ofstream target(target_name, std::fstream::trunc);
 
-	int *i = (int*)calloc(1,sizeof(int));
-	while (!in->eof()) {
-		(*out) << (char)(in->get() ^ key.get_char(*i % 32));
-		(*i)++;
-		in->peek();
+	// output encrypted content
+	for (i = 0; i < length; i++) {
+		target << (int)chunk[i] << ",";
 	}
 
-	if (run == limit) {
-		(*out) << std::endl; // all files that have been properly output will end with an empty line
-		
-		in->close();
-		out->close();
-		
-		std::remove(filename.c_str());
-		rename(temp_filename.c_str(), filename.c_str()); // overwrite previous version with final
+	target.close();
 
-		if (old_filename != filename) { // if they are the same, the rename operation has already solved it
-			std::remove(old_filename.c_str());
+	while (!source.eof()) { // repeat until file is done
+		target.open(target_name, std::fstream::app); // now we append to whatever exists there
+		k = key;
+
+		// get message content to RAM
+		for (length = 0; !source.eof() && length < 32000; length++) {
+			chunk[i] = source.get();
+		}
+		length--; // to compensate for last increment
+
+		// encrypt chunk
+		for (i = 0; i < n_runs; i++, k++) {
+			for (j = 0; j < length; j++) {
+				chunk[j] ^= k.get_char(j);
+			}
 		}
 
-		return true;
+		// output encrypted content
+		for (i = 0; i < length; i++) {
+			target << (int)chunk[i];
+		}
 	}
 
-	in->close();
-	out->close();
-	
-	delete in; // more stable memory management, minimum overhead
-	delete out;
+	if (target.is_open()) target.close();
+	source.close();
 
-	rename(temp_filename.c_str(), filename.c_str());
-	
-	for (*i = 0; *i < 10; (*i)++) key.increment();
+	delete[] chunk;
 
-	delete i;
-	
-	if (encrypt_private(temp_filename, key, run + 1, limit)) return true; // optimise to make use of dynamic memory, to prevent overflow, if we have time
-	return false;
+	std::remove(filename.c_str());
+
+	return 0;
 }
 
-bool CryptoFile::decrypt(std::string target_name, CryptoKey &key, int run)
+int CryptoFile::decrypt(std::string target_name, const CryptoKey & key, bool overwrite)
 {
-	if (status != statuses::encrypted) {
-		std::cerr << "File is already decrypted!";
-		return false;
+	// return values:
+	// 0 - all OK
+	// -1 - couldn't open target without overwriting
+	// -2 - couldn't open source
+	// -3 - file can't be encrypted, because it is not plaintext
+
+	if (status != statuses::encrypted) return -3;
+
+	int length, j, i;
+	length = j = i = 0;
+
+	std::ifstream fin(target_name);
+
+	if (!fin.fail() && !overwrite) { // file exists and we do not want to overwrite
+		do {
+			i++;
+			if (i == 10) break;
+			fin.close();
+			fin.open(target_name + "_" + std::to_string(i));
+		} while (!fin.fail());
+
+		if (i == 10) return -1;
+
+		fin.close();
+
+		return (encrypt(target_name + "_" + std::to_string(i), key));
 	}
 
-	std::ifstream *in = new std::ifstream(filename);
+	std::ifstream source(filename);
+	if (source.fail()) return -2;
 
-	in->seekg(0, std::ios_base::end);
-	std::ios_base::streampos end_pos = in->tellg();
-	end_pos -= 2;
-	delete in;
+	char * chunk = new char[32000];
+	std::string aux;
 
-	decrypt_private(("_" + filename), key, end_pos); // first 500
+	// get message content to RAM
+	for (length = 0; !source.eof() && length < 32000; length++) {
+		std::getline(source, aux, ',');
+		chunk[length] = (char)(atoi(aux.c_str()));
+	}
+	length--; // to compensate for last increment
 
-	for (int i = 1; i < key.get_repetitions() / 500; i++) {
-		decrypt_private(target_name, key, end_pos);
+	CryptoKey k(key.get_decrypt_key());
+	int n_runs = key.get_repetitions();
+
+	// decrypt chunk
+	for (i = 0; i < n_runs; i++, k--) {
+		for (j = 0; j < length; j++) {
+			chunk[j] ^= k.get_char(j);
+		}
 	}
 
-	if (key.get_repetitions() % 500 != 0) {
-		decrypt_private(target_name, key, end_pos, 0, key.get_repetitions() % 500);
+	std::ofstream target(target_name, std::fstream::trunc);
+
+	// output encrypted content
+	for (i = 0; i < length; i++) {
+		target << (char)chunk[i];
 	}
 
-	set_status(plaintext);
+	target.close();
 
-	return true;
-}
+	while (!source.eof()) { // repeat until file is done
+		target.open(target_name, std::fstream::app); // now we append to whatever exists there
+		k = key;
 
-bool CryptoFile::decrypt_private(std::string target_name, CryptoKey &key, std::ios_base::streampos &n_chars, int run, int limit)
-{
-	std::ifstream * in = new std::ifstream;
-	std::ofstream * out = new std::ofstream;
+		// get message content to RAM
+		for (length = 0; !source.eof() && length < 32000; length++) {
+			chunk[i] = source.get();
+		}
+		length--; // to compensate for last increment
 
-	in->open(filename, std::ifstream::binary);
-	if (!in->is_open()) return false;
-
-	if (run == 0) {
-		old_filename = filename;
-		filename = target_name;
-		temp_filename = "_" + filename;
-	}
-
-	out->open(temp_filename, std::ofstream::binary | std::ofstream::trunc);
-
-	int *i = (int*)calloc(1, sizeof(int)); // allocated once
-
-	while (*i < n_chars) { // iterator relative to streampos
-		(*out) << (char)(in->get() ^ key.get_char((*i) % 32));
-
-		(*i)++;
-	}
-	
-	in->close();
-	out->close();
-
-	delete in;
-	delete out;
-
-	if (run == limit) {
-		std::remove(filename.c_str());
-		rename(temp_filename.c_str(), filename.c_str());
-
-		if (old_filename != filename) { // if they are the same, the rename operation has already solved it
-			std::remove(old_filename.c_str());
+				  // decrypt chunk
+		for (i = 0; i < n_runs; i++, k++) {
+			for (j = 0; j < length; j++) {
+				chunk[j] ^= k.get_char(j);
+			}
 		}
 
-		return true;
+		// output encrypted content
+		for (i = 0; i < length; i++) {
+			target << (char)chunk[i];
+		}
 	}
 
-	rename(temp_filename.c_str(), filename.c_str());
+	if (target.is_open()) target.close();
+	source.close();
 
-	for (*i = 0; *i < 10; (*i)++) key.decrement(); // reuse variable
+	delete[] chunk;
 
-	delete i; // extend recursion lifetime
+	std::remove(filename.c_str());
 
-	if (decrypt_private(temp_filename, key, n_chars, run + 1, limit)) return true;
-	return false;
+	return 0;
 }
 
 CryptoFile::~CryptoFile()
 {
 }
-
