@@ -73,7 +73,7 @@ public:
 class options_menu : public game_state
 {
 private:
-	const std::string options_str[3] = { "Back", "Music", "Difficulty"};
+	const std::string options_str[3] = { "Back", "Stop Music", "Skip Song"};
 	sf::Font options_font;
 	sf::Text options[3];
 	sf::Texture background;

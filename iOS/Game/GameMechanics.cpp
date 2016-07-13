@@ -967,7 +967,7 @@ store * user_profile::get_active_store()
 	{
 		if (stores.empty())
 		{
-			stores.push_back(new store(""));
+			stores.push_back(new store(this, ""));
 			active_store = stores.front();
 		}
 	}

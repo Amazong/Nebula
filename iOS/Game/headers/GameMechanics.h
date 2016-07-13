@@ -222,11 +222,9 @@ public:
 	friend class in_game_setup;
 	friend class finance;
 	friend class store_state;
-<<<<<<< HEAD
 	friend class store_buy;
-=======
+
 	friend class staff;
->>>>>>> staff
 };
 
 
@@ -293,10 +291,7 @@ public:
 	friend class in_game_setup;
 	friend class finance;
 	friend class store_state;
-<<<<<<< HEAD
 	friend class store_buy;
-=======
 	friend class staff;
->>>>>>> staff
 };
 

@@ -1448,7 +1448,6 @@ void new_game::input()
 						break;
 					}
 					game->get_current_user()->set_user_name(name);
-
 					game->push_state(new msg_box(game, game->window.capture(), "Game created!",20, 50, new in_game_setup(game)));
 					return;
 				}
