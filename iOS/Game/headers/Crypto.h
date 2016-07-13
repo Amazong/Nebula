@@ -21,7 +21,7 @@ private:
 public:
 	CryptoKey();
 	CryptoKey(const CryptoKey &k);
-	CryptoKey(std::string new_key, mode mod = repeating, char repeater = '0');
+	CryptoKey(std::string new_key);
 	~CryptoKey();
 
 	bool set_key(std::string new_key, mode mod = repeating, char repeater = '0');

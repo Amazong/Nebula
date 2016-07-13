@@ -21,7 +21,7 @@ public:
 
 	game_state * peek_state();
 
-	void set_current_user(user_profile *user); 
+	void set_current_user(user_profile *user);
 	user_profile * get_current_user();
 	
 	void push_state(game_state * state);
