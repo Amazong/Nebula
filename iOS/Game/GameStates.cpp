@@ -536,15 +536,15 @@ void in_game::input()
 
 			switch (selection)
 			{
-			case 0:
-				game->pop_state();
+			case 3:	
 				return;
 				break;
+
 			case 4:
-				current_user->buy_store(new store(current_user, ""));
 				game->push_state(new inventory(game, game->window.capture()));
 				break;
 			case 5:
+				game->push_state(new store_state(game, game->window.capture()));
 				break;
 			case 6:
 				game->push_state(new finance(game));
@@ -2326,7 +2326,7 @@ void inventory::update_list()
 	for (i = 0; i < starting_index * 5; i++) it++;
 
 	for (i = 0; i < 5; i++) {
-		currently_showing[i].setString(std::to_string(starting_index * 5 + i + 1) + ". " + (*it)->print_brand_cpp_short());
+		currently_showing[i].setString(std::to_string(starting_index * 5 + i + 1) + ". " + ((*it)->print_brand_cpp_short()));
 		it++;
 		if (it == current_user->get_active_store()->get_inventory()->end()) {
 			for (int j = i+1; j < 5; j++) {
@@ -2715,7 +2715,7 @@ void inventory_buy::update_properties() {
 	}
 }
 
-/*------------------------------ finance ------------------------------*/
+/*------------------------------   finance   ------------------------------*/
 
 finance::finance(state_manager * game_ptr)
 {
@@ -2835,8 +2835,6 @@ void finance::input()
 		{
 			if (handle_icons((sf::Vector2f) sf::Mouse::getPosition(game->window))) //handles input for icons and for back;
 				return;
-
-
 			break;
 		}
 		default:
@@ -2871,6 +2869,8 @@ void finance::logic_update(const float elapsed)
 	}
 
 	update_indicators();
+	update_list();
+	update_properties();
 }
 
 void finance::draw(const float elapsed)
@@ -2880,8 +2880,22 @@ void finance::draw(const float elapsed)
 	for (int i = 0; i < 5; i++)
 		game->window.draw(indicators[i]);
 	for (int i = 0; i < 5; i++)
+	{
+		if (i > 2)
+		{
+			if ((starting_index + 1) * 5 >= current_user->stores.size())
+				icons[3].setScale(0.0f, 0.0f);
+
+			if (starting_index == 0)
+				icons[4].setScale(0.0f, 0.0f);
+		}
+
 		game->window.draw(icons[i]);
-	for (int i = 0; i < 5; i++)
+	}
+		
+	int num = (current_user->stores.size() > 5) ? 5 : current_user->stores.size();  // adusts the rects it draws,
+
+	for (int i = 0; i < num; i++)
 		game->window.draw(store_box[i]);
 	for (int i = 0; i < 9; i++)
 		game->window.draw(options[i]);
@@ -2957,11 +2971,11 @@ void finance::setup_options()
 
 		store_box_text[i].setString("test test   test  test ");
 		store_box_text[i].setFont(options_font);
-		store_box_text[i].setCharacterSize((int)(game->window.getSize().y / 16.0f));
+		store_box_text[i].setCharacterSize((int)(game->window.getSize().y / 18.5f));
 		store_box_text[i].setOrigin((store_box_text[i].getGlobalBounds().width / 2.0f), (store_box_text[i].getGlobalBounds().height / 2.0f));
 		store_box_text[i].setColor(sf::Color::White);
 		store_box_text[i].setPosition(store_box[i].getPosition());
-		store_box_text[i].move(0, -4 * (store_box[i].getGlobalBounds().height / 15.0f));
+		store_box_text[i].move(0, -3.0f * (store_box[i].getGlobalBounds().height / 15.0f));
 	}
 
 
@@ -3174,15 +3188,21 @@ bool finance::handle_icons(sf::Vector2f mouse_pos)
 		return(true);
 	}
 
-	if (icons[3].getGlobalBounds().contains(mouse_pos))
+
+	if (icons[3].getGlobalBounds().contains(mouse_pos)) // down
 	{
-		//to do
+		if ((starting_index + 1) * 5 < current_user->stores.size()) {
+			move_list_down();
+			icons[4].setScale(0.4f, 0.4f);
+		}
 		return(true);
 	}
 
-	if (icons[4].getGlobalBounds().contains(mouse_pos))
+	if (icons[4].getGlobalBounds().contains(mouse_pos)) // up
 	{
-		//to do
+		if (starting_index != 0)
+			move_list_up();
+		icons[3].setScale(0.4f, 0.4f);
 		return(true);
 	}
 
@@ -3222,10 +3242,64 @@ void finance::update_profits()
 
 void finance::move_list_down()
 {
+	starting_index++;
+	update_list();
+	update_properties();
 }
 
 void finance::move_list_up()
 {
+	starting_index--;
+	update_list();
+	update_properties();
+}
+
+void finance::update_list()
+{
+	int i;
+	std::list<store *>::iterator it = current_user->stores.begin();
+		
+	for (i = 0; i < starting_index * 5; i++) it++;
+
+	for (i = 0; i < 5; i++) {
+		options[i].setString(std::to_string(starting_index * 5 + i + 1) + ". " + (*it)->get_name_cpp());
+		it++;
+		if (it == current_user->stores.end()) {
+			for (int j = i + 1; j < 5; j++) {
+				options[j].setString("");
+			}
+			break;
+		}
+	}
+}
+
+void finance::update_properties()
+{
+
+	for (int i = 0; i < 5; i++)
+	{
+		if (options[i].getString() == "")
+		{
+			store_box_text[i].setString("");
+			store_box[i].setScale(0.0f, 0.0f);
+		}
+		else
+		{
+			store_box[i].setScale(1.0f, 1.0f);
+			int j;
+			std::list<store *>::iterator it = current_user->stores.begin();
+			 j = (starting_index * 5 + i); //index that  i need
+			
+			 for (int k = 0; k < j ;  k++) //go there
+				 it++;
+
+			 store_box_text[i].setString("Staff:" + std::to_string((*it)->inventory.size()) + "   Stock:" + std::to_string((*it)->staff.size())+ "   Traffic:" + std::to_string((*it)->traffic));
+			 store_box_text[i].setOrigin((store_box_text[i].getGlobalBounds().width / 2.0f), (store_box_text[i].getGlobalBounds().height / 2.0f));
+			 store_box_text[i].setColor(sf::Color::White);
+			 store_box_text[i].setPosition(store_box[i].getPosition());
+			 store_box_text[i].move(0, -3.0f * (store_box[i].getGlobalBounds().height / 15.0f));
+		}
+	}
 }
 
 std::string finance::style(long double d)
@@ -3262,3 +3336,365 @@ std::string finance::style(long double d)
 
 	return s;
 }
+
+
+
+
+/*------------------------------ store_state ------------------------------*/
+
+store_state::store_state(state_manager * game_ptr, sf::Image print)
+{
+	game = game_ptr;
+	in_game_printscr = print;
+
+	if (!font.loadFromFile("res/fonts/Roboto-Bold.ttf")) {
+		complain(ErrNo::file_access);
+		return;
+	}
+
+	if (!backgroud_texture.loadFromImage(print)) {
+		complain(ErrNo::file_access);
+		return;
+	}
+
+	background.setTexture(backgroud_texture, true);
+	background.setTextureRect(sf::IntRect(0, 0, (int)(game->window.getSize().x / 5.8f), (int)(game->window.getSize().y - (game->window.getSize().y / 7.0f))));
+
+	details.setFillColor(sf::Color::Color(170, 170, 170, 235));
+	details.setSize(sf::Vector2f((8.0f / 16.0f) * game->window.getSize().x, (game->window.getSize().y * (2.0f / 3.0f))));
+	details.setPosition(game->window.getSize().x * (7.0f / 16.0f), game->window.getSize().y / 5.5f);
+	details.setOutlineColor(sf::Color(100, 100, 100, 255));
+	details.setOutlineThickness(-3);
+
+	setup();
+}
+
+void store_state::input()
+{
+	sf::Event event;
+	sf::Vector2f mouse_pos(0.0f, 0.0f); // by default
+
+	while (game->window.pollEvent(event))
+	{
+		// if in input mode
+		
+		switch (event.type)
+		{
+			case sf::Event::KeyPressed:
+			{
+				if (event.key.alt && (event.key.code == sf::Keyboard::F4)) {
+					game->window.close();
+				}
+				else if (event.key.alt && (event.key.code == sf::Keyboard::S)) {
+					MUSIC::get_m_player()->set_skip(true);
+				}
+				else if (event.key.alt && (event.key.code == sf::Keyboard::M)) {
+					if (MUSIC::get_m_player()->get_stop() == false) {
+						MUSIC::get_m_player()->set_stop(true);
+					}
+					else MUSIC::get_m_player()->set_stop(false);
+				}
+				else if (event.key.alt && (event.key.code == sf::Keyboard::J)) {
+					MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() - 5);
+				}
+				else if (event.key.alt && (event.key.code == sf::Keyboard::K)) {
+					MUSIC::get_m_player()->set_MAX_VOL(MUSIC::get_m_player()->get_MAX_VOL() + 5);
+				}
+				break;
+			}
+			case sf::Event::MouseMoved:
+			{
+				mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
+
+				// update properties
+				for (int i = 0; i < 5; i++) {
+					if (currently_showing[i].getGlobalBounds().contains(mouse_pos) && currently_showing[i].getString() != "") {
+						int j;
+						int item_number = starting_index * 5 + i;
+						auto it = current_user->stores.begin();
+
+						currently_showing[i].setStyle(sf::Text::Bold);
+
+						for (j = 0; j < 5; j++) {
+							if (j == i) continue;
+							currently_showing[j].setStyle(sf::Text::Regular);
+						}
+
+						for (j = 0; j < item_number; j++) {
+							it++;
+						}
+
+						current_selection = *it;
+
+						set_active_store.setColor(sf::Color(70, 70, 70, 255));
+
+						update_properties();
+						return;
+					}
+				}
+
+				if (back.getGlobalBounds().contains(mouse_pos)) {
+					selection = 0;
+					back.setStyle(sf::Text::Bold);
+				}
+				else if (buy.getGlobalBounds().contains(mouse_pos)) {
+					selection = 1;
+					buy.setStyle(sf::Text::Bold);
+				}
+				else if (set_active_store.getGlobalBounds().contains(mouse_pos)) {
+					selection = 2;
+				}
+				else if (scroll[0].getGlobalBounds().contains(mouse_pos)) {
+					scroll[0].setScale(0.5f, 0.5f);
+					selection = 3;
+				}
+				else if (scroll[1].getGlobalBounds().contains(mouse_pos)) {
+					scroll[1].setScale(0.5f, 0.5f);
+					selection = 4;
+				}
+				else {
+					scroll[0].setScale(0.4f, 0.4f);
+					scroll[1].setScale(0.4f, 0.4f);
+					selection = -1;
+					buy.setStyle(sf::Text::Regular);
+					back.setStyle(sf::Text::Regular);
+				}
+
+				break;
+			}
+			case sf::Event::MouseButtonPressed:
+			{
+				state_manager * aux = game;
+				switch (selection) // 0 - back; 1 - buy; 2 - set_active_store; 3 - move down; 4 - move up
+				{
+				case 0:
+					game->pop_state();
+					return;
+				case 1:
+					//game->push_state(new store_state_buy(game, in_game_printscr));
+					return;
+				case 2:
+					//to do
+
+					return;
+				case 3:
+					if ((starting_index + 1) * 5 < current_user->get_active_store()->get_stock()) {
+						move_list_down();
+						scroll[1].setScale(0.4f, 0.4f);
+					}
+					break;
+				case 4:
+					if (starting_index != 0) {
+						move_list_up();
+						scroll[0].setScale(0.4f, 0.4f);
+					}
+					break;
+					// to add actions
+				}
+			}
+			default:
+				break;
+		
+		}
+	}
+
+}
+
+void store_state::logic_update(const float elapsed)
+{
+	update_list();
+	update_properties();
+}
+
+void store_state::draw(const float elapsed)
+{
+	game->window.draw(background);
+	game->window.draw(details);
+	game->window.draw(buy);
+	game->window.draw(back);
+	game->window.draw(set_active_store);
+	
+
+	if ((starting_index + 1) * 5 >= current_user->stores.size())
+		scroll[0].setScale(0.0f, 0.0f);
+
+	if (starting_index == 0)
+		scroll[1].setScale(0.0f, 0.0f);
+
+	int i;
+	for (i = 0; i < 2; i++)
+		game->window.draw(scroll[i]);
+
+	for (i = 0; i < 5; i++)
+		game->window.draw(currently_showing[i]);
+
+	for (i = 0; i < 6; i++)
+		game->window.draw(active_properties[i]);
+}
+
+void store_state::move_list_down()
+{
+	starting_index++;
+
+	update_list();
+	current_selection = nullptr;
+	set_active_store.setColor(sf::Color::Transparent);
+	update_properties();
+}
+
+void store_state::move_list_up()
+{
+	starting_index--;
+
+	update_list();
+	current_selection = nullptr;
+	set_active_store.setColor(sf::Color::Transparent);
+	update_properties();
+}
+
+void store_state::setup()
+{
+	current_user = game->get_current_user();
+	active_store = current_user->get_active_store();
+
+	setup_text();
+	setup_icons();
+}
+
+void store_state::setup_text()
+{
+	// currently showing (list)
+	for (int i = 0; i < 5; i++) {
+		currently_showing[i].setFont(font);
+		currently_showing[i].setCharacterSize((int)(game->window.getSize().y / 16.0f));
+		currently_showing[i].setColor(sf::Color::White);
+		currently_showing[i].setPosition((game->window.getSize().x / 5.8f) + 90, (2 * i * currently_showing[i].getCharacterSize() + game->window.getSize().y / 5.0f));
+	}
+	update_list();
+
+	// buy
+	{
+		buy.setFont(font);
+		buy.setColor(sf::Color::White);
+		buy.setCharacterSize(50);
+		buy.setString("Buy store");
+		buy.setPosition((game->window.getSize().x - buy.getGlobalBounds().width - 50),
+		game->window.getSize().y - (float)2 * buy.getCharacterSize());
+	}
+
+	// back
+	{
+		back.setFont(font);
+		back.setColor(sf::Color::White);
+		back.setCharacterSize(50);
+		back.setString("Back");
+		back.setPosition((game->window.getSize().x / 5.8f) + 50,
+			game->window.getSize().y - (float)2 * buy.getCharacterSize());
+	}
+
+	//set active store
+	{
+		set_active_store.setFont(font);
+		set_active_store.setColor(sf::Color::Transparent);
+		set_active_store.setString("Set active store");
+	}
+}
+
+void store_state::setup_icons()
+{
+	std::string scroll_names[2] = { "down_arrow.png", "up_arrow.png" };
+
+	for (int i = 0; i < 2; i++)
+	{
+		if (!scroll_texture[i].loadFromFile("res/png/" + scroll_names[i]))
+		{
+			complain(ErrNo::file_access);
+			return;
+		}
+
+		scroll[i].setTexture(scroll_texture[i]);
+		scroll[i].setOrigin((scroll[i].getGlobalBounds().width / 2.0f), (scroll[i].getGlobalBounds().height / 2.0f));
+		scroll[i].setScale(0.4f, 0.4f);
+
+	}
+
+	scroll[0].setPosition(10 + currently_showing[0].getPosition().x + scroll[0].getGlobalBounds().width / 2.0f,
+		currently_showing[0].getPosition().y - (1.0f / 2.0f)*scroll[0].getGlobalBounds().height);
+	scroll[1].setPosition(currently_showing[0].getPosition().x + currently_showing[0].getGlobalBounds().width - scroll[1].getGlobalBounds().width - 10 + scroll[1].getGlobalBounds().width / 2.0f,
+		currently_showing[0].getPosition().y - (1.0f / 2.0f)*scroll[1].getGlobalBounds().height);
+}
+
+void store_state::update_list()
+{
+	int i;
+	std::list<store *>::iterator it = current_user->stores.begin();
+
+	for (i = 0; i < starting_index * 5; i++) it++;
+
+	for (i = 0; i < 5; i++) {
+		currently_showing[i].setString(std::to_string(starting_index * 5 + i + 1) + ". " + (*it)->get_name_cpp());
+		it++;
+		if (it == current_user->stores.end()) {
+			for (int j = i + 1; j < 5; j++) {
+				currently_showing[j].setString("");
+			}
+			break;
+		}
+	}
+}
+
+void store_state::update_properties() {
+	if (current_selection == nullptr) {
+		for (int i = 0; i < 6; i++) {
+			active_properties[i].setString("");
+		}
+		return;
+	}
+
+	// active_properties
+	int i = 5;
+
+
+	float base_size = (details.getGlobalBounds().height) / 19.0f;
+	unsigned int character_size = (int)(2 * base_size);
+
+	for (; i >= 0; i--) {
+		active_properties[i].setFont(font);
+		active_properties[i].setCharacterSize(character_size);
+		active_properties[i].setColor(sf::Color::White);
+		active_properties[i].setPosition(details.getPosition().x + 30,
+		details.getPosition().y + base_size + i * 3 * base_size);
+
+		switch (i) {
+		case 0:
+			active_properties[i].setString("Value: " + current_selection->get_value_cpp());
+			break;
+		case 1:
+			
+
+			active_properties[i].setString("Area: " + current_selection->get_area(int(current_selection->setting)));
+
+			set_active_store.setCharacterSize(active_properties[1].getCharacterSize());
+			set_active_store.setPosition(details.getPosition().x + details.getGlobalBounds().width - 30 - set_active_store.getGlobalBounds().width,
+			active_properties[1].getPosition().y);
+			break;
+		case 2:
+			active_properties[i].setString("Population: " + current_selection->get_population(int(current_selection->placement)));
+			active_properties[i].setCharacterSize(character_size);
+			break;
+		case 3:
+			active_properties[i].setString("Name: " + current_selection->get_name_cpp());
+			break;
+		case 4:
+			active_properties[i].setString("Max Stock: " + std::to_string(current_selection->get_max_stock()));
+			break;
+		case 5:
+			active_properties[i].setString("Buying Rate: " + std::to_string(current_selection->buying_rate));
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+

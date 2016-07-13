@@ -516,6 +516,34 @@ store & store::operator=(const store & shop)
 	return(*this);
 }
 
+std::string store::get_area(int num)
+{
+	std::string temp = "";
+
+	if (num == 0)
+		temp = "Poor";
+	else if (num == 1)
+		temp = "Middle";
+	else
+		temp = "Rich";
+
+	return temp;
+}
+
+std::string store::get_population(int num)
+{
+	std::string temp = "";
+
+	if (num == 0)
+		temp = "Rural";
+	else if (num == 1)
+		temp = "Town";
+	else
+		temp = "City";
+
+	return temp;
+}
+
 // averages
 void store::update_average_purchasing_power() {
 	double purchasing_power = 0;
@@ -1061,7 +1089,7 @@ void user_profile::save_inventories(std::string user, const guitar * tab, int si
 {
 	std::string file_name = user; //std structure of naming files
 	file_name += ".Store_inventory";
-	file_name.push_back(char(store_index));
+	file_name.push_back(char(store_index + 65));
 
 	std::ofstream fout(file_name, std::ios::binary | std::ios::trunc); //whatever was there is redefined
 
@@ -1082,7 +1110,7 @@ void user_profile::save_staff(std::string user, const employee * tab, int size, 
 {
 	std::string file_name = user; //std structure of naming files
 	file_name += ".Store_staff";
-	file_name.push_back(char(store_index));
+	file_name.push_back(char(store_index + 65));
 
 	std::ofstream fout(file_name, std::ios::binary | std::ios::trunc); //whatever was there is redefined
 
@@ -1228,13 +1256,15 @@ void user_profile::load_store_inv(const user_profile * user, store & shop, int s
 	std::string file_name = "saves/";
 	file_name += user->user;
 	file_name += ".Store_inventory";
-	file_name.push_back(store_index);
+	file_name.push_back(store_index + 65);
 
 	std::ifstream fin(file_name, std::ios::binary);
 
 	if (fin.fail())
-		error::trace_error(ErrNo::file_access);
-
+	{
+		fin.close();
+		return;//error::trace_error(ErrNo::file_access);
+	}
 	int size;
 	guitar * tab_ptr = nullptr;
 
@@ -1269,13 +1299,15 @@ void user_profile::load_store_staff(const user_profile * user, store & shop, int
 	std::string file_name = "saves/";
 	file_name += user->user;
 	file_name += ".Store_staff";
-	file_name.push_back(store_index);
+	file_name.push_back(store_index + 65);
 
 	std::ifstream fin(file_name, std::ios::binary);
 
 	if (fin.fail())
-		error::trace_error(ErrNo::file_access);
-
+	{
+		fin.close();
+		return;//error::trace_error(ErrNo::file_access);
+	}
 	int size;
 	employee * tab_ptr = nullptr;
 

@@ -57,6 +57,12 @@ int main() {
 	ACTIVE_USER.set_net_worth(2000000);
 
 	ACTIVE_USER.buy_store(new store(&ACTIVE_USER, "Downtown", 20000, 2));
+	ACTIVE_USER.buy_store(new store(&ACTIVE_USER, "UPtown", 20000, 2));
+	ACTIVE_USER.buy_store(new store(&ACTIVE_USER, "Sidetown", 20000, 2));
+	ACTIVE_USER.buy_store(new store(&ACTIVE_USER, "lowtown", 20000, 2));
+	ACTIVE_USER.buy_store(new store(&ACTIVE_USER, "notown", 20000, 2));
+	ACTIVE_USER.buy_store(new store(&ACTIVE_USER, "whattown", 20000, 2));
+	ACTIVE_USER.buy_store(new store(&ACTIVE_USER, "nevertown", 20000, 2));
 	ACTIVE_USER.set_active_store(ACTIVE_USER.get_back_store());
 	ACTIVE_USER.get_active_store()->buy_guitar(new guitar(200, "Larrivee"));
 	ACTIVE_USER.get_active_store()->buy_piano(new piano(piano_brands::Steinway, piano_type::Grand, quality::Great));

@@ -172,7 +172,9 @@ public:
 	// store management
 	void set_reputation(double rep) { reputation = rep; };
 	double get_reputation() { return reputation; };
-	
+
+	std::string get_area(int num);
+	std::string get_population(int num);
 	// averages
 	void update_average_purchasing_power();
 	void update_average_efficiency();
@@ -212,6 +214,8 @@ public:
 	// friends
 	friend class user_profile;
 	friend class in_game_setup;
+	friend class finance;
+	friend class store_state;
 };
 
 
@@ -277,5 +281,6 @@ public:
 	friend class in_game;
 	friend class in_game_setup;
 	friend class finance;
+	friend class store_state;
 };
 
