@@ -11,13 +11,13 @@
 #include "headers\GameMechanics.h"
 
 int main() {
-	ShowWindow(GetConsoleWindow(), SW_HIDE);
+	//ShowWindow(GetConsoleWindow(), SW_HIDE);
 	// uncomment line above to show console
 
 	// while debugging, I'll leave the splash screen commented
-	if (render_splash() == 42) {
-		return ErrNo::file_access;
-	}
+	//if (render_splash() == 42) {
+	//	return ErrNo::file_access;
+	//}
 	
 	LOGGER::log("Program started");
 
@@ -35,8 +35,7 @@ int main() {
 	
 	ACTIVE_USER.set_net_worth(2000000);
 
-	ACTIVE_USER.buy_store(new store(&ACTIVE_USER, "Downtown", 20000, 2));
-	ACTIVE_USER.set_active_store(ACTIVE_USER.get_back_store());
+	ACTIVE_USER.buy_store(new store(&ACTIVE_USER, "Downtown"));
 	ACTIVE_USER.get_active_store()->buy_guitar(new guitar(200, "Larrivee"));
 	ACTIVE_USER.get_active_store()->buy_piano(new piano(piano_brands::Steinway, piano_type::Grand, quality::Great));
 	ACTIVE_USER.get_active_store()->buy_guitar(new guitar(400, "Martin"));

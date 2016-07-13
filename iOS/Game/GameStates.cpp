@@ -2476,7 +2476,7 @@ void store_buy::input()
 				if (currently_showing[i].getGlobalBounds().contains(mouse_pos) && currently_showing[i].getString() != "") {
 					int j;
 					int item_number = starting_index * 5 + i;
-					auto it = current_user->stores.begin();
+					auto it = purchaseables.begin();
 
 					currently_showing[i].setStyle(sf::Text::Bold);
 
@@ -2529,7 +2529,7 @@ void store_buy::input()
 				game->pop_state();
 				return;
 			case 1:
-				//game->push_state(new store_buy_buy(game, in_game_printscr));
+				
 				return;
 			case 2:
 				//to do
@@ -2583,8 +2583,8 @@ void store_buy::setup()
 	current_user = game->get_current_user();
 	active_store = current_user->get_active_store();
 
+	setup_purchaseables();
 	setup_text();
-	setup_icons();
 }
 
 void store_buy::setup_text()
@@ -2626,27 +2626,23 @@ void store_buy::setup_text()
 	}
 }
 
-void store_buy::setup_icons()
+void store_buy::setup_purchaseables()
 {
-
+	for (int i = 0; i < 5; i++) {
+		purchaseables.push_back(new store(current_user, ""));
+	}
 }
 
 void store_buy::update_list()
 {
 	int i;
-	std::list<store *>::iterator it = current_user->stores.begin();
+	std::list<store *>::iterator it = purchaseables.begin();
 
 	for (i = 0; i < starting_index * 5; i++) it++;
 
 	for (i = 0; i < 5; i++) {
 		currently_showing[i].setString(std::to_string(starting_index * 5 + i + 1) + ". " + (*it)->get_name_cpp());
 		it++;
-		if (it == current_user->stores.end()) {
-			for (int j = i + 1; j < 5; j++) {
-				currently_showing[j].setString("");
-			}
-			break;
-		}
 	}
 }
 
@@ -2675,7 +2671,7 @@ void store_buy::update_properties() {
 
 		switch (i) {
 		case 0:
-			active_properties[i].setString("Value: " + current_selection->get_value_cpp());
+			active_properties[i].setString("Value: " + current_selection->get_value_cpp() + " £");
 			break;
 		case 1:
 			active_properties[i].setString("Area: " + current_selection->get_area(int(current_selection->setting)));
@@ -3769,7 +3765,7 @@ void store_state::input()
 					game->pop_state();
 					return;
 				case 1:
-					//game->push_state(new store_state_buy(game, in_game_printscr));
+					game->push_state(new store_buy(game, in_game_printscr));
 					return;
 				case 2:
 					//to do

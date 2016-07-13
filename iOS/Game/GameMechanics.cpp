@@ -436,10 +436,11 @@ store::store(const store & shop)
 	staff.clear();
 }
 
-store::store(user_profile * current, char * name, double value, int areacode, int pop) // areacode: 0-poor; 1-middle; 2-rich 
+store::store(user_profile * current, char * name, double value, int areacode, unsigned int max_stock, int pop) // areacode: 0-poor; 1-middle; 2-rich 
 {
 	this->value = value;
 	this->user = current;
+	this->max_stock = max_stock;
 	strcpy_s(this->name, name);
 
 	placement = static_cast<population>(pop);
@@ -487,6 +488,7 @@ store::store(user_profile * current, char * name)
 	}
 
 	int a, p;
+	unsigned int s;
 	double v, modulate;	
 
 	std::uniform_int_distribution<int> range1(1, 3);
@@ -503,7 +505,14 @@ store::store(user_profile * current, char * name)
 	v *= ((a+1) / 3.0) * ((p+1) / 3.0);
 	v *= modulate;
 
-	*this = store(current, n, v, a, p);
+	std::uniform_int_distribution<int> stock_range(50, 100);
+
+	s = stock_range(random_numbers);
+	s *= (((a + 1) / 3.0) * (current->difficulty + 1) / 3.0);
+	s = (int)((double)s * modulate);
+
+	*this = store(current, n, v, a, s, p);
+	this->user = current;
 }
 
 store::~store()

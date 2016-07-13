@@ -1,4 +1,4 @@
-Tokyo
+﻿Tokyo
 Seoul
 Paris
 Chicago
@@ -23,7 +23,7 @@ San Jose
 San Diego
 Denver
 Baltimore
-Brasília
+Brasilia
 Portland
 St. Louis
 Charlotte
@@ -70,7 +70,7 @@ Aberdeen
 Belfast
 Liverpool
 Coventry
-Anápolis
+Anapolis
 Islamabad
 Mumbai
 Abidjan
@@ -156,7 +156,7 @@ Macau
 Madrid
 Manila
 Marseille
-Medellín
+Medellin
 Medan
 Milan
 Monterrey
@@ -206,4 +206,4 @@ Wuxi
 Xiamen
 Xian
 Xuzhou
-Zürich
+Zurich

@@ -163,7 +163,7 @@ private:
 public:
 	store() {};
 	store(const store & shop); // does not copy the std::lists nor the user pointer
-	store(user_profile * current, char * name, double value, int areacode, int pop = 1); // areacode: 0-poor; 1-middle; 2-rich
+	store(user_profile * current, char * name, double value, int areacode, unsigned int max_stock, int pop = 1); // areacode: 0-poor; 1-middle; 2-rich
 	store(user_profile * current, char * name);
 	~store();
 

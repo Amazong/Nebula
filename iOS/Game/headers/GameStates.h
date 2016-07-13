@@ -320,12 +320,14 @@ class store_buy : public game_state {
 private:
 	sf::Image in_game_printscr;
 
+	std::list<store *> purchaseables;
+
 	sf::Font font;
 	sf::Text title;
 	sf::Text buy;
 	sf::Text back;
 	sf::Text set_active_store;
-	sf::Text active_properties[5]; // value, area, population, max stock, BR
+	sf::Text active_properties[4]; // value, area, population, max stock
 	sf::Text currently_showing[5];
 
 	std::string active_store_str;
@@ -333,7 +335,7 @@ private:
 	sf::RectangleShape details;
 	
 	sf::Sprite background;
-	sf::Texture backgroud_texture;
+	sf::Texture backgroud_texture;	
 
 	double buying_rate;
 	int selection = -1;
@@ -345,7 +347,7 @@ private:
 
 	void setup();
 	void setup_text();
-	void setup_icons();
+	void setup_purchaseables();
 	void update_list();
 	void update_properties();
 
