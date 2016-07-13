@@ -2728,9 +2728,8 @@ finance::finance(state_manager * game_ptr)
 		return;
 	}
 
-	setup_options();
-	update_indicators();
-	setup_icons();
+	setup();
+	
 }
 
 void finance::update_buying_rate()
@@ -2775,6 +2774,10 @@ void finance::input()
 	{
 		icons[1].setScale(0.2f, 0.2f);
 		icons[2].setScale(0.2f, 0.2f);
+		icons[3].setScale(0.4f, 0.4f);
+		icons[4].setScale(0.4f, 0.4f);
+		options[7].setStyle(sf::Text::Regular);
+		options[7].setScale(1.0f, 1.0f);
 
 		switch (event.type)
 		{
@@ -2803,29 +2806,23 @@ void finance::input()
 		case sf::Event::MouseMoved:
 		{
 			mouse_pos = (sf::Vector2f) sf::Mouse::getPosition(game->window);
-			if (selection != -1)
-			{
-				//options[(selection - 3)].setScale(1.0f, 1.0f);
-				//options[(selection - 3)].setStyle(sf::Text::Regular);
-			}
+			
 
 			selection = -1; // this way the selection will always be -1 if it's not in one of the options
 
-							/*for (int i = 0; i < 4; i++)
-							{
-							if (heat[(3 + i)].getGlobalBounds().contains(mouse_pos))
-							{
-							selection = i + 3;
-							}
-							}
-							*/
 
-							/*if (selection != -1)
-							{
-							options[(selection - 3)].scale(1.1f, 1.1f);
-							options[(selection - 3)].setStyle(sf::Text::Underlined);
-							}
-							*/
+			if (options[7].getGlobalBounds().contains(mouse_pos))
+			{
+				options[7].scale(1.1f, 1.1f);
+				options[7].setStyle(sf::Text::Underlined);
+				selection = 7;
+			}
+
+			if (selection != 7)
+			{
+				options[7].setStyle(sf::Text::Regular);
+				options[7].setScale(1.0f, 1.0f);
+			}
 
 			control_icon_animations(mouse_pos);
 
@@ -2836,28 +2833,10 @@ void finance::input()
 		}
 		case sf::Event::MouseButtonPressed:
 		{
-			if (handle_icons((sf::Vector2f) sf::Mouse::getPosition(game->window))) //handles input for icons
+			if (handle_icons((sf::Vector2f) sf::Mouse::getPosition(game->window))) //handles input for icons and for back;
 				return;
 
-			/*if (selection != -1 && event.mouseButton.button == sf::Mouse::Left)
-			{
-			//options[(selection - 3)].setStyle(sf::Text::Italic);
-			//options[(selection - 3)].setColor(sf::Color::Red);
-			//options[(selection - 3)].scale(0.9f, 0.9f);
-			}
-			switch (selection)
-			{
-			case 0:
-			game->pop_state();
-			return;
-			break;
-			case 4:
-			current_user->buy_store(new store(current_user, ""));
-			game->push_state(new inventory(game, game->window.capture()));
-			break;
-			// to add actions
-			}
-			*/
+
 			break;
 		}
 		default:
@@ -2902,12 +2881,23 @@ void finance::draw(const float elapsed)
 		game->window.draw(indicators[i]);
 	for (int i = 0; i < 5; i++)
 		game->window.draw(icons[i]);
+	for (int i = 0; i < 5; i++)
+		game->window.draw(store_box[i]);
+	for (int i = 0; i < 9; i++)
+		game->window.draw(options[i]);
+	for (int i = 0; i < 5; i++)
+		game->window.draw(store_box_text[i]);
 }
 
 void finance::setup()
 {
 	current_user = game->get_current_user();
 	active_store = current_user->get_active_store();
+
+
+	setup_options();
+	update_indicators();
+	setup_icons();
 }
 
 void finance::setup_options()
@@ -2954,6 +2944,84 @@ void finance::setup_options()
 			break;
 		}
 	}
+
+	sf::Vector2f size = sf::Vector2f(game->window.getSize().x / 2.0f, game->window.getSize().y / 15.0f);
+	
+	for (int i = 0; i < 5; i++)
+	{
+		store_box[i].setFillColor(sf::Color(170, 170, 170, 235));
+		store_box[i].setSize(size);
+		store_box[i].setOrigin((store_box[i].getGlobalBounds().width / 2.0f), (store_box[i].getGlobalBounds().height / 2.0f));
+		store_box[i].setPosition(game->window.getSize().x * (2.15f/3.0f), (game->window.getSize().y / 3.5f) + (store_box[i].getGlobalBounds().height) );
+		store_box[i].move(0, (i * store_box[i].getGlobalBounds().height  * 1.15f));
+
+		store_box_text[i].setString("test test   test  test ");
+		store_box_text[i].setFont(options_font);
+		store_box_text[i].setCharacterSize((int)(game->window.getSize().y / 16.0f));
+		store_box_text[i].setOrigin((store_box_text[i].getGlobalBounds().width / 2.0f), (store_box_text[i].getGlobalBounds().height / 2.0f));
+		store_box_text[i].setColor(sf::Color::White);
+		store_box_text[i].setPosition(store_box[i].getPosition());
+		store_box_text[i].move(0, -4 * (store_box[i].getGlobalBounds().height / 15.0f));
+	}
+
+
+	for (int i = 6; i < 8; i++) //setting back and stores
+	{
+		options[i].setFont(options_font);
+		options[i].setString(options_str[(i - 6)]);
+		options[i].setCharacterSize((int)(game->window.getSize().y / 13.5f));
+		options[i].setOrigin((options[i].getGlobalBounds().width / 2.0f), (options[i].getGlobalBounds().height / 2.0f));
+		options[i].setColor(sf::Color::White);
+
+		switch (i)
+		{
+			case 6:
+			{
+				options[i].setPosition(game->window.getSize().x / 3.4f, game->window.getSize().y / 8.4f);
+				break;
+			}
+			case 7:
+			{
+				//options[i].setPosition(game->window.getSize().x / 1.70f, game->window.getSize().y * (7.20f/8.0f));
+				options[i].setPosition(heat[0].getGlobalBounds().width + (game->window.getSize().x - heat[0].getGlobalBounds().width)/ 2.0f
+					, game->window.getSize().y * (7.20f / 8.0f));
+				break;
+			}
+			default:
+				break;		
+		}
+	}
+
+	//setting the store indicators and the average store revenue.
+	for (int i = 0; i < 6; i++)
+	{
+		options[i].setFont(options_font);
+		options[i].setString(std::to_string(i + 1) +". 1234567890");
+		options[i].setCharacterSize((int)(game->window.getSize().y / 16.0f));
+		options[i].setOrigin((options[i].getGlobalBounds().width / 2.0f), (options[i].getGlobalBounds().height / 2.0f));
+		options[i].setColor(sf::Color::White);
+
+		switch (i)
+		{
+			case 5:
+			{
+				options[i].setString("Average Store Revenue: ");
+				options[i].setOrigin((options[i].getGlobalBounds().width / 2.0f), (options[i].getGlobalBounds().height / 2.0f));
+				options[i].setPosition(heat[0].getGlobalBounds().width + (game->window.getSize().x - heat[0].getGlobalBounds().width) / 2.0f
+					, game->window.getSize().y * (6.2f / 8.0f));
+				break;
+			}
+			default:
+			{
+				options[i].setPosition(store_box[i].getPosition().x - (store_box[i].getGlobalBounds().width * 0.8f), store_box[i].getPosition().y);
+				options[i].move(0, - 3 * (store_box[i].getGlobalBounds().height / 15.0f));
+
+				break;
+			}
+				
+		}
+	}
+	
 }
 
 void finance::update_indicators()
@@ -3020,35 +3088,43 @@ void finance::setup_icons()
 
 
 		if (i > 2)
+		{
 			icons[i].setScale(0.4, 0.4);
+		}
 
 
 
 		switch (i) // i refering to for 
 		{
-		case 0: // bar graph
-		{
-			icons[i].setPosition(heat[0].getPosition().x + (heat[0].getGlobalBounds().width / 2.0f), heat[0].getPosition().y + (heat[0].getGlobalBounds().height / 2.0f));
-			break;
-		}
-		case 1: // save 
-		{
-			icons[i].setPosition(heat[2].getPosition().x + (heat[2].getGlobalBounds().width / 4.0f), heat[2].getPosition().y + (heat[2].getGlobalBounds().height / 2.0f));
-			break;
-		}
-		case 2: // quit game
-		{
-			icons[i].setPosition(heat[2].getPosition().x + (heat[2].getGlobalBounds().width * (3.0f / 4.0f)), heat[2].getPosition().y + (heat[2].getGlobalBounds().height / 2.0f));
-			break;
-		}
+			case 0: // bar graph
+			{
+				icons[i].setPosition(heat[0].getPosition().x + (heat[0].getGlobalBounds().width / 2.0f), heat[0].getPosition().y + (heat[0].getGlobalBounds().height / 2.0f));
+				break;
+			}
+			case 1: // save 
+			{
+				icons[i].setPosition(heat[2].getPosition().x + (heat[2].getGlobalBounds().width / 4.0f), heat[2].getPosition().y + (heat[2].getGlobalBounds().height / 2.0f));
+				break;
+			}
+			case 2: // quit game
+			{
+				icons[i].setPosition(heat[2].getPosition().x + (heat[2].getGlobalBounds().width * (3.0f / 4.0f)), heat[2].getPosition().y + (heat[2].getGlobalBounds().height / 2.0f));
+				break;
+			}
+			default: // everyhting else
+			{
 
-		default: // everyhting else
-		{
-			icons[i].setPosition(game->window.getPosition().x / 2.0f, game->window.getPosition().y / 2.0f);
-			if (i == 4)
-				icons[i].move(0, icons[i].getGlobalBounds().height / 1.8f);
-			break;
-		}
+				icons[i].setPosition(options[6].getPosition());
+				icons[i].move(0, icons[i].getGlobalBounds().height * 1.1f);
+				
+				if(i == 3)
+					icons[i].move(-(options[6].getGlobalBounds().width / 2.5f) ,0 );
+				else
+					icons[i].move((options[6].getGlobalBounds().width / 2.5f),0 );
+
+				break;
+			}
+
 
 		}
 
@@ -3065,9 +3141,15 @@ void finance::control_icon_animations(sf::Vector2f mouse_pos)
 	else if (icons[2].getGlobalBounds().contains(mouse_pos))
 		icons[2].scale(1.1f, 1.1f);
 	else if (icons[3].getGlobalBounds().contains(mouse_pos))
+	{
 		icons[3].scale(1.1f, 1.1f);
+		selection = 10;
+	}
 	else if (icons[4].getGlobalBounds().contains(mouse_pos))
+	{
 		icons[4].scale(1.1f, 1.1f);
+		selection = 11;
+	}
 	else
 	{
 		icons[1].setScale(0.2f, 0.2f);
@@ -3079,7 +3161,7 @@ void finance::control_icon_animations(sf::Vector2f mouse_pos)
 
 bool finance::handle_icons(sf::Vector2f mouse_pos)
 {
-	if (icons[2].getGlobalBounds().contains(mouse_pos))
+	if (icons[2].getGlobalBounds().contains(mouse_pos) || selection == 7)
 	{
 		game->pop_state();
 		return(true);
@@ -3136,6 +3218,14 @@ void finance::update_profits()
 		average += (past_net_worths.at(i) / (double)lim);
 	}
 	indicators[4].setString("AYP : " + style(average));
+}
+
+void finance::move_list_down()
+{
+}
+
+void finance::move_list_up()
+{
 }
 
 std::string finance::style(long double d)

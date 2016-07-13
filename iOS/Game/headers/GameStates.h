@@ -319,7 +319,7 @@ public:
 class finance : public game_state
 {
 private:
-
+	std::string options_str[2] = {"Stores:", "Back"};
 	std::string indicators_str[5] = { "Balance", "Reputation", "Game Time", "Month's profits", "Year's Profits" };
 
 	sf::Time buffer = sf::seconds(0.0f);
@@ -333,10 +333,16 @@ private:
 	sf::Sprite icons[5];
 	sf::Texture icons_texture[5];
 
+	sf::Text options[8];
+	sf::RectangleShape store_box[5];
+	sf::Text store_box_text[5];
+
 	double buying_rate;
 	int selection = -1;
-
 	int last_second = -1;
+
+	int starting_index = 0;
+	store * current_selection;
 
 	store * active_store;
 	user_profile * current_user;
@@ -359,6 +365,9 @@ public:
 
 	void add_profits(long double n_worth);
 	void update_profits();
+
+	void move_list_down();
+	void move_list_up();
 
 	std::string style(long double d);
 };
