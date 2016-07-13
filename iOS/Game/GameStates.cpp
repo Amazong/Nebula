@@ -3478,7 +3478,9 @@ void store_state::input()
 					return;
 				case 2:
 					//to do
-					//if(!current_user->set_active_store(current_selection))
+					if (!current_user->set_active_store(current_selection)) {
+
+					}
 						// to do
 					return;
 				case 3:
