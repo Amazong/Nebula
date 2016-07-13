@@ -16,6 +16,9 @@ Como está estruturado
 ### Algoritmos
 e.g. algoritmo de compra, etc.
 
+### Listas de texto
+As listas foram extraídas de sites por um procedimento automático, que optámos por não incluir no resultado final.
+
 ### Conclusão
 
 
@@ -36,7 +39,7 @@ e.g. algoritmo de compra, etc.
 - **Marvel** para sincronização de mockups e experimentação de UX.
 
 ##### Para edição de música:
-- **Adobe Audition**, para edição das músicas, que gravámos na casa do João.
+- Com o **Adobe Audition**, o João editou as músicas que o Elvis gravou em casa do João.
  
 
 ### Fontes:
