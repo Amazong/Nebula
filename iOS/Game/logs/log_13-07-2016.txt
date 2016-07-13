@@ -5233,3 +5233,45 @@ Started playing HotaruNoShikai.ogg.
 17:14:15 - Bought G&L guitar for 2019.00£ (peanuts).
 17:14:48 - Quitting music player.
 17:14:49 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+17:25:41 - Program started.
+17:25:41 - Music started playing.
+17:25:41 - Bought Downtown for 20000.00£ (peanuts).
+17:25:41 - Bought Larrivee guitar for 200.00£ (peanuts).
+17:25:41 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+17:25:41 - Bought Martin guitar for 400.00£ (peanuts).
+17:25:41 - Bought digital Roland piano for 500.00£ (peanuts).
+17:25:41 - Bought Maton guitar for 600.00£ (peanuts).
+17:25:41 - Bought upright Korg piano for 1904.76£ (peanuts).
+17:25:41 - Bought Larrivee guitar for 200.00£ (peanuts).
+17:25:41 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+17:25:41 - Bought Martin guitar for 400.00£ (peanuts).
+17:25:41 - Bought grand Steinway & Sons piano for 45238.09£ (peanuts).
+17:25:17:25:41 - Started playing BossaBossa.ogg.
+41 - Bought Maton guitar for 600.00£ (peanuts).
+17:25:41 - Bought digital Yamaha piano for 1285.71£ (peanuts).
+17:25:41 - Hired Cersei for 200000.00£ (peanuts).
+17:25:41 - Hired Ned Stark for 5000.00£ (peanuts).
+17:25:41 - Hired Jon Snow for 100000.00£ (peanuts).
+17:25:41 - Hired Sansa for 1000.00£ (peanuts).
+17:25:41 - Game Lady Stark saved.
+17:25:41 - Sold Martin guitar for 400.00£ (peanuts).
+17:25:41 - Sold an item! Your reputation has increased.
+17:25:41 - Sold Larrivee guitar for 1000.00£ (peanuts).
+17:25:41 - Sold an item! Your reputation has increased.
+17:25:41 - Sold grand Steinway & Sons piano for 50000.00£ (peanuts).
+17:25:41 - Sold an item! Your reputation has increased.
+17:25:41 - The client didn't buy anything. Your reputation has decreased.
+17:25:41 - The client didn't buy anything. Your reputation has decreased.
+17:25:44 - Bought  for 487130.04£ (peanuts).
+17:25:49 - Program exited normally.

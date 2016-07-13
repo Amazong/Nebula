@@ -3089,7 +3089,7 @@ void finance::setup_icons()
 
 		if (i > 2)
 		{
-			icons[i].setScale(0.4, 0.4);
+			icons[i].setScale(0.4f, 0.4f);
 		}
 
 
