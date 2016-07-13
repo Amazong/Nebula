@@ -541,7 +541,6 @@ void in_game::input()
 				return;
 				break;
 			case 4:
-				current_user->buy_store(new store(current_user, ""));
 				game->push_state(new inventory(game, game->window.capture()));
 				break;
 			case 5:

@@ -728,7 +728,6 @@ void store::sell_instrument(int position_offset)
 	delete (*it); // memory management
 
 	inventory.erase(it);
-	
 }
 
 void store::hire_employee(employee * employee)

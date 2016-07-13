@@ -5275,3 +5275,50 @@ Started playing HotaruNoShikai.ogg.
 17:25:41 - The client didn't buy anything. Your reputation has decreased.
 17:25:44 - Bought  for 487130.04£ (peanuts).
 17:25:49 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+17:33:51 - Program started.
+17:33:52 - Music started playing.
+17:33:52 - Bought Downtown for 20000.00£ (peanuts).
+17:33:52 - Bought Larrivee guitar for 200.00£ (peanuts).
+17:33:52 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+17:33:52 - Bought Martin guitar for 400.00£ (peanuts).
+17:33:52 - Bought grand Yamaha piano for 38095.23£ (peanuts).
+17:33:52 - Bought Maton guitar for 600.00£ (peanuts).
+17:33:52 - Bought grand Yamaha piano for 33333.33£ (peanuts).
+17:33:52 - Bought Larrivee guitar for 200.00£ (peanuts).
+17:33:52 - Bought grand Steinway & Sons piano for 50000.00£ (peanuts).
+17:33:5217 - :Started playing Kygo.ogg.
+33:52 - Bought Martin guitar for 400.00£ (peanuts).
+17:33:52 - Bought digital Kawai piano for 928.57£ (peanuts).
+17:33:52 - Bought Maton guitar for 600.00£ (peanuts).
+17:33:52 - Bought grand Kawai piano for 35714.28£ (peanuts).
+17:33:52 - Hired Cersei for 200000.00£ (peanuts).
+17:33:52 - Hired Ned Stark for 5000.00£ (peanuts).
+17:33:52 - Hired Jon Snow for 100000.00£ (peanuts).
+17:33:52 - Hired Sansa for 1000.00£ (peanuts).
+17:33:52 - Game Lady Stark saved.
+17:33:52 - Sold Maton guitar for 600.00£ (peanuts).
+17:33:52 - Sold an item! Your reputation has increased.
+17:33:52 - Sold Larrivee guitar for 1000.00£ (peanuts).
+17:33:52 - Sold an item! Your reputation has increased.
+17:33:52 - Sold grand Yamaha piano for 33333.33£ (peanuts).
+17:33:52 - Sold an item! Your reputation has increased.
+17:33:52 - The client didn't buy anything. Your reputation has decreased.
+17:33:52 - The client didn't buy anything. Your reputation has decreased.
+17:33:57 - Sold an item! Your reputation has increased.
+17:34:01 - Sold an item! Your reputation has increased.
+17:34:31 - Sold an item! Your reputation has increased.
+17:35:03 - Stopping playback.
+17:35:16 - Sold an item! Your reputation has increased.
+17:35:25 - Sold an item! Your reputation has increased.
+17:35:34 - Program exited normally.
