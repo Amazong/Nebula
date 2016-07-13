@@ -226,7 +226,6 @@ guitar::guitar(piano_brands::piano_brands brand, piano_type::piano_type type, qu
 	own_quality = quality;
 }
 
-
 void guitar::set_perceived_value(double ratio)
 {
 	if (ratio <= 0.1)
@@ -320,26 +319,24 @@ piano::piano(piano_brands::piano_brands brand, piano_type::piano_type type, qual
 	set_perceived_value(this->price / this->value); // update purchasing power
 }
 
-
 void piano::set_perceived_value(double ratio)
 {
-	if (ratio <= 0.1)
+	if (ratio <= 0.5)
 		purchasing_power = perceived_value::irresistible;
-	else if (ratio <= 1.5 && ratio > 0.1)
+	else if (ratio <= 1.5)
 		purchasing_power = perceived_value::cheap;
-	else if (ratio <= 2 && ratio > 1.5)
+	else if (ratio <= 2)
 		purchasing_power = perceived_value::neutral;
-	else if (ratio <= 3 && ratio > 2)
+	else if (ratio <= 3)
 		purchasing_power = perceived_value::high;
-	else if (ratio <= 5 && ratio > 3)
+	else if (ratio <= 5)
 		purchasing_power = perceived_value::overpriced;
-	else if (ratio > 5)
+	else
 		purchasing_power = perceived_value::unattainable;
 }
 
 
 /*------------------------------ employee ------------------------------*/
-
 
 employee::employee(char * name)
 {
