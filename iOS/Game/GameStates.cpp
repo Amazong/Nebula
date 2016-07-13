@@ -2168,10 +2168,15 @@ void inventory::input()
 				aux->pop_state();
 				return;
 			case 5:
-				move_list_down();
+				if (starting_index != current_user->get_active_store()->get_stock() / 5) {
+					move_list_down();
+					scroll[1].setScale(0.4f, 0.4f);
+				}
 				break;
 			case 6:
-				move_list_up();
+				if (starting_index != 0)
+					move_list_up();
+					scroll[0].setScale(0.4f, 0.4f);
 				break;
 			// to add actions
 			}
@@ -2200,14 +2205,10 @@ void inventory::draw(const float elapsed)
 	game->window.draw(price_setter);
 	game->window.draw(price_setter_inside);
 	
-	if (starting_index != current_user->get_active_store()->get_stock() / 5)
-		scroll[0].setScale(0.4f, 0.4f);
-	else
+	if (starting_index == current_user->get_active_store()->get_stock() / 5)
 		scroll[0].setScale(0.0f, 0.0f);
 
-	if (starting_index != 0)
-		scroll[1].setScale(0.4f, 0.4f);
-	else
+	if (starting_index == 0)
 		scroll[1].setScale(0.0f, 0.0f);
 			
 	int i;
