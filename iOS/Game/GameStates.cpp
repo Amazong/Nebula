@@ -3443,6 +3443,8 @@ void store_state::input()
 				}
 				else if (set_active_store.getGlobalBounds().contains(mouse_pos)) {
 					selection = 2;
+					set_active_store.setStyle(sf::Text::Bold);
+
 				}
 				else if (scroll[0].getGlobalBounds().contains(mouse_pos)) {
 					scroll[0].setScale(0.5f, 0.5f);
@@ -3458,6 +3460,7 @@ void store_state::input()
 					selection = -1;
 					buy.setStyle(sf::Text::Regular);
 					back.setStyle(sf::Text::Regular);
+					set_active_store.setStyle(sf::Text::Regular);
 				}
 
 				break;
@@ -3475,7 +3478,8 @@ void store_state::input()
 					return;
 				case 2:
 					//to do
-
+					//if(!current_user->set_active_store(current_selection))
+						// to do
 					return;
 				case 3:
 					if ((starting_index + 1) * 5 < current_user->get_active_store()->get_stock()) {
