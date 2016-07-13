@@ -2121,10 +2121,19 @@ void inventory::input()
 				icons[2].setScale(0.3f, 0.3f);
 				selection = 4;
 			}
+			else if (scroll[0].getGlobalBounds().contains(mouse_pos)) {
+				scroll[0].setScale(0.5f, 0.5f);
+				selection = 5;
+			}
+			else if (scroll[1].getGlobalBounds().contains(mouse_pos)) {
+				scroll[1].setScale(0.5f, 0.5f);
+				selection = 6;
+			}
 			else {
 				icons[1].setScale(0.2f, 0.2f);
 				icons[2].setScale(0.2f, 0.2f);
-				
+				scroll[0].setScale(0.4f, 0.4f);
+				scroll[1].setScale(0.4f, 0.4f);
 				selection = -1;
 				buy.setStyle(sf::Text::Regular);
 				back.setStyle(sf::Text::Regular);
@@ -2134,7 +2143,8 @@ void inventory::input()
 		}
 		case sf::Event::MouseButtonPressed:
 		{
-			switch (selection) // 0 - back; 1 - buy; 2 - set price; 3 - save; 4 - exit
+			state_manager * aux = game;
+			switch (selection) // 0 - back; 1 - buy; 2 - set price; 3 - save; 4 - exit; 5 - move down; 6 - move up
 			{
 			case 0:
 				game->pop_state();
@@ -2151,11 +2161,17 @@ void inventory::input()
 				return;
 			case 3:
 				// save game
+				return;
 			case 4:
-				state_manager * aux = game;
 				aux->pop_state();
 				aux->pop_state();
 				return;
+			case 5:
+				move_list_down();
+				break;
+			case 6:
+				move_list_up();
+				break;
 			// to add actions
 			}
 
@@ -2185,6 +2201,9 @@ void inventory::draw(const float elapsed)
 			
 	for (int i = 0; i < 3; i++)
 		game->window.draw(icons[i]);
+	
+	for (int i = 0; i < 2; i++)
+		game->window.draw(scroll[i]);
 
 	for (int i = 0; i < 5; i++)
 		game->window.draw(currently_showing[i]);
@@ -2196,11 +2215,19 @@ void inventory::draw(const float elapsed)
 void inventory::move_list_down()
 {
 	starting_index++;
+
+	update_list();
+	selection = -1;
+	update_properties();
 }
 
 void inventory::move_list_up()
 {
 	starting_index--;
+
+	update_list();
+	selection = -1;
+	update_properties();
 }
 
 void inventory::setup()
@@ -2264,7 +2291,15 @@ void inventory::setup_icons()
 		}
 
 		scroll[i].setTexture(scroll_texture[i]);
+		scroll[i].setOrigin((scroll[i].getGlobalBounds().width / 2.0f), (scroll[i].getGlobalBounds().height / 2.0f));
+		scroll[i].setScale(0.4, 0.4);	
+
 	}
+
+	scroll[0].setPosition(10 + currently_showing[0].getPosition().x + scroll[0].getGlobalBounds().width / 2.0f,
+		currently_showing[0].getPosition().y - (1.0f / 2.0f)*scroll[0].getGlobalBounds().height);
+	scroll[1].setPosition(currently_showing[0].getPosition().x + currently_showing[0].getGlobalBounds().width - scroll[1].getGlobalBounds().width - 10 + scroll[1].getGlobalBounds().width / 2.0f,
+		currently_showing[0].getPosition().y - (1.0f / 2.0f)*scroll[1].getGlobalBounds().height);
 }
 
 void inventory::update_list()
