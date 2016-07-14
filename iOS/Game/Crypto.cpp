@@ -58,12 +58,12 @@ void CryptoKey::update_repetitions()
 		i++;
 		reps += (int)(key[i]);
 
-		reps %= 65536; // reps will be between 0-65536
+		reps %= 256; // reps will be between 0-256
 
 		if (reps == 0) reps = 1; // modulo op can return 0
 								 // need to safeguard against that
 	}
-	this->reps = reps + 1000; // always an added bonus, to ensure at least 1000, but in random number
+	this->reps = reps + 100; // always an added bonus, to ensure at least 1000, but in random number
 }
 
 CryptoKey * CryptoKey::increment()
@@ -317,7 +317,7 @@ int CryptoFile::decrypt(std::string target_name, const CryptoKey & key, bool ove
 
 	std::ofstream target(target_name, std::fstream::trunc | std::fstream::binary);
 
-	// output encrypted content
+	// output decrypted content
 	for (i = 0; i < length; i++) {
 		target << (char)chunk[i];
 	}
@@ -341,7 +341,7 @@ int CryptoFile::decrypt(std::string target_name, const CryptoKey & key, bool ove
 			}
 		}
 
-		// output encrypted content
+		// output decrypted content
 		for (i = 0; i < length; i++) {
 			target << chunk[i];
 		}

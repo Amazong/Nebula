@@ -658,6 +658,23 @@ bool store::buy_piano(piano * piano)
 	return false;
 }
 
+void store::buy_first_instrument()
+{
+	int sel;
+
+	std::random_device rd;
+	std::mt19937 random_numbers(rd());
+	std::uniform_int_distribution<int> range(0, 1);
+
+	sel = range(random_numbers);
+	if (sel == 0) {
+		inventory.push_back(new guitar(""));
+	}
+	else {
+		inventory.push_back(new piano(""));
+	}
+}
+
 bool store::run_probability(double prob)
 {
 	std::mt19937 random_numbers(rd());
@@ -967,6 +984,9 @@ user_profile::~user_profile()
 
 store * user_profile::get_active_store()
 {
+	if (stores.empty()) {
+		return nullptr;
+	}
 	if (active_store == nullptr)
 	{
 		active_store = stores.front();
@@ -976,10 +996,16 @@ store * user_profile::get_active_store()
 
 bool user_profile::set_active_store(store * active_store_new)
 {
+	if (active_store_new == nullptr) {
+		get_active_store();
+		return true;
+	}
+
 	if (!stores.empty()){
 		active_store = active_store_new;
 		return true;
 	}
+
 	return false;
 }
 
@@ -1139,6 +1165,14 @@ void user_profile::save_game()
 	LOGGER::log("Game " + get_name_cpp() + " saved");
 
 	fout.close();
+
+	std::string profile_name;
+	profile_name = user;
+	profile_name.erase(0, 6);
+	CryptoKey k(profile_name);
+	CryptoFile f(user, statuses::plaintext);
+
+	f.encrypt(user + "_encrypted", k);
 }
 
 void user_profile::save_inventories(std::string user, const guitar * tab, int size, int store_index)
@@ -1161,7 +1195,10 @@ void user_profile::save_inventories(std::string user, const guitar * tab, int si
 
 	fout.close();
 
-	CryptoKey k(user);
+	std::string profile_name;
+	profile_name = user;
+	profile_name.erase(0, 6);
+	CryptoKey k(profile_name);
 	CryptoFile f(file_name, statuses::plaintext);
 
 	f.encrypt(file_name + "_encrypted", k);
@@ -1187,7 +1224,10 @@ void user_profile::save_staff(std::string user, const employee * tab, int size, 
 
 	fout.close();
 
-	CryptoKey k(user);
+	std::string profile_name;
+	profile_name = user;
+	profile_name.erase(0, 6);
+	CryptoKey k(profile_name);
 	CryptoFile f(file_name, statuses::plaintext);
 
 	f.encrypt(file_name + "_encrypted", k);
@@ -1212,7 +1252,10 @@ void user_profile::save_stores(std::string user, const store * tab, int size)
 
 	fout.close();
 
-	CryptoKey k(user);
+	std::string profile_name;
+	profile_name = user;
+	profile_name.erase(0, 6);
+	CryptoKey k(profile_name);
 	CryptoFile f(file_name, statuses::plaintext);
 
 	f.encrypt(file_name + "_encrypted", k);
@@ -1247,7 +1290,12 @@ void user_profile::load_game(std::string profile_title)
 }
 
 void user_profile::load_user(std::string & profile_title)
-{	
+{
+	CryptoKey k(profile_title);
+	CryptoFile f("saves/" + profile_title + "_encrypted", statuses::encrypted);
+
+	f.decrypt("saves/" + profile_title, k);
+	
 	std::ifstream fin_2("saves/" + profile_title, std::ios::binary);
 
 	if (fin_2.fail())
@@ -1279,7 +1327,7 @@ void user_profile::load_stores(user_profile * user)
 	file_name += user->user;
 	file_name += ".Stores";
 
-	CryptoKey k(user->get_name_cpp());
+	CryptoKey k(user->user);
 	CryptoFile f(file_name + "_encrypted", statuses::encrypted);
 
 	f.decrypt(file_name, k);
@@ -1315,6 +1363,7 @@ void user_profile::load_stores(user_profile * user)
 	for (int i = 0; tab_ptr != nullptr, i < size; i++)
 	{
 		user->stores.push_back(new store(tab_ptr[i]));
+		user->active_store = stores.back();
 
 		user->stores.back()->user = user;
 
@@ -1333,7 +1382,7 @@ void user_profile::load_store_inv(const user_profile * user, store & shop, int s
 	file_name += ".Store_inventory";
 	file_name.push_back(store_index + 65);
 
-	CryptoKey k(user->get_name_cpp());
+	CryptoKey k(user->user);
 	CryptoFile f(file_name + "_encrypted", statuses::encrypted);
 
 	f.decrypt(file_name, k);
@@ -1381,7 +1430,7 @@ void user_profile::load_store_staff(const user_profile * user, store & shop, int
 	file_name += ".Store_staff";
 	file_name.push_back(store_index + 65);
 
-	CryptoKey k(user->get_name_cpp());
+	CryptoKey k(user->user);
 	CryptoFile f(file_name + "_encrypted", statuses::encrypted);
 
 	f.decrypt(file_name, k);

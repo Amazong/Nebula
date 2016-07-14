@@ -198,7 +198,8 @@ public:
 	int get_stock();
 	std::list<instrument *> * get_inventory() { return &inventory; }
 	bool buy_guitar(guitar * guitar); // needs access to user's attributes
-	bool buy_piano(piano * piano); // to implement
+	bool buy_piano(piano * piano);
+	void buy_first_instrument();
 
 	void sell_algorithm();
 	void sell_instrument(int position_offset);
@@ -226,8 +227,8 @@ public:
 	friend class finance;
 	friend class store_state;
 	friend class store_buy;
-	
 	friend class staff;
+	friend class new_game;
 };
 
 
@@ -258,7 +259,7 @@ public:
 	void set_net_worth(double worth) { net_worth = worth; }
 
 	store * get_active_store();
-	bool set_active_store(store * active_store_new);
+	bool set_active_store(store * active_store_new = nullptr);
 	bool set_active_store(unsigned int store_id);
 
 	int get_difficulty() { return difficulty; }

@@ -1432,32 +1432,30 @@ void new_game::input()
 				case 5:
 				{
 					game->set_current_user(new user_profile());
-
 					game->get_current_user()->set_difficulty(difficulty);
+					game->get_current_user()->set_user_name(name);
+										
+					game->get_current_user()->stores.push_back(new store(game->get_current_user(), ""));
+					game->get_current_user()->set_active_store();
+
+					game->get_current_user()->active_store->buy_first_instrument();
+					game->get_current_user()->active_store->staff.push_back(new employee(""));
+
 					switch (difficulty) {
 					case 0:
-						game->get_current_user()->set_net_worth(400000);
+						game->get_current_user()->set_net_worth(150000);
 						break;
 					case 1:
-						game->get_current_user()->set_net_worth(300000);
+						game->get_current_user()->set_net_worth(100000);
 						break;
 					case 2:
-						game->get_current_user()->set_net_worth(200000);
+						game->get_current_user()->set_net_worth(50000);
 						break;
 					default:
 						break;
 					}
-					game->get_current_user()->set_user_name(name);
-
-					game->get_current_user()->stores.push_back(new store(game->get_current_user(), ""));
-					
-					/*game->get_current_user()->set_net_worth(game->get_current_user()->net_worth -
-						game->get_current_user()->get_back_store()->get_value());
-					*/
-
-					game->get_current_user()->set_net_worth(game->get_current_user()->net_worth - 200000);
-					game->get_current_user()->set_active_store(game->get_current_user()->stores.back());
-					game->push_state(new msg_box(game, game->window.capture(), "Game created! We've given you a store. Now buy your first employee and instrument!", 20, 50, new in_game_setup(game)));
+																				
+					game->push_state(new msg_box(game, game->window.capture(), "                       Game created!                       We've given you your first store, employee and instrument!", 60, 30, new in_game_setup(game)));
 					return;
 				}
 				case 9:

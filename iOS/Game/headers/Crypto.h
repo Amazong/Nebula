@@ -52,8 +52,8 @@ public:
 	bool set_file(std::string name);
 	void set_status(statuses stat);
 
-	int encrypt(std::string target_name, const CryptoKey &key, bool overwrite = 0);
-	int decrypt(std::string target_name, const CryptoKey &key, bool overwrite = 0);
+	int encrypt(std::string target_name, const CryptoKey &key, bool overwrite = 1);
+	int decrypt(std::string target_name, const CryptoKey &key, bool overwrite = 1);
 
 	~CryptoFile();
 };
