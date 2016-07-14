@@ -111,15 +111,16 @@ private:
 	sf::Sprite icons[7];
 	sf::Texture icons_texture[7];
 
-	double buying_rate;
+	int sold_this_week;
+	int rev_this_week;
+
 	int selection = -1;
-	
 	int last_second = -1;
 
 	store * active_store;
 	user_profile * current_user;
 	
-	void update_buying_rate();
+	void process_sales();
 
 public:
 	in_game(state_manager * game_ptr);
@@ -159,7 +160,7 @@ private:
 	int selection = -1;
 	store * active_store;
 	user_profile * current_user;
-	void update_buying_rate();
+	void process_sales();
 
 public:
 	in_game_setup(state_manager * game_ptr);
@@ -391,7 +392,7 @@ private:
 	store * active_store;
 	user_profile * current_user;
 
-	void update_buying_rate();
+	void process_sales();
 
 public:
 	finance(state_manager * game_ptr);

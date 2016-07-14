@@ -158,12 +158,14 @@ private:
 	double reputation = 0; // by default
 	double average_purchasing_power;
 	double average_efficiency;
+
+	int sold_this_week = 0;
+	double rev_this_week = 0;
 	
 	unsigned int max_stock;
 	
 	double value;
-	int traffic;
-	int buying_rate; // each store has it's buying rate
+	int traffic = (int)((2.5 + 2 * (atan(1) * 4)) * (((int)placement + 1) / 3.0) + 0.5);
 
 public:
 	store() {};
@@ -177,12 +179,12 @@ public:
 	// store management
 	void set_reputation(double rep) { reputation = rep; };
 	double get_reputation() { return reputation; };
-
 	double get_value() { return value; }
+	int get_base_traffic() { return (int)((2.5 + 2 * (atan(1) * 4)) * (((int)placement + 1) / 3.0) + 0.5); }
+	int get_traffic() { update_traffic(); return traffic; }
 
 	std::string get_area(int num);
 	std::string get_population(int num);
-	std::string get_buying_rate();
 
 	// averages
 	void update_average_purchasing_power();

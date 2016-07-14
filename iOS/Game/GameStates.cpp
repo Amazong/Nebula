@@ -355,6 +355,8 @@ void options_menu::input()
 
 void options_menu::logic_update(const float elapsed)
 {
+	setup_text();
+	
 	if (selection != -1)
 	{
 		selector.setOrigin((selector.getGlobalBounds().width / 2.0f), (selector.getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
@@ -386,9 +388,16 @@ void options_menu::setup_text()
 
 	for (int i = 0; i < 3; i++)
 	{
+		if (i == 1 && MUSIC::get_m_player()->get_stop() == true) {
+			options[1].setString("Resume Music");
+			options[i].setCharacterSize((int)(font_size * 0.8f));
+		}
+		else {
+			options[i].setString(options_str[i]);
+			options[i].setCharacterSize(font_size);
+		}
+		
 		options[i].setFont(options_font);
-		options[i].setCharacterSize(font_size);
-		options[i].setString(options_str[i]);
 		options[i].setColor(sf::Color::White);
 		options[i].setOrigin((options[i].getGlobalBounds().width / 2.0f) , (options[i].getGlobalBounds().height / 2.0f) ); // origin of font in its geometric center
 		options[i].setPosition(starting_pos);
@@ -420,30 +429,13 @@ in_game::in_game(state_manager * game_ptr)
 	setup_icons();
 }
 
-void in_game::update_buying_rate()
+void in_game::process_sales()
 {
-	buying_rate = active_store->get_max_stock() * // theoretical maximum
-		active_store->get_reputation() * 2;
-	if (buying_rate > 0) {
-		switch (current_user->get_difficulty())
-		{
-		case 0:
-			buying_rate *= 2.0; // can be adjusted later, according to game balance
-			break;
-		case 1:
-			buying_rate *= 1.5; // can be adjusted later, according to game balance
-			break;
-		case 2:
-			// rate stays as is
-			break;
-		default:
-			// something is wrong with the user profile
+	for (auto it = current_user->stores.begin(); it != current_user->stores.end(); it++) {
+		(*it)->sell_algorithm();
 
-			// log corrupt profile error
-
-			complain(ErrNo::corrupt_profile);
-			return;
-			break;
+		if ((*it)->get_inventory()->empty()) {
+			game->push_state(new msg_box(game, game->window.capture(), "Your inventory is empty!", 30, 50));
 		}
 	}
 }
@@ -565,13 +557,6 @@ void in_game::input()
 
 void in_game::logic_update(const float elapsed)
 {
-	//update_buying_rate();
-	//if (buying_rate > active_store->get_stock()) {
-	//
-	//	// if not enough items in stock, penalize player
-	//	active_store->set_reputation (active_store->get_reputation() * 0.9);
-	//}
-	
 	current_user->time_elapsed += sf::Time(sf::seconds(elapsed));
 	buffer += sf::Time(sf::seconds(elapsed));
 
@@ -580,6 +565,8 @@ void in_game::logic_update(const float elapsed)
 	}
 
 	if ((int)(current_user->time_elapsed.asSeconds()) % (int)current_user->WEEK_TIME_SECS == 0) {
+		process_sales();
+
 		if ((int)(current_user->time_elapsed.asSeconds()) != last_second) {
 			last_second = (int)(current_user->time_elapsed.asSeconds());
 			indicators_str[2] = current_user->get_time_str();
@@ -902,7 +889,7 @@ in_game_setup::in_game_setup(state_manager * game_ptr)
 	start_text.setPosition(game->window.getSize().x - start_text.getGlobalBounds().width - 80, 20);
 }
 
-void in_game_setup::update_buying_rate()
+void in_game_setup::process_sales()
 {
 	buying_rate = active_store->get_max_stock() * // theoretical maximum
 		active_store->get_reputation() * 2;
@@ -1081,7 +1068,7 @@ void in_game_setup::logic_update(const float elapsed)
 {
 
 	/*
-	update_buying_rate();
+	process_sales();
 	if (buying_rate > active_store->get_stock()) {
 	// if not enough items in stock, penalize player
 	active_store->set_reputation (active_store->get_reputation() * 0.9);
@@ -2711,7 +2698,7 @@ void store_buy::update_properties() {
 			active_properties[i].setString("Max Stock: " + std::to_string(current_selection->get_max_stock()));
 			break;
 		case 4:
-			active_properties[i].setString("Buying Rate: " + current_selection->get_buying_rate());
+			active_properties[i].setString("Base traffic: " + std::to_string(current_selection->get_base_traffic()));
 			break;
 		default:
 			break;
@@ -3046,7 +3033,7 @@ finance::finance(state_manager * game_ptr)
 	
 }
 
-void finance::update_buying_rate()
+void finance::process_sales()
 {
 	buying_rate = active_store->get_max_stock() * // theoretical maximum
 		active_store->get_reputation() * 2;
@@ -3160,7 +3147,7 @@ void finance::input()
 
 void finance::logic_update(const float elapsed)
 {
-	//update_buying_rate();
+	//process_sales();
 	//if (buying_rate > active_store->get_stock()) {
 	//
 	//	// if not enough items in stock, penalize player
@@ -4005,7 +3992,7 @@ void store_state::update_properties() {
 			active_properties[i].setString("Max Stock: " + std::to_string(current_selection->get_max_stock()));
 			break;
 		case 4:
-			active_properties[i].setString("Buying Rate: " + current_selection->get_buying_rate());
+			active_properties[i].setString("Base Traffic: " + current_selection->get_base_traffic());
 			break;
 		default:
 			break;
