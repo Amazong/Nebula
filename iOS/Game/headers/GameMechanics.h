@@ -127,7 +127,7 @@ public:
 	std::string get_name() { std::string s = name; return s; }
 	std::string get_salary();
 	std::string get_efficiency(int num);
-
+	std::string style(double d);
 
 	friend class store;
 	friend class staff;
@@ -222,6 +222,7 @@ public:
 	// string returns
 	std::string get_name_cpp() { std::string s = name; return s; };
 	std::string get_value_cpp();
+	std::string style(double d);
 
 	// friends
 	friend class user_profile;
@@ -232,6 +233,7 @@ public:
 	friend class store_buy;
 	friend class staff;
 	friend class new_game;
+
 };
 
 
@@ -251,7 +253,7 @@ private:
 	int difficulty = -1; // difficulty: 0-easy; 1-medium; 2-hard
 
 public:
-	const float WEEK_TIME_SECS = 2.0f;
+	const float WEEK_TIME_SECS = 20.0f;
 	const float YEAR_TIME_SECS = WEEK_TIME_SECS * 52.0f;
 
 	user_profile() {};
@@ -268,7 +270,7 @@ public:
 	int get_difficulty() { return difficulty; }
 	void set_difficulty(int diff) { difficulty = diff; }
 
-	void buy_store(store * store);
+	bool buy_store(store * store);
 	store * get_back_store() { return stores.back(); }
 
 	void set_user_name(std::string s) { strcpy_s(this->user, s.c_str()); }

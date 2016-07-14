@@ -417,6 +417,41 @@ std::string employee::get_salary()
 	return s;
 }
 
+std::string employee::style(double d)
+{
+	std::string s = "";
+
+	if (d < 0) { // negative
+		s += "- ";
+		s += style(-d);
+		return s;
+	}
+	else if (d < 1000) { // display directly
+		s += std::to_string((int)d).substr(0, 3);
+	}
+	else if (d < 1000000) { // K range
+		s += std::to_string((int)d / 1000).substr(0, 3); // How many K's
+		s += ".";
+		s += std::to_string((int)d % 1000).substr(0, 1);
+		s += "K";
+	}
+	else if (d < 1000000000) { // M range
+		s += std::to_string((int)d / 1000000).substr(0, 3); // How many M's
+		s += ".";
+		s += std::to_string((int)d % 1000000).substr(0, 1);
+		s += "M";
+	}
+	else {
+		s += "1 $"; // if the user has more than 1000000000 £, we display "1 $"
+					// small easter egg :)
+		return s;
+	}
+
+	s += " £";
+
+	return s;
+}
+
 std::string employee::get_efficiency(int num)
 {
 	std::string temp;
@@ -946,6 +981,41 @@ std::string store::get_value_cpp()
 	return s;
 }
 
+std::string store::style(double d)
+{
+	std::string s = "";
+
+	if (d < 0) { // negative
+		s += "- ";
+		s += style(-d);
+		return s;
+	}
+	else if (d < 1000) { // display directly
+		s += std::to_string((int)d).substr(0, 3);
+	}
+	else if (d < 1000000) { // K range
+		s += std::to_string((int)d / 1000).substr(0, 3); // How many K's
+		s += ".";
+		s += std::to_string((int)d % 1000).substr(0, 1);
+		s += "K";
+	}
+	else if (d < 1000000000) { // M range
+		s += std::to_string((int)d / 1000000).substr(0, 3); // How many M's
+		s += ".";
+		s += std::to_string((int)d % 1000000).substr(0, 1);
+		s += "M";
+	}
+	else {
+		s += "1 $"; // if the user has more than 1000000000 £, we display "1 $"
+					// small easter egg :)
+		return s;
+	}
+
+	s += " £";
+
+	return s;
+}
+
 
 /*------------------------------ user_profile ------------------------------*/
 
@@ -1030,14 +1100,17 @@ bool user_profile::set_active_store(unsigned int store_id)
 	return true;
 }
 
-void user_profile::buy_store(store * store)
+bool user_profile::buy_store(store * store)
 {
 	if (this->net_worth >= store->value)
 	{
 		LOGGER::log("Bought " + store->get_name_cpp() + " for " + store->get_value_cpp() + "£ (peanuts)");
 		this->net_worth -= store->value;
 		stores.push_back(store);
+		return true;
 	}
+	
+	return false;
 }
 
 std::string user_profile::get_time_str() const
