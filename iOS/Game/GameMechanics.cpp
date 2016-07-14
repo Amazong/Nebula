@@ -442,8 +442,9 @@ store::store(const store & shop)
 	max_stock = shop.max_stock;
 	value = shop.value;
 	traffic = shop.traffic;
-	buying_rate = shop.buying_rate;
 	placement = shop.placement;
+	sold_this_week = shop.sold_this_week;
+	rev_this_week = shop.rev_this_week;
 
 	inventory.clear();
 	staff.clear();
@@ -552,11 +553,13 @@ store & store::operator=(const store & shop)
 	max_stock = shop.max_stock;
 	value = shop.value;
 	traffic = shop.traffic;
-	buying_rate = shop.buying_rate;
+	placement = shop.placement;
+	sold_this_week = shop.sold_this_week;
+	rev_this_week = shop.rev_this_week;
+
 	strcpy_s(this->name, shop.name);
 	inventory.clear();
 	staff.clear();
-	placement = shop.placement;
 
 	return(*this);
 }
@@ -587,12 +590,6 @@ std::string store::get_population(int num)
 		temp = "City";
 
 	return temp;
-}
-
-std::string store::get_buying_rate()
-{
-	if (buying_rate < 0) return "0";
-	return std::to_string(buying_rate);
 }
 
 // averages
@@ -694,6 +691,8 @@ void store::update_traffic()
 
 	double traffic_double = 2.5 * (1 + reputation) + 2 * cos((weeks_in_year / 26) * (atan(1) * 4));
 	
+	traffic_double *= ((int)placement + 1) / 3.0;
+
 	switch (user->difficulty)
 	{
 	case 0:
@@ -729,6 +728,9 @@ int store::get_stock()
 
 void store::sell_algorithm()
 {
+	sold_this_week = 0;
+	rev_this_week = 0;
+
 	if (!inventory.empty()) // only when inventory is not empty
 	{
 		std::mt19937 random_numbers(rd()); // random number generator algorithm
@@ -767,12 +769,15 @@ void store::sell_algorithm()
 			double probability = desirability + service;
 
 			if (run_probability(probability)) {
+				sold_this_week++;
+				rev_this_week += (*instrument_it)->price;
+
 				if ((*instrument_it)->is_guitar) {
 					LOGGER::log("Sold " + (*instrument_it)->print_brand_cpp() + " guitar for " + (*instrument_it)->get_price_cpp() + "£ (peanuts)");
 				}
 				else {
 					LOGGER::log("Sold " + (*instrument_it)->print_type_cpp() + " " + (*instrument_it)->print_brand_cpp() + " piano for " + (*instrument_it)->get_price_cpp() + "£ (peanuts)");
-				}
+				}				
 
 				sell_instrument(product_pos); // to be redefined upon piano class deployment	
 				
@@ -782,6 +787,7 @@ void store::sell_algorithm()
 						reputation *= 0.99;
 						reputation -= 1;
 					}
+
 					LOGGER::log("Inventory emptied"); 
 					LOGGER::log("Your inventory is empty. Your reputation has decreased");
 					break;

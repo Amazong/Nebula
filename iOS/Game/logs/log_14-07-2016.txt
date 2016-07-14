@@ -1451,3 +1451,80 @@ Started playing Butterfly.ogg.
 01:22:31 - Hired Robb for 9446.93£ (peanuts).
 01:22:41 - Game Lady Stark saved.
 01:22:43 - Game Lady Stark loaded.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+01:26:11 - Program started.
+01:26:11 - Music started playing.
+01:26:11 - Started playing HotaruNoShikai.ogg.
+01:27:27 - Game Lady Stark saved.
+01:27:38 - Stopping playback.
+01:27:57 - Quitting music player.
+01:27:58 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+01:32:32 - Program started.
+01:32:32 - Music started playing.
+01:32:32 - Started playing HotaruNoShikai.ogg.
+01:32:41 - Stopping playback.
+01:32:41 - Started playing Bossa2.ogg.
+01:32:43 - Stopping playback.
+01:32:45 - Stopping playback.
+01:32:48 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+01:33:04 - Program started.
+01:33:05 - Music started playing.
+01:33:05 - Started playing Bossa1.5.ogg.
+01:33:09 - Stopping playback.
+01:33:12 - Started playing BackgroundProgression.ogg.
+01:33:13 - Skipping song.
+01:33:19 - Stopping playback.
+01:33:23 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+01:38:04 - Program started.
+01:38:04 - Music started playing.
+01:38:04 - Started playing BackgroundProgression.ogg.
+01:38:22 - Fired Cersei. Will not be missed.
+01:38:24 - Fired Jon Snow. Will not be missed.
+01:38:25 - Fired Ned Stark. Will not be missed.
+01:38:25 - Fired Sansa. Will not be missed.
+01:38:28 - Hired Lucille for 10378.69£ (peanuts).
+01:39:17 - Quitting music player.
+01:39:19 - Program exited normally.
