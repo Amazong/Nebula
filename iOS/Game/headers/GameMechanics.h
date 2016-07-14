@@ -225,6 +225,7 @@ public:
 
 	// friends
 	friend class user_profile;
+	friend class in_game;
 	friend class in_game_setup;
 	friend class finance;
 	friend class store_state;

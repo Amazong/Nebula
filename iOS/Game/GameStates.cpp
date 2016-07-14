@@ -86,6 +86,7 @@ void main_menu::input()
 					}
 					
 					selection_old = selection;
+					
 					// WORK IN PROGRESS
 					/*std::thread animate_selection;
 					selector.setSize(sf::Vector2f(1, 5));
@@ -528,22 +529,53 @@ void in_game::input()
 
 			switch (selection)
 			{
-			case 3:	
-				game->push_state(new staff(game, game->window.capture()));
+			case 3:
+				if (current_user->get_active_store() != NULL) {
+					// if you have a store...
+					if (current_user->get_active_store()->staff.empty()) {
+						// ...and it's empty, you buy inventory
+						game->push_state(new staff_hire(game, game->window.capture()));
+					}
+					else {
+						game->push_state(new staff(game, game->window.capture()));
+					}
+				}
+				else {
+					game->push_state(new msg_box(game, game->window.capture(), "You have no stores! ", 30, 50));
+				}
 				return;
-				break;
-
 			case 4:
-				game->push_state(new inventory(game, game->window.capture()));
+				if (current_user->get_active_store() != NULL) {
+					// if you have a store...
+					if (current_user->get_active_store()->get_inventory()->empty()) {
+						// ...and it's empty, you buy inventory
+						game->push_state(new inventory_buy(game, game->window.capture()));
+					}
+					else {
+						game->push_state(new inventory(game, game->window.capture()));
+					}
+				}
+				else {
+					game->push_state(new msg_box(game, game->window.capture(), "You have no stores! ", 30, 50));
+				}
 				break;
 			case 5:
-				game->push_state(new store_state(game, game->window.capture()));
+				if (current_user->stores.empty()) {
+					// ...and it's empty, you buy inventory
+					game->push_state(new store_buy(game, game->window.capture()));
+				}
+				else {
+					game->push_state(new store_state(game, game->window.capture()));
+				}
 				break;
 			case 6:
-				game->push_state(new finance(game));
-				return;
-				break;
-			// to add actions
+				if (current_user->stores.empty()) {
+					// ...and it's empty, you buy inventory
+					game->push_state(new msg_box(game, game->window.capture(), "You have no stores! ", 30, 50));
+				}
+				else {
+					game->push_state(new store_state(game, game->window.capture()));
+				}
 			}
 
 			break;
@@ -1025,31 +1057,60 @@ void in_game_setup::input()
 			switch (selection)
 			{
 				case 0:
-				{
 					game->pop_state();
 					return;
-					break;
-				}
 				case 3:
-					game->push_state(new staff(game, game->window.capture()));
+					if (current_user->get_active_store() != NULL) {
+						// if you have a store...
+						if (current_user->get_active_store()->staff.empty()) {
+							// ...and it's empty, you buy inventory
+							game->push_state(new staff_hire(game, game->window.capture()));
+						}
+						else {
+							game->push_state(new staff(game, game->window.capture()));
+						}
+					}
+					else {
+						game->push_state(new msg_box(game, game->window.capture(), "You have no stores! ", 30, 50));
+					}
 					return;
-					break;
-
 				case 4:
-					game->push_state(new inventory(game, game->window.capture()));
+					if (current_user->get_active_store() != NULL) {
+						// if you have a store...
+						if (current_user->get_active_store()->get_inventory()->empty()) {
+							// ...and it's empty, you buy inventory
+							game->push_state(new inventory_buy(game, game->window.capture()));
+						}
+						else {
+							game->push_state(new inventory(game, game->window.capture()));
+						}
+					}
+					else {
+						game->push_state(new msg_box(game, game->window.capture(), "You have no stores! ", 30, 50));
+					}
 					break;
 				case 5:
-					game->push_state(new store_state(game, game->window.capture()));
+					if (current_user->stores.empty()) {
+						// ...and it's empty, you buy inventory
+						game->push_state(new store_buy(game, game->window.capture()));
+					}
+					else {
+						game->push_state(new store_state(game, game->window.capture()));
+					}
 					break;
 				case 6:
-					game->push_state(new finance(game));
+					if (current_user->stores.empty()) {
+						// ...and it's empty, you buy inventory
+						game->push_state(new msg_box(game, game->window.capture(), "You have no stores! ", 30, 50));
+					}
+					else {
+						game->push_state(new store_state(game, game->window.capture()));
+					}
 					return;
-					break;
 				case 9:
 				{
 					game->change_state(new in_game(game));
 					return;
-					break;
 				}
 
 			// to add actions
@@ -1653,11 +1714,7 @@ void continue_game::input()
 
 				game->set_current_user(new user_profile());
 
-				game->get_current_user()->load_user(user);
-
-				game->set_current_user(new user_profile());
-
-				game->get_current_user()->load_user(user);
+				game->get_current_user()->load_game(user);
 
 				game->change_state(new in_game(game));
 

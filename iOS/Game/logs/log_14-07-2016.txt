@@ -1673,3 +1673,165 @@ Started playing Butterfly.ogg.
 02:34:23 - Started playing BossaBossa.ogg.
 02:34:24 - Skipping song.
 02:34:25 - Stopping playback.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:35:48 - Program started.
+02:35:48 - Music started playing.
+02:35:48 - Started playing HotaruNoShikai.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:36:07 - Program started.
+02:36:07 - Music started playing.
+02:36:07 - Started playing Butterfly.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:40:00 - Program started.
+02:40:00 - Music started playing.
+02:40:00 - Started playing InMyLife.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:40:37 - Program started.
+02:40:37 - Music started playing.
+02:40:37 - Started playing Bossa2.ogg.
+02:40:42 - Game Lady Stark loaded.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:43:14 - Program started.
+02:43:14 - Music started playing.
+02:43:14 - Started playing HotaruNoShikai.ogg.
+02:43:18 - Game Lady Stark loaded.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:43:38 - Program started.
+02:43:38 - Music started playing.
+02:43:38 - Started playing Tears in Heaven.ogg.
+02:43:41 - Game Lady Stark loaded.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:44:57 - Program started.
+02:44:57 - Music started playing.
+02:44:57 - Started playing Forever Young.ogg.
+02:45:02 - Game Lady Stark loaded.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:46:55 - Program started.
+02:46:55 - Music started playing.
+02:46:55 - Started playing Forever Young.ogg.
+02:46:58 - Game Lady Stark loaded.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:52:20 - Program started.
+02:52:21 - Music started playing.
+02:52:21 - Started playing InMyLife.ogg.
+02:52:23 - Game Lady Stark loaded.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:55:01 - Program started.
+02:55:01 - Music started playing.
+02:55:01 - Started playing InMyLife.ogg.
+02:55:04 - Game Lady Stark loaded.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:57:11 - Program started.
+02:57:11 - Music started playing.
+02:57:11 - Started playing HotaruNoShikai.ogg.
+02:57:13 - Game Lady Stark loaded.
