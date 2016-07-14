@@ -36,6 +36,9 @@ Foi desenvolvido um algoritmo de encriptação, que se utilizou para encriptar o
 ### Listas de texto
 As listas foram extraídas de sites por um procedimento automático desenvolvido por nós, que optámos por não incluir no resultado final.
 
+### Música
+O Elvis gravou a música que se pode ouvir durante o jogo. O João editou. Esta música corre ao longo de todo o jogo, através de um player que implementámos numa thread separada.
+
 ### Conclusão
 Apesar de infelizmente não termos conseguido entregar o projeto na data final sem erros na parte gráfica, o funcionamento do jogo está maioritariamente completo. Adicionalmente, a implementação das partes que não conseguimos incluir nesta versão que enviamos seria em grande medida análoga a implementações que foram já feitas.
 Independentemente da avaliação, tencionamos continuar o desenvolvimento deste projecto, que se revelou muito enriquecedor para ambos os membros que o desenvolveram.
@@ -57,7 +60,7 @@ Independentemente da avaliação, tencionamos continuar o desenvolvimento deste 
 - **Marvel** para sincronização de mockups e experimentação de UX.
 
 ##### Para edição de música:
-- Com o **Adobe Audition**, o João editou as músicas que o Elvis gravou em casa do João.
+- **Adobe Audition**, para edição de música.
  
 
 ### Fontes:
