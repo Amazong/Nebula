@@ -2442,3 +2442,97 @@ Started playing Butterfly.ogg.
 04:09:12 - Game Lady Stark loaded.
 04:09:51 - Quitting music player.
 04:09:53 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+04:11:02 - Program started.
+04:11:02 - Music started playing.
+04:11:02 - Started playing Paradise.ogg.
+04:11:14 - Sold upright Kawai piano for 3095.23£ (peanuts).
+04:11:14 - Sold an item! Your reputation has increased.
+04:11:14 - Inventory emptied.
+04:11:14 - Your inventory is empty. Your reputation has decreased.
+04:11:18 - Bought digital Yamaha piano for 1142.85£ (peanuts).
+04:11:26 - Game Hey-oh! saved.
+04:11:31 - Quitting music player.
+04:11:32 - Program exited normally.
+13:41:48 - Sold Larrivee guitar for 4237.00£ (peanuts).
+13:41:48 - Sold an item! Your reputation has increased.
+13:41:48 - Inventory emptied.
+13:41:48 - Your inventory is empty. Your reputation has decreased.
+13:42:14 - Your inventory is empty. Reputation has decreased.
+13:42:20 - Bought Martin guitar for 1396.00£ (peanuts).
+13:42:28 - Bought upright Yamaha piano for 4285.71£ (peanuts).
+13:42:40 - Bought PRS guitar for 3167.00£ (peanuts).
+13:43:17 - Hired Karry for 27229.35£ (peanuts).
+13:43:24 - Hired Hettie for 28347.32£ (peanuts).
+13:43:31 - Hired Jolie for 25717.35£ (peanuts).
+13:44:15 - Started playing Forever Young.ogg.
+13:45:20 - Sold PRS guitar for 3.00£ (peanuts).
+13:45:20 - Sold an item! Your reputation has increased.
+13:45:20 - Sold Martin guitar for 2.00£ (peanuts).
+13:45:20 - Sold an item! Your reputation has increased.
+13:45:20 - Sold upright Yamaha piano for 5.00£ (peanuts).
+13:45:20 - Sold an item! Your reputation has increased.
+13:45:20 - Inventory emptied.
+13:45:20 - Your inventory is empty. Your reputation has decreased.
+13:45:51 - Bought digital Steinway & Sons piano for 1500.00£ (peanuts).
+13:45:58 - Bought PRS guitar for 4036.00£ (peanuts).
+13:46:04 - Bought grand Roland piano for 21428.57£ (peanuts).
+13:46:14 - Bought PRS guitar for 3659.00£ (peanuts).
+13:47:00 - Game M saved.
+13:47:02 - The client didn't buy anything. Your reputation has decreased.
+13:47:02 - Sold PRS guitar for 4036.00£ (peanuts).
+13:47:02 - Sold an item! Your reputation has increased.
+13:47:02 - Sold PRS guitar for 3659.00£ (peanuts).
+13:47:02 - Sold an item! Your reputation has increased.
+13:47:28 - Fired Adelia. Will not be missed.
+13:47:43 - Started playing Bossa1.5.ogg.
+13:47:43 - Sold digital Steinway & Sons piano for 1500.00£ (peanuts).
+13:47:43 - Sold an item! Your reputation has increased.
+13:47:43 - Sold grand Roland piano for 21428.57£ (peanuts).
+13:47:43 - Sold an item! Your reputation has increased.
+13:47:43 - Inventory emptied.
+13:47:43 - Your inventory is empty. Your reputation has decreased.
+13:47:49 - Bought digital Steinway & Sons piano for 1500.00£ (peanuts).
+13:47:55 - Bought grand Kawai piano for 35714.28£ (peanuts).
+13:48:01 - Bought digital Yamaha piano for 1000.00£ (peanuts).
+13:49:43 - Started playing BackgroundProgression.ogg.
+13:50:36 - Sold grand Kawai piano for 35714.28£ (peanuts).
+13:50:36 - Sold an item! Your reputation has increased.
+13:50:56 - Sold digital Steinway & Sons piano for 1500.00£ (peanuts).
+13:50:56 - Sold an item! Your reputation has increased.
+13:51:16 - Sold digital Yamaha piano for 250.00£ (peanuts).
+13:51:16 - Sold an item! Your reputation has increased.
+13:51:16 - Inventory emptied.
+13:51:16 - Your inventory is empty. Your reputation has decreased.
+13:51:36 - Bought grand Yamaha piano for 38095.23£ (peanuts).
+13:52:11 - Bought Martin guitar for 1864.00£ (peanuts).
+13:52:17 - Bought grand Steinway & Sons piano for 45238.09£ (peanuts).
+13:52:22 - Bought PRS guitar for 3068.00£ (peanuts).
+13:52:53 - Started playing InMyLife.ogg.
+13:55:44 - Started playing SweetChildOMine.ogg.
+13:55:48 - The client didn't buy anything. Your reputation has decreased.
+13:56:11 - The client didn't buy anything. Your reputation has decreased.
+13:56:51 - Fired Eleanore. Will not be missed.
+13:57:09 - Sold grand Yamaha piano for 20000.00£ (peanuts).
+13:57:09 - Sold an item! Your reputation has increased.
+13:57:09 - Sold grand Steinway & Sons piano for 80000.00£ (peanuts).
+13:57:09 - Sold an item! Your reputation has increased.
+13:57:10 - Game M saved.
+13:57:19 - Started playing Tears in Heaven.ogg.
+13:57:30 - Game M saved.
+13:58:17 - Started playing HotaruNoShikai.ogg.
+13:58:20 - Skipping song.
+13:58:35 - Stopping playback.
+13:58:35 - Started playing BossaBossaBossa.ogg.
+13:59:17 - Quitting music player.
+13:59:18 - Program exited normally.

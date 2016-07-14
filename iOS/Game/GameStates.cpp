@@ -3756,7 +3756,7 @@ void store_state::update_properties() {
 		case 1:
 			active_properties[i].setString("Area: " + current_selection->get_area(int(current_selection->setting)));
 
-			set_active_store.setCharacterSize(active_properties[1].getCharacterSize() * 0.6f);
+			set_active_store.setCharacterSize((int)(active_properties[1].getCharacterSize() * 0.6f));
 			set_active_store.setOrigin(set_active_store.getGlobalBounds().width / 2.0f , set_active_store.getGlobalBounds().height / 2.0f);
 			set_active_store.setPosition(details.getPosition().x + details.getGlobalBounds().width - set_active_store.getGlobalBounds().width / 2.0f - 30,
 					active_properties[1].getPosition().y + set_active_store.getGlobalBounds().height / 2.0f);
