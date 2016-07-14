@@ -2536,3 +2536,37 @@ Started playing Butterfly.ogg.
 13:58:35 - Started playing BossaBossaBossa.ogg.
 13:59:17 - Quitting music player.
 13:59:18 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+15:35:09 - Program started.
+15:35:09 - Music started playing.
+15:35:09 - Started playing Forever Young.ogg.
+15:35:14 - Quitting music player.
+15:35:15 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+15:35:33 - Program started.
+15:35:33 - Music started playing.
+15:35:33 - Started playing Butterfly.ogg.
+15:35:48 - Started playing Kygo.ogg.
+15:35:49 - Skipping song.
+15:36:07 - Quitting music player.
+15:36:08 - Program exited normally.
