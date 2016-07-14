@@ -2536,3 +2536,35 @@ Started playing Butterfly.ogg.
 13:58:35 - Started playing BossaBossaBossa.ogg.
 13:59:17 - Quitting music player.
 13:59:18 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+15:33:35 - Program started.
+15:33:35 - Music started playing.
+15:33:35 - Started playing OpenGJam.ogg.
+15:33:39 - Quitting music player.
+15:33:40 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+15:36:16 - Program started.
+15:36:16 - Music started playing.
+15:36:16 - Started playing Paradise.ogg.
+15:36:19 - Quitting music player.
+15:36:20 - Program exited normally.

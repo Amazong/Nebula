@@ -15,9 +15,9 @@ int main() {
 	// uncomment line above to show console
 
 	// while debugging, I'll leave the splash screen commented
-	/*if (render_splash() == 42) {
+	if (render_splash() == 42) {
 		return ErrNo::file_access;
-	}*/
+	}
 	
 	LOGGER::log("Program started");
 

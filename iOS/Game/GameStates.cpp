@@ -922,28 +922,11 @@ in_game_setup::in_game_setup(state_manager * game_ptr)
 
 void in_game_setup::process_sales()
 {
-	buying_rate = active_store->get_max_stock() * // theoretical maximum
-		active_store->get_reputation() * 2;
-	if (buying_rate > 0) {
-		switch (current_user->get_difficulty())
-		{
-		case 0:
-			buying_rate *= 2.0; // can be adjusted later, according to game balance
-			break;
-		case 1:
-			buying_rate *= 1.5; // can be adjusted later, according to game balance
-			break;
-		case 2:
-			// rate stays as is
-			break;
-		default:
-			// something is wrong with the user profile
+	for (auto it = current_user->stores.begin(); it != current_user->stores.end(); it++) {
+		(*it)->sell_algorithm();
 
-			// log corrupt profile error
-
-			complain(ErrNo::corrupt_profile);
-			return;
-			break;
+		if ((*it)->get_inventory()->empty()) {
+			game->push_state(new msg_box(game, game->window.capture(), "Your inventory is empty!", 30, 50));
 		}
 	}
 }
@@ -2793,28 +2776,11 @@ finance::finance(state_manager * game_ptr)
 
 void finance::process_sales()
 {
-	buying_rate = active_store->get_max_stock() * // theoretical maximum
-		active_store->get_reputation() * 2;
-	if (buying_rate > 0) {
-		switch (current_user->get_difficulty())
-		{
-		case 0:
-			buying_rate *= 2.0; // can be adjusted later, according to game balance
-			break;
-		case 1:
-			buying_rate *= 1.5; // can be adjusted later, according to game balance
-			break;
-		case 2:
-			// rate stays as is
-			break;
-		default:
-			// something is wrong with the user profile
+	for (auto it = current_user->stores.begin(); it != current_user->stores.end(); it++) {
+		(*it)->sell_algorithm();
 
-			// log corrupt profile error
-
-			complain(ErrNo::corrupt_profile);
-			return;
-			break;
+		if ((*it)->get_inventory()->empty()) {
+			game->push_state(new msg_box(game, game->window.capture(), "Your inventory is empty!", 30, 50));
 		}
 	}
 }
@@ -2921,6 +2887,7 @@ void finance::logic_update(const float elapsed)
 
 	if ((int)(current_user->time_elapsed.asSeconds()) % (int)current_user->WEEK_TIME_SECS == 0) {
 		if ((int)(current_user->time_elapsed.asSeconds()) != last_second) {
+			process_sales();
 			last_second = (int)(current_user->time_elapsed.asSeconds());
 			indicators_str[2] = current_user->get_time_str();
 			add_profits(this->current_user->net_worth);
@@ -3352,7 +3319,7 @@ void finance::update_properties()
 			 for (int k = 0; k < j ;  k++) //go there
 				 it++;
 
-			 store_box_text[i].setString("Staff:" + std::to_string((*it)->inventory.size()) + "   Stock:" + std::to_string((*it)->staff.size())+ "   Traffic:" + std::to_string((*it)->traffic));
+			 store_box_text[i].setString("Staff:" + std::to_string((*it)->staff.size()) + "   Stock:" + std::to_string((*it)->inventory.size()) + "   Traffic:" + std::to_string((*it)->traffic));
 			 store_box_text[i].setOrigin((store_box_text[i].getGlobalBounds().width / 2.0f), (store_box_text[i].getGlobalBounds().height / 2.0f));
 			 store_box_text[i].setColor(sf::Color::White);
 			 store_box_text[i].setPosition(store_box[i].getPosition());
