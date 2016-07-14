@@ -1528,3 +1528,148 @@ Started playing Butterfly.ogg.
 01:38:28 - Hired Lucille for 10378.69£ (peanuts).
 01:39:17 - Quitting music player.
 01:39:19 - Program exited normally.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:19:06 - Program started.
+02:19:07 - Music started playing.
+02:19:07 - Started playing HotaruNoShikai.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:19:24 - Program started.
+02:19:24 - Music started playing.
+02:19:24 - Started playing Kygo.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:19:48 - Program started.
+02:19:48 - Music started playing.
+02:19:48 - Started playing BossaBossaBossa.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:21:59 - Program started.
+02:21:59 - Music started playing.
+02:21:59 - Started playing BackgroundProgression.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:26:53 - Program started.
+02:26:53 - Music started playing.
+02:26:53 - Started playing Butterfly.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:29:24 - Program started.
+02:29:24 - Music started playing.
+02:29:24 - Started playing BossaBossaBossa.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:29:53 - Program started.
+02:29:54 - Music started playing.
+02:29:54 - Started playing InMyLife.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:30:32 - Program started.
+02:30:33 - Music started playing.
+02:30:33 - Started playing Paradise.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:33:30 - Program started.
+02:33:30 - Music started playing.
+02:33:30 - Started playing OpenGJam.ogg.
+
+                                              __
+     ,                                      ," e`- - o
+    ((                                     (  | __,'
+     \~----------------------------------' \_;/
+     (     Elvis Borges & João Ferreira       /
+     /) ._________________________________.  )
+    (( (                                  (( (
+     ``-'                                  ``-'
+
+
+02:34:16 - Program started.
+02:34:16 - Music started playing.
+02:34:16 - Started playing Paradise.ogg.
+02:34:22 - Stopping playback.
+02:34:22 - Started playing Butterfly.ogg.
+02:34:23 - Started playing BossaBossa.ogg.
+02:34:24 - Skipping song.
+02:34:25 - Stopping playback.

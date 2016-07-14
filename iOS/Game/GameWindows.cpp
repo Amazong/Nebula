@@ -40,7 +40,6 @@ int n_words(const std::string & str)
 	{
 		counter++;
 		num = str.find_first_of(' ', num + 1);
-
 	}
 
 	return(counter + 1);
@@ -106,8 +105,8 @@ std::string * get_string_tab(std::string & str, int & size, unsigned int line_si
 		}
 
 		temp += tab_ptr[i];
-
 	}
+
 	fitted_strings.push_back(new std::string(temp));
 
 	delete[] tab_ptr;

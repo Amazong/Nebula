@@ -1442,7 +1442,7 @@ void new_game::input()
 						break;
 					}
 																				
-					game->push_state(new msg_box(game, game->window.capture(), "                       Game created!                       We've given you your first store, employee and instrument!", 60, 30, new in_game_setup(game)));
+					game->push_state(new msg_box(game, game->window.capture(), "                       Game created!                       We've given you your first store, employee and instrument! ", 60, 30, new in_game_setup(game)));
 					return;
 				}
 				case 9:
@@ -1749,7 +1749,6 @@ msg_box::msg_box(state_manager * game_ptr, sf::Image background_img, std::string
 		return;
 	}
 
-
 	setup_text();
 
 	background_sprite.setTexture(background);						//to deal with
@@ -1921,15 +1920,11 @@ void msg_box::show_textbox(std::string & str, unsigned int line_size, unsigned i
 
 void msg_box::setup_text()
 {
-	
-
-
 	close.setFont(options_font);
 	close.setCharacterSize(char_size);
 	close.setString("Close");
 	close.setColor(sf::Color::White);
 	close.setOrigin((close.getGlobalBounds().width / 2.0f), (close.getGlobalBounds().height / 2.0f)); // origin of font in its geometric center
-
 }
 
 
